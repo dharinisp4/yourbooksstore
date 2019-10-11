@@ -107,7 +107,8 @@ public class Home_fragment extends Fragment {
 
     //private ImageView iv_Call, iv_Whatspp, iv_reviews, iv_share_via;
     private TextView timer;
-    Button View_all_deals, View_all_TopSell;
+
+    TextView View_all_TopSell,View_all_deals;
 
     private ImageView Top_Selling_Poster, Deal_Of_Day_poster;
 
@@ -153,18 +154,18 @@ public class Home_fragment extends Fragment {
 
         }
 
-        View_all_deals = (Button) view.findViewById(R.id.view_all_deals);
-        View_all_TopSell = (Button) view.findViewById(R.id.view_all_topselling);
-        Deal_Frame_layout = (FrameLayout) view.findViewById(R.id.deal_frame_layout);
-        Deal_Frame_layout1 = (FrameLayout) view.findViewById(R.id.deal_frame_layout1);
-        Deal_Linear_layout = (LinearLayout) view.findViewById(R.id.deal_linear_layout);
+        View_all_deals = (TextView) view.findViewById(R.id.view_all_deals);
+        View_all_TopSell = (TextView) view.findViewById(R.id.view_all_topselling);
+//        Deal_Frame_layout = (FrameLayout) view.findViewById(R.id.deal_frame_layout);
+//        Deal_Frame_layout1 = (FrameLayout) view.findViewById(R.id.deal_frame_layout1);
+//        Deal_Linear_layout = (LinearLayout) view.findViewById(R.id.deal_linear_layout);
 
 
         //Top Selling Poster
-        Top_Selling_Poster = (ImageView) view.findViewById(R.id.top_selling_imageview);
+      //  Top_Selling_Poster = (ImageView) view.findViewById(R.id.top_selling_imageview);
 
         //Deal Of Day Poster
-        Deal_Of_Day_poster = (ImageView) view.findViewById(R.id.deal_of_day_imageview);
+       // Deal_Of_Day_poster = (ImageView) view.findViewById(R.id.deal_of_day_imageview);
 
 
         //Scroll View
@@ -172,17 +173,17 @@ public class Home_fragment extends Fragment {
         scrollView.setSmoothScrollingEnabled(true);
 
         //Search
-        Search_layout = (LinearLayout) view.findViewById(R.id.search_layout);
-        Search_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fm = new Search_fragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                        .addToBackStack(null).commit();
-
-            }
-        });
+//        Search_layout = (LinearLayout) view.findViewById(R.id.search_layout);
+//        Search_layout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment fm = new Search_fragment();
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+//                        .addToBackStack(null).commit();
+//
+//            }
+//        });
         //Slider
         imgSlider = (SliderLayout) view.findViewById(R.id.home_img_slider);
         banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
@@ -190,11 +191,11 @@ public class Home_fragment extends Fragment {
 
 
         //Catogary Icons
-        rv_items = (RecyclerView) view.findViewById(R.id.rv_home);
+//        rv_items = (RecyclerView) view.findViewById(R.id.rv_home);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        rv_items.setLayoutManager(gridLayoutManager);
-        rv_items.setItemAnimator(new DefaultItemAnimator());
-        rv_items.setNestedScrollingEnabled(false);
+//        rv_items.setLayoutManager(gridLayoutManager);
+//        rv_items.setItemAnimator(new DefaultItemAnimator());
+//        rv_items.setNestedScrollingEnabled(false);
 
         //DealOf the Day
         rv_deal_of_day = (RecyclerView) view.findViewById(R.id.rv_deal);
@@ -207,11 +208,12 @@ public class Home_fragment extends Fragment {
 
         //Top Selling Products
         rv_top_selling = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
-        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getActivity(), 2);
-        rv_top_selling.setLayoutManager(gridLayoutManager2);
+      //  GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getActivity(), 2);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.VERTICAL,false );
+        rv_top_selling.setLayoutManager(layoutManager1);
         rv_top_selling.setItemAnimator(new DefaultItemAnimator());
         rv_top_selling.setNestedScrollingEnabled(false);
-        rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
+     //   rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
 
 
         //make_menu_items Icons
@@ -281,28 +283,28 @@ public class Home_fragment extends Fragment {
 */
 
         //Recycler View Shop By Catogary
-        rv_items.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_items, new RecyclerTouchListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                getid = category_modelList.get(position).getId();
-                getcat_title = category_modelList.get(position).getTitle();
-                Bundle args = new Bundle();
-                Fragment fm = new Product_fragment();
-                args.putString("cat_id", getid);
-                args.putString("cat_title", getcat_title);
-                fm.setArguments(args);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                        .addToBackStack(null).commit();
-
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
-
+//        rv_items.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_items, new RecyclerTouchListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                getid = category_modelList.get(position).getId();
+//                getcat_title = category_modelList.get(position).getTitle();
+//                Bundle args = new Bundle();
+//                Fragment fm = new Product_fragment();
+//                args.putString("cat_id", getid);
+//                args.putString("cat_title", getcat_title);
+//                fm.setArguments(args);
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+//                        .addToBackStack(null).commit();
+//
+//            }
+//
+//            @Override
+//            public void onLongItemClick(View view, int position) {
+//
+//            }
+//        }));
+//
 
         //Recycler View Menu Products
         rv_headre_icons.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_headre_icons, new RecyclerTouchListener.OnItemClickListener() {
@@ -603,7 +605,7 @@ public class Home_fragment extends Fragment {
                             }.getType();
                             category_modelList = gson.fromJson(response.getString("data"), listType);
                             adapter = new Home_adapter(category_modelList);
-                            rv_items.setAdapter(adapter);
+                           // rv_items.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
                     }

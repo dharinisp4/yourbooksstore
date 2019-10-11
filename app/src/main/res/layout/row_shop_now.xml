@@ -13,7 +13,7 @@
         android:layout_height="130dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/offwhite"
+
         android:orientation="vertical"
         android:padding="5dp">
 

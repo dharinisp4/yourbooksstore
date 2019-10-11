@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -84,7 +85,7 @@ public class Product_fragment extends Fragment {
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);
         banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
         rv_cat = (RecyclerView) view.findViewById(R.id.rv_subcategory);
-        rv_cat.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv_cat.setLayoutManager(new GridLayoutManager(getActivity(),2));
         String getcat_id = getArguments().getString("cat_id");
         String id = getArguments().getString("id");
         String get_deal_id = getArguments().getString("cat_deal");

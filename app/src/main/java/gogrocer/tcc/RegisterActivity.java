@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_phone, et_name, et_password, et_email;
     private RelativeLayout btn_register;
-    private TextView tv_phone, tv_name, tv_password, tv_email;
+    private TextView  tv_login ,tv_phone, tv_name, tv_password, tv_email;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -57,10 +57,11 @@ public class RegisterActivity extends AppCompatActivity {
         et_name = (EditText) findViewById(R.id.et_reg_name);
         et_password = (EditText) findViewById(R.id.et_reg_password);
         et_email = (EditText) findViewById(R.id.et_reg_email);
-        tv_password = (TextView) findViewById(R.id.tv_reg_password);
-        tv_phone = (TextView) findViewById(R.id.tv_reg_phone);
-        tv_name = (TextView) findViewById(R.id.tv_reg_name);
-        tv_email = (TextView) findViewById(R.id.tv_reg_email);
+        tv_login =(TextView)findViewById( R.id.btnSignin);
+//        tv_password = (TextView) findViewById(R.id.tv_reg_password);
+//        tv_phone = (TextView) findViewById(R.id.tv_reg_phone);
+//        tv_name = (TextView) findViewById(R.id.tv_reg_name);
+//        tv_email = (TextView) findViewById(R.id.tv_reg_email);
         btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +70,13 @@ public class RegisterActivity extends AppCompatActivity {
                  attemptRegister();
             }
         });
+        tv_login.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( RegisterActivity.this,LoginActivity.class );
+                startActivity( intent );
+            }
+        } );
     }
 
     private void attemptRegister() {

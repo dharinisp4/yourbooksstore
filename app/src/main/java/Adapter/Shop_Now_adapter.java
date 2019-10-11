@@ -49,7 +49,7 @@ public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyVi
     @Override
     public Shop_Now_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_shop_now, parent, false);
+                .inflate(R.layout.row_headre_catogaries, parent, false);
 
         context = parent.getContext();
 

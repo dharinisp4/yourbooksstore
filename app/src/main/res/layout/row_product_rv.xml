@@ -4,8 +4,11 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="200dp"
+    android:layout_marginLeft="@dimen/space_5"
+    android:layout_marginTop="@dimen/space_2"
+    android:layout_marginRight="@dimen/dimen_2dp"
+    android:layout_height="300dp"
     app:cardElevation="@dimen/space_5"
     app:cardUseCompatPadding="true"
     card_view:cardCornerRadius="4dp">
@@ -15,9 +18,9 @@
     <RelativeLayout
         android:id="@+id/rel_click"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/offwhite"
+
         android:paddingTop="20dp"
         android:paddingBottom="2dp"
         android:paddingRight="@dimen/space_5"
@@ -26,22 +29,21 @@
 
         <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/iv_subcat_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
 
+            android:scaleType="fitXY"
 
             app:srcCompat="@drawable/icon" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:layout_toLeftOf="@+id/rel_no"
-            android:layout_toRightOf="@+id/iv_subcat_img"
+
+            android:layout_below="@+id/iv_subcat_img"
             android:orientation="vertical"
 
 
@@ -49,7 +51,7 @@
 
             <TextView
                 android:id="@+id/tv_subcat_title"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="NAme"
@@ -58,15 +60,28 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="18dp"
                 android:padding="3dp"/>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_subcat_price"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="price"
+                android:layout_alignParentStart="true"
                 android:textColor="#000"
                 android:textSize="16dp"
                 android:padding="3dp" />
+    <TextView
+        android:id="@+id/tv_subcat_mrp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="price"
+        android:textColor="@color/dark_gray"
+        android:textSize="16dp"
+        android:layout_alignParentEnd="true"
+        android:padding="3dp" />
+</RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +89,8 @@
                 android:layout_marginBottom="@dimen/space_3"
                 android:layout_marginTop="2dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/textView4"
@@ -83,7 +99,8 @@
                     android:text="@string/tv_cart_total"
                     android:textColor="#000"
                     android:textSize="16dp"
-                    android:padding="3dp" />
+                    android:padding="3dp"
+                   />
 
                 <TextView
                     android:id="@+id/tv_subcat_total"
@@ -92,17 +109,18 @@
                     android:text=" TextView"
                     android:textColor="#000"
                     android:textSize="16dp"
-                    android:padding="3dp" />
-                <Fonts.LatoBLack
+                    android:padding="3dp"
+                    />
+                <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:text="@string/currency"
                     android:textColor="#000"
                     android:textSize="16dp"
                     android:padding="3dp"
-                    android:visibility="gone"/>
+                    />
 
             </LinearLayout>
 
@@ -143,8 +161,9 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/space_8"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/space_10"
             android:id="@+id/rel_no"
             android:visibility="gone">
@@ -154,7 +173,8 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_alignParentStart="true"
-                app:srcCompat="@drawable/minus" />
+                app:srcCompat="@drawable/minus"
+                android:tint="@color/colorPrimaryDark"/>
             <TextView
                 android:layout_centerVertical="true"
                 android:id="@+id/tv_subcat_contetiy"
@@ -175,7 +195,7 @@
             android:layout_height="30dp"
 
             android:layout_marginTop="10dp"
-
+            android:tint="@color/colorPrimaryDark"
             android:layout_toRightOf="@id/tv_subcat_contetiy"
             app:srcCompat="@drawable/plus" />
 
@@ -189,11 +209,11 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/space_10"
+            android:layout_marginBottom="@dimen/space_8"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/bg_rounded_button"
             android:gravity="center"
-            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/tv_pro_add"
             android:textColor="@color/white"
             android:textSize="15dp"
@@ -215,5 +235,6 @@
         android:id="@+id/iv_subcat_remove"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        app:srcCompat="@drawable/ic_close" />
+        app:srcCompat="@drawable/ic_close"
+        android:visibility="gone"/>
 </android.support.v7.widget.CardView>

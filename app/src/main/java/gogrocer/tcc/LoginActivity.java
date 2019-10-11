@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,9 +35,9 @@ import util.Session_management;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static String TAG = LoginActivity.class.getSimpleName();
-    private RelativeLayout btn_continue, btn_register;
+    private Button btn_continue,btn_facebook,btn_google;
     private EditText et_password, et_email;
-    private TextView tv_password, tv_email, btn_forgot;
+    private TextView tv_password, tv_email, btn_forgot , btn_register;
     private Session_management sessionManagement;
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -55,14 +56,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         et_email = (EditText) findViewById(R.id.et_login_email);
         tv_password = (TextView) findViewById(R.id.tv_login_password);
         tv_email = (TextView) findViewById(R.id.tv_login_email);
-        btn_continue = (RelativeLayout) findViewById(R.id.btnContinue);
-        btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
+        btn_continue = (Button) findViewById(R.id.btnContinue);
+        btn_register = (TextView) findViewById(R.id.btnRegister);
         btn_forgot = (TextView) findViewById(R.id.btnForgot);
+        btn_facebook=(Button)findViewById( R.id.btnfb );
+        btn_google=(Button)findViewById( R.id.btngoogle );
+
 
         btn_continue.setOnClickListener(this);
         btn_register.setOnClickListener(this);
         btn_forgot.setOnClickListener(this);
-
+        btn_google.setOnClickListener( this );
+        btn_facebook.setOnClickListener( this );
     }
 
     @Override

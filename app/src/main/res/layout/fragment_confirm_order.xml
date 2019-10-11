@@ -7,14 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="@dimen/space_3"
-    app:cardBackgroundColor="@color/offwhite"
+
     app:cardUseCompatPadding="true"
     card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/offwhite"
+
         android:orientation="vertical">
 
         <Fonts.LatoBLack

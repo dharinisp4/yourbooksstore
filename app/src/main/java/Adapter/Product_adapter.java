@@ -46,7 +46,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
     String language;
 SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ;
+        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_mrp ;
         public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
         public RelativeLayout rel_click;
         public Double reward;
@@ -63,6 +63,7 @@ SharedPreferences preferences;
             tv_total = (TextView) view.findViewById(R.id.tv_subcat_total);
             tv_contetiy = (TextView) view.findViewById(R.id.tv_subcat_contetiy);
             tv_add = (Button) view.findViewById(R.id.tv_subcat_add);
+            tv_mrp =(TextView)view.findViewById( R.id.tv_subcat_mrp );
             iv_logo = (ImageView) view.findViewById(R.id.iv_subcat_img);
             iv_plus = (ImageView) view.findViewById(R.id.iv_subcat_plus);
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
@@ -330,6 +331,7 @@ SharedPreferences preferences;
         }
         holder.tv_reward.setText( mList.getRewards() );
         holder.tv_price.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
+        holder.tv_mrp.setText( context.getResources().getString( R.string.currency ));
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
         if (Integer.valueOf( modelList.get( position ).getStock() ) <= 0) {
             holder.tv_add.setText( R.string.tv_out );

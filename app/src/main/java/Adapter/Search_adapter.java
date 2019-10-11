@@ -259,7 +259,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
     @Override
     public Search_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_product_rv, parent, false);
+                .inflate(R.layout.row_cart_product, parent, false);
 
         context = parent.getContext();
 
@@ -281,6 +281,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         holder.tv_title.setText(mList.getProduct_name());
         holder.tv_reward.setText(mList.getRewards());
         holder.tv_price.setText(" " + context.getResources().getString(R.string.currency) + " " + mList.getPrice());
+        holder.tv_total.setVisibility( View.GONE );
         holder.tv_total.setText(context.getResources().getString(R.string.currency) +mList.getPrice()  );
 
         if (dbcart.isInCart(mList.getProduct_id())) {

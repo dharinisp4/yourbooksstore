@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/offwhite"
+
     tools:context="gogrocer.tcc.RegisterActivity">
 
     <ScrollView
@@ -24,113 +24,121 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="left"
                 android:gravity="center_horizontal"
-                android:src="@drawable/icon"
+                android:src="@mipmap/ic_launcher_round"
                 android:textAlignment="center" />
 
-            <Fonts.LatoBLack
+            <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_marginLeft="110dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-80dp"
                 android:layout_marginBottom="25dp"
-                android:shadowColor="#050505"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"
-                android:textStyle="bold"
-                android:text="@string/tv_reg"
+
+                android:text="@string/app_name"
+                android:textSize="@dimen/dimen_30dp"
                 android:textAlignment="center"
-                android:textColor="#050505"
-                android:textSize="30sp" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
-    <Fonts.LatoBLack
-        android:id="@+id/tv_reg_name"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_reg_name_hint"
-        android:textSize="14sp" />
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-smallcaps"
+                />
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:orientation="horizontal"-->
+<!--    android:layout_marginTop="@dimen/dimen_20dp"-->
+<!--    android:layout_height="wrap_content">-->
+<!--    <EditText-->
+<!--        android:id="@+id/tv_reg_name"-->
+<!--        android:textColor="#000"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/tv_reg_name_hint"-->
+<!--        android:textSize="14sp" />-->
 
-    <ImageView
-        android:id="@+id/iconname"
-        android:src="@drawable/iconn"
-        android:layout_width="16dp"
-        android:layout_height="16dp" />
+<!--    <ImageView-->
+<!--        android:id="@+id/iconname"-->
+<!--        android:src="@drawable/iconn"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="16dp" />-->
 
-</LinearLayout>
+<!--</LinearLayout>-->
 
             <EditText
                 android:id="@+id/et_reg_name"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/space_4"
+                android:layout_marginTop="@dimen/dimen_40dp"
                 android:textSize="14sp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_50dp"
+                android:hint="Name"
                 android:layout_marginBottom="@dimen/space_5"
-                android:background="@drawable/xml_textbox_bg"
+                android:drawableLeft="@drawable/icons8_change_user_52px"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawablePadding="@dimen/space_5"
                 android:ems="10"
+                android:outlineProvider="bounds"
                 android:inputType="text" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <Fonts.LatoBLack
-                    android:id="@+id/tv_reg_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:text="@string/tv_login_email"
-                    android:textSize="14sp" />
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_height="wrap_content">-->
+<!--                <Fonts.LatoBLack-->
+<!--                    android:id="@+id/tv_reg_email"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="#000"-->
+<!--                    android:layout_marginTop="@dimen/space_10"-->
+<!--                    android:text="@string/tv_login_email"-->
+<!--                    android:textSize="14sp" />-->
 
-                <ImageView
-                    android:id="@+id/iconnemail"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:src="@drawable/iconn" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/iconnemail"-->
+<!--                    android:layout_width="16dp"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:layout_marginTop="@dimen/space_10"-->
+<!--                    android:src="@drawable/iconn" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
 
             <EditText
                 android:id="@+id/et_reg_email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
+                android:drawableLeft="@drawable/icons8_email_48px"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawablePadding="@dimen/space_5"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/xml_textbox_bg"
+                android:hint="@string/email"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <Fonts.LatoBLack
-                    android:textColor="#000"
-                    android:id="@+id/tv_reg_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/et_login_phone_hint"
-                    android:textSize="14sp"
-                    android:layout_marginTop="@dimen/space_10"/>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_height="wrap_content">-->
+<!--                <Fonts.LatoBLack-->
+<!--                    android:textColor="#000"-->
+<!--                    android:id="@+id/tv_reg_phone"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/et_login_phone_hint"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:layout_marginTop="@dimen/space_10"/>-->
 
-                <ImageView
-                    android:id="@+id/iconp"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:src="@drawable/iconn" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/iconp"-->
+<!--                    android:layout_width="16dp"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:layout_marginTop="@dimen/space_10"-->
+<!--                    android:src="@drawable/iconn" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
 
             <EditText
@@ -138,9 +146,12 @@
                 android:textSize="14sp"
                 android:id="@+id/et_reg_phone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginBottom="@dimen/space_10"
-                android:background="@drawable/xml_textbox_bg"
+                android:hint="Phone Numbe"
+                android:drawableLeft="@drawable/icons8_phonelink_ring_filled_50px"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawablePadding="@dimen/space_5"
                 android:ems="10"
                 android:inputType="phone"
                 android:maxLength="15" />
@@ -169,25 +180,25 @@
                 android:drawableRight="@mipmap/ic_next"
                 android:gravity="left|center_vertical"
                 android:padding="10dp"/>-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <Fonts.LatoBLack
-                    android:textColor="#000"
-                    android:id="@+id/tv_reg_password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_login_password"
-                    android:textSize="14sp" />
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_height="wrap_content">-->
+<!--                <Fonts.LatoBLack-->
+<!--                    android:textColor="#000"-->
+<!--                    android:id="@+id/tv_reg_password"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/tv_login_password"-->
+<!--                    android:textSize="14sp" />-->
 
-                <ImageView
-                    android:id="@+id/iconpass"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/iconn" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/iconpass"-->
+<!--                    android:layout_width="16dp"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:src="@drawable/iconn" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
 
 
@@ -197,10 +208,13 @@
                 android:layout_marginTop="@dimen/space_4"
                 android:id="@+id/et_reg_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/xml_textbox_bg"
+              android:hint="@string/password"
                 android:inputType="textPassword"
+                android:drawableLeft="@drawable/icons8_lock_2_filled_50px"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawablePadding="@dimen/space_5"
                 android:maxLength="10"
                 android:ems="10"/>
 
@@ -218,10 +232,38 @@
                     android:gravity="center"
                     android:text="@string/btn_Register"
                     android:textColor="#fff"
-                    android:textSize="@dimen/text_size_small"/>
+                    android:textSize="15dp"/>
 
 
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:id="@+id/text_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_margin="12dp"
+                    android:layout_centerInParent="true"
+                    android:padding="12dp"
+                    android:gravity="center"
+                    android:text="Already Registered ?"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small" />
+
+                <TextView
+                    android:id="@+id/btnSignin"
+                    android:layout_toRightOf="@+id/text_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginLeft="-15dp"
+                    android:gravity="center"
+                    android:text="Sign In "
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/dimen_15dp"/>        </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

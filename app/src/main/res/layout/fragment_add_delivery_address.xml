@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/offwhite"
+
     android:orientation="vertical">
 
     <ScrollView
@@ -31,8 +31,8 @@
 
                 <ImageView
                     android:id="@+id/iconnemail"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/iconn" />
 
             </LinearLayout>
@@ -62,8 +62,8 @@
 
                 <ImageView
                     android:id="@+id/iconm"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/iconn" />
 
             </LinearLayout>
@@ -95,8 +95,8 @@
 
                 <ImageView
                     android:id="@+id/iconpass"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/iconn" />
 
             </LinearLayout>
@@ -128,8 +128,8 @@
 
                 <ImageView
                     android:id="@+id/area"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/iconn" />
 
             </LinearLayout>
@@ -142,8 +142,9 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="@dimen/space_4"
                 android:background="@drawable/xml_textbox_bg"
-                android:drawableEnd="@drawable/arrow_right"
-                android:drawableRight="@drawable/arrow_right"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:drawableEnd="@drawable/icons8_right_arrow_52px_1"
+                android:drawableRight="@drawable/icons8_right_arrow_52px_1"
                 android:gravity="start|center_vertical"
                 android:text="Select City"
                 android:textColor="#000"
@@ -162,8 +163,8 @@
 
                 <ImageView
                     android:id="@+id/aresa"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:src="@drawable/iconn" />
 
             </LinearLayout>
