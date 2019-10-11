@@ -23,6 +23,10 @@ public class Deal_Of_Day_model {
     String end_time;
     String product_image;
     String price;
+
+
+
+    String mrp;
     String status;
     String in_stock;
     String unit_value;
@@ -44,6 +48,13 @@ public class Deal_Of_Day_model {
 
     public void setProduct_name_arb(String product_name_arb) {
         this.product_name_arb = product_name_arb;
+    }
+    public String getMrp() {
+        return mrp;
+    }
+
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
     }
 
     public String getId() {

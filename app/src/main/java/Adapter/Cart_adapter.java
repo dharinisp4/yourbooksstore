@@ -3,6 +3,7 @@ package Adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,6 +88,8 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
 
         holder.tv_reward.setText(map.get("rewards"));
         holder.tv_price.setText( activity.getResources().getString(R.string.currency)+map.get("price"));
+        holder.tv_mrp.setText(activity.getResources().getString(R.string.currency)+map.get("mrp") );
+        holder.tv_mrp.setPaintFlags(holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_contetiy.setText(map.get("qty"));
         Double items = Double.parseDouble( String.valueOf( holder.tv_contetiy.getText() ) );
         final Double price = Double.parseDouble(map.get("price"));
@@ -152,6 +155,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 mapProduct.put("end_date",map.get("end_date"  ));
                 mapProduct.put("end_time",map.get( "end_time" ));
                 mapProduct.put("price", map.get( "price" ));
+                mapProduct.put( "mrp",map.get( "mrp" ) );
                 mapProduct.put("product_image", map.get("product_image"  ));
                 mapProduct.put("status",map.get( "status" ));
                 mapProduct.put("in_stock",map.get("in_stock"  ));
@@ -234,7 +238,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
     }
 
     class ProductHolder extends RecyclerView.ViewHolder {
-        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy,
+        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy, tv_mrp,
                 tv_unit, tv_unit_value;
         Button tv_add;
         RelativeLayout rel_no ;
@@ -254,7 +258,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
             rel_no =(RelativeLayout)view.findViewById( R.id.rel_no );
-
+            tv_mrp =(TextView)view.findViewById( R.id.tv_subcat_mrp );
            // tv_add.setText(R.string.tv_pro_update);
             rel_no.setVisibility( View.VISIBLE );
                 tv_add.setVisibility( View.GONE );

@@ -61,15 +61,28 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="18dp"
                 android:padding="3dp"/>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_subcat_price"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="price"
+                android:layout_alignParentStart="true"
                 android:textColor="#000"
                 android:textSize="16dp"
                 android:padding="3dp" />
+            <TextView
+                android:id="@+id/tv_subcat_mrp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="price"
+                android:textColor="@color/dark_gray"
+                android:layout_marginEnd="@dimen/space_20"
+                android:textSize="16dp"
+                android:layout_alignParentEnd="true"
+                android:padding="3dp" /></RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

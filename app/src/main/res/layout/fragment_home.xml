@@ -61,7 +61,7 @@
                 android:layout_marginRight="@dimen/space_8"
                 android:text="@string/selling_product"
                 android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
+                android:textStyle="bold|italic"
                 android:paddingTop="@dimen/space_10"
                 android:paddingBottom="@dimen/space_10"
                 android:paddingLeft="@dimen/space_5"
@@ -133,7 +133,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/deals"
+                android:text="Related Products"
                 android:layout_gravity="center_vertical"
                 android:textStyle="bold"
                 android:paddingLeft="@dimen/space_5"

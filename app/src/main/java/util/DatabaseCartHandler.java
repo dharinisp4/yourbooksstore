@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class DatabaseCartHandler extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "pc_db";
+    private static String DB_NAME = "cart_db";
     private static int DB_VERSION = 3;
     private SQLiteDatabase db;
 
@@ -23,6 +23,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
     public static final String COLUMN_CAT_ID = "category_id";
     public static final String COLUMN_NAME = "product_name";
     public static final String COLUMN_PRICE = "price";
+    public static final String COLUMN_MRP = "mrp";
     public static final String COLUMN_UNIT_PRICE = "unit_price";
     public static final String COLUMN_SIZE = "size";
     public static final String COLUMN_COLOR = "color";
@@ -41,8 +42,8 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
     }
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        this.db=db;
+    public void onCreate(SQLiteDatabase dbcart) {
+        this.db=dbcart;
         String exe = "CREATE TABLE IF NOT EXISTS " + CART_TABLE
                 + "(" + COLUMN_ID + " integer primary key, "
                 + COLUMN_QTY + " DOUBLE NOT NULL,"
@@ -50,6 +51,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
                 + COLUMN_CAT_ID + " TEXT NOT NULL, "
                 + COLUMN_NAME + " TEXT NOT NULL, "
                 + COLUMN_PRICE + " DOUBLE NOT NULL, "
+                + COLUMN_MRP + " DOUBLE NOT NULL, "
                 + COLUMN_UNIT_PRICE + " DOUBLE NOT NULL, "
                 + COLUMN_SIZE +" TEXT NOT NULL,"
                 + COLUMN_COLOR +" TEXT NOT NULL,"
@@ -70,7 +72,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
     public boolean setCart(HashMap<String, String> map, Float Qty) {
         db = getWritableDatabase();
         if (isInCart(map.get(COLUMN_ID))) {
-            db.execSQL("update " + CART_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "'," + COLUMN_PRICE + " = '" + map.get(COLUMN_PRICE) + "' where " + COLUMN_ID + "=" + map.get(COLUMN_ID));
+            db.execSQL("update " + CART_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "'," + COLUMN_PRICE + " = '" + map.get(COLUMN_PRICE)+ COLUMN_MRP + " = '" + map.get(COLUMN_MRP) + "' where " + COLUMN_ID + "=" + map.get(COLUMN_ID));
             return false;
         } else {
             ContentValues values = new ContentValues();
@@ -81,6 +83,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             values.put(COLUMN_INCREAMENT, map.get(COLUMN_INCREAMENT));
             values.put(COLUMN_NAME, map.get(COLUMN_NAME));
             values.put(COLUMN_PRICE, map.get(COLUMN_PRICE));
+            values.put(COLUMN_MRP, map.get(COLUMN_MRP));
             values.put(COLUMN_UNIT_PRICE, map.get(COLUMN_UNIT_PRICE));
             values.put(COLUMN_SIZE,map.get(COLUMN_SIZE));
             values.put(COLUMN_COLOR,map.get(COLUMN_COLOR));
@@ -179,6 +182,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             map.put(COLUMN_CAT_ID, cursor.getString(cursor.getColumnIndex(COLUMN_CAT_ID)));
             map.put(COLUMN_NAME, cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
             map.put(COLUMN_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_PRICE)));
+            map.put(COLUMN_MRP, cursor.getString(cursor.getColumnIndex(COLUMN_MRP)));
             map.put(COLUMN_UNIT_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_PRICE)));
             map.put(COLUMN_SIZE,cursor.getString(cursor.getColumnIndex(COLUMN_SIZE)));
             map.put(COLUMN_COLOR,cursor.getString(cursor.getColumnIndex(COLUMN_COLOR)));
@@ -210,6 +214,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             map.put(COLUMN_CAT_ID, cursor.getString(cursor.getColumnIndex(COLUMN_CAT_ID)));
             map.put(COLUMN_NAME, cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
             map.put(COLUMN_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_PRICE)));
+            map.put(COLUMN_MRP, cursor.getString(cursor.getColumnIndex(COLUMN_MRP)));
             map.put(COLUMN_UNIT_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_PRICE)));
             map.put(COLUMN_SIZE,cursor.getString(cursor.getColumnIndex(COLUMN_SIZE)));
             map.put(COLUMN_COLOR,cursor.getString(cursor.getColumnIndex(COLUMN_COLOR)));

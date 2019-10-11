@@ -151,7 +151,7 @@
                                     android:textStyle="italic"
                                     android:layout_toRightOf="@id/details_product_price"
                                     android:text="Name"
-                                    android:visibility="gone"
+
                                     />
                                 <TextView
                                     android:id="@+id/details_product_per"

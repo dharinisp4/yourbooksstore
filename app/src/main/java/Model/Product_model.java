@@ -1,8 +1,5 @@
 package Model;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
 
 public class Product_model {
 
@@ -16,6 +13,10 @@ public class Product_model {
     String end_date;
     String end_time;
     String price;
+    String mrp ;
+
+
+
     String product_image;
     String product_name_arb;
     String product_description_arb;
@@ -33,7 +34,13 @@ public class Product_model {
         return product_id;
     }
 
+    public String getMrp() {
+        return mrp;
+    }
 
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
+    }
     public void setProduct_id(String product_id) {
         this.product_id = product_id;
     }
