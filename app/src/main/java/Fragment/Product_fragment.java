@@ -133,53 +133,7 @@ public class Product_fragment extends Fragment {
             }
         });
 
-        rv_cat.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_cat, new RecyclerTouchListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
 
-             Details_Fragment details_fragment=new Details_Fragment();
-
-                Bundle args = new Bundle();
-
-                //Intent intent=new Intent(context, Product_details.class);
-                args.putString("product_id",product_modelList.get(position).getProduct_id());
-                args.putString("product_name", product_modelList.get(position).getProduct_name());
-                args.putString("category_id",product_modelList.get(position).getCategory_id());
-                args.putString("product_description",product_modelList.get(position).getProduct_description());
-                args.putString("deal_price",product_modelList.get(position).getDeal_price());
-                args.putString("start_date",product_modelList.get(position).getStart_date());
-                args.putString("start_time",product_modelList.get(position).getStart_time());
-                args.putString("end_date",product_modelList.get(position).getEnd_date());
-                args.putString("end_time",product_modelList.get(position).getEnd_time());
-                args.putString("price",product_modelList.get(position).getPrice());
-                args.putString("product_image",product_modelList.get(position).getProduct_image());
-                args.putString("status", product_modelList.get(position).getStatus());
-                args.putString("in_stock", product_modelList.get(position).getIn_stock());
-                args.putString("unit_value", product_modelList.get(position).getUnit_value());
-                args.putString("unit", product_modelList.get(position).getUnit());
-                args.putString("increament",product_modelList.get(position).getIncreament());
-                args.putString("rewards",product_modelList.get(position).getRewards());
-                args.putString("stock",product_modelList.get(position).getStock());
-                args.putString("title",product_modelList.get(position).getTitle());
-                details_fragment.setArguments(args);
-
-
-                // Toast.makeText(getActivity(),"col"+product_modelList.get(position).getColor(),Toast.LENGTH_LONG).show();
-
-
-
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel,details_fragment)
-                        .addToBackStack(null).commit();
-
-
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
         return view;
     }
 

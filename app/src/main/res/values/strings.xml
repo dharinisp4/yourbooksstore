@@ -18,7 +18,7 @@
     <string name="coupon_used" translatable="false">Coupon Used</string>
     <string name="apply" translatable="false">Apply</string>
     <!-- string.xml -->
-    <string name="nav_home" translatable="false">Shop Now</string>
+    <string name="nav_home" translatable="false">Shop By Category</string>
     <string name="nav_chat" translatable="false">Chat With Us</string>
     <string name="nav_user" translatable="false">User</string>
     <string name="nav_order" translatable="false">My Orders</string>

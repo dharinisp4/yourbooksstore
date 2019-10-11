@@ -17,7 +17,7 @@
         <item
             android:id="@+id/nav_my_profile"
             android:icon="@drawable/ic_nav_profile"
-            android:title="Update Profile" />
+            android:title="My Profile" />
     </group>
     <group
         android:id="@+id/group_support"
@@ -25,6 +25,7 @@
         <item
             android:id="@+id/nav_support"
             android:icon="@drawable/ic_nav_support"
+            android:visible="false"
             android:title="@string/nav_chat" />
     </group>
     <group
@@ -58,13 +59,15 @@
         <item
             android:id="@+id/nav_review"
             android:icon="@drawable/ic_nav_review"
-            android:title="@string/nav_review" />
+            android:title="@string/nav_review"
+            android:visible="false"/>
     </group>
     <group
         android:id="@+id/group_share"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_share"
+            android:visible="false"
             android:icon="@drawable/ic_nav_share"
             android:title="@string/nav_share" />
     </group>
