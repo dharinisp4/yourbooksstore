@@ -1,7 +1,6 @@
 package Fragment;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -47,7 +47,6 @@ import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
-import util.RecyclerTouchListener;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -66,6 +65,7 @@ public class Product_fragment extends Fragment {
     private Product_adapter adapter_product;
     private SliderLayout  banner_slider;
     String language;
+    ImageView img_no_products;
     SharedPreferences preferences;
     public Product_fragment() {
     }
@@ -92,8 +92,9 @@ public class Product_fragment extends Fragment {
         String get_top_sale_id = getArguments().getString("cat_top_selling");
         String getcat_title = getArguments().getString("cat_title");
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_product_name));
-
+        img_no_products=(ImageView)view.findViewById(R.id.img_no_items);
         // check internet connection
+
         if (ConnectivityReceiver.isConnected()) {
             //Shop by Catogary
             makeGetCategoryRequest(getcat_id);
@@ -109,7 +110,7 @@ public class Product_fragment extends Fragment {
 
         }
 
-        tab_cat.setVisibility(View.GONE);
+        tab_cat.setVisibility(View.VISIBLE);
         tab_cat.setSelectedTabIndicatorColor(getActivity().getResources().getColor(R.color.white));
 
         tab_cat.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -118,6 +119,7 @@ public class Product_fragment extends Fragment {
                 String getcat_id = cat_menu_id.get(tab.getPosition());
                 if (ConnectivityReceiver.isConnected()) {
                     //Shop By Catogary Products
+                  //  Toast.makeText(getActivity(),""+product_modelList.size(),Toast.LENGTH_LONG).show();
                     makeGetProductRequest(getcat_id);
                     ((MainActivity) getActivity()).setTitle(String.valueOf( tab.getText() ));
                 }
@@ -131,6 +133,7 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
@@ -143,6 +146,7 @@ public class Product_fragment extends Fragment {
      */
     //Get Shop By Catogary
     private void makeGetCategoryRequest(final String parent_id) {
+
         String tag_json_obj = "json_category_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("parent", parent_id);
@@ -171,7 +175,7 @@ public class Product_fragment extends Fragment {
                                     tab_cat.addTab(tab_cat.newTab().setText(category_modelList.get(i).getTitle()));
                                 }
                                 else {
-                                    tab_cat.addTab(tab_cat.newTab().setText(category_modelList.get(i).getArb_title()));
+                                    tab_cat.addTab(tab_cat.newTab().setText(category_modelList.get(i).getTitle()));
 
                                 }
                             }
@@ -199,6 +203,7 @@ public class Product_fragment extends Fragment {
 
     //Get Shop By Catogary Products
     private void makeGetProductRequest(String cat_id) {
+
         String tag_json_obj = "json_product_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("cat_id", cat_id);
@@ -208,7 +213,7 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d("qwerty", response.toString());
 
                 try {
                     Boolean status = response.getBoolean("responce");
@@ -216,18 +221,29 @@ public class Product_fragment extends Fragment {
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
+                        product_modelList.clear();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
-                        adapter_product = new Product_adapter(product_modelList, getActivity());
-                        rv_cat.setAdapter(adapter_product);
-                        adapter_product.notifyDataSetChanged();
-                        if (getActivity() != null) {
-                            if (product_modelList.isEmpty()) {
-                                //  Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
-                            }
-                        }
+
+                            adapter_product = new Product_adapter(product_modelList, getActivity());
+
+                            img_no_products.setVisibility(View.GONE);
+                            rv_cat.setVisibility(View.VISIBLE);
+                            rv_cat.setAdapter(adapter_product);
+                            adapter_product.notifyDataSetChanged();
+
+
+
+
 
                     }
                 } catch (JSONException e) {
+
+                    String msg=e.getMessage();
+                    if(msg.equals("No value for data"))
+                    {
+                        rv_cat.setVisibility(View.GONE);
+                        img_no_products.setVisibility(View.VISIBLE);
+                    }
                     e.printStackTrace();
                 }
             }

@@ -43,9 +43,7 @@ import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
 
-/**
- * Created by Rajesh on 2017-08-01.
- */
+
 
 public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_get_address_adapter.MyViewHolder> {
 
@@ -132,8 +130,9 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
         }
     }
 
-    public Delivery_get_address_adapter(List<Delivery_address_model> modelList) {
+    public Delivery_get_address_adapter(List<Delivery_address_model> modelList, Context context) {
         this.modelList = modelList;
+        this.context = context;
     }
 
     @Override
@@ -141,7 +140,6 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_delivery_time_rv_test, parent, false);
 
-        context = parent.getContext();
 
         return new Delivery_get_address_adapter.MyViewHolder(itemView);
     }

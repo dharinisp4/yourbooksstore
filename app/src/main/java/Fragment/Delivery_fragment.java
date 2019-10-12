@@ -349,8 +349,8 @@ String language;
                         delivery_address_modelList = gson.fromJson(response.getString("data"), listType);
 
                         //RecyclerView.Adapter adapter1 = new Delivery_get_address_adapter(delivery_address_modelList);
-                        adapter = new Delivery_get_address_adapter(delivery_address_modelList);
-                        ((Delivery_get_address_adapter) adapter).setMode(Attributes.Mode.Single);
+                        adapter = new Delivery_get_address_adapter(delivery_address_modelList,getActivity());
+                        //((Delivery_get_address_adapter) adapter).setMode(Attributes.Mode.Single);
                         rv_address.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
 

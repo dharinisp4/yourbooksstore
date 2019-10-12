@@ -181,6 +181,7 @@ private List<Product_model> modelList ;
         details_product_price=bundle.getString("price");
         details_product_mrp=bundle.getString("mrp");
         details_product_unit_value=bundle.getString("unit_value");
+
         details_product_unit=bundle.getString("unit");
         details_product_rewards=bundle.getString("rewards");
         details_product_increament=bundle.getString("increment");

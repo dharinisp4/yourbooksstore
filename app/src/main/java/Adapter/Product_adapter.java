@@ -1,8 +1,6 @@
 package Adapter;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +27,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import Fragment.Details_Fragment;
+
 import Config.BaseURL;
+import Fragment.Details_Fragment;
 import Model.Product_model;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -44,12 +42,11 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 
     private List<Product_model> modelList = new ArrayList<>( );
     private Context context;
-    private Activity activity;
     private DatabaseHandler dbcart;
     String language;
 SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_mrp ;
+        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp;
         public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
         public RelativeLayout rel_click;
         public Double reward;
@@ -65,8 +62,8 @@ SharedPreferences preferences;
             tv_reward = (TextView) view.findViewById(R.id.tv_reward_point);
             tv_total = (TextView) view.findViewById(R.id.tv_subcat_total);
             tv_contetiy = (TextView) view.findViewById(R.id.tv_subcat_contetiy);
+            tv_subcat_mrp = (TextView) view.findViewById(R.id.tv_subcat_mrp);
             tv_add = (Button) view.findViewById(R.id.tv_subcat_add);
-            tv_mrp =(TextView)view.findViewById( R.id.tv_subcat_mrp );
             iv_logo = (ImageView) view.findViewById(R.id.iv_subcat_img);
             iv_plus = (ImageView) view.findViewById(R.id.iv_subcat_plus);
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
@@ -111,7 +108,6 @@ SharedPreferences preferences;
     map.put("end_date", modelList.get(position).getEnd_date());
     map.put("end_time", modelList.get(position).getEnd_time());
     map.put("price", modelList.get(position).getPrice());
-    map.put("mrp",modelList.get( position ).getMrp());
     map.put("product_image", modelList.get(position).getProduct_image());
     map.put("status", modelList.get(position).getStatus());
     map.put("in_stock", modelList.get(position).getIn_stock());
@@ -170,7 +166,6 @@ SharedPreferences preferences;
                  map.put("end_date", modelList.get(position).getEnd_date());
                  map.put("end_time", modelList.get(position).getEnd_time());
                  map.put("price", modelList.get(position).getPrice());
-                 map.put( "mrp",modelList.get( position ).getMrp() );
                  map.put("product_image", modelList.get(position).getProduct_image());
                  map.put("status", modelList.get(position).getStatus());
                  map.put("in_stock", modelList.get(position).getIn_stock());
@@ -227,7 +222,6 @@ SharedPreferences preferences;
                     map.put("end_date", modelList.get(position).getEnd_date());
                     map.put("end_time", modelList.get(position).getEnd_time());
                     map.put("price", modelList.get(position).getPrice());
-                    map.put( "mrp",modelList.get( position ).getMrp() );
                     map.put("product_image", modelList.get(position).getProduct_image());
                     map.put("status", modelList.get(position).getStatus());
                     map.put("in_stock", modelList.get(position).getIn_stock());
@@ -262,7 +256,7 @@ SharedPreferences preferences;
                 }
 
             }
-           else if(id==R.id.rel_click)
+           else if(id== R.id.rel_click)
              {
                  Details_Fragment details_fragment=new Details_Fragment();
                  AppCompatActivity activity = (AppCompatActivity) view.getContext();
@@ -279,7 +273,6 @@ SharedPreferences preferences;
                  args.putString("end_date",modelList.get(position).getEnd_date());
                  args.putString("end_time",modelList.get(position).getEnd_time());
                  args.putString("price",modelList.get(position).getPrice());
-                 args.putString( "mrp",modelList.get( position ).getMrp() );
                  args.putString("product_image",modelList.get(position).getProduct_image());
                  args.putString("status", modelList.get(position).getStatus());
                  args.putString("in_stock", modelList.get(position).getIn_stock());
@@ -333,14 +326,14 @@ SharedPreferences preferences;
         if (language.contains( "english" )) {
             holder.tv_title.setText( mList.getProduct_name() );
         } else {
-            holder.tv_title.setText( mList.getProduct_name_arb() );
+            holder.tv_title.setText( mList.getProduct_name() );
 
         }
+
+        holder.tv_subcat_mrp.setPaintFlags(holder.tv_subcat_mrp.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tv_subcat_mrp.setText(context.getResources().getString( R.string.currency ) + mList.getMrp());
         holder.tv_reward.setText( mList.getRewards() );
-        holder.tv_price.setText(context.getResources().getString( R.string.currency ) + mList.getPrice() );
-        holder.tv_mrp.setText(context.getResources().getString(R.string.currency)+mList.getMrp()  );
-        holder.tv_mrp.setPaintFlags(holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_mrp.setText( context.getResources().getString( R.string.currency )+mList.getMrp());
+        holder.tv_price.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
         if (Integer.valueOf( modelList.get( position ).getStock() ) <= 0) {
             holder.tv_add.setText( R.string.tv_out );
@@ -386,7 +379,6 @@ SharedPreferences preferences;
                 map.put( "end_date", modelList.get( position ).getEnd_date() );
                 map.put( "end_time", modelList.get( position ).getEnd_time() );
                 map.put( "price", modelList.get( position ).getPrice() );
-                map.put( "mrp",modelList.get( position ).getMrp() );
                 map.put( "product_image", modelList.get( position ).getProduct_image() );
                 map.put( "status", modelList.get( position ).getStatus() );
                 map.put( "in_stock", modelList.get( position ).getIn_stock() );
@@ -446,7 +438,6 @@ SharedPreferences preferences;
                 map.put( "end_date", modelList.get( position ).getEnd_date() );
                 map.put( "end_time", modelList.get( position ).getEnd_time() );
                 map.put( "price", modelList.get( position ).getPrice() );
-                map.put( "mrp",modelList.get( position ).getMrp() );
                 map.put( "product_image", modelList.get( position ).getProduct_image() );
                 map.put( "status", modelList.get( position ).getStatus() );
                 map.put( "in_stock", modelList.get( position ).getIn_stock() );
@@ -505,7 +496,6 @@ SharedPreferences preferences;
                     map.put( "end_date", modelList.get( position ).getEnd_date() );
                     map.put( "end_time", modelList.get( position ).getEnd_time() );
                     map.put( "price", modelList.get( position ).getPrice() );
-                    map.put( "mrp",modelList.get( position ).getMrp() );
                     map.put( "product_image", modelList.get( position ).getProduct_image() );
                     map.put( "status", modelList.get( position ).getStatus() );
                     map.put( "in_stock", modelList.get( position ).getIn_stock() );
@@ -640,7 +630,6 @@ SharedPreferences preferences;
                     map.put("end_date", modelList.get(position).getEnd_date());
                     map.put("end_time", modelList.get(position).getEnd_time());
                     map.put("price", modelList.get(position).getPrice());
-                    map.put( "mrp",modelList.get( position ).getMrp() );
                     map.put("product_image", modelList.get(position).getProduct_image());
                     map.put("status", modelList.get(position).getStatus());
                     map.put("in_stock", modelList.get(position).getIn_stock());
