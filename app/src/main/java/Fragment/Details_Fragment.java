@@ -199,7 +199,7 @@ private List<Product_model> modelList ;
 //        dialog_txtVar=(TextView)view.findViewById(R.id.txtVar);
         btn_checkout=(Button)view.findViewById(R.id.btn_f_Add_to_cart);
        // cardView=(CardView)view.findViewById(R.id.card_view2);
-        txtPer=(TextView)view.findViewById(R.id.details_product_per);
+        txtPer=(TextView)view.findViewById(R.id.product_discount);
 
         rel_variant=(RelativeLayout)view.findViewById(R.id.rel_variant);
         btn=(ImageView)view.findViewById(R.id.img_product);
@@ -218,7 +218,7 @@ private List<Product_model> modelList ;
         txtDesc=(TextView)view.findViewById(R.id.details_product_description);
         txtPrice=(TextView)view.findViewById(R.id.details_product_price);
         txtMrp=(TextView)view.findViewById(R.id.details_product_mrp);
-        txtMrp.setPaintFlags(txtMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
       //  btn_add_to_cart=(Button)view.findViewById(R.id.btnAdd_to_cart);
 
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(details_product_name);
@@ -230,8 +230,23 @@ private List<Product_model> modelList ;
         txtDesc.setText(details_product_desc);
         txtName.setText(details_product_name);
         txtPrice.setText( "\u20B9"+details_product_price );
-        txtMrp.setText(  "\u20B9"+details_product_mrp );
 
+        int mrp = Integer.parseInt( details_product_mrp );
+        int price =Integer.parseInt( details_product_price );
+        int dif = mrp - price;
+        if ( mrp >price)
+        {
+            int discount = (dif/ mrp) * 100;
+
+            txtMrp.setText( "\u20B9" + details_product_mrp );
+            txtMrp.setPaintFlags( txtMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
+            txtPer.setText( discount + "%"  );
+        }
+        else
+        {
+            txtPer.setVisibility( View.GONE );
+            txtMrp.setVisibility( View.GONE );
+        }
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 

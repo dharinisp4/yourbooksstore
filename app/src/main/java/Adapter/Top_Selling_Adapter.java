@@ -35,7 +35,7 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
     private Activity activity ;
 SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView product_nmae, product_prize, product_mrp;
+        public TextView product_nmae, product_prize, product_mrp , product_discount;
         public ImageView image;
         public CardView card_view_top;
 
@@ -44,6 +44,7 @@ SharedPreferences preferences;
             product_nmae = (TextView) view.findViewById( R.id.product_name );
             product_prize = (TextView) view.findViewById( R.id.product_prize );
             image = (ImageView) view.findViewById( R.id.iv_icon );
+            product_discount=(TextView)view.findViewById( R.id.product_discount );
             product_mrp = (TextView) view.findViewById( R.id.product_mrp );
             card_view_top = (CardView) view.findViewById( R.id.card_view_top );
             card_view_top.setOnClickListener( this );
@@ -111,9 +112,27 @@ SharedPreferences preferences;
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontAnimate()
                 .into(holder.image);
+
         holder.product_prize.setText(context.getResources().getString(R.string.tv_toolbar_price) + context.getResources().getString(R.string.currency) + mList.getPrice());
-        holder.product_mrp.setText(context.getResources().getString(R.string.currency)+mList.getMrp()  );
-        holder.product_mrp.setPaintFlags(holder.product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+
+
+
+      int mrp = Integer.parseInt( mList.getMrp() );
+      int price = Integer.parseInt( mList.getPrice() );
+
+      int diff = mrp-price;
+      if (diff>0) {
+          int discount = (diff / mrp) * 100;
+          holder.product_discount.setText( discount + "%" );
+          holder.product_mrp.setText( context.getResources().getString( R.string.currency ) + mList.getMrp() );
+          holder.product_mrp.setPaintFlags( holder.product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
+      }
+      else
+      {
+          holder.product_mrp.setVisibility( View.GONE );
+          holder.product_discount.setVisibility( View.GONE );
+      }
 
         if (language.contains("english")) {
             holder.product_nmae.setText(mList.getProduct_name());

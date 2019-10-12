@@ -46,7 +46,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
     String language;
 SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp;
+        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp ,tv_discount;
         public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
         public RelativeLayout rel_click;
         public Double reward;
@@ -61,6 +61,7 @@ SharedPreferences preferences;
             tv_price = (TextView) view.findViewById(R.id.tv_subcat_price);
             tv_reward = (TextView) view.findViewById(R.id.tv_reward_point);
             tv_total = (TextView) view.findViewById(R.id.tv_subcat_total);
+            tv_discount=(TextView)view.findViewById( R.id.product_discount );
             tv_contetiy = (TextView) view.findViewById(R.id.tv_subcat_contetiy);
             tv_subcat_mrp = (TextView) view.findViewById(R.id.tv_subcat_mrp);
             tv_add = (Button) view.findViewById(R.id.tv_subcat_add);
@@ -334,11 +335,23 @@ SharedPreferences preferences;
 
         }
 
-        holder.tv_subcat_mrp.setPaintFlags(holder.tv_subcat_mrp.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_subcat_mrp.setText(context.getResources().getString( R.string.currency ) + mList.getMrp());
+
         holder.tv_reward.setText( mList.getRewards() );
         holder.tv_price.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
+        double mrp = Double.parseDouble( mList.getMrp() );
+       double diff = mrp-price;
+       if(mrp>price) {
+           double discount = (diff / mrp) * 100;
+           holder.tv_subcat_mrp.setPaintFlags( holder.tv_subcat_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
+           holder.tv_subcat_mrp.setText( context.getResources().getString( R.string.currency ) + mList.getMrp() );
+           holder.tv_discount.setText( discount + "%" );
+       }
+       else
+       {
+           holder.tv_subcat_mrp.setVisibility( View.GONE );
+           holder.tv_discount.setVisibility( View.GONE );
+       }
         if (Integer.valueOf( modelList.get( position ).getStock() ) <= 0) {
             holder.tv_add.setText( R.string.tv_out );
             holder.tv_add.setTextColor( context.getResources().getColor( R.color.black ) );

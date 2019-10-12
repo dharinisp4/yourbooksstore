@@ -88,13 +88,26 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
 
         holder.tv_reward.setText(map.get("rewards"));
         holder.tv_price.setText( activity.getResources().getString(R.string.currency)+map.get("price"));
-        holder.tv_mrp.setText(activity.getResources().getString(R.string.currency)+map.get("mrp") );
-        holder.tv_mrp.setPaintFlags(holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         holder.tv_contetiy.setText(map.get("qty"));
+//        int mrp = Integer.parseInt( map.get("mrp") );
+//        int price = Integer.parseInt( map.get( "price" ));
+//        int diff = mrp-price;
+//        if(mrp >price) {
+//            int discount = (diff / mrp) * 100;
+            holder.tv_mrp.setText( activity.getResources().getString( R.string.currency ) + map.get( "mrp" ) );
+            holder.tv_mrp.setPaintFlags( holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
+//            holder.tv_discount.setText( discount + "%" );
+//        }
+//        else
+//        {
+//            holder.tv_mrp.setVisibility( View.GONE );
+//            holder.tv_discount.setVisibility( View.GONE );
+//        }
         Double items = Double.parseDouble( String.valueOf( holder.tv_contetiy.getText() ) );
-        final Double price = Double.parseDouble(map.get("price"));
+        final Double prices = Double.parseDouble(map.get("price"));
       //  Double reward = Double.parseDouble(map.get("rewards"));
-        holder.tv_total.setText("" + price * items);
+        holder.tv_total.setText("" + prices * items);
       //  holder.tv_reward.setText("" + reward * items);
         holder.iv_minus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +120,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                     qty = qty - 1;
                     holder.tv_contetiy.setText(String.valueOf(qty));
 
-                    holder.tv_total.setText("" + price * qty);
+                    holder.tv_total.setText("" + prices * qty);
                     int id=Integer.parseInt(map.get("product_id"));
 
                     ArrayList<HashMap<String, String>> mapP=dbHandler.getCartProduct(id);
@@ -294,7 +307,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
     }
 
     class ProductHolder extends RecyclerView.ViewHolder {
-        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy, tv_mrp,
+        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy, tv_mrp,tv_discount,
                 tv_unit, tv_unit_value;
         Button tv_add;
         RelativeLayout rel_no ;
@@ -308,6 +321,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             tv_total = (TextView) view.findViewById(R.id.tv_subcat_total);
             tv_reward = (TextView) view.findViewById(R.id.tv_reward_point);
             tv_contetiy = (TextView) view.findViewById(R.id.tv_subcat_contetiy);
+            tv_discount=(TextView)view.findViewById( R.id.product_discount );
             tv_add = (Button) view.findViewById(R.id.tv_subcat_add);
             iv_logo = (ImageView) view.findViewById(R.id.iv_subcat_img);
             iv_plus = (ImageView) view.findViewById(R.id.iv_subcat_plus);

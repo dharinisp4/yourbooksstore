@@ -47,6 +47,21 @@
 <!--                android:layout_margin="@dimen/space_10"-->
 <!--                app:srcCompat="@drawable/wish_after"-->
 <!--                android:visibility="invisible"/>-->
+            <TextView
+                android:id="@+id/product_discount"
+                android:layout_width="@dimen/dimen_70dp"
+                android:layout_height="@dimen/dimen_70dp"
+                android:padding="@dimen/space_5"
+                android:layout_marginTop="-10dp"
+                android:text="10%"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimen_15dp"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/ic_bookmark_black_24dp"
+                />
         </RelativeLayout>
         <View
             android:id="@+id/lined4"

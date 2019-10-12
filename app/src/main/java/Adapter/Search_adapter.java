@@ -3,6 +3,7 @@ package Adapter;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -44,7 +45,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
     private DatabaseHandler dbcart;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy;
+        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_discount ,tv_mrp;
         public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
         Button tv_add ;
         RelativeLayout rel_no ;
@@ -61,10 +62,11 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
             iv_plus = (ImageView) view.findViewById(R.id.iv_subcat_plus);
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
-
+            tv_discount =(TextView)view.findViewById( R.id.product_discount );
+            tv_mrp=(TextView)view.findViewById( R.id.tv_subcat_mrp );
             iv_remove.setVisibility(View.GONE);
             tv_add.setVisibility( View.GONE );
-
+            tv_total.setVisibility( View.GONE );
             iv_minus.setOnClickListener(this);
             iv_plus.setOnClickListener(this);
             tv_add.setOnClickListener(this);
@@ -292,7 +294,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
     @Override
     public Search_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_cart_product, parent, false);
+                .inflate(R.layout.row_search_rv, parent, false);
 
         context = parent.getContext();
 
@@ -316,6 +318,22 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         holder.tv_price.setText(" " + context.getResources().getString(R.string.currency) + " " + mList.getPrice());
         holder.tv_total.setVisibility( View.GONE );
         holder.tv_total.setText(context.getResources().getString(R.string.currency) +mList.getPrice()  );
+        int mrp = Integer.parseInt( mList.getMrp() );
+        int price = Integer.parseInt( mList.getPrice() );
+        int diff = mrp-price;
+        if (mrp>price) {
+            int discount = (diff / mrp) * 100;
+            holder.tv_discount.setText( discount + "%" );
+            holder.tv_mrp.setText( context.getResources().getString( R.string.currency ) + mList.getMrp() );
+            holder.tv_mrp.setPaintFlags( holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
+        }
+        else
+        {
+            holder.tv_mrp.setVisibility( View.GONE );
+            holder.tv_discount.setVisibility( View.GONE );
+        }
+
+
 
         if (dbcart.isInCart(mList.getProduct_id())) {
 
@@ -326,7 +344,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         }
 
         Double items = Double.parseDouble(dbcart.getInCartItemQty(mList.getProduct_id()));
-        Double price = Double.parseDouble(mList.getPrice());
+        Double prices = Double.parseDouble(mList.getPrice());
         Double reward = Double.parseDouble(mList.getRewards());
         holder.tv_reward.setText("" + reward * items);
        // holder.tv_total.setText("" + price * items);
