@@ -20,10 +20,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
-       android:paddingTop="@dimen/space_5"
+
         android:paddingBottom="2dp"
-        android:paddingRight="@dimen/space_5"
-        android:paddingLeft="@dimen/space_5">
+       >
 
 
         <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,7 +31,7 @@
             android:layout_height="100dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="@dimen/space_8"
 
 
@@ -232,5 +231,21 @@
         android:id="@+id/iv_subcat_remove"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        app:srcCompat="@drawable/ic_close" />
+        app:srcCompat="@drawable/ic_close"
+        android:layout_marginLeft="365dp"
+        />
+    <TextView
+        android:id="@+id/product_discount"
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_70dp"
+        android:layout_marginTop="-10dp"
+        android:text="10%"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="@dimen/dimen_15dp"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:background="@drawable/ic_bookmark_black_24dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        />
 </android.support.v7.widget.CardView>
