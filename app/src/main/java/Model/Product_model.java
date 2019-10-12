@@ -16,9 +16,6 @@ public class Product_model {
     String end_date;
     String end_time;
     String price;
-    String mrp ;
-
-
     String product_image;
     String product_name_arb;
     String product_description_arb;
@@ -31,13 +28,6 @@ public class Product_model {
     String stock;
     String title;
 
-    public String getMrp() {
-        return mrp;
-    }
-
-    public void setMrp(String mrp) {
-        this.mrp = mrp;
-    }
 
     public String  getProduct_id() {
         return product_id;

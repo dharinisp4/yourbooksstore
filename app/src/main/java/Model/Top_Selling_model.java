@@ -20,9 +20,6 @@ public class Top_Selling_model {
     String end_time;
     String price;
     String mrp ;
-
-
-
     String product_image;
     String product_name_arb;
     String product_description_arb;

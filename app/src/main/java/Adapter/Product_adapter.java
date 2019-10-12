@@ -74,7 +74,7 @@ SharedPreferences preferences;
             iv_minus.setOnClickListener(this);
             iv_plus.setOnClickListener(this);
             tv_add.setOnClickListener(this);
-            iv_logo.setOnClickListener(this);
+           // iv_logo.setOnClickListener(this);
     rel_click.setOnClickListener(this);
             CardView cardView = (CardView) view.findViewById(R.id.card_view);
             cardView.setOnClickListener(this);
@@ -290,7 +290,7 @@ SharedPreferences preferences;
                  details_fragment.setArguments(args);
                  FragmentManager fragmentManager=activity.getFragmentManager();
                  fragmentManager.beginTransaction().replace(R.id.contentPanel,details_fragment)
-                         .addToBackStack(null).commit();
+                 .addToBackStack(null).commit();
 
 
              }
@@ -317,7 +317,7 @@ SharedPreferences preferences;
 
         Glide.with( context )
                 .load( BaseURL.IMG_PRODUCT_URL + mList.getProduct_image() )
-                .centerCrop()
+                .fitCenter()
                 .placeholder( R.drawable.icon )
                 .crossFade()
                 .diskCacheStrategy( DiskCacheStrategy.ALL )
