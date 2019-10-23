@@ -118,13 +118,13 @@ SharedPreferences preferences;
 
 
 
-      int mrp = Integer.parseInt( mList.getMrp() );
-      int price = Integer.parseInt( mList.getPrice() );
+      Double mrp = Double.parseDouble( mList.getMrp() );
+      Double price = Double.parseDouble( mList.getPrice() );
 
-      int diff = mrp-price;
+      double diff = mrp-price;
       if (diff>0) {
-          int discount = (diff / mrp) * 100;
-          holder.product_discount.setText( discount + "%" );
+          double discount = (diff / mrp) * 100;
+          holder.product_discount.setText( Math.round(discount) + "%" );
           holder.product_mrp.setText( context.getResources().getString( R.string.currency ) + mList.getMrp() );
           holder.product_mrp.setPaintFlags( holder.product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
       }

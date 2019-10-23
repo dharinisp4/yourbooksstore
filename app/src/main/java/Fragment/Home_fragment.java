@@ -367,12 +367,35 @@ public class Home_fragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 getid = top_selling_models.get(position).getProduct_id();
+
+                Fragment details_fragment=new Details_Fragment();
                 Bundle args = new Bundle();
-                Fragment fm = new Product_fragment();
-                args.putString("cat_top_selling", "2");
-                fm.setArguments(args);
+
+                //Intent intent=new Intent(context, Product_details.class);
+                args.putString("product_id",top_selling_models.get(position).getProduct_id());
+                args.putString("product_name", top_selling_models.get(position).getProduct_name());
+                args.putString("category_id",top_selling_models.get(position).getCategory_id());
+                args.putString("product_description",top_selling_models.get(position).getProduct_description());
+                args.putString("deal_price",top_selling_models.get(position).getDeal_price());
+                args.putString("start_date",top_selling_models.get(position).getStart_date());
+                args.putString("start_time",top_selling_models.get(position).getStart_time());
+                args.putString("end_date",top_selling_models.get(position).getEnd_date());
+                args.putString("end_time",top_selling_models.get(position).getEnd_time());
+                args.putString("price",top_selling_models.get(position).getPrice());
+                args.putString( "mrp",top_selling_models.get( position ).getMrp() );
+                args.putString("product_image",top_selling_models.get(position).getProduct_image());
+                args.putString("status", top_selling_models.get(position).getStatus());
+                args.putString("in_stock", top_selling_models.get(position).getIn_stock());
+                args.putString("unit_value", top_selling_models.get(position).getUnit_value());
+                args.putString("unit", top_selling_models.get(position).getUnit());
+                args.putString("increament",top_selling_models.get(position).getIncreament());
+                args.putString("rewards",top_selling_models.get(position).getRewards());
+                args.putString("stock",top_selling_models.get(position).getStock());
+                args.putString("title",top_selling_models.get(position).getTitle());
+                details_fragment.setArguments(args);
+
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
                         .addToBackStack(null).commit();
 
             }

@@ -27,12 +27,12 @@ public class Product_model {
     String rewards;
     String stock;
     String title;
+    String mrp;
 
 
-    public String  getProduct_id() {
+    public String getProduct_id() {
         return product_id;
     }
-
 
     public void setProduct_id(String product_id) {
         this.product_id = product_id;
@@ -46,24 +46,16 @@ public class Product_model {
         this.product_name = product_name;
     }
 
+    public String getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
+    }
+
     public String getProduct_description() {
         return product_description;
-    }
-
-    public String getProduct_name_arb() {
-        return product_name_arb;
-    }
-
-    public void setProduct_name_arb(String product_name_arb) {
-        this.product_name_arb = product_name_arb;
-    }
-
-    public String getProduct_description_arb() {
-        return product_description_arb;
-    }
-
-    public void setProduct_description_arb(String product_description_arb) {
-        this.product_description_arb = product_description_arb;
     }
 
     public void setProduct_description(String product_description) {
@@ -126,6 +118,22 @@ public class Product_model {
         this.product_image = product_image;
     }
 
+    public String getProduct_name_arb() {
+        return product_name_arb;
+    }
+
+    public void setProduct_name_arb(String product_name_arb) {
+        this.product_name_arb = product_name_arb;
+    }
+
+    public String getProduct_description_arb() {
+        return product_description_arb;
+    }
+
+    public void setProduct_description_arb(String product_description_arb) {
+        this.product_description_arb = product_description_arb;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -134,12 +142,12 @@ public class Product_model {
         this.status = status;
     }
 
-    public String getStock() {
-        return stock;
+    public String getIn_stock() {
+        return in_stock;
     }
 
-    public void setStock(String stock) {
-        this.stock = stock;
+    public void setIn_stock(String in_stock) {
+        this.in_stock = in_stock;
     }
 
     public String getUnit_value() {
@@ -174,6 +182,14 @@ public class Product_model {
         this.rewards = rewards;
     }
 
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -182,19 +198,11 @@ public class Product_model {
         this.title = title;
     }
 
-    public String getCategory_id() {
-        return category_id;
+    public String getMrp() {
+        return mrp;
     }
 
-    public void setCategory_id(String category_id) {
-        this.category_id = category_id;
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
     }
-    public String getIn_stock() {
-        return in_stock;
-    }
-
-    public void setIn_stock(String in_stock) {
-        this.in_stock = in_stock;
-    }
-
 }

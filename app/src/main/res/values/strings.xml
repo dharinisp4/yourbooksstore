@@ -234,6 +234,9 @@
     <string name="pincode">Pincode:\u0020</string>
     <string name="house_no">House No.:\u0020</string>
     <string name="socity">Society:\u0020</string>
+    <string name="neosans_pro_regular" translatable="false">neosans_pro_regular.ttf</string>
+
+
 
     <string name="status_stop">Powered By <font color="#f7941e">Your Books Store</font></string>
 </resources>

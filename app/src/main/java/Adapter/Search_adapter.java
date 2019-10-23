@@ -318,12 +318,12 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         holder.tv_price.setText(" " + context.getResources().getString(R.string.currency) + " " + mList.getPrice());
         holder.tv_total.setVisibility( View.GONE );
         holder.tv_total.setText(context.getResources().getString(R.string.currency) +mList.getPrice()  );
-        int mrp = Integer.parseInt( mList.getMrp() );
-        int price = Integer.parseInt( mList.getPrice() );
-        int diff = mrp-price;
+        Double mrp = Double.parseDouble( mList.getMrp() );
+        Double price = Double.parseDouble( mList.getPrice() );
+        Double diff = mrp-price;
         if (mrp>price) {
-            int discount = (diff / mrp) * 100;
-            holder.tv_discount.setText( discount + "%" );
+            Double discount = (diff / mrp) * 100;
+            holder.tv_discount.setText( Math.round(discount )+ "%" );
             holder.tv_mrp.setText( context.getResources().getString( R.string.currency ) + mList.getMrp() );
             holder.tv_mrp.setPaintFlags( holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
         }

@@ -109,6 +109,9 @@
     <meta-data android:name="instamojo.orderauth.url"
                    android:value="http://yourbooksstore.com/admin/token/access_token.php"
             />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
     <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS"/>
  
