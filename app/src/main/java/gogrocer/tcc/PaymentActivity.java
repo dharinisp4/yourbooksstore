@@ -6,17 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
-import android.app.Activity;
 
-import instamojo.library.InstapayListener;
-import instamojo.library.InstamojoPay;
-import instamojo.library.Config;
-import util.DatabaseHandler;
+import util.DatabaseCartHandler;
 import util.Session_management;
 import Config.BaseURL;
 import org.json.JSONObject;
 import org.json.JSONException;
-import android.content.IntentFilter;
+
 import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -43,7 +39,7 @@ public class PaymentActivity extends AppCompatActivity {
     private static final String TAG ="tag" ;
     private Session_management sessionManagement;
     RelativeLayout confirm;
-    private DatabaseHandler db_cart;
+    private DatabaseCartHandler db_cart;
     private String getlocation_id = "";
     private String getstore_id = "";
     private String getvalue = "";
@@ -75,7 +71,7 @@ public class PaymentActivity extends AppCompatActivity {
         get_wallet_ammount = getIntent().getStringExtra("wallet_ammount");
 //        callInstamojoPay(email, mobile, total_rs, "official", name);
         sessionManagement = new Session_management(PaymentActivity.this);
-        db_cart = new DatabaseHandler(PaymentActivity.this);
+        db_cart = new DatabaseCartHandler(PaymentActivity.this);
         startPay(email, mobile, name, total_rs, user_id);
        /* try
         {

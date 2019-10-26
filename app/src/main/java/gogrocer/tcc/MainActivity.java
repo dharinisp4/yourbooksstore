@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -66,7 +65,7 @@ import Fragment.Wallet_fragment;
 import Fragment.Search_fragment;
 import gogrocer.tcc.networkconnectivity.NetworkError;
 import util.ConnectivityReceiver;
-import util.DatabaseHandler;
+import util.DatabaseCartHandler;
 import util.Session_management;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView totalBudgetCount, totalBudgetCount2, totalBudgetCount3, tv_name, powerd_text;
     private ImageView iv_profile;
-    private DatabaseHandler dbcart;
+    private DatabaseCartHandler dbcart;
     private Session_management sessionManagement;
     private Menu nav_menu;
     ImageView imageView;
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        dbcart = new DatabaseHandler(this);
+        dbcart = new DatabaseCartHandler(this);
 
 
         checkConnection();

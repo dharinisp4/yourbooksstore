@@ -44,7 +44,6 @@ import Config.SharedPref;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.PaymentActivity;
-import gogrocer.tcc.PaymentActivity;
 import gogrocer.tcc.networkconnectivity.NetworkConnection;
 import gogrocer.tcc.networkconnectivity.NetworkError;
 
@@ -52,7 +51,7 @@ import gogrocer.tcc.Paytm;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
-import util.DatabaseHandler;
+import util.DatabaseCartHandler;
 import util.Session_management;
 
 import static com.android.volley.VolleyLog.TAG;
@@ -60,7 +59,7 @@ import static com.android.volley.VolleyLog.TAG;
 
 public class Payment_fragment extends Fragment {
     RelativeLayout confirm;
-    private DatabaseHandler db_cart;
+    private DatabaseCartHandler db_cart;
     private Session_management sessionManagement;
     TextView payble_ammount, my_wallet_ammount, used_wallet_ammount, used_coupon_ammount, order_ammount;
     private String getlocation_id = "";
@@ -156,7 +155,7 @@ public class Payment_fragment extends Fragment {
         getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
         my_wallet_ammount = (TextView) view.findViewById(R.id.user_wallet);
         my_wallet_ammount.setText(getwallet+getActivity().getString(R.string.currency));
-        db_cart = new DatabaseHandler(getActivity());
+        db_cart = new DatabaseCartHandler(getActivity());
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener(new View.OnKeyListener()

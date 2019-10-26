@@ -27,8 +27,39 @@ public class Product_model {
     String rewards;
     String stock;
     String title;
+    String size;
+    String color;
     String mrp;
+    String product_attribute;
 
+
+    public Product_model(String product_id, String product_name, String category_id, String product_description, String deal_price, String start_date, String start_time, String end_date, String end_time, String price, String product_image, String product_name_arb, String product_description_arb, String status, String in_stock, String unit_value, String unit, String increament, String rewards, String stock, String title, String size, String color, String mrp, String product_attribute) {
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.category_id = category_id;
+        this.product_description = product_description;
+        this.deal_price = deal_price;
+        this.start_date = start_date;
+        this.start_time = start_time;
+        this.end_date = end_date;
+        this.end_time = end_time;
+        this.price = price;
+        this.product_image = product_image;
+        this.product_name_arb = product_name_arb;
+        this.product_description_arb = product_description_arb;
+        this.status = status;
+        this.in_stock = in_stock;
+        this.unit_value = unit_value;
+        this.unit = unit;
+        this.increament = increament;
+        this.rewards = rewards;
+        this.stock = stock;
+        this.title = title;
+        this.size = size;
+        this.color = color;
+        this.mrp = mrp;
+        this.product_attribute = product_attribute;
+    }
 
     public String getProduct_id() {
         return product_id;
@@ -198,11 +229,35 @@ public class Product_model {
         this.title = title;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public String getMrp() {
         return mrp;
     }
 
     public void setMrp(String mrp) {
         this.mrp = mrp;
+    }
+
+    public String getProduct_attribute() {
+        return product_attribute;
+    }
+
+    public void setProduct_attribute(String product_attribute) {
+        this.product_attribute = product_attribute;
     }
 }

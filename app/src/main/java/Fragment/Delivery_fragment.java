@@ -28,7 +28,6 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.daimajia.swipe.util.Attributes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -54,7 +53,7 @@ import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
-import util.DatabaseHandler;
+import util.DatabaseCartHandler;
 import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -76,7 +75,7 @@ public class Delivery_fragment extends Fragment implements View.OnClickListener 
     private Delivery_get_address_adapter adapter;
     private List<Delivery_address_model> delivery_address_modelList = new ArrayList<>();
 
-    private DatabaseHandler db_cart;
+    private DatabaseCartHandler db_cart;
 SharedPreferences preferences;
     private Session_management sessionManagement;
 
@@ -119,7 +118,7 @@ String language;
         //tv_socity = (TextView) view.findViewById(R.id.tv_deli_socity);
         //et_address = (EditText) view.findViewById(R.id.et_deli_address);
 
-        db_cart = new DatabaseHandler(getActivity());
+        db_cart = new DatabaseCartHandler( getActivity());
         tv_total.setText(db_cart.getTotalAmount());
         tv_item.setText("" + db_cart.getCartCount());
 

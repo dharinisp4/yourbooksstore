@@ -23,7 +23,7 @@ import java.util.HashMap;
 import Config.BaseURL;
 import Fragment.Cart_fragment;
 import gogrocer.tcc.R;
-import util.DatabaseHandler;
+import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -39,13 +39,13 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
     String language;
 
     int lastpostion;
-    DatabaseHandler dbHandler;
+    DatabaseCartHandler dbHandler;
 
     public Cart_adapter(Activity activity, ArrayList<HashMap<String, String>> list) {
         this.list = list;
         this.activity = activity;
 
-        dbHandler = new DatabaseHandler(activity);
+        dbHandler = new DatabaseCartHandler(activity);
         /*common = new CommonClass(activity);
         File cacheDir = StorageUtils.getCacheDirectory(activity);
         options = new DisplayImageOptions.Builder()

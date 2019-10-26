@@ -30,7 +30,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,7 +40,7 @@ import gogrocer.tcc.LoginActivity;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
-import util.DatabaseHandler;
+import util.DatabaseCartHandler;
 import util.Session_management;
 
 /**
@@ -57,7 +56,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
    public static TextView tv_clear, tv_total, tv_item;
     RelativeLayout btn_checkout;
 
-   DatabaseHandler db;
+   DatabaseCartHandler db;
 
    Session_management sessionManagement;
 
@@ -87,7 +86,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         rv_cart = (RecyclerView) view.findViewById(R.id.rv_cart);
         rv_cart.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        db = new DatabaseHandler(getActivity());
+        db = new DatabaseCartHandler(getActivity());
 
         ArrayList<HashMap<String, String>> map = db.getCartAll();
 

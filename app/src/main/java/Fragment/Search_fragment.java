@@ -118,6 +118,7 @@ public class Search_fragment extends Fragment {
                 args.putString("end_date", modelList.get(position).getEnd_date());
                 args.putString("end_time", modelList.get(position).getEnd_time());
                 args.putString("price", modelList.get(position).getPrice());
+                args.putString( "mrp",modelList.get( position ).getMrp() );
                 args.putString("product_image", modelList.get(position).getProduct_image());
                 args.putString("status", modelList.get(position).getStatus());
                 args.putString("in_stock", modelList.get(position).getIn_stock());

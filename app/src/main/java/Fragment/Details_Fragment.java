@@ -2,7 +2,6 @@ package Fragment;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -20,8 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
@@ -40,26 +36,20 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import Adapter.Produccts_images_adapter;
 
 import Config.BaseURL;
 
-import Config.CustomTextView;
 import Config.ExpandableSecondTextView;
-import Config.ExpandableTextView;
 import Model.Product_model;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.LoginActivity;
@@ -67,9 +57,7 @@ import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 
 import util.ConnectivityReceiver;
-import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
-import util.DatabaseHandler;
 import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -95,7 +83,7 @@ private List<Product_model> modelList ;
 //    private List<RelatedProductModel> product_modelList = new ArrayList<>();
 //    private RelatedProductAdapter adapter_product;
     Activity activity;
-    DatabaseHandler dbcart ;
+    //DatabaseHandler dbcart ;
     DatabaseCartHandler db_cart;
  //  WishlistHandler db_wish ;
     //TextView txtColor,txtSize;
@@ -478,15 +466,15 @@ private List<Product_model> modelList ;
 
 
 
-                        dbcart.setCart(map, Float.valueOf(1));
+                        db_cart.setCart(map, Float.valueOf(1));
                         btn_add.setVisibility( View.GONE );
                         numberButton.setVisibility( View.VISIBLE );
                                                //  tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
 
 
-                ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
+                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());
 
-                Toast.makeText( context ,"count" + dbcart.getCartCount(),Toast.LENGTH_LONG ).show();
+                Toast.makeText( context ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
             }
         } );
         numberButton.setOnValueChangeListener( new ElegantNumberButton.OnValueChangeListener() {
