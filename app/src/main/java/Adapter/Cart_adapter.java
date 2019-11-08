@@ -27,9 +27,7 @@ import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
+
 
 public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolder> {
     ArrayList<HashMap<String, String>> list;
@@ -87,25 +85,25 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             holder.tv_title.setText(map.get("product_name"));
 
         holder.tv_reward.setText(map.get("rewards"));
-        holder.tv_price.setText( activity.getResources().getString(R.string.currency)+map.get("price"));
+        holder.tv_price.setText( activity.getResources().getString(R.string.currency)+map.get("unit_price"));
 
         holder.tv_contetiy.setText(map.get("qty"));
-//        int mrp = Integer.parseInt( map.get("mrp") );
-//        int price = Integer.parseInt( map.get( "price" ));
-//        int diff = mrp-price;
-//        if(mrp >price) {
-//            int discount = (diff / mrp) * 100;
-            holder.tv_mrp.setText( activity.getResources().getString( R.string.currency ) + map.get( "mrp" ) );
+        int mrp = Integer.parseInt( map.get("mrp") );
+        int price = Integer.parseInt(map.get("unit_price" ));
+        if(mrp>price) {
+            int discount=getDiscount(map.get("unit_price" ),map.get("mrp"));
+
+            holder.tv_mrp.setText( activity.getResources().getString( R.string.currency ) + map.get("mrp") );
             holder.tv_mrp.setPaintFlags( holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
-//            holder.tv_discount.setText( discount + "%" );
-//        }
-//        else
-//        {
-//            holder.tv_mrp.setVisibility( View.GONE );
-//            holder.tv_discount.setVisibility( View.GONE );
-//        }
+            holder.tv_discount.setText( discount + "%" );
+        }
+        else
+        {
+            holder.tv_mrp.setVisibility( View.GONE );
+            holder.tv_discount.setVisibility( View.GONE );
+        }
         Double items = Double.parseDouble( String.valueOf( holder.tv_contetiy.getText() ) );
-        final Double prices = Double.parseDouble(map.get("price"));
+        final Double prices = Double.parseDouble(map.get("unit_price"));
       //  Double reward = Double.parseDouble(map.get("rewards"));
         holder.tv_total.setText("" + prices * items);
       //  holder.tv_reward.setText("" + reward * items);
@@ -127,41 +125,28 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
 
                     HashMap<String,String> mapProduct=mapP.get(0);
 
-                    double t=Double.parseDouble(mapProduct.get("price"));
+                    double t=Double.parseDouble(mapProduct.get("unit_price"));
                     //   double p=Double.parseDouble(mapProduct.get("unit_price"));
                     holder.tv_total.setText("" + t * qty);
                     //  String pr=String.valueOf(t+p);
                     float qt=Float.valueOf(qty);
 
-                    // Toast.makeText(activity,"\npri "+map.get("unit_value")+"\n am "+pr,Toast.LENGTH_LONG ).show();
-                    //  HashMap<String, String> mapProduct = new HashMap<String, String>();
-
-                    mapProduct.put( "cart_id",map.get( "cart_id" ) );
-                    mapProduct.put("product_id",map.get( "product_id" ) );
-                    mapProduct.put("product_name",map.get( "product_name" ) );
-                    mapProduct.put("category_id",map.get( "category_id" ));
-                    mapProduct.put("product_description",map.get( "product_description" ) );
-                    mapProduct.put("deal_price",map.get("deal_price" ));
-                    mapProduct.put("start_date",map.get( "start_date" ) );
-                    mapProduct.put("start_time",map.get( "start_time" ) );
-                    mapProduct.put("end_date",map.get("end_date"  ));
-                    mapProduct.put("end_time",map.get( "end_time" ));
-                    mapProduct.put("price", map.get( "price" ));
-                    mapProduct.put("product_image", map.get("product_image"  ));
-                    mapProduct.put("status",map.get( "status" ));
-                    mapProduct.put("in_stock",map.get("in_stock"  ));
-                    mapProduct.put("unit_value", map.get("unit_value"  ));
-                    mapProduct.put("unit", map.get( "unit" ));
-                    mapProduct.put("increament", map.get( "increament" ));
-                    mapProduct.put("rewards", map.get("rewards"  ));
-                    mapProduct.put("stock", map.get( "stock" ));
-                    mapProduct.put("title", map.get( "title" ));
-
-
-//                Toast.makeText(activity,"id- "+map.get("product_id")+"\n img- "+map.get("product_image")+"\n cat_id- "+map.get("category_id")+"\n" +
-//                        "\n name- "+map.get("product_name")+"\n price- "+pr+"\n unit_price- "+map.get("unit_price")+
-//                        "\n size- "+ map.get("size")+"\n col- "+ map.get("color")+"rew- "+ map.get("rewards")+"unit_value- "+ map.get("unit_value")+
-//                        "unit- "+map.get("unit")+"\n inc- "+map.get("increament")+"stock- "+map.get("stock")+"title- "+map.get("title"),Toast.LENGTH_LONG).show();
+                    double unit_price=Double.parseDouble(dbHandler.getUnitPrice(map.get( "product_id" ) ));
+                    mapProduct.put("product_id", map.get( "product_id" ));
+                    mapProduct.put("cart_id", map.get( "cart_id" ));
+                    mapProduct.put("product_image",map.get("product_image"));
+                    mapProduct.put("cat_id",map.get( "cat_id" ));
+                    mapProduct.put("product_name",map.get( "product_name" ));
+                    mapProduct.put("price", String.valueOf(qty*unit_price));
+                    mapProduct.put("product_description",map.get("product_description"));
+                    mapProduct.put("rewards", map.get("rewards"));
+                    mapProduct.put("unit_price", map.get("price"));
+                    mapProduct.put("unit", map.get("unit"));
+                    mapProduct.put("increament", map.get("increament"));
+                    mapProduct.put("stock",map.get( "stock" ));
+                    mapProduct.put("title",map.get( "title" ));
+                    mapProduct.put("mrp",map.get( "mrp" ));
+                    mapProduct.put("sid",map.get( "sid" ));
 
                     boolean update_cart=dbHandler.setCart(mapProduct,qt);
                     if(update_cart==true)
@@ -204,7 +189,8 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
 
                 HashMap<String,String> mapProduct=mapP.get(0);
 
-                double t=Double.parseDouble(mapProduct.get("price"));
+                double t=Double.parseDouble(mapProduct.get("unit_price"));
+                double unit_price=Double.parseDouble(dbHandler.getUnitPrice(map.get( "product_id" ) ));
              //   double p=Double.parseDouble(mapProduct.get("unit_price"));
                 holder.tv_total.setText("" + t * qty);
               //  String pr=String.valueOf(t+p);
@@ -213,28 +199,23 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 // Toast.makeText(activity,"\npri "+map.get("unit_value")+"\n am "+pr,Toast.LENGTH_LONG ).show();
               //  HashMap<String, String> mapProduct = new HashMap<String, String>();
 
-                mapProduct.put( "cart_id",map.get( "cart_id" ) );
-                mapProduct.put("product_id",map.get( "product_id" ) );
-                mapProduct.put("product_name",map.get( "product_name" ) );
-                mapProduct.put("category_id",map.get( "category_id" ));
-                mapProduct.put("product_description",map.get( "product_description" ) );
-                mapProduct.put("deal_price",map.get("deal_price" ));
-                mapProduct.put("start_date",map.get( "start_date" ) );
-                mapProduct.put("start_time",map.get( "start_time" ) );
-                mapProduct.put("end_date",map.get("end_date"  ));
-                mapProduct.put("end_time",map.get( "end_time" ));
-                mapProduct.put("price", map.get( "price" ));
-                mapProduct.put( "mrp",map.get( "mrp" ) );
-                mapProduct.put("product_image", map.get("product_image"  ));
-                mapProduct.put("status",map.get( "status" ));
-                mapProduct.put("in_stock",map.get("in_stock"  ));
-                mapProduct.put("unit_value", map.get("unit_value"  ));
-                mapProduct.put("unit", map.get( "unit" ));
-                mapProduct.put("increament", map.get( "increament" ));
-                mapProduct.put("rewards", map.get("rewards"  ));
-                mapProduct.put("stock", map.get( "stock" ));
-                mapProduct.put("title", map.get( "title" ));
 
+
+                mapProduct.put("product_id", map.get( "product_id" ));
+                mapProduct.put("cart_id", map.get( "cart_id" ));
+                mapProduct.put("product_image",map.get("product_image"));
+                mapProduct.put("cat_id",map.get( "cat_id" ));
+                mapProduct.put("product_name",map.get( "product_name" ));
+                mapProduct.put("price", String.valueOf(qty*unit_price));
+                mapProduct.put("product_description",map.get("product_description"));
+                mapProduct.put("rewards", map.get("rewards"));
+                mapProduct.put("unit_price", map.get("price"));
+                mapProduct.put("unit", map.get("unit"));
+                mapProduct.put("increament", map.get("increament"));
+                mapProduct.put("stock",map.get( "stock" ));
+                mapProduct.put("title",map.get( "title" ));
+                mapProduct.put("mrp",map.get( "mrp" ));
+                mapProduct.put("sid",map.get( "sid" ));
 
 //                Toast.makeText(activity,"id- "+map.get("product_id")+"\n img- "+map.get("product_image")+"\n cat_id- "+map.get("category_id")+"\n" +
 //                        "\n name- "+map.get("product_name")+"\n price- "+pr+"\n unit_price- "+map.get("unit_price")+
@@ -341,5 +322,14 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
         activity.sendBroadcast(updates);
     }
 
+    public int getDiscount(String price, String mrp)
+    {
+        double mrp_d=Double.parseDouble(mrp);
+        double price_d=Double.parseDouble(price);
+        double per=((mrp_d-price_d)/mrp_d)*100;
+        double df=Math.round(per);
+        int d=(int)df;
+        return d;
+    }
 }
 

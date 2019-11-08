@@ -77,6 +77,7 @@ public class View_time_fragment extends Fragment {
 
         // check internet connection
         if (ConnectivityReceiver.isConnected()) {
+            Toast.makeText(getActivity(),""+getdate,Toast.LENGTH_LONG).show();
             makeGetTimeRequest(getdate);
         } else {
             ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
@@ -121,7 +122,7 @@ public class View_time_fragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d("tm_slt", response.toString());
 
                 try {
                     Boolean status = response.getBoolean("responce");

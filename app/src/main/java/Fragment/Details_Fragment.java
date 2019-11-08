@@ -6,8 +6,10 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
@@ -51,12 +54,15 @@ import Config.BaseURL;
 
 import Config.ExpandableSecondTextView;
 import Model.Product_model;
+import Model.SellerModel;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.LoginActivity;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 
 import util.ConnectivityReceiver;
+import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import util.Session_management;
 
@@ -74,6 +80,7 @@ public class Details_Fragment extends Fragment {
 private List<Product_model> modelList ;
     private static String TAG = Details_Fragment.class.getSimpleName();
     private RecyclerView rv_cat;
+
     int index;
     double tot_amt=0;
     ProgressDialog loadingBar;
@@ -87,7 +94,7 @@ private List<Product_model> modelList ;
     DatabaseCartHandler db_cart;
  //  WishlistHandler db_wish ;
     //TextView txtColor,txtSize;
-    TextView txtPer;
+    TextView txtPer,sel_info,featuresTitle;
 
     ImageView wish_before ,wish_after ;
     int status=0;
@@ -100,7 +107,7 @@ private List<Product_model> modelList ;
     public static ProgressBar progressBar,pgb,pbg1;
     RelativeLayout relativeLayout_spinner,relativeLayout_size,relativeLayout_color;
     Produccts_images_adapter imagesAdapter;
-    String cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
+    String seller_id,cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
     String details_product_price,details_product_mrp,details_product_unit_value,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
     //String details_product_size,details_product_color;
     String details_product_status , product_startDate , product_EndDate , product_startTime ,product_endTime ,product_dealprice ,prodcut_stock;
@@ -114,7 +121,7 @@ private List<Product_model> modelList ;
     List<String> image_list;
     private TextView txtPrice,txtMrp;
     TextView txtName;
-    ExpandableSecondTextView txtDesc,details_description;
+    ExpandableSecondTextView txtDesc;
     //Spinner spinner_size,spinner_color;
     RecyclerView recyclerView;
     TabLayout tabLayout;
@@ -163,11 +170,11 @@ private List<Product_model> modelList ;
    //     details_product_color=bundle.getString("product_color");
        details_product_inStock=bundle.getString("in_stock");
        details_product_status = bundle.getString( "status" );
-       product_dealprice= bundle.getString("deal_price");
-       product_startDate= bundle.getString("start_date");
-       product_startTime= bundle.getString("start_time");
-        product_EndDate=bundle.getString("end_date");
-        product_endTime=bundle.getString("end_time");
+      // product_dealprice= bundle.getString("deal_price");
+       //product_startDate= bundle.getString("start_date");
+       //product_startTime= bundle.getString("start_time");
+      //  product_EndDate=bundle.getString("end_date");
+       // product_endTime=bundle.getString("end_time");
         prodcut_stock =bundle.getString( "stock");
       //  details_product_attribute=bundle.getString("product_attribute");
 
@@ -181,6 +188,7 @@ private List<Product_model> modelList ;
         details_product_rewards=bundle.getString("rewards");
         details_product_increament=bundle.getString("increment");
         details_product_title=bundle.getString("title");
+        seller_id=bundle.getString("seller_id");
 
 
 //         list=new ArrayList<String>();
@@ -195,6 +203,8 @@ private List<Product_model> modelList ;
         btn_checkout=(Button)view.findViewById(R.id.btn_f_Add_to_cart);
        // cardView=(CardView)view.findViewById(R.id.card_view2);
         txtPer=(TextView)view.findViewById(R.id.product_discount);
+        sel_info=(TextView)view.findViewById(R.id.sel_info);
+        featuresTitle=(TextView)view.findViewById(R.id.featuresTitle);
 
       //  rel_variant=(RelativeLayout)view.findViewById(R.id.rel_variant);
         btn=(ImageView)view.findViewById(R.id.img_product);
@@ -211,7 +221,6 @@ private List<Product_model> modelList ;
         //   Glide.with(this).load(R.raw.basicloader).into(btn);
         txtName=(TextView)view.findViewById(R.id.details_product_name);
         txtDesc=(ExpandableSecondTextView) view.findViewById(R.id.details_product_description);
-        details_description=(ExpandableSecondTextView) view.findViewById(R.id.details_description);
         txtPrice=(TextView)view.findViewById(R.id.details_product_price);
         txtMrp=(TextView)view.findViewById(R.id.details_product_mrp);
 
@@ -222,194 +231,8 @@ private List<Product_model> modelList ;
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
 
-        String tx="Some important attributes of android ProgressDialog are given below.\n" +
-                "\n" +
-                "setMessage() : This method is used to show the message to the user. Example: Loading…\n" +
-                "setTitle() : This method is used to set a title to the dialog box\n" +
-                "setProgressStyle(ProgressDialog.STYLE_HORIZONTAL) : This method is used to show the horizontal progress bar in the dialog box\n" +
-                "setProgressStyle(ProgressDialog.STYLE_SPINNER) : This method is used to show the circle/spinning progress bar in the dialog box\n" +
-                "setMax() : This method is used to set the maximum value\n" +
-                "getProgress() : This method is used to get the current progress value in numbers\n" +
-                "getMax() : This method returns the maximum value of the progress\n" +
-                "show(Context context, CharSequence title, CharSequence message) : This is a static method, used to display progress dialog\n" +
-                "incrementProgressBy(int diff) : This method increments the progress bar by the difference of value passed as a parameter\n" +
-                "In this tutorial we’ll develop an application that displays a ProgressDialog containing a horizontal ProgressBar which increments after every 200 milliseconds.\n" +
-                "\n" +
-                "Android ProgressDialog Project Structure\n" +
-                "android progress dialog, Android ProgressDialog, Android ProgressDialog Example\n" +
-                "\n" +
-                "Android ProgressDialog Example\n" +
-                "The activity_main.xml contains a Button which invokes a ProgressDialog on click as shown in the xml code below:\n" +
-                "\n" +
-                "activity_main.xml\n" +
-                "\n" +
-                "\n" +
-                "<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n" +
-                "    xmlns:tools=\"http://schemas.android.com/tools\"\n" +
-                "    android:layout_width=\"match_parent\"\n" +
-                "    android:layout_height=\"match_parent\"\n" +
-                "    tools:context=\".MainActivity\" >\n" +
-                "\n" +
-                "    <Button\n" +
-                "        android:id=\"@+id/button\"\n" +
-                "        android:layout_width=\"wrap_content\"\n" +
-                "        android:layout_height=\"wrap_content\"\n" +
-                "        android:text=\" Start ProgressDialog\"\n" +
-                "        android:layout_alignParentTop=\"true\"\n" +
-                "        android:layout_centerHorizontal=\"true\"\n" +
-                "        android:layout_marginTop=\"57dp\" />\n" +
-                "\n" +
-                "</RelativeLayout>\n" +
-                "The MainActivity.java file is given below.\n" +
-                "\n" +
-                "MainActivity.java\n" +
-                "\n" +
-                "\n" +
-                "package com.journaldev.progressdialog;\n" +
-                "\n" +
-                "import android.app.ProgressDialog;\n" +
-                "import android.os.Handler;\n" +
-                "import android.os.Message;\n" +
-                "import android.support.v7.app.AppCompatActivity;\n" +
-                "import android.os.Bundle;\n" +
-                "import android.view.Menu;\n" +
-                "import android.view.MenuItem;\n" +
-                "import android.view.View;\n" +
-                "import android.widget.Button;\n" +
-                "\n" +
-                "public class MainActivity extends AppCompatActivity {\n" +
-                "\n" +
-                "    Button button;\n" +
-                "    ProgressDialog progressDoalog;\n" +
-                "\n" +
-                "    @Override\n" +
-                "    protected void onCreate(Bundle savedInstanceState) {\n" +
-                "        super.onCreate(savedInstanceState);\n" +
-                "        setContentView(R.layout.activity_main);\n" +
-                "        button = (Button) findViewById(R.id.button);\n" +
-                "        button.setOnClickListener(new View.OnClickListener() {\n" +
-                "            @Override\n" +
-                "            public void onClick(View v) {\n" +
-                "                progressDoalog = new ProgressDialog(MainActivity.this);\n" +
-                "                progressDoalog.setMax(100);\n" +
-                "                progressDoalog.setMessage(\"Its loading....\");\n" +
-                "                progressDoalog.setTitle(\"ProgressDialog bar example\");\n" +
-                "                progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
-                "                progressDoalog.show();\n" +
-                "                new Thread(new Runnable() {\n" +
-                "                    @Override\n" +
-                "                    public void run() {\n" +
-                "                        try {\n" +
-                "                            while (progressDoalog.getProgress() <= progressDoalog\n" +
-                "                                    .getMax()) {\n" +
-                "                                Thread.sleep(200);\n" +
-                "                                handle.sendMessage(handle.obtainMessage());\n" +
-                "                                if (progressDoalog.getProgress() == progressDoalog\n" +
-                "                                        .getMax()) {\n" +
-                "                                    progressDoalog.dismiss();\n" +
-                "                                }\n" +
-                "                            }\n" +
-                "                        } catch (Exception e) {\n" +
-                "                            e.printStackTrace();\n" +
-                "                        }\n" +
-                "                    }\n" +
-                "                }).start();\n" +
-                "            }\n" +
-                "\n" +
-                "            Handler handle = new Handler() {\n" +
-                "                @Override\n" +
-                "                public void handleMessage(Message msg) {\n" +
-                "                    super.handleMessage(msg);\n" +
-                "                    progressDoalog.incrementProgressBy(1);\n" +
-                "                }\n" +
-                "            };\n" +
-                "        });\n" +
-                "    }\n" +
-                "}\n" +
-                "The following code activates the handler in which we write the code to increment the progress bar.\n" +
-                "\n" +
-                "\n" +
-                "handle.sendMessage(handle.obtainMessage());\n" +
-                "Below is the output video when you will run the android progress dialog example application in android emulator.\n" +
-                "\n" +
-                "android progressdialog example, android ProgressDialog, android progress dialog\n" +
-                "\n" +
-                "This brings an end to Android ProgressDialog Example tutorial. You can download the final Android ProgressDialog Project from the below link.\n" +
-                "\n" +
-                "Download Android ProgressDialog Project\n" +
-                "\n" +
-                " \n" +
-                "Facebook\n" +
-                "Twitter\n" +
-                "WhatsApp\n" +
-                "Reddit\n" +
-                "Linkedin\n" +
-                "Email\n" +
-                "PREV\n" +
-                "\n" +
-                "Android SeekBar and RatingBar Example Tutorial\n" +
-                "\n" +
-                "NEXT\n" +
-                "\n" +
-                "Android ProgressBar Example\n" +
-                "\n" +
-                "\n" +
-                "Anupam Chugh\n" +
-                "He loves learning new stuff in Android and iOS. Shoot him queries.\n" +
-                "\n" +
-                "Follow Author\n" +
-                "\n" +
-                "Comments\n" +
-                "\n" +
-                "Mayur Kodhe\n" +
-                "says:\n" +
-                "April 29, 2019 at 6:45 am\n" +
-                "I want to implement object detection application. where it captures the images and detects objects in it. I tried so many demo’s but cant get the accuracy. help me if you find anything useful on it.\n" +
-                "Thanks in advance.\n" +
-                "\n" +
-                "Reply\n" +
-                "\n" +
-                "\n" +
-                "chamira\n" +
-                "says:\n" +
-                "April 9, 2019 at 9:12 pm\n" +
-                "thank you very much for the code\n" +
-                "\n" +
-                "Reply\n" +
-                "\n" +
-                "Tao\n" +
-                "says:\n" +
-                "May 3, 2017 at 11:52 pm\n" +
-                "In your code, there is a miss-typo\n" +
-                "” if (progressDoalog.getProgress() ” -> ” if (progressDialog.getProgress() “\n" +
-                "\n" +
-                "Reply\n" +
-                "\n" +
-                "Tao\n" +
-                "says:\n" +
-                "May 3, 2017 at 11:53 pm\n" +
-                "Oh, my,, I was wrong, your instance name was progressDoalog, I didn’t catch that.\n" +
-                "\n" +
-                "Reply\n" +
-                "\n" +
-                "saran\n" +
-                "says:\n" +
-                "October 3, 2016 at 10:47 pm\n" +
-                "Thank you so much\n" +
-                "\n" +
-                "Reply\n" +
-                "\n" +
-                "Leave a Reply\n" +
-                "Your email address will not be published. Required fields are marked *\n" +
-                "\n" +
-                "Comment\n" +
-                "\n" +
-                "Name *\n" +
-                " " +
-                "Email *";
 
-        txtDesc.setText(tx);
-        details_description.setText(tx);
+        txtDesc.setText(details_product_desc);
         txtName.setText(details_product_name);
         txtPrice.setText( "\u20B9"+details_product_price );
 
@@ -435,54 +258,56 @@ private List<Product_model> modelList ;
         btn_add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String, String> map = new HashMap<>();
-
-
-                preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
-                language=preferences.getString("language","");
-
-
-                map.put("product_id", product_id);
-                map.put("product_name", details_product_name);
-                map.put("category_id",cat_id);
-                map.put("product_description", details_product_desc);
-                map.put("deal_price",product_dealprice);
-                map.put("start_date", product_startDate);
-                map.put("start_time", product_startTime);
-                map.put("end_date", product_EndDate);
-                map.put("end_time",product_endTime);
-                map.put("price", details_product_price);
-                map.put("mrp",details_product_mrp);
-                map.put("product_image", product_images);
-                map.put("status",details_product_status);
-                map.put("in_stock",details_product_inStock);
-                map.put("unit_value", details_product_unit_value);
-                map.put("unit", details_product_unit);
-                map.put("increament",details_product_increament);
-                map.put("rewards", details_product_rewards);
-                map.put("stock", prodcut_stock);
-                map.put("title", details_product_title);
 
 
 
 
-                        db_cart.setCart(map, Float.valueOf(1));
-                        btn_add.setVisibility( View.GONE );
-                        numberButton.setVisibility( View.VISIBLE );
-                                               //  tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                float qty = 1;
+                String unt=details_product_unit_value+details_product_unit;
+                Module module=new Module();
+                module.setIntoCart(getActivity(),product_id,product_id,
+                        product_images,cat_id,details_product_name,
+                        details_product_price,details_product_desc,details_product_rewards
+                        ,details_product_price,unt,details_product_increament,prodcut_stock
+                        ,details_product_title,details_product_mrp,seller_id,qty);
 
-
-                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());
-
-                Toast.makeText( context ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
+                btn_add.setVisibility( View.GONE );
+                numberButton.setVisibility( View.VISIBLE );
+                numberButton.setNumber("1");
+//                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());
+                Toast.makeText( getActivity() ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
             }
         } );
         numberButton.setOnValueChangeListener( new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
-            }
+                if(newValue<=0)
+                {
+
+                        db_cart.removeItemFromCart(product_id);
+
+                    numberButton.setVisibility(View.GONE);
+                    btn_add.setVisibility(View.VISIBLE);
+                }
+                else {
+
+
+                    float qty = Float.parseFloat(String.valueOf(newValue));
+                    double unit_price=Double.parseDouble(db_cart.getUnitPrice(product_id));
+
+                    String unt=details_product_unit_value+details_product_unit;
+                    Module module=new Module();
+                    module.setIntoCart(getActivity(),product_id,product_id,
+                            product_images,cat_id,details_product_name,
+                            String.valueOf(qty*unit_price),details_product_desc,details_product_rewards
+                            ,details_product_price,unt,details_product_increament,prodcut_stock
+                            ,details_product_title,details_product_mrp,seller_id,qty);
+
+                }
+                }
         } );
+
 
 
 
@@ -525,6 +350,17 @@ private List<Product_model> modelList ;
              numberButton.setVisibility( View.VISIBLE);
             }
 
+            int sell=Integer.parseInt(seller_id);
+            if(sell<=0)
+            {
+             featuresTitle.setVisibility(View.GONE);
+            }
+            else
+            {
+                getSellerData(sell);
+            }
+
+            updateData();
 //        else
 //        {
 //
@@ -583,6 +419,57 @@ private List<Product_model> modelList ;
        // progressBar.setVisibility(View.INVISIBLE);
         //recyclerView.setAdapter(imagesAdapter);
 
+
+    }
+
+    private void getSellerData(int sell) {
+
+        String json_tag="json_seller";
+        HashMap<String,String> map=new HashMap<>();
+        map.put("user_id",String.valueOf(sell));
+
+
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_SELLER_URL, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try
+                {
+                    boolean status=response.getBoolean("responce");
+                    if(status)
+                    {
+                        JSONArray array=response.getJSONArray("data");
+                        for(int i=0; i<array.length();i++)
+                        {
+                           JSONObject object=array.getJSONObject(i);
+                            SellerModel sellerModel=new SellerModel();
+                            sellerModel.setUser_id(object.getString("user_id"));
+                            sellerModel.setUser_name(object.getString("user_name"));
+                            sellerModel.setUser_email(object.getString("user_email"));
+                            sellerModel.setUser_fullname(object.getString("user_fullname"));
+                            sel_info.setText("Seller : "+ sellerModel.getUser_fullname()+"\n \n"+ "Seller Owner : "+sellerModel.getUser_name()
+                            +"\n \n Email : "+sellerModel.getUser_email());
+                        }
+
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
 
     }
 
@@ -1024,6 +911,37 @@ public boolean checkAttributeStatus(String atr)
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // unregister reciver
+        getActivity().unregisterReceiver(mCart);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // register reciver
+        getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+    }
+
+
+    private BroadcastReceiver mCart = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("update")) {
+                updateData();
+            }
+        }
+    };
+
+    public void updateData()
+    {
+        ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
+    }
 
 
 }

@@ -81,15 +81,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void attemptRegister() {
 
-        tv_phone.setText(getResources().getString(R.string.et_login_phone_hint));
-        tv_email.setText(getResources().getString(R.string.tv_login_email));
-        tv_name.setText(getResources().getString(R.string.tv_reg_name_hint));
-        tv_password.setText(getResources().getString(R.string.tv_login_password));
+//        tv_phone.setText(getResources().getString(R.string.et_login_phone_hint));
+//        tv_email.setText(getResources().getString(R.string.tv_login_email));
+//        tv_name.setText(getResources().getString(R.string.tv_reg_name_hint));
+//        tv_password.setText(getResources().getString(R.string.tv_login_password));
 
-        tv_name.setTextColor(getResources().getColor(R.color.dark_gray));
-        tv_phone.setTextColor(getResources().getColor(R.color.dark_gray));
-        tv_password.setTextColor(getResources().getColor(R.color.dark_gray));
-        tv_email.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_name.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_phone.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_password.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_email.setTextColor(getResources().getColor(R.color.dark_gray));
 
         String getphone = et_phone.getText().toString();
         String getname = et_name.getText().toString();
@@ -104,8 +104,10 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = et_phone;
             cancel = true;
         } else if (!isPhoneValid(getphone)) {
-            tv_phone.setText(getResources().getString(R.string.phone_too_short));
-            tv_phone.setTextColor(getResources().getColor(R.color.black));
+
+            et_phone.setError("Invalid Mobile number");
+          //  tv_phone.setText(getResources().getString(R.string.phone_too_short));
+            //tv_phone.setTextColor(getResources().getColor(R.color.black));
             focusView = et_phone;
             cancel = true;
         }

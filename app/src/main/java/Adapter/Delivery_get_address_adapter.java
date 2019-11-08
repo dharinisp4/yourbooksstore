@@ -334,4 +334,16 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
+    public HashMap<String,String> getAlladdress() {
+
+
+        HashMap<String,String> map=new HashMap<String, String>(  );
+        map.put("name",getname);
+        map.put("phone",getphone);
+        map.put("pin",getpin);
+        map.put("house",gethouse);
+        map.put("society",getsocity);
+
+        return map;
+    }
 }

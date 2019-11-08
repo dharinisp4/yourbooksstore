@@ -294,10 +294,11 @@ public class Payment_fragment extends Fragment {
                 try {
                     jObjP.put("product_id", map.get("product_id"));
                     jObjP.put("qty", map.get("qty"));
-                    jObjP.put("unit_value", map.get("unit_value"));
+                    jObjP.put("unit_value","");
                     jObjP.put("unit", map.get("unit"));
                     jObjP.put("price", map.get("price"));
                     jObjP.put("rewards", map.get("rewards"));
+                    jObjP.put("store_id", map.get("sid"));
                     passArray.put(jObjP);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -311,8 +312,16 @@ public class Payment_fragment extends Fragment {
                 Log.e(TAG, "from:" + gettime + "\ndate:" + getdate +
                         "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id + getstore_id + "\ndata:" + passArray.toString());
 
+                try {
 
-    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, getstore_id, passArray);
+                    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, getstore_id, passArray);
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+
 
 
             }
@@ -331,6 +340,7 @@ public class Payment_fragment extends Fragment {
         params.put("total_ammount",total_amount);
         params.put("payment_method", getvalue);
         params.put("data", passArray.toString());
+     //   Toast.makeText(getActivity(),""+passArray,Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.ADD_ORDER_URL, params, new Response.Listener<JSONObject>() {
             @Override
@@ -356,6 +366,7 @@ public class Payment_fragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
+                    Toast.makeText(getActivity(),""+e.getMessage(),Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }

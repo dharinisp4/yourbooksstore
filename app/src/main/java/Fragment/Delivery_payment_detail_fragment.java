@@ -61,7 +61,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         db_cart = new DatabaseCartHandler(getActivity());
         sessionManagement = new Session_management(getActivity());
 
-      //  tv_timeslot = (TextView) view.findViewById(R.id.textTimeSlot);
+        tv_timeslot = (TextView) view.findViewById(R.id.textTimeSlot);
         // tv_address = (TextView) view.findViewById(R.id.txtAddress);
         //tv_item = (TextView) view.findViewById(R.id.textItems);
         //tv_total = (TextView) view.findViewById(R.id.textPrice);
@@ -75,8 +75,8 @@ public class Delivery_payment_detail_fragment extends Fragment {
         mobileno = view.findViewById( R.id.mobileno );
         pincode = view.findViewById( R.id.pincode );
         Address = view.findViewById( R.id.Address );
-        // Houseno = view.findViewById( R.id.Houseno );
-        //  Society = view.findViewById( R.id.Society );
+        // Houseno = view.findViewById( R.idi.Houseno );
+        //  Society = view.findViewById( R.d.Society );
 
 
 
@@ -84,18 +84,9 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
         getdate = getArguments().getString("getdate");
 
-        preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
-        String language=preferences.getString("language","");
-        if (language.contains("spanish")) {
+
             gettime = getArguments().getString("time");
 
-            gettime=gettime.replace("PM","م");
-            gettime=gettime.replace("AM","ص");
-
-        }else {
-            gettime = getArguments().getString("time");
-
-        }
         getlocation_id = getArguments().getString("location_id");
         getstore_id = getArguments().getString("store_id");
         deli_charges = Integer.parseInt(getArguments().getString("deli_charges"));
@@ -134,7 +125,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
 //                getResources().getString(R.string.total_amount) +
 //                db_cart.getTotalAmount() + " + " + deli_charges + " = " + total+ getResources().getString(R.string.currency));
 //
-
+        recivername.setText(name);
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -11,11 +11,11 @@ import java.util.HashMap;
 
 public class DatabaseCartHandler extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "prodcts_db";
+    private static String DB_NAME = "bs_db";
     private static int DB_VERSION = 3;
     private SQLiteDatabase db;
 
-    public static final String CART_TABLE = "cart";
+    public static final String CART_TABLE = "wertb";
 
     public static final String COLUMN_ID = "product_id";
     public static final String COLUMN_CID = "cart_id";
@@ -26,11 +26,13 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_MRP = "mrp";
     public static final String COLUMN_UNIT_PRICE = "unit_price";
-   // public static final String COLUMN_UNIT_VALUE = "unit_value";
     public static final String COLUMN_UNIT = "unit";
-    public static final String COLUMN_TYPE = "type";
-    public  static  final String COLUMN_DESC = "product_descriptio";
-    public static final String COLUMN_SELLER_ID = "seller_id";
+    public static final String COLUMN_STOCK = "stock";
+    public static final String COLUMN_INCREMENT = "increament";
+    public static final String COLUMN_REWARDS = "rewards";
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_DESC = "product_description";
+    public static final String COLUMN_SID = "sid";
 
 
 
@@ -55,9 +57,12 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
                 + COLUMN_MRP + " DOUBLE NOT NULL, "
                 + COLUMN_UNIT_PRICE + " DOUBLE NOT NULL, "
                 + COLUMN_UNIT + " TEXT NOT NULL, "
-                + COLUMN_TYPE + " TEXT NOT NULL,"
-                + COLUMN_DESC + " TEXT NOT NULL, "
-                + COLUMN_SELLER_ID + "TEXT NOT NULL"
+                + COLUMN_DESC + " TEXT, "
+                + COLUMN_STOCK + " TEXT, "
+                + COLUMN_INCREMENT + " TEXT, "
+                + COLUMN_REWARDS + " TEXT, "
+                + COLUMN_SID + " TEXT NOT NULL, "
+                + COLUMN_TITLE + " TEXT "
 
                 + ")";
 
@@ -77,17 +82,17 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             values.put(COLUMN_QTY, Qty);
             values.put(COLUMN_CAT_ID, map.get(COLUMN_CAT_ID));
             values.put(COLUMN_IMAGE, map.get(COLUMN_IMAGE));
-
             values.put(COLUMN_NAME, map.get(COLUMN_NAME));
             values.put(COLUMN_PRICE, map.get(COLUMN_PRICE));
             values.put(COLUMN_MRP, map.get(COLUMN_MRP));
             values.put(COLUMN_UNIT_PRICE, map.get(COLUMN_UNIT_PRICE));
             values.put(COLUMN_UNIT, map.get(COLUMN_UNIT));
-            values.put(COLUMN_TYPE, map.get(COLUMN_TYPE));
-            values.put( COLUMN_SELLER_ID,map.get( COLUMN_SELLER_ID ) );
-
-           // values.put(COLUMN_UNIT_VALUE, map.get(COLUMN_UNIT_VALUE));
-          values.put(COLUMN_DESC, map.get(COLUMN_DESC));
+            values.put(COLUMN_STOCK, map.get(COLUMN_STOCK));
+        //    values.put(COLUMN_INCREMENT, map.get(COLUMN_INCREMENT));
+            values.put(COLUMN_REWARDS, map.get(COLUMN_REWARDS));
+            values.put(COLUMN_TITLE, map.get(COLUMN_TITLE));
+            values.put(COLUMN_SID, map.get(COLUMN_SID));
+            values.put(COLUMN_DESC, map.get(COLUMN_DESC));
 
 
             db.insert(CART_TABLE, null, values);
@@ -194,11 +199,13 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             map.put(COLUMN_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_PRICE)));
             map.put(COLUMN_MRP, cursor.getString(cursor.getColumnIndex(COLUMN_MRP)));
             map.put(COLUMN_UNIT_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_PRICE)));
-        //    map.put(COLUMN_UNIT_VALUE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_VALUE)));
             map.put(COLUMN_UNIT, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT)));
-            map.put(COLUMN_TYPE, cursor.getString(cursor.getColumnIndex(COLUMN_TYPE)));
+            map.put(COLUMN_STOCK, cursor.getString(cursor.getColumnIndex(COLUMN_STOCK)));
+            map.put(COLUMN_INCREMENT, cursor.getString(cursor.getColumnIndex(COLUMN_INCREMENT)));
+            map.put(COLUMN_REWARDS, cursor.getString(cursor.getColumnIndex(COLUMN_REWARDS)));
+            map.put(COLUMN_TITLE, cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
             map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
-            map.put(COLUMN_SELLER_ID,cursor.getString(cursor.getColumnIndex( COLUMN_SELLER_ID ) ));
+            map.put(COLUMN_SID,cursor.getString(cursor.getColumnIndex( COLUMN_SID ) ));
 
             list.add(map);
             cursor.moveToNext();
@@ -225,9 +232,12 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             map.put(COLUMN_UNIT_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_PRICE)));
          //   map.put(COLUMN_UNIT_VALUE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_VALUE)));
             map.put(COLUMN_UNIT, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT)));
-            map.put(COLUMN_TYPE, cursor.getString(cursor.getColumnIndex(COLUMN_TYPE)));
+            map.put(COLUMN_STOCK, cursor.getString(cursor.getColumnIndex(COLUMN_STOCK)));
+            map.put(COLUMN_INCREMENT, cursor.getString(cursor.getColumnIndex(COLUMN_INCREMENT)));
+            map.put(COLUMN_REWARDS, cursor.getString(cursor.getColumnIndex(COLUMN_REWARDS)));
+            map.put(COLUMN_TITLE, cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
             map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
-            map.put(COLUMN_SELLER_ID,cursor.getString(cursor.getColumnIndex( COLUMN_SELLER_ID ) ));
+            map.put(COLUMN_SID,cursor.getString(cursor.getColumnIndex( COLUMN_SID ) ));
             list.add(map);
             cursor.moveToNext();
         }
@@ -278,5 +288,19 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public String getUnitPrice(String id) {
+        db = getReadableDatabase();
+        String qry = "Select " + COLUMN_UNIT_PRICE + " from " + CART_TABLE + " where " + COLUMN_CID + " = " + id;
+        Cursor cursor = db.rawQuery(qry, null);
+        cursor.moveToFirst();
+        String total = cursor.getString(cursor.getColumnIndex("unit_price"));
+        if (total != null) {
+
+            return total;
+        } else {
+            return "0";
+        }
     }
 }

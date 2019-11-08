@@ -75,7 +75,7 @@ public class Home_Icon_Adapter extends RecyclerView.Adapter<Home_Icon_Adapter.My
             holder.title.setText(mList.getTitle());
         }
         else {
-            holder.title.setText(mList.getArb_title());
+            holder.title.setText(mList.getTitle());
 
         }
     }

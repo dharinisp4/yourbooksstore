@@ -1,6 +1,10 @@
 package Fragment;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -47,6 +51,7 @@ import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
+import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -67,6 +72,7 @@ public class Product_fragment extends Fragment {
     String language;
     ImageView img_no_products;
     SharedPreferences preferences;
+    private DatabaseCartHandler dbcart;
     public Product_fragment() {
     }
 
@@ -94,16 +100,19 @@ public class Product_fragment extends Fragment {
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_product_name));
         img_no_products=(ImageView)view.findViewById(R.id.img_no_items);
         // check internet connection
+    dbcart=new DatabaseCartHandler(getActivity());
 
         if (ConnectivityReceiver.isConnected()) {
             //Shop by Catogary
+          //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
+            makeGetSliderCategoryRequest(id);
             makeGetCategoryRequest(getcat_id);
 
             //Deal Of The Day Products
             makedealIconProductRequest(get_deal_id);
             //Top Sale Products
             maketopsaleProductRequest(get_top_sale_id);
-            makeGetSliderCategoryRequest(id);
+
 
             //Slider
             makeGetBannerSliderRequest();
@@ -141,7 +150,13 @@ public class Product_fragment extends Fragment {
         return view;
     }
 
-      /**
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateData();
+    }
+
+    /**
      * Method to make json object request where json response starts wtih
      */
     //Get Shop By Catogary
@@ -270,7 +285,7 @@ public class Product_fragment extends Fragment {
                 BaseURL.GET_SLIDER_CATEGORY_URL, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d("slid", response.toString());
 
                 try {
                     Boolean status = response.getBoolean("response");
@@ -291,17 +306,24 @@ public class Product_fragment extends Fragment {
                                     tab_cat.addTab(tab_cat.newTab().setText(slider_subcat_models.get(i).getTitle()));
                                 }
                                 else {
-                                    tab_cat.addTab(tab_cat.newTab().setText(slider_subcat_models.get(i).getArb_title()));
+                                    tab_cat.addTab(tab_cat.newTab().setText(slider_subcat_models.get(i).getTitle()));
 
                                 }
                             }
                         } else {
-                          //  makeGetProductRequest(parent_id);
+
                         }
 
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                   String s= e.getMessage();
+                   if(s.equals("No value for response"))
+                   {
+                       makeGetProductRequest(sub_cat_id);
+
+                   }
+                  // Toast.makeText(getActivity(),""+s,Toast.LENGTH_LONG).show();
+
                 }
             }
         }, new Response.ErrorListener() {
@@ -477,6 +499,39 @@ public class Product_fragment extends Fragment {
         });
         AppController.getInstance().addToRequestQueue(req);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // register reciver
+        getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+    }
+
+    // broadcast reciver for receive data
+    private BroadcastReceiver mCart = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("update")) {
+                updateData();
+            }
+        }
+    };
+
+    private void updateData() {
+
+        ((MainActivity) getActivity()).setCartCounter("" + dbcart.getCartCount());
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // unregister reciver
+        getActivity().unregisterReceiver(mCart);
     }
 
 

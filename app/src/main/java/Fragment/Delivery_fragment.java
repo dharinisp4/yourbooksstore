@@ -303,12 +303,23 @@ String language;
 
             Bundle args = new Bundle();
             Fragment fm = new Delivery_payment_detail_fragment();
+            HashMap<String,String> addmap = adapter.getAlladdress();
+            String name = addmap.get( "name" );
+            String phone = addmap.get("phone");
+            String society = addmap.get("society");
+            String pin = addmap.get("pin");
+            String house = addmap.get("house");
             args.putString("getdate", getdate);
             args.putString("time", gettime);
             args.putString("location_id", location_id);
             args.putString("address", address);
             args.putString("deli_charges", deli_charges);
             args.putString("store_id", store_id);
+            args.putString("name",name);
+            args.putString( "pin",pin );
+            args.putString( "house",house );
+            args.putString( "society",society );
+            args.putString( "phone",phone );
             fm.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

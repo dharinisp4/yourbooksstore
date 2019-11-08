@@ -81,6 +81,8 @@ SharedPreferences preferences;
                 args.putString( "rewards", modelList.get( position ).getRewards() );
                 args.putString( "stock", modelList.get( position ).getStock() );
                 args.putString( "title", modelList.get( position ).getTitle() );
+                args.putString( "seller_id", modelList.get( position ).getSeller_id() );
+
                 details_fragment.setArguments( args );
                 FragmentManager fragmentManager = activity.getFragmentManager();
                 fragmentManager.beginTransaction().replace( R.id.contentPanel, details_fragment )

@@ -46,7 +46,7 @@ public class BaseURL {
     public static final String CITY_ID = "CITY_ID";
     public static final String STORE_ID = "STORE_ID";
 
-    public static String BASE_URL = "http://yourbooksstore.com/admin/";
+    public static String BASE_URL = "https://yourbooksstore.com/admin/";
 
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
     public static String IMG_CATEGORY_URL = BASE_URL + "uploads/category/";
@@ -78,6 +78,7 @@ public class BaseURL {
 
 
     public static String GET_PRODUCT_URL = BASE_URL + "index.php/api/get_products";
+    public static String GET_SELLER_URL = BASE_URL + "index.php/api/get_seller";
 
     public static String GET_ABOUT_URL = BASE_URL + "index.php/api/aboutus";
 

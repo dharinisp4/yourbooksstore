@@ -31,6 +31,7 @@ public class Top_Selling_model {
     String rewards;
     String stock;
     String title;
+    String seller_id;
 
     @SerializedName("sub_cat")
     ArrayList<Category_subcat_model> category_sub_datas;
@@ -209,6 +210,14 @@ public class Top_Selling_model {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSeller_id() {
+        return seller_id;
+    }
+
+    public void setSeller_id(String seller_id) {
+        this.seller_id = seller_id;
     }
 
     public ArrayList<Category_subcat_model> getCategory_sub_datas() {

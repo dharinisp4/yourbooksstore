@@ -392,6 +392,7 @@ public class Home_fragment extends Fragment {
                 args.putString("rewards",top_selling_models.get(position).getRewards());
                 args.putString("stock",top_selling_models.get(position).getStock());
                 args.putString("title",top_selling_models.get(position).getTitle());
+                args.putString("seller_id",top_selling_models.get(position).getSeller_id());
                 details_fragment.setArguments(args);
 
                 FragmentManager fragmentManager = getFragmentManager();
@@ -726,7 +727,7 @@ public class Home_fragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d("top_sell", response.toString());
 
                 try {
                     if (response != null && response.length() > 0) {

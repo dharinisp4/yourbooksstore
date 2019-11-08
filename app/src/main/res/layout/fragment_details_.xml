@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="Fragment.Details_Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -298,7 +298,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/details_product_description"
                                     android:id="@+id/featuresTitle"
-                                    android:text="Description :"
+                                    android:text="Seller Info:"
                                     android:textSize="18dp"
                                     android:padding="5dp"
                                     android:fontFamily="@font/cabin"
@@ -306,35 +306,13 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     />
-                                <Config.ExpandableSecondTextView
-                                    android:id="@+id/details_description"
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:maxCollapsedLines="2"
+                                <TextView
+                                    android:fontFamily="@font/cabin"
+                                    android:textSize="@dimen/space_14"
                                     android:layout_below="@+id/featuresTitle"
-                                    app:animDuration="200">
-                                    <TextView
-                                        android:id="@id/expandable_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
-                                        android:textSize="16sp"
-                                        android:fontFamily="@font/cabin"
-                                        android:textColor="#666666" />
-                                    <ImageButton
-                                        android:id="@id/expand_collapse"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingLeft="16dp"
-                                        android:paddingTop="@dimen/space_5"
-                                        android:paddingBottom="@dimen/space_2"
-                                        android:paddingRight="@dimen/space_2"
-                                        android:layout_gravity="right|bottom"
-                                        android:background="@android:color/transparent"/>
-                                </Config.ExpandableSecondTextView>
-
+                                    android:id="@+id/sel_info"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
                                 <View
                                     android:id="@+id/line3"
                                     android:layout_width="match_parent"
@@ -548,7 +526,6 @@ android:visibility="gone"
 
 
         </RelativeLayout>
-
 
 
 
