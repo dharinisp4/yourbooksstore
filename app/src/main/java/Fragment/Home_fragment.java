@@ -208,9 +208,9 @@ public class Home_fragment extends Fragment {
 
         //Top Selling Products
         rv_top_selling = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
-      //  GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getActivity(), 2);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.VERTICAL,false );
-        rv_top_selling.setLayoutManager(layoutManager1);
+        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getActivity(), 2);
+       // LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.HORIZONTAL,false );
+        rv_top_selling.setLayoutManager(gridLayoutManager2);
         rv_top_selling.setItemAnimator(new DefaultItemAnimator());
         rv_top_selling.setNestedScrollingEnabled(false);
      //   rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
@@ -218,7 +218,7 @@ public class Home_fragment extends Fragment {
 
         //make_menu_items Icons
         rv_headre_icons = (RecyclerView) view.findViewById(R.id.collapsing_recycler);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity()) {
+       GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),3) {
 
             @Override
             public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
@@ -234,7 +234,7 @@ public class Home_fragment extends Fragment {
                 startSmoothScroll(smoothScroller);
             }
         };
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+       // layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rv_headre_icons.setLayoutManager(layoutManager);
         rv_headre_icons.setHasFixedSize(true);
         rv_headre_icons.setItemViewCacheSize(10);
@@ -331,14 +331,14 @@ public class Home_fragment extends Fragment {
         rv_deal_of_day.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_deal_of_day, new RecyclerTouchListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                getid = deal_of_day_models.get(position).getId();
-                Bundle args = new Bundle();
-                Fragment fm = new Product_fragment();
-                args.putString("cat_deal", "2");
-                fm.setArguments(args);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                        .addToBackStack(null).commit();
+//                getid = deal_of_day_models.get(position).getId();
+//                Bundle args = new Bundle();
+//                Fragment fm = new Product_fragment();
+//                args.putString("cat_deal", "2");
+//                fm.setArguments(args);
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+//                        .addToBackStack(null).commit();
 
             }
 

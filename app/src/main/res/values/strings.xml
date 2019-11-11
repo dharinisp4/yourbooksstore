@@ -237,6 +237,9 @@
     <string name="neosans_pro_regular" translatable="false">neosans_pro_regular.ttf</string>
 
 
-
     <string name="status_stop">Powered By <font color="#f7941e">Your Books Store</font></string>
+    <string name="title_activity_main_bottom">MainActivity_bottom</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

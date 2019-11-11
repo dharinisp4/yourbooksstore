@@ -3,22 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="gogrocer.tcc">
 
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:resizeable="true"
-        android:smallScreens="true"
-        android:supportsRtl="true" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:name=".AppController"
         android:allowBackup="true"
@@ -31,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity android:name="com.payumoney.sdkui.ui.activities.PayUmoneyActivity"/>
+        <activity android:name="com.payumoney.sdkui.ui.activities.PayUmoneyActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -45,7 +29,7 @@
             android:name=".PaymentActivity"
             android:configChanges="orientation|screenSize"
             android:label="PaymentActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
@@ -58,6 +42,43 @@
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- Firebase Notifications -->
+        <activity android:name=".SelectStore" />
+        <activity android:name=".SelectCity" />
+        <activity
+            android:name=".ForgotActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- ./Firebase Notifications -->
+        <activity android:name=".My_Order_activity" />
+
+        <activity android:name=".MyOrderDetail" />
+        <activity android:name=".RechargeWallet" />
+        <activity android:name=".ThanksOrder" />
+        <!--
+<activity
+            android:name=".PaymentGatWay"
+            android:theme="@style/AppTheme.NoActionBar" />
+        -->
+        <activity android:name=".OrderFail" />
+        <activity
+            android:name="com.paytm.pgsdk.PaytmPGActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Paytm" />
+
+        <activity android:name=".networkconnectivity.NoInternetConnection" />
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_ILgsfZCZoFIKMb" />
+        <meta-data
+            android:name="android.support.multidex.MultiDexApplication"
+            android:value="true" />
+        <meta-data
+            android:name="instamojo.orderauth.url"
+            android:value="http://yourbooksstore.com/admin/token/access_token.php" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
         <service
             android:name="fcm.MyFirebaseMessagingService"
             android:exported="false">
@@ -65,6 +86,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <service android:name="com.google.firebase.components.ComponentDiscoveryService">
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
@@ -76,54 +98,32 @@
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
-        </service> <!-- ./Firebase Notifications -->
-        <meta-data
-            android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_ILgsfZCZoFIKMb" />
-
-        <activity android:name=".SelectStore" />
-        <activity android:name=".SelectCity" />
-        <activity
-            android:name=".ForgotActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!--<activity
-            android:name=".PaymentGatWay"
-            android:theme="@style/AppTheme.NoActionBar" />-->
-        <activity android:name=".My_Order_activity" />
-        <activity android:name=".MyOrderDetail" />
-        <activity android:name=".RechargeWallet" />
-
-        <meta-data
-            android:name="android.support.multidex.MultiDexApplication"
-            android:value="true" />
-
-        <activity android:name=".ThanksOrder" />
-        <activity android:name=".OrderFail" />
-        <activity
-            android:name="com.paytm.pgsdk.PaytmPGActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Paytm" />
-        <activity android:name=".networkconnectivity.NoInternetConnection" />
-    <meta-data android:name="instamojo.orderauth.url"
-                   android:value="http://yourbooksstore.com/admin/token/access_token.php"
-            />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        </service>
     </application>
-    <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS"/>
- 
-    <uses-permission-sdk-23 android:name="android.permission.READ_SMS"/>
- 
-    <uses-permission-sdk-23 android:name="android.permission.READ_PHONE_STATE"/>
- 
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
- 
-    <uses-permission android:name="android.permission.READ_SMS"/>
- 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
- 
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:supportsRtl="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
+
+    <uses-permission-sdk-23 android:name="android.permission.READ_PHONE_STATE" />
 
 </manifest>

@@ -9,7 +9,7 @@
         android:id="@+id/img_pd_dt"
         android:layout_width="78dp"
         android:layout_height="match_parent"
-     android:src="@drawable/khaledgrocerylogo"
+     android:src="@drawable/icon"
         android:scaleType="fitXY"
         />
 </LinearLayout>

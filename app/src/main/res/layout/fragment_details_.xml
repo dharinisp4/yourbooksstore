@@ -14,60 +14,111 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <RelativeLayout
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/space_5">
+        <LinearLayout
             android:id="@+id/relative_layout_img"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/details_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginLeft="@dimen/space_5"
+                android:textColor="@color/black"
+                android:padding="3dp"
+                android:maxLines="3"
+                android:fontFamily="@font/cabin"
+                android:text="Name"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/details_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:padding="@dimen/space_2"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="@dimen/space_5"
+                android:fontFamily="@font/cabin"
+                android:text="Name"
+                />
 
-            android:layout_height="260dp">
+            <TextView
+                android:id="@+id/details_product_mrp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="3dp"
+                android:textSize="13dp"
+                android:layout_marginTop="3dp"
+                android:padding="2dp"
+                android:fontFamily="@font/cabin"
+                android:layout_toRightOf="@id/details_product_price"
+                android:text="Name"
+
+                />
+                <TextView
+                    android:id="@+id/product_discount"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space_5"
+
+                    android:text="10%"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/dimen_15dp"
+                    android:textAlignment="gravity"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/space_10"
+                    android:layout_alignParentEnd="true"
+
+                    /></RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/img_product"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/space_10"
                 android:scaleType="fitXY"
                 />
-<!--            <ImageView-->
-<!--                android:id="@+id/wish_before"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_margin="@dimen/space_10"-->
-<!--                app:srcCompat="@drawable/wish_before"-->
-<!--                />-->
-<!--            <ImageView-->
-<!--                android:id="@+id/wish_after"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="30dp"-->
-
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_margin="@dimen/space_10"-->
-<!--                app:srcCompat="@drawable/wish_after"-->
-<!--                android:visibility="invisible"/>-->
-            <TextView
-                android:id="@+id/product_discount"
-                android:layout_width="@dimen/dimen_70dp"
-                android:layout_height="@dimen/dimen_70dp"
-                android:padding="@dimen/space_5"
-                android:layout_marginTop="-10dp"
-                android:text="10%"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="@dimen/dimen_15dp"
-                android:textAlignment="gravity"
-                android:gravity="center"
-                android:backgroundTint="@color/colorPrimary"
-                android:background="@drawable/ic_bookmark_black_24dp"
+            <ImageView
+                android:id="@+id/wish_before"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="@dimen/space_20"
+                app:srcCompat="@drawable/wish_before"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 />
-        </RelativeLayout>
+            <ImageView
+                android:id="@+id/wish_after"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="@dimen/space_20"
+                app:srcCompat="@drawable/wish_after"
+                android:visibility="invisible"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+        </android.support.v7.widget.CardView>
         <View
             android:id="@+id/lined4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-
+            android:layout_marginTop="@dimen/space_10"
             android:layout_marginLeft="@dimen/space_5"
             android:layout_marginRight="@dimen/space_5"
             android:background="@color/dark_gray"/>
@@ -97,435 +148,490 @@
             android:layout_marginRight="@dimen/space_5"
             android:background="@color/dark_gray"
             android:visibility="gone"/>
-        <RelativeLayout
-            android:padding="2dp"
-            android:id="@+id/relative_layout3"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10"
+            android:padding="@dimen/space_10"
+            app:cardElevation="@dimen/space_5"
+            android:id="@+id/card_icons"
+            android:layout_gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/space_10"
+                android:layout_gravity="center_horizontal"
+                android:weightSum="3">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:elevation="@dimen/space_5"
+                    android:gravity="center_horizontal">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/dimen_60dp"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:id="@+id/rewardsimg"
+                        android:src="@drawable/icons8_medal_48px"
+                        android:padding="@dimen/space_5"
+                        android:layout_centerHorizontal="true"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rewards"
+                        android:layout_below="@+id/rewardsimg"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/space_14"
+                        android:padding="@dimen/space_5"
+                        android:textAlignment="gravity"
+                        android:gravity="center_horizontal"
+                        android:layout_centerHorizontal="true"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center_horizontal"
+                    android:elevation="@dimen/space_5">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="@dimen/dimen_60dp"
+                    android:layout_height="@dimen/dimen_60dp"
+                    android:id="@+id/descimg"
+                    android:src="@drawable/icons8_google_docs_48px"
+                    android:padding="@dimen/space_5"
+                    android:layout_centerHorizontal="true"
+                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:layout_below="@+id/descimg"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/space_14"
+                        android:padding="@dimen/space_5"
+                        android:textAlignment="gravity"
+                        android:gravity="center_horizontal"
+                        android:layout_centerHorizontal="true"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center_horizontal"
+                    android:elevation="@dimen/space_5">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/dimen_60dp"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:id="@+id/sellerimg"
+                        android:src="@drawable/icons8_about_24px"
+                        android:padding="@dimen/space_5"
+                        android:layout_centerHorizontal="true"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seller Info"
+                        android:layout_below="@+id/sellerimg"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/space_14"
+                        android:padding="@dimen/space_5"
+                        android:textAlignment="gravity"
+                        android:gravity="center_horizontal"
+                        android:layout_centerHorizontal="true"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center_horizontal"
+                    android:elevation="@dimen/space_5">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/dimen_60dp"
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:id="@+id/relimg"
+                        android:src="@drawable/icons8_related_companies_48px"
+                        android:padding="@dimen/space_5"
+                        android:layout_centerHorizontal="true"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Related Products"
+                        android:layout_below="@+id/relimg"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/space_14"
+                        android:padding="@dimen/space_5"
+                        android:textAlignment="gravity"
+                        android:gravity="center_horizontal"
+                        android:layout_centerHorizontal="true"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+        <View
+            android:id="@+id/liness"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:background="@color/dark_gray"/>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10"
+            app:cardElevation="@dimen/space_5"
             >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/space_5"
                 >
 
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-
-                        android:paddingBottom="70dp"
-
-
-                        >
-
-
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/card_view1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/white"
-                            android:padding="10dp"
-                            app:cardCornerRadius="3dp">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:id="@+id/details_product_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="16dp"
-                                    android:layout_marginLeft="@dimen/space_5"
-                                    android:textColor="@color/colorPrimary"
-                                    android:padding="3dp"
-                                    android:fontFamily="@font/cabin"
-                                    android:text="Name"/>
-                                <TextView
-                                    android:id="@+id/details_product_price"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="16dp"
-                                    android:padding="@dimen/space_2"
-                                    android:textColor="@color/black"
-                                    android:layout_marginLeft="@dimen/space_5"
-                                    android:fontFamily="@font/cabin"
-                                    android:layout_below="@id/details_product_name"
-                                    android:text="Name"
-                                    />
-                                <TextView
-                                    android:id="@+id/details_product_mrp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/details_product_name"
-                                    android:layout_marginLeft="3dp"
-                                    android:textSize="13dp"
-                                    android:layout_marginTop="3dp"
-                                    android:padding="2dp"
-                                    android:fontFamily="@font/cabin"
-                                    android:layout_toRightOf="@id/details_product_price"
-                                    android:text="Name"
-
-                                    />
-
-                                <RelativeLayout
-                                    android:id="@+id/rel_qty"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@+id/details_product_mrp"
-                                    android:layout_below="@id/details_product_name">
-                                    <Button
-                                        android:id="@+id/btn_add"
-                                        android:layout_width="80dp"
-                                        android:layout_height="30dp"
-                                        android:layout_marginLeft="20dp"
-
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_marginRight="@dimen/space_10"
-
-                                        android:background="@color/colorPrimary"
-                                        android:clickable="true"
-                                        android:text="Add"
-                                        android:textColor="@color/white" />
-                                    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                                        android:id="@+id/product_qty"
-                                        android:layout_width="80dp"
-                                        android:layout_height="28dp"
-                                        android:layout_marginLeft="20dp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_marginRight="@dimen/space_10"
-
-                                        android:background="@color/colorPrimary"
-                                        android:elevation="6dp"
-                                        app:textSize="8dp"
-                                        app:initialNumber="0"
-                                        app:finalNumber="10"
-                                        app:textColor="@color/white"
-                                        android:visibility="gone"
-                                        />
-
-                                </RelativeLayout>
-                                <TextView
-                                    android:id="@+id/details_product_per"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
-                                    android:textSize="18dp"
-                                    android:textColor="@color/black"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="3dp"
-                                    android:padding="2dp"
-
-                                    android:textStyle="italic"
-                                android:layout_alignParentRight="true"
-
-
-                                    />
-
-                                <View
-                                    android:id="@+id/line2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_marginTop="9dp"
-                                    android:layout_marginLeft="@dimen/space_5"
-                                    android:layout_marginRight="@dimen/space_5"
-                                    android:layout_below="@id/rel_qty"
-                                    android:background="@color/dark_gray"/>
-
-
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/rel_qty"
-                                    android:id="@+id/descriptionTitle"
-                                    android:text="Description :"
-                                    android:textSize="18dp"
-                                    android:padding="5dp"
-                                   android:fontFamily="@font/cabin"
-                                    android:textColor="@color/black"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_marginTop="@dimen/space_10"
-                                    />
-<!--                                <Config.ExpandableTextView-->
-<!--                                    android:id="@+id/details_product_description"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_below="@id/descriptionTitle"-->
-<!--                                    android:layout_marginTop="5dp"-->
-<!--                                    android:textSize="18sp"-->
-<!--                                    android:textColor="@color/black"-->
-<!--                                    android:fontFamily="@font/cabin"-->
-<!--                                    android:padding="5dp"-->
-<!--                                    android:text="Name"-->
-<!--                                    android:layout_marginRight="5dp"-->
-<!--                                    android:layout_marginLeft="5dp"-->
-<!--                                    />-->
-
-                                <Config.ExpandableSecondTextView
-                                    android:id="@+id/details_product_description"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:maxCollapsedLines="2"
-                                    android:layout_below="@+id/descriptionTitle"
-                                     app:animDuration="200">
-                                    <TextView
-                                        android:id="@id/expandable_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
-                                        android:textSize="16sp"
-                                        android:fontFamily="@font/cabin"
-                                        android:textColor="#666666" />
-                                    <ImageButton
-                                        android:id="@id/expand_collapse"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingLeft="16dp"
-                                        android:paddingTop="@dimen/space_5"
-                                        android:paddingBottom="@dimen/space_2"
-                                        android:paddingRight="@dimen/space_2"
-                                        android:layout_gravity="right|bottom"
-                                        android:background="@android:color/transparent"/>
-                                </Config.ExpandableSecondTextView>
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/details_product_description"
-                                    android:id="@+id/featuresTitle"
-                                    android:text="Seller Info:"
-                                    android:textSize="18dp"
-                                    android:padding="5dp"
-                                    android:fontFamily="@font/cabin"
-                                    android:textColor="@color/black"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    />
-                                <TextView
-                                    android:fontFamily="@font/cabin"
-                                    android:textSize="@dimen/space_14"
-                                    android:layout_below="@+id/featuresTitle"
-                                    android:id="@+id/sel_info"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"/>
-                                <View
-                                    android:id="@+id/line3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_below="@+id/details_product_description"
-                                    android:layout_alignStart="@+id/details_product_description"
-                                    android:layout_marginStart="0dp"
-                                    android:layout_marginLeft="@dimen/space_5"
-                                    android:layout_marginRight="@dimen/space_5"
-                                    android:background="@color/dark_gray" />
-
-
-
-                            </RelativeLayout>
-
-
-                        </android.support.v7.widget.CardView>
-<!--                        <TextView-->
-
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_below="@+id/card_view1"-->
-<!--                            android:layout_height="30dp"-->
-<!--                            android:layout_marginLeft="@dimen/space_5"-->
-<!--                            android:layout_marginRight="@dimen/space_5"-->
-<!--                            android:layout_weight=".50"-->
-<!--                            android:text="Select Color"-->
-<!--                            android:id="@+id/txtColor"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:layout_marginTop="@dimen/space_5"-->
-<!--                            android:background="@drawable/spinner_back_layout"-->
-<!--                            android:visibility="gone"/>-->
-
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtSize"-->
-<!--                            android:layout_below="@+id/txtColor"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="30dp"-->
-<!--                            android:layout_weight=".30"-->
-
-<!--                            android:text="Select Size"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:layout_marginTop="@dimen/space_5"-->
-<!--                            android:layout_marginLeft="@dimen/space_5"-->
-<!--                            android:layout_marginRight="@dimen/space_5"-->
-<!--                            android:visibility="gone"-->
-<!--                            android:background="@drawable/spinner_back_layout"/>-->
-
-<!--                        <android.support.v7.widget.CardView-->
-<!--                            android:id="@+id/card_view3"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:background="@android:color/white"-->
-<!--                            android:layout_marginTop="@dimen/space_5"-->
-<!--                            android:layout_below="@id/card_view1"-->
-<!--                            app:cardCornerRadius="3dp">-->
-<!--                            <RelativeLayout-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:paddingLeft="10dp"-->
-<!--                                android:paddingRight="10dp"-->
-
-<!--                                android:paddingBottom="10dp"-->
-
-
-<!--                                >-->
-
-
-<!--&lt;!&ndash;                                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:id="@+id/txtId"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_marginTop="@dimen/space_10"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:textSize="10dp"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:text="Weight "&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:visibility="invisible"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    />&ndash;&gt;-->
-<!--&lt;!&ndash;                                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:id="@+id/txtVar"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_marginTop="@dimen/space_10"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:textSize="10dp"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:text="Weight :"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:visibility="invisible"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    />&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:id="@+id/txtrate"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                 android:layout_marginTop="@dimen/space_10"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:textSize="15dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_marginLeft="5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:text="Weight :"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:padding="5dp"&ndash;&gt;-->
-
-
-<!--&lt;!&ndash;                                    />&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_marginTop="@dimen/space_10"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:id="@+id/product_rate"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_marginLeft="@dimen/space_10"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   android:textAlignment="center"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:visibility="gone"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:textSize="15dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:padding="5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:text="Rate"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_alignParentRight="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    />&ndash;&gt;-->
-<!--&lt;!&ndash;                                <RelativeLayout&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:id="@+id/rel_variant"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:layout_height="wrap_content"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    android:layout_marginTop="@dimen/space_10"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    android:visibility="gone"&ndash;&gt;-->
-<!--&lt;!&ndash;                                  >&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:id="@+id/unit_type"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:layout_centerHorizontal="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                                       android:layout_centerVertical="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:text=""&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:textColor="@color/black"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:textSize="15sp" />&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:layout_toRightOf="@id/unit_type"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                        android:layout_width="30dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        android:layout_height="30dp">&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    </ImageView>&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                </RelativeLayout>&ndash;&gt;-->
-
-<!--                               -->
-<!--                            </RelativeLayout>-->
-
-<!--                        </android.support.v7.widget.CardView>-->
-
-                        <View
-                            android:id="@+id/line6"
-                            android:layout_width="match_parent"
-                            android:layout_below="@id/card_view1"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="@dimen/space_2"
-                            android:layout_marginBottom="@dimen/space_2"
-                            android:layout_marginLeft="@dimen/space_5"
-                            android:layout_marginRight="@dimen/space_5"/>
-
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/card_view4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/white"
-
-android:visibility="gone"
-                            android:layout_below="@id/line6"
-                            app:cardCornerRadius="3dp">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingTop="@dimen/space_10"
-                                android:paddingBottom="10dp"
-                                android:layout_marginLeft="@dimen/space_20"
-
-                                >
-                                <TextView
-                                    android:id="@+id/txttot"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_centerVertical="true"
-                                    android:text="Total : "
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold|italic"
-                                    android:textSize="20dp"
-
-
-                                    />
-
-
-
-
-
-
-
-
-                            </RelativeLayout>
-
-                        </android.support.v7.widget.CardView>
-
-                    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtQty"
+                    android:text="Quantity:"
+                    android:textSize="18dp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/cabin"
+                    android:textColor="@color/black"
+                    />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/space_10"
+                    android:id="@+id/rel_no"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_subcat_minus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentStart="true"
+                        app:srcCompat="@drawable/minus"
+                        android:tint="@color/colorPrimaryDark"/>
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_subcat_contetiy"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="10dp"
+                        android:padding="@dimen/space_2"
+                        android:textAlignment="center"
+                        android:text="1"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:layout_toRightOf="@id/iv_subcat_minus"/>
+
+                    <ImageView
+                        android:id="@+id/iv_subcat_plus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+
+                        android:layout_marginTop="10dp"
+                        android:tint="@color/colorPrimaryDark"
+                        android:layout_toRightOf="@id/tv_subcat_contetiy"
+                        app:srcCompat="@drawable/plus" />
+
+
+
+
+                </RelativeLayout>
+                <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                    android:id="@+id/product_qty"
+                    android:layout_width="80dp"
+                    android:layout_height="@dimen/dimen_30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:background="@color/colorPrimary"
+                    android:elevation="6dp"
+                    app:textSize="7dp"
+                    app:initialNumber="1"
+                    app:finalNumber="10"
+                    app:textColor="@color/white"
+                    android:visibility="gone"
+                    />
 
             </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <View
 
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:background="@color/dark_gray"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="10dp"
+            app:cardElevation="@dimen/space_5"
+           >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/descriptionTitle"
+                    android:text="Description :"
+                    android:textSize="18dp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/cabin"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="@dimen/space_10"
+                    />
+
+
+
+                <Config.ExpandableSecondTextView
+                    android:id="@+id/details_product_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxCollapsedLines="2"
+                    android:layout_below="@+id/descriptionTitle"
+                    app:animDuration="200">
+                    <TextView
+                        android:id="@id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textSize="16sp"
+                        android:text="@string/app_name"
+                        android:fontFamily="@font/cabin"
+                        android:textColor="#666666" />
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="@dimen/space_5"
+                        android:paddingBottom="@dimen/space_2"
+                        android:paddingRight="@dimen/space_2"
+                        android:layout_gravity="right|bottom"
+                        android:background="@android:color/transparent"/>
+                </Config.ExpandableSecondTextView>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <View
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/space_10"
+
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:background="@color/dark_gray" />
+   <android.support.v7.widget.CardView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="@dimen/space_10"
+       app:cardElevation="@dimen/space_5">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/featuresTitle"
+                    android:text="Seller Info:"
+                    android:textSize="18dp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/cabin"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    />
+                <TextView
+
+                    android:textSize="@dimen/space_14"
+                    android:layout_below="@+id/featuresTitle"
+                    android:id="@+id/sel_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:fontFamily="@font/cabin"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+       </RelativeLayout>
+   </android.support.v7.widget.CardView>
+
+    <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="@dimen/space_5"
+                    android:background="@color/dark_gray" />
+
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:layout_marginTop="@dimen/space_10"
+       app:cardElevation="@dimen/space_5">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RewardsTitle"
+            android:text="Rewards :"
+            android:textSize="18dp"
+            android:padding="5dp"
+            android:fontFamily="@font/cabin"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="@dimen/space_10"
+
+            android:textAlignment="gravity"
+            android:gravity="center_vertical"
+            android:layout_alignParentStart="true"
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rewards"
+                android:text="00.00"
+                android:textSize="16dp"
+                android:padding="5dp"
+                android:fontFamily="@font/cabin"
+                android:textColor="@color/black"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="@dimen/space_12"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:drawableEnd="@drawable/icons8_medal_48px"
+                android:drawablePadding="@dimen/space_10"
+                />
 
         </RelativeLayout>
+    </android.support.v7.widget.CardView>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:background="@color/dark_gray" />
+
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginRight="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:text="Add To Cart"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/btn_buynow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_15"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_5"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:text="Buy Now"
+            android:textColor="@color/white" />
+
+<!--        <android.support.v7.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--        <RelativeLayout-->
+<!--            android:padding="2dp"-->
+<!--            android:id="@+id/relative_layout3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            >-->
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/rel_qty"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                >-->
+
+<!--                <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton-->
+<!--                    android:id="@+id/product_qty"-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="28dp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_marginRight="@dimen/space_10"-->
+
+<!--                    android:background="@color/colorPrimary"-->
+<!--                    android:elevation="6dp"-->
+<!--                    app:textSize="8dp"-->
+<!--                    app:initialNumber="0"-->
+<!--                    app:finalNumber="10"-->
+<!--                    app:textColor="@color/white"-->
+<!--                    android:visibility="gone"-->
+<!--                    />-->
+
+<!--            </RelativeLayout>-->
+<!--            <TextView-->
+<!--                android:id="@+id/details_product_per"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="3dp"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:layout_marginTop="3dp"-->
+<!--                android:padding="2dp"-->
+<!--                android:textStyle="italic"-->
+<!--                android:layout_alignParentRight="true"-->
+
+
+<!--                />-->
+<!--        </RelativeLayout>-->
+<!--        </android.support.v7.widget.CardView>-->
+
+
+
+
+
+
+
 
 
 
@@ -590,7 +696,8 @@ android:visibility="gone"
                 android:layout_toRightOf="@id/relll"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/white"
-                android:text="Checkout"/>
+                android:text="Checkout"
+                android:visibility="gone"/>
         </RelativeLayout>
 
     </RelativeLayout>
