@@ -181,8 +181,8 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
         preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
         language = preferences.getString( "language", "" );
         Double price = Double.valueOf( mList.getPrice() );
-        Double qty = Double.parseDouble( (String) holder.tv_contetiy.getText() );
-        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
+//        Double qty = Double.parseDouble( (String) holder.tv_contetiy.getText() );
+//        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
 
         String bk_lang="";
         String lang=mList.getLanguage().toString();
@@ -210,23 +210,22 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
         }
 
 
-        holder.tv_reward_point.setText(""+Double.parseDouble(mList.getRewards()));
+//        holder.tv_reward_point.setText(""+Double.parseDouble(mList.getRewards()));
         //  holder.tv_reward.setText( mList.getRewards() );
         holder.tv_price.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
-        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
+  //      holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
 
-        boolean is_inCart=dbcart.isInCart(mList.getProduct_id());
-        if (is_inCart)
-        {
-            holder.tv_add.setVisibility(View.GONE);
-            holder.rel_no.setVisibility(View.VISIBLE);
-            String qt=dbcart.getCartItemQty(mList.getProduct_id());
-            holder.tv_contetiy.setText(qt);
-        }
-        else
-        {
-
-        }
+//        boolean is_inCart=dbcart.isInCart(mList.getProduct_id());
+//        if (is_inCart)
+//        {
+//            holder.rel_no.setVisibility(View.VISIBLE);
+//            String qt=dbcart.getCartItemQty(mList.getProduct_id());
+//            holder.tv_contetiy.setText(qt);
+//        }
+//        else
+//        {
+//
+//        }
 
 
         double mrp = Double.parseDouble( mList.getMrp() );
@@ -247,117 +246,117 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 //            holder.tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
 //        }
         Double items = Double.parseDouble( dbcart.getInCartItemQty( mList.getProduct_id() ) );
-        // Double price = Double.parseDouble(mList.getPrice());
+        price = Double.parseDouble(mList.getPrice());
         Double reward = Double.parseDouble( mList.getRewards() );
-        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
+//        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
         // holder.tv_reward.setText( context.getResources().getString( R.string.currency ) + reward * items );
 
-        holder.tv_add.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  Toast.makeText(context,"2nd",Toast.LENGTH_LONG).show();
-                int in_stock=Integer.parseInt(modelList.get(position).getIn_stock());
-                if(in_stock==0)
-                {
-                    Toast.makeText(context,"Out of Stock",Toast.LENGTH_LONG).show();
-                }
-                else {
-                    HashMap<String, String> map = new HashMap<>();
-                    int qty = Integer.valueOf(holder.tv_contetiy.getText().toString());
-                    Double price = Double.parseDouble(modelList.get(position).getPrice());
-
-                    holder.tv_total.setText(context.getResources().getString(R.string.currency) + price);
-
-                    preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
-                    language = preferences.getString("language", "");
-
-
-                    String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
-                    Module module=new Module();
-                    module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),modelList.get(position).getPrice(),modelList.get(position).getProduct_description(),modelList.get(position).getRewards(),
-                            modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),
-                            modelList.get(position).getStock(),modelList.get(position).getTitle(),modelList.get(position).getMrp(),
-                            modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
-                    updateintent();
-                    holder.tv_add.setVisibility(View.GONE);
-                    holder.rel_no.setVisibility( View.VISIBLE );
-
-
-
-                }
-            }
-        } );
-        holder.iv_plus.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int qty = Integer.valueOf( holder.tv_contetiy.getText().toString() );
-                qty = qty + 1;
-                holder.tv_contetiy.setText( String.valueOf( qty ) );
-
-                preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
-                language = preferences.getString( "language", "" );
-
-
-                String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
-                double unit_price=Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
-                // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
-                Module module=new Module();
-                module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                        modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
-                        String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
-                        ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
-                        ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
-                updateintent();
-                //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
-
-                //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
-                //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
-
-            }
-        } );
-        holder.iv_minus.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int qty = 1;
-                if (!holder.tv_contetiy.getText().toString().equalsIgnoreCase( "" ))
-                    qty = Integer.valueOf( holder.tv_contetiy.getText().toString() );
-
-
-                if (qty > 1) {
-                    qty = qty - 1;
-                    holder.tv_contetiy.setText( String.valueOf( qty ) );
-                    preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
-                    language = preferences.getString( "language", "" );
-
-                    String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
-                    double unit_price=Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
-                    // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
-                    Module module=new Module();
-                    module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
-                            String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
-                            ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
-                            ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
-                    updateintent();
-                    //Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
-                    holder.tv_add.setVisibility( View.GONE );
-                    holder.rel_no.setVisibility( View.VISIBLE );
-
-                } else {
-                    dbcart.removeItemFromCart( modelList.get(position).getProduct_id() );
-                    updateintent();
-                    holder.rel_no.setVisibility( View.GONE );
-                    holder.tv_add.setVisibility( View.VISIBLE );
-                }
-                // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
-                //  Double price = Double.parseDouble(map.get("price").trim());
-                Double price = Double.parseDouble( modelList.get( position ).getPrice() );
-                holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
-
-            }
-
-        } );
+//        holder.tv_add.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //  Toast.makeText(context,"2nd",Toast.LENGTH_LONG).show();
+//                int in_stock=Integer.parseInt(modelList.get(position).getIn_stock());
+//                if(in_stock==0)
+//                {
+//                    Toast.makeText(context,"Out of Stock",Toast.LENGTH_LONG).show();
+//                }
+//                else {
+//                    HashMap<String, String> map = new HashMap<>();
+//                    int qty = Integer.valueOf(holder.tv_contetiy.getText().toString());
+//                    Double price = Double.parseDouble(modelList.get(position).getPrice());
+//
+//                    holder.tv_total.setText(context.getResources().getString(R.string.currency) + price);
+//
+//                    preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
+//                    language = preferences.getString("language", "");
+//
+//
+//                    String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
+//                    Module module=new Module();
+//                    module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
+//                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),modelList.get(position).getPrice(),modelList.get(position).getProduct_description(),modelList.get(position).getRewards(),
+//                            modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),
+//                            modelList.get(position).getStock(),modelList.get(position).getTitle(),modelList.get(position).getMrp(),
+//                            modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
+//                    updateintent();
+//                    holder.tv_add.setVisibility(View.GONE);
+//                    holder.rel_no.setVisibility( View.VISIBLE );
+//
+//
+//
+//                }
+//            }
+//        } );
+//        holder.iv_plus.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int qty = Integer.valueOf( holder.tv_contetiy.getText().toString() );
+//                qty = qty + 1;
+//                holder.tv_contetiy.setText( String.valueOf( qty ) );
+//
+//                preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
+//                language = preferences.getString( "language", "" );
+//
+//
+//                String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
+//                double unit_price=Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
+//                // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+//                Module module=new Module();
+//                module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
+//                        modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
+//                        String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
+//                        ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
+//                        ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
+//                updateintent();
+//                //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
+//
+//                //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
+//                //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
+//
+//            }
+//        } );
+//        holder.iv_minus.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int qty = 1;
+//                if (!holder.tv_contetiy.getText().toString().equalsIgnoreCase( "" ))
+//                    qty = Integer.valueOf( holder.tv_contetiy.getText().toString() );
+//
+//
+//                if (qty > 1) {
+//                    qty = qty - 1;
+//                    holder.tv_contetiy.setText( String.valueOf( qty ) );
+//                    preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
+//                    language = preferences.getString( "language", "" );
+//
+//                    String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
+//                    double unit_price=Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
+//                    // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+//                    Module module=new Module();
+//                    module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
+//                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
+//                            String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
+//                            ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
+//                            ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
+//                    updateintent();
+//                    //Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
+//                    holder.tv_add.setVisibility( View.GONE );
+//                    holder.rel_no.setVisibility( View.VISIBLE );
+//
+//                } else {
+//                    dbcart.removeItemFromCart( modelList.get(position).getProduct_id() );
+//                    updateintent();
+//                    holder.rel_no.setVisibility( View.GONE );
+//                    holder.tv_add.setVisibility( View.VISIBLE );
+//                }
+//                // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+//                //  Double price = Double.parseDouble(map.get("price").trim());
+//                Double price = Double.parseDouble( modelList.get( position ).getPrice() );
+//                holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
+//
+//            }
+//
+//        } );
     }
     @Override
     public int getItemCount() {
