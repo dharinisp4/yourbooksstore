@@ -1,26 +1,19 @@
 package Fragment;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.PhoneNumberUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -28,7 +21,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Adapter.Deal_OfDay_Adapter;
+import Adapter.NewAdapter;
 import Adapter.Home_adapter;
 import Adapter.Home_Icon_Adapter;
 import Adapter.Top_Selling_Adapter;
@@ -98,7 +90,7 @@ public class Home_fragment extends Fragment {
 
 
     //Deal O Day
-    private Deal_OfDay_Adapter deal_ofDay_adapter;
+    private NewAdapter new_adapter;
     private List<Deal_Of_Day_model> deal_of_day_models = new ArrayList<>();
     LinearLayout Deal_Linear_layout;
     FrameLayout Deal_Frame_layout, Deal_Frame_layout1;
@@ -327,26 +319,7 @@ module=new Module();
             }
         }));
 
-        //Recycler View Deal Of Day
-        rv_deal_of_day.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_deal_of_day, new RecyclerTouchListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-//                getid = deal_of_day_models.get(position).getId();
-//                Bundle args = new Bundle();
-//                Fragment fm = new Product_fragment();
-//                args.putString("cat_deal", "2");
-//                fm.setArguments(args);
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-//                        .addToBackStack(null).commit();
 
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
         View_all_deals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -361,6 +334,52 @@ module=new Module();
             }
         });
 
+
+        rv_deal_of_day.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_deal_of_day, new RecyclerTouchListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                getid = deal_of_day_models.get(position).getProduct_id();
+
+                Fragment details_fragment=new Details_Fragment();
+                Bundle args = new Bundle();
+
+                //Intent intent=new Intent(context, Product_details.class);
+                args.putString("product_id",deal_of_day_models.get(position).getProduct_id());
+                args.putString("product_name", deal_of_day_models.get(position).getProduct_name());
+                args.putString("category_id",deal_of_day_models.get(position).getCategory_id());
+                args.putString("product_description",deal_of_day_models.get(position).getProduct_description());
+                args.putString("deal_price",deal_of_day_models.get(position).getDeal_price());
+                args.putString("start_date",deal_of_day_models.get(position).getStart_date());
+                args.putString("start_time",deal_of_day_models.get(position).getStart_time());
+                args.putString("end_date",deal_of_day_models.get(position).getEnd_date());
+                args.putString("end_time",deal_of_day_models.get(position).getEnd_time());
+                args.putString("price",deal_of_day_models.get(position).getPrice());
+                args.putString( "mrp",deal_of_day_models.get( position ).getMrp() );
+                args.putString("product_image",deal_of_day_models.get(position).getProduct_image());
+                args.putString("status", deal_of_day_models.get(position).getStatus());
+                args.putString("in_stock", deal_of_day_models.get(position).getIn_stock());
+                args.putString("unit_value", deal_of_day_models.get(position).getUnit_value());
+                args.putString("unit", deal_of_day_models.get(position).getUnit());
+                args.putString("increament",deal_of_day_models.get(position).getIncreament());
+                args.putString("rewards",deal_of_day_models.get(position).getRewards());
+                args.putString("stock",deal_of_day_models.get(position).getStock());
+                args.putString("title",deal_of_day_models.get(position).getTitle());
+                args.putString("seller_id",deal_of_day_models.get(position).getSeller_id());
+                details_fragment.setArguments(args);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
+                        .addToBackStack(null).commit();
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+
+            }
+        }));
 
         //REcyclerview Top Selling
         rv_top_selling.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_top_selling, new RecyclerTouchListener.OnItemClickListener() {
@@ -668,7 +687,7 @@ module=new Module();
         }*/
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.GET,
-                BaseURL.GET_DEAL_OF_DAY_PRODUCTS, params, new Response.Listener<JSONObject>() {
+                BaseURL.GET_NEW_PRODUCT_URL, params, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -681,17 +700,17 @@ module=new Module();
                         if (status) {
                             Type listType = new TypeToken<List<Deal_Of_Day_model>>() {
                             }.getType();
-                            deal_of_day_models = gson.fromJson(response.getString("Deal_of_the_day"), listType);
-                            deal_ofDay_adapter = new Deal_OfDay_Adapter(deal_of_day_models, getActivity());
-                            rv_deal_of_day.setAdapter(deal_ofDay_adapter);
-                            deal_ofDay_adapter.notifyDataSetChanged();
+                            deal_of_day_models = gson.fromJson(response.getString("new_product"), listType);
+                            new_adapter = new NewAdapter(deal_of_day_models, getActivity());
+                            rv_deal_of_day.setAdapter(new_adapter);
+                            new_adapter.notifyDataSetChanged();
                             if (getActivity() != null) {
                                 if (deal_of_day_models.isEmpty()) {
                                     //  Toast.makeText(getActivity(), "No Deal For Day", Toast.LENGTH_SHORT).show();
                                     rv_deal_of_day.setVisibility(View.GONE);
-                                    Deal_Frame_layout.setVisibility(View.GONE);
-                                    Deal_Frame_layout1.setVisibility(View.GONE);
-                                    Deal_Linear_layout.setVisibility(View.GONE);
+                                  //  Deal_Frame_layout.setVisibility(View.GONE);
+                                    //Deal_Frame_layout1.setVisibility(View.GONE);
+                                    //Deal_Linear_layout.setVisibility(View.GONE);
                                 }
                             }
                         } else {

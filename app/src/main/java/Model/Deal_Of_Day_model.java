@@ -7,62 +7,96 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Rajesh Dabhi on 24/6/2017.
- */
+
 
 public class Deal_Of_Day_model {
 
-    String id;
+    String product_id;
     String product_name;
-    String product_name_arb;
+    String category_id;
+    String product_description;
     String deal_price;
     String start_date;
     String start_time;
     String end_date;
     String end_time;
-    String product_image;
     String price;
-
-
-
-    String mrp;
+    String product_image;
+    String product_name_arb;
+    String product_description_arb;
     String status;
     String in_stock;
     String unit_value;
     String unit;
     String increament;
     String rewards;
+    String stock;
     String title;
+    String mrp;
+    String seller_id;
+    String book_class;
+    String language;
+    String subject;
 
-
-    @SerializedName("sub_cat")
-    ArrayList<Category_subcat_model> category_sub_datas;
-
-    public Deal_Of_Day_model(List<Deal_Of_Day_model> deal_of_day_models, Activity activity) {
-    }
-
-    public String getProduct_name_arb() {
-        return product_name_arb;
-    }
-
-    public void setProduct_name_arb(String product_name_arb) {
+    public Deal_Of_Day_model(String product_id, String product_name, String category_id, String product_description, String deal_price, String start_date, String start_time, String end_date, String end_time, String price, String product_image, String product_name_arb, String product_description_arb, String status, String in_stock, String unit_value, String unit, String increament, String rewards, String stock, String title, String mrp, String seller_id, String book_class, String language, String subject) {
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.category_id = category_id;
+        this.product_description = product_description;
+        this.deal_price = deal_price;
+        this.start_date = start_date;
+        this.start_time = start_time;
+        this.end_date = end_date;
+        this.end_time = end_time;
+        this.price = price;
+        this.product_image = product_image;
         this.product_name_arb = product_name_arb;
-    }
-    public String getMrp() {
-        return mrp;
-    }
-
-    public void setMrp(String mrp) {
+        this.product_description_arb = product_description_arb;
+        this.status = status;
+        this.in_stock = in_stock;
+        this.unit_value = unit_value;
+        this.unit = unit;
+        this.increament = increament;
+        this.rewards = rewards;
+        this.stock = stock;
+        this.title = title;
         this.mrp = mrp;
+        this.seller_id = seller_id;
+        this.book_class = book_class;
+        this.language = language;
+        this.subject = subject;
     }
 
-    public String getId() {
-        return id;
+    public String getBook_class() {
+        return book_class;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBook_class(String book_class) {
+        this.book_class = book_class;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
     }
 
     public String getProduct_name() {
@@ -71,6 +105,22 @@ public class Deal_Of_Day_model {
 
     public void setProduct_name(String product_name) {
         this.product_name = product_name;
+    }
+
+    public String getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
+    }
+
+    public String getProduct_description() {
+        return product_description;
+    }
+
+    public void setProduct_description(String product_description) {
+        this.product_description = product_description;
     }
 
     public String getDeal_price() {
@@ -113,6 +163,14 @@ public class Deal_Of_Day_model {
         this.end_time = end_time;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public String getProduct_image() {
         return product_image;
     }
@@ -121,12 +179,20 @@ public class Deal_Of_Day_model {
         this.product_image = product_image;
     }
 
-    public String getPrice() {
-        return price;
+    public String getProduct_name_arb() {
+        return product_name_arb;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setProduct_name_arb(String product_name_arb) {
+        this.product_name_arb = product_name_arb;
+    }
+
+    public String getProduct_description_arb() {
+        return product_description_arb;
+    }
+
+    public void setProduct_description_arb(String product_description_arb) {
+        this.product_description_arb = product_description_arb;
     }
 
     public String getStatus() {
@@ -177,6 +243,14 @@ public class Deal_Of_Day_model {
         this.rewards = rewards;
     }
 
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -185,8 +259,19 @@ public class Deal_Of_Day_model {
         this.title = title;
     }
 
+    public String getMrp() {
+        return mrp;
+    }
 
-    public ArrayList<Category_subcat_model> getCategory_sub_datas() {
-        return category_sub_datas;
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
+    }
+
+    public String getSeller_id() {
+        return seller_id;
+    }
+
+    public void setSeller_id(String seller_id) {
+        this.seller_id = seller_id;
     }
 }

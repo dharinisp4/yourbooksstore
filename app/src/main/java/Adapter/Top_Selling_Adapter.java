@@ -143,7 +143,7 @@ SharedPreferences preferences;
             holder.product_nmae.setText(mList.getProduct_name());
         }
         else {
-            holder.product_nmae.setText(mList.getProduct_name_arb());
+            holder.product_nmae.setText(mList.getProduct_name());
 
         }
 
