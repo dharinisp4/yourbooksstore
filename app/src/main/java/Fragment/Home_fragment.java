@@ -156,19 +156,6 @@ public class Home_fragment extends Fragment {
 
         View_all_deals = (TextView) view.findViewById(R.id.view_all_deals);
         View_all_TopSell = (TextView) view.findViewById(R.id.view_all_topselling);
-//        Deal_Frame_layout = (FrameLayout) view.findViewById(R.id.deal_frame_layout);
-//        Deal_Frame_layout1 = (FrameLayout) view.findViewById(R.id.deal_frame_layout1);
-//        Deal_Linear_layout = (LinearLayout) view.findViewById(R.id.deal_linear_layout);
-
-
-        //Top Selling Poster
-      //  Top_Selling_Poster = (ImageView) view.findViewById(R.id.top_selling_imageview);
-
-        //Deal Of Day Poster
-       // Deal_Of_Day_poster = (ImageView) view.findViewById(R.id.deal_of_day_imageview);
-
-
-        //Scroll View
         scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
         scrollView.setSmoothScrollingEnabled(true);
 
@@ -311,9 +298,14 @@ public class Home_fragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 getid = menu_models.get(position).getId();
+
+                String title=menu_models.get(position).getTitle();
                 Bundle args = new Bundle();
-                Fragment fm = new Product_fragment();
+                Fragment fm = new SubCategory_Fragment();
                 args.putString("cat_id", getid);
+                args.putString( "title" ,title );
+                // args.putString( "" );
+                // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
                 fm.setArguments(args);
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
