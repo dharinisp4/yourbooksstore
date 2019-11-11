@@ -92,7 +92,7 @@ public class Shop_Now_fragment extends Fragment {
                 getid = category_modelList.get(position).getId();
                 getcat_title = category_modelList.get(position).getTitle();
                 Bundle args = new Bundle();
-                Fragment fm = new Product_fragment();
+                Fragment fm = new SubCategory_Fragment();
                 args.putString("cat_id", getid);
                 args.putString("cat_title", getcat_title);
                 fm.setArguments(args);

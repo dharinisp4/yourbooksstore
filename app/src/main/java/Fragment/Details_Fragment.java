@@ -74,9 +74,6 @@ import util.DatabaseHandlerWishList;
 import util.Session_management;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Details_Fragment extends Fragment {
      Context context;
     Button btn_add ,btn_checkout;
@@ -92,7 +89,7 @@ private List<Product_model> modelList ;
     double tot=0;
    // RelativeLayout rel_variant;
     SharedPreferences preferences ;
-    private List<RelatedProductModel> product_modelList = new ArrayList<>();
+    private List<Product_model> product_modelList = new ArrayList<>();
     private RelatedProductAdapter adapter_product;
 
     Activity activity;
@@ -264,6 +261,7 @@ private List<Product_model> modelList ;
             txtPer.setVisibility( View.GONE );
             txtMrp.setVisibility( View.GONE );
         }
+
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -380,7 +378,7 @@ private List<Product_model> modelList ;
 //        }
 
         //Toast.makeText(getActivity(),""+cat_id, Toast.LENGTH_LONG).show();
-      //  makeRelatedProductRequest(cat_id);
+        makeRelatedProductRequest(cat_id);
 
 //       try
 //        {
@@ -861,11 +859,11 @@ public boolean checkAttributeStatus(String atr)
                     if (status) {
                         ///         Toast.makeText(getActivity(),""+response.getString("data"),Toast.LENGTH_LONG).show();
                         Gson gson = new Gson();
-                        Type listType = new TypeToken<List<RelatedProductModel>>() {
+                        Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         loadingBar.dismiss();
-                        adapter_product = new RelatedProductAdapter( getActivity(),product_modelList,product_id);
+                        adapter_product = new RelatedProductAdapter( product_modelList,getActivity(),product_id);
 
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();

@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
 
     tools:context="gogrocer.tcc.LoginActivity">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -238,5 +245,6 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/dimen_15dp"/>        </RelativeLayout>
     </LinearLayout>
-
+    </RelativeLayout>
+</ScrollView>
 </RelativeLayout>
