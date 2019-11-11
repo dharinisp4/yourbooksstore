@@ -39,21 +39,27 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Adapter.Produccts_images_adapter;
 
+import Adapter.RelatedProductAdapter;
 import Config.BaseURL;
 
 import Config.ExpandableSecondTextView;
 import Model.Product_model;
+import Model.RelatedProductModel;
 import Model.SellerModel;
 import Module.Module;
 import gogrocer.tcc.AppController;
@@ -64,9 +70,8 @@ import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
+import util.DatabaseHandlerWishList;
 import util.Session_management;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -87,12 +92,13 @@ private List<Product_model> modelList ;
     double tot=0;
    // RelativeLayout rel_variant;
     SharedPreferences preferences ;
-//    private List<RelatedProductModel> product_modelList = new ArrayList<>();
-//    private RelatedProductAdapter adapter_product;
+    private List<RelatedProductModel> product_modelList = new ArrayList<>();
+    private RelatedProductAdapter adapter_product;
+
     Activity activity;
     //DatabaseHandler dbcart ;
     DatabaseCartHandler db_cart;
- //  WishlistHandler db_wish ;
+  DatabaseHandlerWishList db_wish ;
     //TextView txtColor,txtSize;
     TextView txtPer,sel_info,featuresTitle,tv_rewards;
 
@@ -105,7 +111,7 @@ private List<Product_model> modelList ;
     String language ;
 
     public static ProgressBar progressBar,pgb,pbg1;
-    RelativeLayout relativeLayout_spinner,relativeLayout_size,relativeLayout_color;
+    RelativeLayout relativeLayout_spinner,relativeLayout_size,relativeLayout_color ,rel_seller;
     Produccts_images_adapter imagesAdapter;
     String seller_id,cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
     String details_product_price,details_product_mrp,details_product_unit_value,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
@@ -115,7 +121,7 @@ private List<Product_model> modelList ;
     public static ImageView btn,img2;
     private TextView txtrate,txtTotal,txtBack;
     ListView listView,listView1;
-
+   // ArrayList<Product_model> product_modelList;
 
 
     List<String> image_list;
@@ -153,11 +159,11 @@ private List<Product_model> modelList ;
         loadingBar.setMessage("Loading...");
         loadingBar.setCanceledOnTouchOutside(false);
        //    tabLayout =(TabLayout)view.findViewById(R.id.desc_tablayout);
-     //   rv_cat = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
-        // gifImageView=(ImageView) view.findViewById(R.id.gifImageView);
-//        LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
-//        rv_cat.setLayoutManager(linearLayoutManager1);
-       // db_wish = new WishlistHandler( getActivity() );
+       rv_cat = (RecyclerView) view.findViewById(R.id.related_recycler);
+     //    gifImageView=(ImageView) view.findViewById(R.id.gifImageView);
+        LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        rv_cat.setLayoutManager(linearLayoutManager1);
+      db_wish = new DatabaseHandlerWishList( getActivity() );
         db_cart=new DatabaseCartHandler(getActivity());
         Bundle bundle=getArguments();
        // variantList=new ArrayList<>();
@@ -209,13 +215,14 @@ private List<Product_model> modelList ;
         tv_rewards=(TextView)view.findViewById(R.id.tv_rewards);
         sel_info=(TextView)view.findViewById(R.id.sel_info);
         featuresTitle=(TextView)view.findViewById(R.id.featuresTitle);
+        rel_seller = (RelativeLayout)view.findViewById( R.id.rel_seller );
 
       //  rel_variant=(RelativeLayout)view.findViewById(R.id.rel_variant);
         btn=(ImageView)view.findViewById(R.id.img_product);
         recyclerView=view.findViewById(R.id.recylerView);
         //   listView=findViewById(R.id.lstView);
-////            wish_after=(ImageView)view.findViewById(R.id.wish_after );
-//            wish_before = (ImageView)view.findViewById( R.id.wish_before );
+            wish_after=(ImageView)view.findViewById(R.id.wish_after );
+            wish_before = (ImageView)view.findViewById( R.id.wish_before );
 
         image_list=new ArrayList<>();
         tv_rewards.setText(""+Double.parseDouble(details_product_rewards));
@@ -276,8 +283,8 @@ private List<Product_model> modelList ;
                         ,details_product_price,unt,details_product_increament,prodcut_stock
                         ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
 
-                btn_add.setVisibility( View.GONE );
-                numberButton.setVisibility( View.VISIBLE );
+               // btn_add.setVisibility( View.GONE );
+             //   numberButton.setVisibility( View.VISIBLE );
                 numberButton.setNumber("1");
 //                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());
                 Toast.makeText( getActivity() ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
@@ -287,13 +294,13 @@ private List<Product_model> modelList ;
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
-                if(newValue<=0)
+                if(newValue<=1)
                 {
 
-                        db_cart.removeItemFromCart(product_id);
+                 //       db_cart.removeItemFromCart(product_id);
 
-                    numberButton.setVisibility(View.GONE);
-                    btn_add.setVisibility(View.VISIBLE);
+                 //   numberButton.setVisibility(View.GONE);
+                //    btn_add.setVisibility(View.VISIBLE);
                 }
                 else {
 
@@ -350,15 +357,16 @@ private List<Product_model> modelList ;
             boolean st=db_cart.isInCart(product_id);
             if(st==true)
             {
-             btn_add.setVisibility( View.GONE);
+             btn_add.setText( "Update Cart");
              numberButton.setNumber(db_cart.getCartItemQty(product_id));
-             numberButton.setVisibility( View.VISIBLE);
+          //   numberButton.setVisibility( View.VISIBLE);
             }
 
             int sell=Integer.parseInt(seller_id);
             if(sell<=0)
             {
-             featuresTitle.setVisibility(View.GONE);
+           //  featuresTitle.setVisibility(View.GONE);
+            rel_seller.setVisibility( View.GONE );
             }
             else
             {
@@ -832,6 +840,70 @@ public boolean checkAttributeStatus(String atr)
     }
     return sts;
 }
+    private void makeRelatedProductRequest(String cat_id) {
+        loadingBar.show();
+        String tag_json_obj = "json_product_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("cat_id", cat_id);
+
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_PRODUCT_URL, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("rett" +
+                        "", response.toString());
+
+                try {
+
+                    Boolean status = response.getBoolean("responce");
+
+                    if (status) {
+                        ///         Toast.makeText(getActivity(),""+response.getString("data"),Toast.LENGTH_LONG).show();
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<RelatedProductModel>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("data"), listType);
+                        loadingBar.dismiss();
+                        adapter_product = new RelatedProductAdapter( getActivity(),product_modelList,product_id);
+
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+
+                                loadingBar.dismiss();
+                                //  Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    loadingBar.dismiss();
+                    //   e.printStackTrace();
+                    String ex=e.getMessage();
+
+
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                //loadingBar.dismiss();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    loadingBar.dismiss();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
 
 
     private void makeGetLimiteRequest() {

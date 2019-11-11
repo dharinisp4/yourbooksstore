@@ -312,6 +312,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/space_10"
                     android:id="@+id/rel_no"
+                    android:visibility="gone"
                     >
                     <ImageView
                         android:id="@+id/iv_subcat_minus"
@@ -356,13 +357,13 @@
                     android:layout_marginTop="5dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="@dimen/space_10"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/bg_rounded_button"
                     android:elevation="6dp"
                     app:textSize="7dp"
                     app:initialNumber="1"
                     app:finalNumber="10"
                     app:textColor="@color/white"
-                    android:visibility="gone"
+
                     />
 
             </RelativeLayout>
@@ -443,15 +444,20 @@
             android:layout_marginLeft="@dimen/space_5"
             android:layout_marginRight="@dimen/space_5"
             android:background="@color/dark_gray" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rel_seller">
    <android.support.v7.widget.CardView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_marginTop="@dimen/space_10"
+       android:id="@+id/cardseller"
        app:cardElevation="@dimen/space_5">
        <RelativeLayout
            android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-
+           android:layout_height="wrap_content"
+           >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -481,15 +487,17 @@
    </android.support.v7.widget.CardView>
 
     <View
+        android:id="@+id/sellerview"
 
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-
+                    android:layout_below="@+id/cardseller"
+        android:layout_marginTop="@dimen/space_10"
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_marginRight="@dimen/space_5"
                     android:background="@color/dark_gray" />
 
-
+        </RelativeLayout>
     <android.support.v7.widget.CardView
 
         android:layout_width="match_parent"
@@ -557,7 +565,7 @@
             android:layout_marginLeft="@dimen/space_15"
             android:layout_marginRight="@dimen/space_15"
             android:layout_marginTop="@dimen/space_10"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/bg_rounded_button"
             android:clickable="true"
             android:text="Add To Cart"
             android:textColor="@color/white" />
@@ -568,7 +576,7 @@
             android:layout_marginRight="@dimen/space_15"
             android:layout_marginLeft="@dimen/space_15"
             android:layout_marginTop="@dimen/space_5"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/bg_rounded_button"
             android:clickable="true"
             android:text="Buy Now"
             android:textColor="@color/white" />
@@ -595,6 +603,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="@dimen/space_10"/>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/related_recycler"
                     android:layout_width="wrap_content"

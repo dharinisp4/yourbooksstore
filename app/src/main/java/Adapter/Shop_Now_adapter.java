@@ -37,8 +37,8 @@ public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyVi
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.tv_home_title);
-            image = (ImageView) view.findViewById(R.id.iv_home_img);
+            title = (TextView) view.findViewById(R.id.service_text);
+            image = (ImageView) view.findViewById(R.id.service_image);
         }
     }
 
