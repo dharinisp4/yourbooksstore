@@ -27,5 +27,6 @@
     <color name="add_cart_img">#C07614</color>
     <color name="stock">#9C8C8C8C</color>
     <color name="in_stock">#348C8C8C</color>
-
+    <color name="dialog">#90000000</color>
+    <color name="first_col">#D50525</color>
 </resources>

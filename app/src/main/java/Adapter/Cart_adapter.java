@@ -84,7 +84,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
         language=preferences.getString("language","");
             holder.tv_title.setText(map.get("product_name"));
 
-        holder.tv_reward.setText(map.get("rewards"));
+        holder.tv_reward.setText(""+Double.parseDouble(map.get("rewards")));
         holder.tv_price.setText( activity.getResources().getString(R.string.currency)+map.get("unit_price"));
 
         holder.tv_contetiy.setText(map.get("qty"));
@@ -147,6 +147,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                     mapProduct.put("title",map.get( "title" ));
                     mapProduct.put("mrp",map.get( "mrp" ));
                     mapProduct.put("sid",map.get( "sid" ));
+
 
                     boolean update_cart=dbHandler.setCart(mapProduct,qt);
                     if(update_cart==true)
@@ -263,7 +264,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 Double price = Double.parseDouble(map.get("price"));
                 Double reward = Double.parseDouble(map.get("rewards"));
                 holder.tv_total.setText("" + price * items);
-                holder.tv_reward.setText("" + reward * items);
+               // holder.tv_reward.setText("" + reward * items);
              //   holder.tv_total.setText(activity.getResources().getString(R.string.tv_cart_total) + price * items + " " + activity.getResources().getString(R.string.currency));
                 updateintent();
             }
@@ -280,6 +281,14 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             }
         });
 
+        holder.rel_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+          //  Toast.makeText(activity,""+map.get("rewards").toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     @Override
@@ -293,7 +302,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
         Button tv_add;
         RelativeLayout rel_no ;
         public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
-
+   RelativeLayout rel_click;
         public ProductHolder(View view) {
             super(view);
 
@@ -309,6 +318,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
             rel_no =(RelativeLayout)view.findViewById( R.id.rel_no );
+            rel_click =(RelativeLayout)view.findViewById( R.id.rel_click );
             tv_mrp =(TextView)view.findViewById( R.id.tv_subcat_mrp );
            // tv_add.setText(R.string.tv_pro_update);
             rel_no.setVisibility( View.VISIBLE );

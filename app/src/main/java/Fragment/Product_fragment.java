@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -60,6 +61,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class Product_fragment extends Fragment {
+    Dialog ProgressDialog;
     private static String TAG = Product_fragment.class.getSimpleName();
     private RecyclerView rv_cat;
     private TabLayout tab_cat;
@@ -86,7 +88,9 @@ public class Product_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
-
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
 
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);
         banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
@@ -105,21 +109,21 @@ public class Product_fragment extends Fragment {
         if (ConnectivityReceiver.isConnected()) {
             //Shop by Catogary
           //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
-            makeGetSliderCategoryRequest(id);
+           // makeGetSliderCategoryRequest(id);
             makeGetCategoryRequest(getcat_id);
 
             //Deal Of The Day Products
-            makedealIconProductRequest(get_deal_id);
+            //makedealIconProductRequest(get_deal_id);
             //Top Sale Products
-            maketopsaleProductRequest(get_top_sale_id);
+            //maketopsaleProductRequest(get_top_sale_id);
 
 
             //Slider
-            makeGetBannerSliderRequest();
+            //makeGetBannerSliderRequest();
 
         }
 
-        tab_cat.setVisibility(View.VISIBLE);
+        tab_cat.setVisibility(View.GONE);
         tab_cat.setSelectedTabIndicatorColor(getActivity().getResources().getColor(R.color.white));
 
         tab_cat.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -162,6 +166,7 @@ public class Product_fragment extends Fragment {
     //Get Shop By Catogary
     private void makeGetCategoryRequest(final String parent_id) {
 
+        ProgressDialog.show();
         String tag_json_obj = "json_category_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("parent", parent_id);
@@ -173,6 +178,7 @@ public class Product_fragment extends Fragment {
 
                 try {
                     Boolean status = response.getBoolean("responce");
+                    ProgressDialog.dismiss();
                     if (status) {
 
                         Gson gson = new Gson();
@@ -200,12 +206,14 @@ public class Product_fragment extends Fragment {
 
                     }
                 } catch (JSONException e) {
+                    ProgressDialog.dismiss();
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ProgressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
@@ -218,7 +226,7 @@ public class Product_fragment extends Fragment {
 
     //Get Shop By Catogary Products
     private void makeGetProductRequest(String cat_id) {
-
+ProgressDialog.show();
         String tag_json_obj = "json_product_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("cat_id", cat_id);
@@ -231,6 +239,7 @@ public class Product_fragment extends Fragment {
                 Log.d("qwerty", response.toString());
 
                 try {
+                    ProgressDialog.dismiss();
                     Boolean status = response.getBoolean("responce");
                     if (status) {
                         Gson gson = new Gson();
@@ -252,7 +261,7 @@ public class Product_fragment extends Fragment {
 
                     }
                 } catch (JSONException e) {
-
+                    ProgressDialog.dismiss();
                     String msg=e.getMessage();
                     if(msg.equals("No value for data"))
                     {
@@ -266,6 +275,7 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                ProgressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

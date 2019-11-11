@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Support_info_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -38,7 +40,8 @@ public class About_us_fragment extends Fragment {
     private static String TAG = About_us_fragment.class.getSimpleName();
 
     private TextView tv_info;
-
+    Dialog ProgressDialog;
+    Module module;
     public About_us_fragment() {
         // Required empty public constructor
     }
@@ -54,6 +57,10 @@ public class About_us_fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_terms_condition, container, false);
 
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
+        module=new Module();
         tv_info = (TextView) view.findViewById(R.id.tv_info);
 
         String geturl = getArguments().getString("url");
@@ -76,6 +83,7 @@ public class About_us_fragment extends Fragment {
      */
     private void makeGetInfoRequest(String url) {
 
+        ProgressDialog.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_info_req";
 
@@ -86,6 +94,7 @@ public class About_us_fragment extends Fragment {
                 Log.d(TAG, response.toString());
 
                 try {
+                    ProgressDialog.dismiss();
                     // Parsing json array response
                     // loop through each json object
 
@@ -108,6 +117,7 @@ public class About_us_fragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
+                    ProgressDialog.dismiss();
                     e.printStackTrace();
                     Toast.makeText(getActivity(),
                             "Error: " + e.getMessage(),
@@ -117,10 +127,12 @@ public class About_us_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String msg=module.VolleyErrorMessage(error);
+                Toast.makeText(getActivity(), ""+msg, Toast.LENGTH_SHORT).show();
+//                VolleyLog.d(TAG, "Error: " + error.getMessage());
+//                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+//                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 

@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ActivityNotFoundException;
@@ -66,6 +67,7 @@ import Model.Category_model;
 import Model.Deal_Of_Day_model;
 import Model.Home_Icon_model;
 import Model.Top_Selling_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.CustomSlider;
 import gogrocer.tcc.MainActivity;
@@ -83,7 +85,9 @@ public class Home_fragment extends Fragment {
     private Home_adapter adapter;
     private boolean isSubcat = false;
     LinearLayout Search_layout;
+    Dialog ProgressDialog;
     String getid;
+    Module module;
     String getcat_title;
     ScrollView scrollView;
     SharedPreferences sharedpreferences;
@@ -131,6 +135,10 @@ public class Home_fragment extends Fragment {
         ((MainActivity) getActivity()).updateHeader();
         view.setFocusableInTouchMode(true);
         view.requestFocus();
+module=new Module();
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -598,6 +606,7 @@ public class Home_fragment extends Fragment {
 
 
     private void makeGetCategoryRequest() {
+        ProgressDialog.show();
         String tag_json_obj = "json_category_req";
         isSubcat = false;
         Map<String, String> params = new HashMap<String, String>();
@@ -613,6 +622,8 @@ public class Home_fragment extends Fragment {
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
                 try {
+                    ProgressDialog.dismiss();
+                   // module.showToast("asdasdasds",getActivity());
                     if (response != null && response.length() > 0) {
                         Boolean status = response.getBoolean("responce");
                         if (status) {
@@ -626,6 +637,7 @@ public class Home_fragment extends Fragment {
                         }
                     }
                 } catch (JSONException e) {
+                    ProgressDialog.dismiss();
                     e.printStackTrace();
                 }
             }
@@ -633,6 +645,7 @@ public class Home_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                ProgressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
@@ -914,4 +927,6 @@ public class Home_fragment extends Fragment {
 //        callIntent.setData(Uri.parse("tel:" + "919889887711"));
 //        startActivity(callIntent);
 //    }
+
+
 }

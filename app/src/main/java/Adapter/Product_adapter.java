@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +52,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
     Module module;
     SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp ,tv_discount;
+        public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp ,tv_discount,tv_reward_point;
         public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
         public RelativeLayout rel_click;
         public Double reward;
@@ -67,6 +69,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             tv_reward = (TextView) view.findViewById(R.id.tv_reward_point);
             tv_total = (TextView) view.findViewById(R.id.tv_subcat_total);
             tv_discount=(TextView)view.findViewById( R.id.product_discount );
+            tv_reward_point=(TextView)view.findViewById( R.id.tv_reward_point );
             tv_contetiy = (TextView) view.findViewById(R.id.tv_subcat_contetiy);
             tv_subcat_mrp = (TextView) view.findViewById(R.id.tv_subcat_mrp);
             tv_add = (Button) view.findViewById(R.id.tv_subcat_add);
@@ -125,6 +128,10 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                     args.putString("stock", modelList.get(position).getStock());
                     args.putString("title", modelList.get(position).getTitle());
                     args.putString("seller_id", modelList.get(position).getSeller_id());
+                    args.putString("book_class", modelList.get(position).getBook_class());
+                    args.putString("language", modelList.get(position).getLanguage());
+                    args.putString("subject", modelList.get(position).getSubject());
+
                     details_fragment.setArguments(args);
                     FragmentManager fragmentManager = activity.getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
@@ -167,10 +174,23 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         Double price = Double.valueOf( mList.getPrice() );
         Double qty = Double.parseDouble( (String) holder.tv_contetiy.getText() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
+
+   String bk_lang="";
+        String lang=mList.getLanguage().toString();
+        if(lang.equals("") || lang.isEmpty() || lang.equals(null))
+        {
+
+        }
+        else
+        {
+            bk_lang=" | "+getBookLanguage(lang);
+        }
+
+
         if (language.contains( "english" )) {
-            holder.tv_title.setText( mList.getProduct_name() );
+            holder.tv_title.setText( mList.getProduct_name() +bk_lang );
         } else {
-            holder.tv_title.setText( mList.getProduct_name() );
+            holder.tv_title.setText( mList.getProduct_name() +bk_lang);
 
         }
 
@@ -181,8 +201,8 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         }
 
 
-
-        holder.tv_reward.setText( mList.getRewards() );
+        holder.tv_reward_point.setText(""+Double.parseDouble(mList.getRewards()));
+      //  holder.tv_reward.setText( mList.getRewards() );
         holder.tv_price.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
 
@@ -221,7 +241,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         // Double price = Double.parseDouble(mList.getPrice());
         Double reward = Double.parseDouble( mList.getRewards() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
-        holder.tv_reward.setText( context.getResources().getString( R.string.currency ) + reward * items );
+       // holder.tv_reward.setText( context.getResources().getString( R.string.currency ) + reward * items );
 
         holder.tv_add.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -246,7 +266,10 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                     String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
                     Module module=new Module();
                    module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),modelList.get(position).getPrice(),modelList.get(position).getProduct_description(),modelList.get(position).getRewards(),modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock(),modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),qty);
+                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),modelList.get(position).getPrice(),modelList.get(position).getProduct_description(),modelList.get(position).getRewards(),
+                           modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),
+                           modelList.get(position).getStock(),modelList.get(position).getTitle(),modelList.get(position).getMrp(),
+                           modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
                     updateintent();
                    holder.tv_add.setVisibility(View.GONE);
                     holder.rel_no.setVisibility( View.VISIBLE );
@@ -275,7 +298,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                         modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
                         String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
                         ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
-                        ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),qty);
+                        ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
                 updateintent();
           //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
 
@@ -306,7 +329,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                             modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
                             String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
                             ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
-                            ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),qty);
+                            ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
                     updateintent();
                     //Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
                         holder.tv_add.setVisibility( View.GONE );
@@ -375,5 +398,33 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         Intent updates = new Intent("Grocery_cart");
         updates.putExtra("type", "update");
         context.sendBroadcast(updates);
+    }
+
+    public String getBookLanguage(String lan)
+    {
+        String lang="";
+        List<String> list=new ArrayList<>();
+        try
+        {
+            JSONArray array=new JSONArray(lan);
+            for(int i=0; i<array.length();i++)
+            {
+               String l=array.getString(i).toString();
+                list.add(l);
+            }
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        StringBuilder sb = new StringBuilder();
+
+        // Appends characters one by one
+        for (String  ch : list) {
+            sb.append(ch);
+            sb.append(",");
+        }
+        lang=sb.toString();
+        return lang.substring(0,lang.length()-1);
     }
 }

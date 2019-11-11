@@ -32,6 +32,31 @@ public class Top_Selling_model {
     String stock;
     String title;
     String seller_id;
+    String book_class,subject,language;
+
+    public String getBook_class() {
+        return book_class;
+    }
+
+    public void setBook_class(String book_class) {
+        this.book_class = book_class;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
     @SerializedName("sub_cat")
     ArrayList<Category_subcat_model> category_sub_datas;

@@ -1,8 +1,6 @@
 package Model;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
+
 
 public class Product_model {
 
@@ -27,12 +25,13 @@ public class Product_model {
     String rewards;
     String stock;
     String title;
-
     String mrp;
     String seller_id;
+    String book_class;
+    String language;
+    String subject;
 
-
-    public Product_model(String product_id, String product_name, String category_id, String product_description, String deal_price, String start_date, String start_time, String end_date, String end_time, String price, String product_image, String product_name_arb, String product_description_arb, String status, String in_stock, String unit_value, String unit, String increament, String rewards, String stock, String title, String mrp, String seller_id) {
+    public Product_model(String product_id, String product_name, String category_id, String product_description, String deal_price, String start_date, String start_time, String end_date, String end_time, String price, String product_image, String product_name_arb, String product_description_arb, String status, String in_stock, String unit_value, String unit, String increament, String rewards, String stock, String title, String mrp, String seller_id, String book_class, String language, String subject) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.category_id = category_id;
@@ -56,6 +55,33 @@ public class Product_model {
         this.title = title;
         this.mrp = mrp;
         this.seller_id = seller_id;
+        this.book_class = book_class;
+        this.language = language;
+        this.subject = subject;
+    }
+
+    public String getBook_class() {
+        return book_class;
+    }
+
+    public void setBook_class(String book_class) {
+        this.book_class = book_class;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getProduct_id() {

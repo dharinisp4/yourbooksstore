@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class DatabaseCartHandler extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "bs_db";
+    private static String DB_NAME = "bkk_db";
     private static int DB_VERSION = 3;
     private SQLiteDatabase db;
 
@@ -33,6 +33,9 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_DESC = "product_description";
     public static final String COLUMN_SID = "sid";
+    public static final String COLUMN_BOOK_CLASS="book_class";
+    public static final String COLUMN_SUBJECT="subject";
+    public static final String COLUMN_LANGUAGE="language";
 
 
 
@@ -62,6 +65,9 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
                 + COLUMN_INCREMENT + " TEXT, "
                 + COLUMN_REWARDS + " TEXT, "
                 + COLUMN_SID + " TEXT NOT NULL, "
+                + COLUMN_BOOK_CLASS + " TEXT NOT NULL, "
+                + COLUMN_SUBJECT + " TEXT NOT NULL, "
+                + COLUMN_LANGUAGE + " TEXT NOT NULL, "
                 + COLUMN_TITLE + " TEXT "
 
                 + ")";
@@ -93,6 +99,9 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             values.put(COLUMN_TITLE, map.get(COLUMN_TITLE));
             values.put(COLUMN_SID, map.get(COLUMN_SID));
             values.put(COLUMN_DESC, map.get(COLUMN_DESC));
+            values.put(COLUMN_BOOK_CLASS, map.get(COLUMN_BOOK_CLASS));
+            values.put(COLUMN_SUBJECT, map.get(COLUMN_SUBJECT));
+            values.put(COLUMN_LANGUAGE, map.get(COLUMN_LANGUAGE));
 
 
             db.insert(CART_TABLE, null, values);
@@ -206,6 +215,9 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             map.put(COLUMN_TITLE, cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
             map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
             map.put(COLUMN_SID,cursor.getString(cursor.getColumnIndex( COLUMN_SID ) ));
+            map.put(COLUMN_BOOK_CLASS,cursor.getString(cursor.getColumnIndex( COLUMN_BOOK_CLASS ) ));
+            map.put(COLUMN_LANGUAGE,cursor.getString(cursor.getColumnIndex( COLUMN_LANGUAGE ) ));
+            map.put(COLUMN_SUBJECT,cursor.getString(cursor.getColumnIndex( COLUMN_SUBJECT ) ));
 
             list.add(map);
             cursor.moveToNext();
@@ -238,6 +250,10 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
             map.put(COLUMN_TITLE, cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
             map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
             map.put(COLUMN_SID,cursor.getString(cursor.getColumnIndex( COLUMN_SID ) ));
+            map.put(COLUMN_BOOK_CLASS,cursor.getString(cursor.getColumnIndex( COLUMN_BOOK_CLASS ) ));
+            map.put(COLUMN_LANGUAGE,cursor.getString(cursor.getColumnIndex( COLUMN_LANGUAGE ) ));
+            map.put(COLUMN_SUBJECT,cursor.getString(cursor.getColumnIndex( COLUMN_SUBJECT ) ));
+
             list.add(map);
             cursor.moveToNext();
         }

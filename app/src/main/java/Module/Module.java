@@ -2,7 +2,21 @@ package Module;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,13 +29,14 @@ import java.util.List;
 import Model.ProductVariantModel;
 
 import gogrocer.tcc.MainActivity;
+import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 
 public class Module {
 
 
     public static void setIntoCart(Activity activity, String cart_id, String product_id, String product_images, String cat_id, String details_product_name, String details_product_price, String details_product_desc, String details_product_rewards, String details_product_unit_price, String details_product_unit,
-                                   String details_product_increament, String details_product_inStock, String details_product_title, String details_product_mrp, String seller_id, float qty)
+                                   String details_product_increament, String details_product_inStock, String details_product_title, String details_product_mrp, String seller_id,String book_class,String subject,String language, float qty)
     {
         DatabaseCartHandler db_cart=new DatabaseCartHandler(activity);
         HashMap<String, String> mapProduct=new HashMap<String, String>();
@@ -40,6 +55,10 @@ public class Module {
         mapProduct.put("title",details_product_title);
         mapProduct.put("mrp",details_product_mrp);
         mapProduct.put("sid",seller_id);
+        mapProduct.put("book_class",book_class);
+        mapProduct.put("subject",subject);
+        mapProduct.put("language",language);
+
 
         try {
 
@@ -76,8 +95,45 @@ public class Module {
         activity.sendBroadcast(updates);
     }
 
+    public  String VolleyErrorMessage(VolleyError error)
+    {
+        String str_error ="";
+        if (error instanceof TimeoutError) {
+            str_error="Connection Timeout";
+        } else if (error instanceof AuthFailureError) {
+            str_error="Session Timeout";
+            //TODO
+        } else if (error instanceof ServerError) {
+            str_error="Server not responding please try again later";
+            //TODO
+        } else if (error instanceof NetworkError) {
+            str_error="Server not responding please try again later";
+            //TODO
+        } else if (error instanceof ParseError) {
+            //TODO
+            str_error="An Unknown error occur";
+        }else if(error instanceof NoConnectionError){
+            str_error="no Internet Connection";
+        }
 
+        return str_error;
+    }
 
+    public void showToast(String msg,Activity activity)
+    {
+        LayoutInflater layoutInflater=activity.getLayoutInflater();
+
+        View layout=layoutInflater.inflate(R.layout.toast_layout,(ViewGroup)activity.findViewById(R.id.toast_root));
+
+        ImageView toast_img=(ImageView)layout.findViewById(R.id.toast_img);
+        TextView toast_text=(TextView) layout.findViewById(R.id.toast_text);
+        toast_text.setText(msg);
+        Toast toast=new Toast(activity.getApplicationContext());
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
 
     }
 

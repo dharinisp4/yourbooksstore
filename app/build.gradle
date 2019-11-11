@@ -86,6 +86,7 @@ dependencies {
         // exclusion is not necessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'
     }
+
     implementation 'com.google.guava:guava:19.0'
     implementation 'org.bouncycastle:bcprov-jdk16:1.46'
     implementation 'com.razorpay:checkout:1.5.2'

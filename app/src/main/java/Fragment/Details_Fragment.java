@@ -94,7 +94,7 @@ private List<Product_model> modelList ;
     DatabaseCartHandler db_cart;
  //  WishlistHandler db_wish ;
     //TextView txtColor,txtSize;
-    TextView txtPer,sel_info,featuresTitle;
+    TextView txtPer,sel_info,featuresTitle,tv_rewards;
 
     ImageView wish_before ,wish_after ;
     int status=0;
@@ -109,7 +109,7 @@ private List<Product_model> modelList ;
     Produccts_images_adapter imagesAdapter;
     String seller_id,cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
     String details_product_price,details_product_mrp,details_product_unit_value,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
-    //String details_product_size,details_product_color;
+    String details_product_class,details_product_subject,details_product_language;
     String details_product_status , product_startDate , product_EndDate , product_startTime ,product_endTime ,product_dealprice ,prodcut_stock;
 
     public static ImageView btn,img2;
@@ -189,6 +189,9 @@ private List<Product_model> modelList ;
         details_product_increament=bundle.getString("increment");
         details_product_title=bundle.getString("title");
         seller_id=bundle.getString("seller_id");
+        details_product_class=bundle.getString("book_class");
+        details_product_subject=bundle.getString("subject");
+        details_product_language=bundle.getString("language");
 
 
 //         list=new ArrayList<String>();
@@ -203,6 +206,7 @@ private List<Product_model> modelList ;
         btn_checkout=(Button)view.findViewById(R.id.btn_f_Add_to_cart);
        // cardView=(CardView)view.findViewById(R.id.card_view2);
         txtPer=(TextView)view.findViewById(R.id.product_discount);
+        tv_rewards=(TextView)view.findViewById(R.id.tv_rewards);
         sel_info=(TextView)view.findViewById(R.id.sel_info);
         featuresTitle=(TextView)view.findViewById(R.id.featuresTitle);
 
@@ -214,6 +218,7 @@ private List<Product_model> modelList ;
 //            wish_before = (ImageView)view.findViewById( R.id.wish_before );
 
         image_list=new ArrayList<>();
+        tv_rewards.setText(""+Double.parseDouble(details_product_rewards));
 //        progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
 
         //txtColor=(TextView)view.findViewById(R.id.txtColor);
@@ -269,7 +274,7 @@ private List<Product_model> modelList ;
                         product_images,cat_id,details_product_name,
                         details_product_price,details_product_desc,details_product_rewards
                         ,details_product_price,unt,details_product_increament,prodcut_stock
-                        ,details_product_title,details_product_mrp,seller_id,qty);
+                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
 
                 btn_add.setVisibility( View.GONE );
                 numberButton.setVisibility( View.VISIBLE );
@@ -302,7 +307,7 @@ private List<Product_model> modelList ;
                             product_images,cat_id,details_product_name,
                             String.valueOf(qty*unit_price),details_product_desc,details_product_rewards
                             ,details_product_price,unt,details_product_increament,prodcut_stock
-                            ,details_product_title,details_product_mrp,seller_id,qty);
+                            ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
 
                 }
                 }

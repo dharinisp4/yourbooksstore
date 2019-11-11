@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.bouncycastle.jce.provider.JCEBlockCipher;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,24 +17,31 @@ import java.util.HashMap;
 
 public class DatabaseHandlerWishList extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "wishlist";
+    private static String DB_NAME = "bkwish_db";
     private static int DB_VERSION = 2;
     private SQLiteDatabase db;
 
     public static final String WISHLIST_TABLE = "wishlist";
 
     public static final String COLUMN_ID = "product_id";
-    public static final String COLUMN_QTY = "qty";
     public static final String COLUMN_IMAGE = "product_image";
     public static final String COLUMN_CAT_ID = "category_id";
     public static final String COLUMN_NAME = "product_name";
+    public static final String COLUMN_DESC = "product_description";
+    public static final String COLUMN_INSTOCK = "in_stock";
+    public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_PRICE = "price";
+    public static final String COLUMN_MRP = "mrp";
     public static final String COLUMN_REWARDS = "rewards";
     public static final String COLUMN_UNIT_VALUE = "unit_value";
     public static final String COLUMN_UNIT = "unit";
     public static final String COLUMN_INCREAMENT = "increament";
     public static final String COLUMN_STOCK = "stock";
     public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_SELLER_ID = "seller_id";
+    public static final String COLUMN_BOOK_CLASS = "book_class";
+    public static final String COLUMN_SUBJECT = "subject";
+    public static final String COLUMN_LANGUAGE = "language";
 
     public DatabaseHandlerWishList(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -44,32 +53,38 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
 
         String exe = "CREATE TABLE IF NOT EXISTS " + WISHLIST_TABLE
                 + "(" + COLUMN_ID + " integer primary key, "
-                + COLUMN_QTY + " DOUBLE NOT NULL,"
                 + COLUMN_IMAGE + " TEXT NOT NULL, "
                 + COLUMN_CAT_ID + " TEXT NOT NULL, "
                 + COLUMN_NAME + " TEXT NOT NULL, "
+                + COLUMN_DESC + " TEXT NOT NULL, "
                 + COLUMN_PRICE + " DOUBLE NOT NULL, "
+                + COLUMN_MRP + " DOUBLE NOT NULL, "
                 + COLUMN_REWARDS + " DOUBLE NOT NULL, "
                 + COLUMN_UNIT_VALUE + " DOUBLE NOT NULL, "
                 + COLUMN_UNIT + " TEXT NOT NULL, "
+                + COLUMN_STATUS + " TEXT NOT NULL, "
                 + COLUMN_INCREAMENT + " DOUBLE NOT NULL, "
                 + COLUMN_STOCK + " DOUBLE NOT NULL, "
-                + COLUMN_TITLE + " TEXT NOT NULL "
+                + COLUMN_INSTOCK + " DOUBLE NOT NULL, "
+                + COLUMN_TITLE + " TEXT NOT NULL, "
+                + COLUMN_SELLER_ID + " TEXT NOT NULL, "
+                + COLUMN_BOOK_CLASS + " TEXT NOT NULL, "
+                + COLUMN_SUBJECT + " TEXT NOT NULL, "
+                + COLUMN_LANGUAGE + " TEXT NOT NULL "
                 + ")";
 
         db.execSQL(exe);
 
     }
 
-    public boolean setwishlist(HashMap<String, String> map, Float Qty) {
+    public boolean setwishlist(HashMap<String, String> map) {
         db = getWritableDatabase();
         if (isInWishlist(map.get(COLUMN_ID))) {
-            db.execSQL("update " + WISHLIST_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "' where " + COLUMN_ID + "=" + map.get(COLUMN_ID));
+            //db.execSQL("update " + WISHLIST_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "' where " + COLUMN_ID + "=" + map.get(COLUMN_ID));
             return false;
         } else {
             ContentValues values = new ContentValues();
             values.put(COLUMN_ID, map.get(COLUMN_ID));
-            values.put(COLUMN_QTY, Qty);
             values.put(COLUMN_CAT_ID, map.get(COLUMN_CAT_ID));
             values.put(COLUMN_IMAGE, map.get(COLUMN_IMAGE));
             values.put(COLUMN_INCREAMENT, map.get(COLUMN_INCREAMENT));
@@ -80,6 +95,15 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
             values.put(COLUMN_TITLE, map.get(COLUMN_TITLE));
             values.put(COLUMN_UNIT, map.get(COLUMN_UNIT));
             values.put(COLUMN_UNIT_VALUE, map.get(COLUMN_UNIT_VALUE));
+            values.put(COLUMN_SELLER_ID, map.get(COLUMN_SELLER_ID));
+            values.put(COLUMN_BOOK_CLASS, map.get(COLUMN_BOOK_CLASS));
+            values.put(COLUMN_SUBJECT, map.get(COLUMN_SUBJECT));
+            values.put(COLUMN_LANGUAGE, map.get(COLUMN_LANGUAGE));
+            values.put(COLUMN_INSTOCK, map.get(COLUMN_INSTOCK));
+            values.put(COLUMN_MRP, map.get(COLUMN_MRP));
+            values.put(COLUMN_DESC, map.get(COLUMN_DESC));
+            values.put(COLUMN_STATUS, map.get(COLUMN_STATUS));
+
             db.insert(WISHLIST_TABLE, null, values);
             return true;
         }
@@ -95,27 +119,9 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
         return false;
     }
 
-    public String getWishlistItemQty(String id) {
 
-        db = getReadableDatabase();
-        String qry = "Select *  from " + WISHLIST_TABLE + " where " + COLUMN_ID + " = " + id;
-        Cursor cursor = db.rawQuery(qry, null);
-        cursor.moveToFirst();
-        return cursor.getString(cursor.getColumnIndex(COLUMN_QTY));
 
-    }
 
-    public String getInWishlistItemQty(String id) {
-        if (isInWishlist(id)) {
-            db = getReadableDatabase();
-            String qry = "Select *  from " + WISHLIST_TABLE + " where " + COLUMN_ID + " = " + id;
-            Cursor cursor = db.rawQuery(qry, null);
-            cursor.moveToFirst();
-            return cursor.getString(cursor.getColumnIndex(COLUMN_QTY));
-        } else {
-            return "0.0";
-        }
-    }
 
     public int getWishlistCount() {
         db = getReadableDatabase();
@@ -124,19 +130,6 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    public String getTotalAmountFromWishlist() {
-        db = getReadableDatabase();
-        String qry = "Select SUM(" + COLUMN_QTY + " * " + COLUMN_PRICE + ") as total_amount  from " + WISHLIST_TABLE;
-        Cursor cursor = db.rawQuery(qry, null);
-        cursor.moveToFirst();
-        String total = cursor.getString(cursor.getColumnIndex("total_amount"));
-        if (total != null) {
-
-            return total;
-        } else {
-            return "0";
-        }
-    }
 
 
     public ArrayList<HashMap<String, String>> getWishlistAll() {
@@ -148,7 +141,6 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
         for (int i = 0; i < cursor.getCount(); i++) {
             HashMap<String, String> map = new HashMap<>();
             map.put(COLUMN_ID, cursor.getString(cursor.getColumnIndex(COLUMN_ID)));
-            map.put(COLUMN_QTY, cursor.getString(cursor.getColumnIndex(COLUMN_QTY)));
             map.put(COLUMN_IMAGE, cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE)));
             map.put(COLUMN_CAT_ID, cursor.getString(cursor.getColumnIndex(COLUMN_CAT_ID)));
             map.put(COLUMN_NAME, cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
@@ -159,25 +151,20 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
             map.put(COLUMN_INCREAMENT, cursor.getString(cursor.getColumnIndex(COLUMN_INCREAMENT)));
             map.put(COLUMN_STOCK, cursor.getString(cursor.getColumnIndex(COLUMN_STOCK)));
             map.put(COLUMN_TITLE, cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
+            map.put(COLUMN_SELLER_ID, cursor.getString(cursor.getColumnIndex(COLUMN_SELLER_ID)));
+            map.put(COLUMN_BOOK_CLASS, cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_CLASS)));
+            map.put(COLUMN_SUBJECT, cursor.getString(cursor.getColumnIndex(COLUMN_SUBJECT)));
+            map.put(COLUMN_LANGUAGE, cursor.getString(cursor.getColumnIndex(COLUMN_LANGUAGE)));
+            map.put(COLUMN_INSTOCK, cursor.getString(cursor.getColumnIndex(COLUMN_INSTOCK)));
+            map.put(COLUMN_MRP, cursor.getString(cursor.getColumnIndex(COLUMN_MRP)));
+            map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
+            map.put(COLUMN_STATUS, cursor.getString(cursor.getColumnIndex(COLUMN_STATUS)));
             list.add(map);
             cursor.moveToNext();
         }
         return list;
     }
 
-    public String getColumnRewards() {
-        db = getReadableDatabase();
-        String qry = "SELECT rewards FROM " + WISHLIST_TABLE;
-        Cursor cursor = db.rawQuery(qry, null);
-        cursor.moveToFirst();
-        String reward = cursor.getString(cursor.getColumnIndex("rewards"));
-        if (reward != null) {
-
-            return reward;
-        } else {
-            return "0";
-        }
-    }
 
     public String getFavConcatString() {
         db = getReadableDatabase();
