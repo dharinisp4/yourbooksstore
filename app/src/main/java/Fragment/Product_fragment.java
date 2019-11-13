@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -16,7 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -42,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.Product_adapter;
+import Adapter.SortAdapter;
 import Config.BaseURL;
 import Model.Category_model;
 import Model.Product_model;
@@ -56,11 +60,9 @@ import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
 
-public class Product_fragment extends Fragment {
+
+public class Product_fragment extends Fragment implements View.OnClickListener{
     Dialog ProgressDialog;
     private static String TAG = Product_fragment.class.getSimpleName();
     private RecyclerView rv_cat;
@@ -72,9 +74,10 @@ public class Product_fragment extends Fragment {
     private Product_adapter adapter_product;
     private SliderLayout  banner_slider;
     String language;
-    ImageView img_no_products;
+    ImageView img_no_products,img_filter,img_sort;
     SharedPreferences preferences;
     private DatabaseCartHandler dbcart;
+    private SortAdapter sortAdapter ;
     public Product_fragment() {
     }
 
@@ -92,6 +95,8 @@ public class Product_fragment extends Fragment {
         ProgressDialog.setContentView(R.layout.progressbar);
         ProgressDialog.setCancelable(false);
 
+        img_sort=(ImageView)view.findViewById(R.id.img_sort);
+        img_filter=(ImageView)view.findViewById(R.id.img_filter);
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);
         banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
         rv_cat = (RecyclerView) view.findViewById(R.id.rv_subcategory);
@@ -103,6 +108,8 @@ public class Product_fragment extends Fragment {
         String getcat_title = getArguments().getString("cat_title");
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_product_name));
         img_no_products=(ImageView)view.findViewById(R.id.img_no_items);
+        img_sort.setOnClickListener(this);
+        img_filter.setOnClickListener(this);
         // check internet connection
     dbcart=new DatabaseCartHandler(getActivity());
 
@@ -113,15 +120,17 @@ public class Product_fragment extends Fragment {
             makeGetCategoryRequest(getcat_id);
 
             //Deal Of The Day Products
-            //makedealIconProductRequest(get_deal_id);
+            makedealIconProductRequest(get_deal_id);
             //Top Sale Products
-            //maketopsaleProductRequest(get_top_sale_id);
+            maketopsaleProductRequest(get_top_sale_id);
 
 
             //Slider
             //makeGetBannerSliderRequest();
 
         }
+
+
 
         tab_cat.setVisibility(View.GONE);
         tab_cat.setSelectedTabIndicatorColor(getActivity().getResources().getColor(R.color.white));
@@ -373,6 +382,8 @@ ProgressDialog.show();
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("Deal_of_the_day"), listType);
                         adapter_product = new Product_adapter(product_modelList, getActivity());
+                        img_no_products.setVisibility(View.GONE);
+                        rv_cat.setVisibility(View.VISIBLE);
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
@@ -383,6 +394,12 @@ ProgressDialog.show();
 
                     }
                 } catch (JSONException e) {
+                    String msg=e.getMessage();
+                    if(msg.equals("No value for data"))
+                    {
+                        rv_cat.setVisibility(View.GONE);
+                        img_no_products.setVisibility(View.VISIBLE);
+                    }
                     e.printStackTrace();
                 }
             }
@@ -423,6 +440,8 @@ ProgressDialog.show();
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("top_selling_product"), listType);
                         adapter_product = new Product_adapter(product_modelList, getActivity());
+                        img_no_products.setVisibility(View.GONE);
+                        rv_cat.setVisibility(View.VISIBLE);
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
@@ -433,6 +452,12 @@ ProgressDialog.show();
 
                     }
                 } catch (JSONException e) {
+                    String msg=e.getMessage();
+                    if(msg.equals("No value for data"))
+                    {
+                        rv_cat.setVisibility(View.GONE);
+                        img_no_products.setVisibility(View.VISIBLE);
+                    }
                     e.printStackTrace();
                 }
             }
@@ -545,7 +570,68 @@ ProgressDialog.show();
     }
 
 
+    @Override
+    public void onClick(View view) {
 
+        int id = view.getId();
+
+        if(id==R.id.img_sort)
+        {
+            final ArrayList <String>  sort_List = new ArrayList<>(  );
+            sort_List.add( "Price Low - High" );
+            sort_List.add("Price High - Low");
+            sort_List.add("Newest First");
+            //  sort_List.add ("Trending");
+            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+            LayoutInflater layoutInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row=layoutInflater.inflate(R.layout.dialog_sort_layout,null);
+            ListView l1=(ListView)row.findViewById(R.id.list_sort);
+            sortAdapter=new SortAdapter(getActivity(),sort_List);
+            //productVariantAdapter.notifyDataSetChanged();
+            l1.setAdapter(sortAdapter);
+            builder.setView(row);
+            final AlertDialog ddlg=builder.create();
+            ddlg.show();
+            l1.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    ddlg.dismiss();
+                    String item = sort_List.get( i ).toString();
+
+                    if (item.equals( "Price Low - High" ))
+                    {
+                        // ddlg.dismiss();
+                        //makeAscendingProductRequest( cat_id );
+                        //tab_grid.setImageResource( R.drawable.icons8_activity_grid_2_48px);
+                        //tab_grid.setTag( "grid" );
+                    }
+                    else if(item.equals( "Price High - Low" ))
+                    {
+                        // Toast.makeText( getActivity(), "category id :" +getcat_id, Toast.LENGTH_SHORT ).show();
+                        // ddlg.dismiss();
+                       // makeDescendingProductRequest(cat_id);
+                        //tab_grid.setImageResource( R.drawable.icons8_activity_grid_2_48px);
+                        //tab_grid.setTag( "grid" );
+
+
+                    }
+                    else if(item.equals( "Newest First" ))
+                    {
+                        // ddlg.dismiss();
+                        //makeNewestProductRequest( cat_id );
+                        //tab_grid.setImageResource( R.drawable.icons8_activity_grid_2_48px);
+                    //    tab_grid.setTag( "grid" );
+                    }
+                    else if (item.equals( "Trending" ))
+                    {
+
+                    }
+
+                    // Toast.makeText( getActivity(),"Showing items:" +item,Toast.LENGTH_LONG ).show();
+                }
+            } );
+        }
+    }
 }
 
 

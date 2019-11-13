@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,15 +36,14 @@ import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.Session_management;
 
-/**
- * Created by Rajesh Dabhi on 29/6/2017.
- */
+
 
 public class Reward_fragment extends Fragment {
     private GifImageView gifImageView;
     private static String TAG = Reward_fragment.class.getSimpleName();
     RelativeLayout Reedeem_Points;
     TextView Rewards_Points;
+    String rewards_amt,wallet_amt="";
     private Session_management sessionManagement;
 
     public Reward_fragment() {
@@ -70,14 +70,24 @@ public class Reward_fragment extends Fragment {
         Reedeem_Points.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Shift_Reward_to_WAllet();
-                gifImageView.setVisibility(View.VISIBLE);
-                final View myview = gifImageView;
-                view.postDelayed(new Runnable() {
-                    public void run() {
-                        myview.setVisibility(View.GONE);
-                    }
-                }, 5000);
+
+                double rew=Double.parseDouble(rewards_amt);
+                if(rew<100)
+                {
+                    Toast.makeText(getActivity(),"Minimum Reedem Points limit is 100",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Shift_Reward_to_WAllet();
+                    gifImageView.setVisibility(View.VISIBLE);
+                    final View myview = gifImageView;
+                    view.postDelayed(new Runnable() {
+                        public void run() {
+                            myview.setVisibility(View.GONE);
+                        }
+                    }, 5000);
+                }
+
             }
         });
 
@@ -97,16 +107,24 @@ public class Reward_fragment extends Fragment {
                     public void onResponse(String response) {
                         try {
                             JSONObject jObj = new JSONObject(response);
-                            if (jObj.optString("success").equalsIgnoreCase("success")) {
-                                String rewards_points = jObj.getString("total_rewards");
-                                if (rewards_points.equals("null")) {
-                                    Rewards_Points.setText("0");
-                                } else {
-                                    Rewards_Points.setText(rewards_points);
-                                    SharedPref.putString(getActivity(), BaseURL.KEY_REWARDS_POINTS, rewards_points);
-                                }
+                            String status=jObj.getString("success");
+                            if(status.equals("success"))
+                            {
+                             rewards_amt=jObj.getString("rewards");
+                             wallet_amt=jObj.getString("wallet");
+                                Rewards_Points.setText(""+Double.parseDouble(rewards_amt.toString()));
+                                    SharedPref.putString(getActivity(), BaseURL.KEY_REWARDS_POINTS, rewards_amt);
+                           // if (jObj.optString("success").equalsIgnoreCase("success")) {
+//                                String rewards_points = jObj.getString("total_rewards");
+//                                if (rewards_points.equals("null")) {
+//                                    Rewards_Points.setText("0");
+//                                } else {
+//                                    Rewards_Points.setText(rewards_points);
+//                                    SharedPref.putString(getActivity(), BaseURL.KEY_REWARDS_POINTS, rewards_points);
+//                                }
 
                             } else {
+                                Rewards_Points.setText("0.0");
                                 // Toast.makeText(DashboardPage.this, "" + jObj.optString("msg"), Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
@@ -129,7 +147,8 @@ public class Reward_fragment extends Fragment {
     private void Shift_Reward_to_WAllet() {
         final String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         final String getreward = Rewards_Points.getText().toString();
-        final String getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
+       // final String getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
+        final String getwallet = wallet_amt;
         if (NetworkConnection.connectionChecking(getActivity())) {
             RequestQueue rq = Volley.newRequestQueue(getActivity());
             StringRequest postReq = new StringRequest(Request.Method.POST, BaseURL.BASE_URL+"index.php/api/shift",

@@ -151,10 +151,12 @@ public class Payment_fragment extends Fragment {
         Relative_used_wallet = (RelativeLayout) view.findViewById(R.id.relative_used_wallet);
         Relative_used_coupon = (RelativeLayout) view.findViewById(R.id.relative_used_coupon);
 
+        getRefresrh();
+        final String WAmmount = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
         //Show  Wallet
         getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
         my_wallet_ammount = (TextView) view.findViewById(R.id.user_wallet);
-        my_wallet_ammount.setText(getwallet+getActivity().getString(R.string.currency));
+        my_wallet_ammount.setText(getActivity().getString(R.string.currency)+WAmmount);
         db_cart = new DatabaseCartHandler(getActivity());
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -216,13 +218,14 @@ public class Payment_fragment extends Fragment {
                     }
                     final String Ammount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
                     final String WAmmount = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
-                    my_wallet_ammount.setText(WAmmount+getActivity().getResources().getString(R.string.currency));
-                    payble_ammount.setText(Ammount+getResources().getString(R.string.currency));
+                    //Toast.makeText(getActivity(),"sd\n "+WAmmount.toString(),Toast.LENGTH_LONG).show();
+                    my_wallet_ammount.setText(getActivity().getResources().getString(R.string.currency)+WAmmount);
+                    payble_ammount.setText(getResources().getString(R.string.currency)+Ammount);
                     used_wallet_ammount.setText("");
                     Relative_used_wallet.setVisibility(View.GONE);
                     if (checkBox_coupon.isChecked()) {
                         final String ammount = SharedPref.getString(getActivity(), BaseURL.COUPON_TOTAL_AMOUNT);
-                        payble_ammount.setText(ammount+getResources().getString(R.string.currency));
+                        payble_ammount.setText(getResources().getString(R.string.currency)+ammount);
                     }
                 }
             }
@@ -299,6 +302,10 @@ public class Payment_fragment extends Fragment {
                     jObjP.put("price", map.get("price"));
                     jObjP.put("rewards", map.get("rewards"));
                     jObjP.put("store_id", map.get("sid"));
+                    jObjP.put("book_class", map.get("book_class"));
+                    jObjP.put("subject", map.get("subject"));
+                    jObjP.put("language", map.get("language"));
+
                     passArray.put(jObjP);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -458,10 +465,10 @@ public class Payment_fragment extends Fragment {
                                             checkBox_coupon.setTextColor(getResources().getColor(R.color.dark_black));
                                         }
                                     }
-                                    payble_ammount.setText(total_amount+getResources().getString(R.string.currency));
+                                    payble_ammount.setText(getResources().getString(R.string.currency)+total_amount);
                                     used_wallet_ammount.setText("(" + getResources().getString(R.string.currency) + Used_Wallet_amount + ")");
                                     SharedPref.putString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT, total_amount);
-                                    my_wallet_ammount.setText(Wallet_amount+getResources().getString(R.string.currency));
+                                    my_wallet_ammount.setText(getResources().getString(R.string.currency)+Wallet_amount);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -517,7 +524,7 @@ public class Payment_fragment extends Fragment {
                                 total_amount = obj.getString("Total_amount");
                                 String Used_coupon_amount = obj.getString("coupon_value");
                                 if (obj.optString("responce").equals("true")) {
-                                    payble_ammount.setText(total_amount+getResources().getString(R.string.currency));
+                                    payble_ammount.setText(getResources().getString(R.string.currency)+total_amount);
                                     SharedPref.putString(getActivity(), BaseURL.COUPON_TOTAL_AMOUNT, total_amount);
                                     Toast.makeText(getActivity(), obj.getString("msg"), Toast.LENGTH_SHORT).show();
                                     used_coupon_ammount.setText("(" + getActivity().getResources().getString(R.string.currency) + Used_coupon_amount + ")");
@@ -527,7 +534,7 @@ public class Payment_fragment extends Fragment {
                                     Toast.makeText(getActivity(), obj.getString("msg"), Toast.LENGTH_SHORT).show();
                                     et_Coupon.setText("");
                                     used_coupon_ammount.setText("");
-                                    payble_ammount.setText(total_amount+getResources().getString(R.string.currency));
+                                    payble_ammount.setText(getResources().getString(R.string.currency)+total_amount);
                                     Promo_code_layout.setVisibility(View.GONE);
                                 }
 
@@ -636,6 +643,40 @@ public class Payment_fragment extends Fragment {
 
 
 
+    }
+
+
+    public void getRefresrh() {
+        String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
+        RequestQueue rq = Volley.newRequestQueue(getActivity());
+        StringRequest strReq = new StringRequest(Request.Method.GET, BaseURL.WALLET_REFRESH + user_id,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            if (jObj.optString("success").equalsIgnoreCase("success")) {
+                                String wallet_amount = jObj.getString("wallet");
+                               // Wallet_Ammount.setText(wallet_amount);
+                                SharedPref.putString(getActivity(), BaseURL.KEY_WALLET_Ammount, wallet_amount);
+                            } else {
+                                // Toast.makeText(DashboardPage.this, "" + jObj.optString("msg"), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+        };
+        rq.add(strReq);
     }
 
 
