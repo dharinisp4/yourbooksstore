@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +44,8 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
     private static String TAG = Add_delivery_address_fragment.class.getSimpleName();
 
-    private EditText et_phone, et_name, et_pin, et_address;
+    private EditText et_phone, et_name,  et_address;
+    private AutoCompleteTextView et_pin ;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_house, tv_socity, select_city;
     private String getsocity = "";
@@ -53,9 +56,11 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
     private String getlocation_id;
 
+
     public Add_delivery_address_fragment() {
         // Required empty public constructor
     }
+    String pincodes [] ={"111111","2222222","3333333","333445"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,12 +77,13 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
         sessionManagement = new Session_management(getActivity());
 
+
         et_phone = (EditText) view.findViewById(R.id.et_add_adres_phone);
         et_name = (EditText) view.findViewById(R.id.et_add_adres_name);
         tv_phone = (TextView) view.findViewById(R.id.tv_add_adres_phone);
         tv_name = (TextView) view.findViewById(R.id.tv_add_adres_name);
         tv_pin = (TextView) view.findViewById(R.id.tv_add_adres_pin);
-        et_pin = (EditText) view.findViewById(R.id.et_add_adres_pin);
+        et_pin = (AutoCompleteTextView) view.findViewById(R.id.et_add_adres_pin);
         et_address = (EditText) view.findViewById(R.id.address);
         tv_house = (TextView) view.findViewById(R.id.tv_add_adres_home);
         tv_socity = (TextView) view.findViewById(R.id.tv_add_adres_socity);
@@ -122,6 +128,14 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
         btn_update.setOnClickListener(this);
         select_city.setOnClickListener(this);
+
+        et_pin.setOnTouchListener( new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                et_pin.showDropDown();
+                return false;
+            }
+        } );
 
         return view;
     }

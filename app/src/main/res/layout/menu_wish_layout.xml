@@ -12,20 +12,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/space_10"
-        android:gravity="bottom">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/space_9"
+
+        >
 
         <ImageView
             android:id="@+id/hotlist_bell"
-            android:layout_width="28dp"
+            android:layout_width="24dp"
             android:layout_height="26dp"
             android:layout_margin="4dp"
             android:contentDescription="bell"
             android:gravity="center"
             android:tint="@color/white"
-            app:srcCompat="@drawable/wish_before" />
+
+            app:srcCompat="@drawable/ic_bookmark_black_24dp" />
 
         <TextView
             android:id="@+id/actionbar_wish_textview"

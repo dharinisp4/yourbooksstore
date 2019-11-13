@@ -586,7 +586,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fm = new Shop_Now_fragment();
         } else if (id == R.id.nav_my_profile) {
             fm = new Edit_profile_fragment();
-        } else if (id == R.id.nav_support) {
+        }
+        else if (id == R.id.nav_my_wishlist) {
+            fm = new Wishlist_fragment();
+        }
+        else if (id == R.id.nav_support) {
             String smsNumber = "91958/4267640";
             Intent sendIntent = new Intent("android.intent.action.MAIN");
             sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));

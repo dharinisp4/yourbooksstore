@@ -81,6 +81,7 @@ public class Payment_fragment extends Fragment {
     RadioGroup radioGroup;
     String Prefrence_TotalAmmount;
     String getwallet;
+    String checkout , product_id;
     LinearLayout Promo_code_layout, Coupon_and_wallet;
     RelativeLayout Apply_Coupon_Code, Relative_used_wallet, Relative_used_coupon;
 
@@ -183,6 +184,10 @@ public class Payment_fragment extends Fragment {
         gettime = getArguments().getString("gettime");
         getlocation_id = getArguments().getString("getlocationid");
         getstore_id = getArguments().getString("getstoreid");
+
+        checkout = getArguments().getString( "checkout" );
+        product_id= getArguments().getString( "product_id" );
+
         payble_ammount = (TextView) view.findViewById(R.id.payable_ammount);
         order_ammount = (TextView) view.findViewById(R.id.order_ammount);
         used_wallet_ammount = (TextView) view.findViewById(R.id.used_wallet_ammount);
@@ -359,7 +364,13 @@ public class Payment_fragment extends Fragment {
                     if (status) {
                         String msg = response.getString("data");
                         String msg_arb=response.getString("data_arb");
-                        db_cart.clearCart();
+                        if(checkout.equalsIgnoreCase( "null" )) {
+                            db_cart.clearCart();
+                        }
+                        else
+                        {
+                            db_cart.removeItemFromCart( product_id );
+                        }
                         Bundle args = new Bundle();
                         Fragment fm = new Thanks_fragment();
                         args.putString("msg", msg);

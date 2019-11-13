@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
 import gogrocer.tcc.R;
 
 public class SortAdapter extends BaseAdapter {
@@ -38,7 +37,7 @@ public class SortAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService( Context.LAYOUT_INFLATER_SERVICE);
 
         View row=layoutInflater.inflate( R.layout.row_spinner,viewGroup,false);
 

@@ -101,30 +101,40 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(getphone)) {
             tv_phone.setTextColor(getResources().getColor(R.color.black));
+            et_phone.requestFocus();
+            et_phone.setError( "invalid" );
             focusView = et_phone;
             cancel = true;
-        } else if (!isPhoneValid(getphone)) {
+        }
+        else if (getphone.charAt( 0 )<6) {
 
             et_phone.setError("Invalid Mobile number");
-          //  tv_phone.setText(getResources().getString(R.string.phone_too_short));
-            //tv_phone.setTextColor(getResources().getColor(R.color.black));
+          //  et_phone.setText(getResources().getString(R.string.phone_too_short));
+            et_phone.setTextColor(getResources().getColor(R.color.black));
             focusView = et_phone;
             cancel = true;
         }
 
+
         if (TextUtils.isEmpty(getname)) {
             tv_name.setTextColor(getResources().getColor(R.color.black));
+            et_name.requestFocus();
+            et_name.setError( "mandatory field" );
             focusView = et_name;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getpassword)) {
             tv_password.setTextColor(getResources().getColor(R.color.black));
+            et_password.setError( "mandatory field" );
+            et_password.requestFocus();
             focusView = et_password;
             cancel = true;
         } else if (!isPasswordValid(getpassword)) {
-            tv_password.setText(getResources().getString(R.string.password_too_short));
+          //  tv_password.setText(getResources().getString(R.string.password_too_short));
             tv_password.setTextColor(getResources().getColor(R.color.black));
+            et_password.setError( "too short" );
+            et_password.requestFocus();
             focusView = et_password;
             cancel = true;
         }
@@ -133,8 +143,10 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = et_email;
             cancel = true;
         } else if (!isEmailValid(getemail)) {
-            tv_email.setText(getResources().getString(R.string.invalide_email_address));
-            tv_email.setTextColor(getResources().getColor(R.color.black));
+           // et_email.setText(getResources().getString(R.string.invalide_email_address));
+            et_email.setTextColor(getResources().getColor(R.color.black));
+            et_email.setError( "invalid" );
+            et_email.requestFocus();
             focusView = et_email;
             cancel = true;
         }

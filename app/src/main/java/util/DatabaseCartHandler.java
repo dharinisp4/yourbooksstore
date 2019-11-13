@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class DatabaseCartHandler extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "bkk_db";
+    private static String DB_NAME = "bkks_db";
     private static int DB_VERSION = 3;
     private SQLiteDatabase db;
 
@@ -65,9 +65,9 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
                 + COLUMN_INCREMENT + " TEXT, "
                 + COLUMN_REWARDS + " TEXT, "
                 + COLUMN_SID + " TEXT NOT NULL, "
-                + COLUMN_BOOK_CLASS + " TEXT NOT NULL, "
-                + COLUMN_SUBJECT + " TEXT NOT NULL, "
-                + COLUMN_LANGUAGE + " TEXT NOT NULL, "
+                + COLUMN_BOOK_CLASS + " TEXT , "
+                + COLUMN_SUBJECT + " TEXT  , "
+                + COLUMN_LANGUAGE + " TEXT , "
                 + COLUMN_TITLE + " TEXT "
 
                 + ")";
@@ -242,7 +242,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getCartProduct(int product_id) {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
         db = getReadableDatabase();
-        String qry = "Select *  from " + CART_TABLE+ " where " + COLUMN_CID + " = " + product_id;
+        String qry = "Select *  from " + CART_TABLE+ " where " + COLUMN_ID + " = " + product_id;
         Cursor cursor = db.rawQuery(qry, null);
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {

@@ -69,7 +69,7 @@ public class Module {
                 mainActivity.setCartCounter("" + db_cart.getCartCount());
 
                 //   context.setCartCounter("" + holder.db_cart.getCartCount());
-                Toast.makeText(activity, "Added to Cart" +db_cart.getCartCount(), Toast.LENGTH_LONG).show();
+               Toast.makeText(activity, "Added to Cart" +db_cart.getCartCount(), Toast.LENGTH_LONG).show();
                 int n = db_cart.getCartCount();
                 updateintent(activity);
           //      txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
@@ -96,7 +96,7 @@ public class Module {
         activity.sendBroadcast(updates);
     }
 
-    public  String VolleyErrorMessage(VolleyError error)
+    public static String VolleyErrorMessage(VolleyError error)
     {
         String str_error ="";
         if (error instanceof TimeoutError) {
@@ -173,13 +173,13 @@ public class Module {
                 mainActivity.setCartCounter("" + db_cart.getWishlistCount());
 
                 //   context.setCartCounter("" + holder.db_cart.getCartCount());
-                Toast.makeText(activity, "Added to Cart" +db_cart.getWishlistCount(), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Added to WishList" +db_cart.getWishlistCount(), Toast.LENGTH_LONG).show();
                 int n = db_cart.getWishlistCount();
                 updateintent(activity);
                 //      txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
 
             } else if (tr == false) {
-                Toast.makeText(activity, "cart updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "WishList updated", Toast.LENGTH_LONG).show();
                 // txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
             }
 

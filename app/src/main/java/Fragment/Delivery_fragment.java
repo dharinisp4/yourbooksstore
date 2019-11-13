@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,15 +59,14 @@ import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 27/6/2017.
- */
+
 
 public class Delivery_fragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = Delivery_fragment.class.getSimpleName();
 
     private TextView tv_afternoon, tv_morning, tv_total, tv_item, tv_socity;
+
     private TextView tv_date, tv_time;
     private EditText et_address;
     private RelativeLayout btn_checkout, tv_add_adress;
@@ -84,8 +84,8 @@ SharedPreferences preferences;
     private String gettime = "";
     private String getdate = "";
 
-    private String deli_charges;
-    String store_id;
+    private String deli_charges ,checkout;
+    String store_id ,product_id;
 String language;
     public Delivery_fragment() {
         // Required empty public constructor
@@ -103,6 +103,9 @@ String language;
         View view = inflater.inflate(R.layout.fragment_delivery_time, container, false);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.delivery));
+        Bundle bundle = getArguments();
+        checkout = bundle.getString( "checkout" );
+        product_id = bundle.getString( "product_id" );
 
         store_id = SharedPref.getString(getActivity(), BaseURL.STORE_ID);
         preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
@@ -113,6 +116,7 @@ String language;
         tv_total = (TextView) view.findViewById(R.id.tv_deli_total);
         tv_item = (TextView) view.findViewById(R.id.tv_deli_item);
         btn_checkout = (RelativeLayout) view.findViewById(R.id.btn_deli_checkout);
+
         rv_address = (RecyclerView) view.findViewById(R.id.rv_deli_address);
         rv_address.setLayoutManager(new LinearLayoutManager(getActivity()));
         //tv_socity = (TextView) view.findViewById(R.id.tv_deli_socity);
@@ -320,6 +324,8 @@ String language;
             args.putString( "house",house );
             args.putString( "society",society );
             args.putString( "phone",phone );
+            args.putString( "checkout" ,checkout );
+            args.putString( "product_id",product_id );
             fm.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

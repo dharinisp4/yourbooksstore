@@ -81,6 +81,9 @@ public class BaseURL {
     public static String GET_PRODUCT_URL = BASE_URL + "index.php/api/get_products";
     public static String GET_NEW_PRODUCT_URL = BASE_URL + "index.php/api/new_product";
     public static String GET_SELLER_URL = BASE_URL + "index.php/api/get_seller";
+    public static String GET_PRODUCT_DESC = BASE_URL + "index.php/api/get_products_high";
+    public static String GET_PRODUCT_ASC = BASE_URL + "index.php/api/get_products_low";
+    public static String GET_PRODUCT_NEWEST = BASE_URL + "index.php/api/get_products_new";
 
     public static String GET_ABOUT_URL = BASE_URL + "index.php/api/aboutus";
 

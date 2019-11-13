@@ -325,7 +325,7 @@ module=new Module();
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 Fragment fm = new Product_fragment();
-                args.putString("cat_deal", "2");
+                args.putString("viewall", "new");
                 fm.setArguments(args);
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
@@ -431,6 +431,7 @@ module=new Module();
                 Bundle args = new Bundle();
                 Fragment fm = new Product_fragment();
                 args.putString("cat_top_selling", "2");
+                args.putString( "viewall","top" );
                 fm.setArguments(args);
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

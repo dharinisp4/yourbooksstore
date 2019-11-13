@@ -203,6 +203,8 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                             if (!issmall && !isbig) {
                                 if (sessionManagement.isLoggedIn()) {
                                     Bundle args = new Bundle();
+                                    args.putString( "checkout","null" );
+                                  //  args.putString( "product_id",cart_id );
                                     Fragment fm = new Delivery_fragment();
                                     fm.setArguments(args);
                                     FragmentManager fragmentManager = getFragmentManager();

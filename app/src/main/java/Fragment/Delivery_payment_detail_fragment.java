@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import Config.BaseURL;
 import Config.SharedPref;
@@ -36,6 +41,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
     private String getstore_id = "";
 
     private int deli_charges;
+    String checkout ,product_id ;
     Double total;
     SharedPreferences preferences;
     private DatabaseCartHandler db_cart;
@@ -95,11 +101,12 @@ public class Delivery_payment_detail_fragment extends Fragment {
         String house = getArguments().getString( "house" );
         String pin = getArguments().getString( "pin" );
         String societys = getArguments().getString( "society" );
-
+        checkout = getArguments().getString( "checkout" );
+        product_id=getArguments().getString( "product_id" );
         tv_timeslot.setText(getdate + " " + gettime);
         //tv_address.setText(getaddress);
 
-        total = Double.parseDouble(db_cart.getTotalAmount()) + deli_charges;
+
 
 //        tv_total.setText("" + db_cart.getTotalAmount());
         //  tv_item.setText("" + db_cart.getWishlistCount());
@@ -109,13 +116,32 @@ public class Delivery_payment_detail_fragment extends Fragment {
         pincode.setText( pin );
         Address.setText( societys );
 
-        tvItems.setText(String.valueOf(db_cart.getCartCount()));
-        // String mrp= String.valueOf(db_cart.getTotalMRP());
-        String price=String.valueOf(db_cart.getTotalAmount());
-        tvMrp.setText(getResources().getString(R.string.currency)+price);
+        if (checkout.equalsIgnoreCase( "null" )) {
 
-        tvDelivary.setText(getResources().getString(R.string.currency)+deli_charges);
-        tvSubTotal.setText(getResources().getString(R.string.currency)+total);
+            tvItems.setText( String.valueOf( db_cart.getCartCount() ) );
+            total = Double.parseDouble( db_cart.getTotalAmount() ) + deli_charges;
+            // String mrp= String.valueOf(db_cart.getTotalMRP());
+            String price = String.valueOf( db_cart.getTotalAmount() );
+            tvMrp.setText( getResources().getString( R.string.currency ) + price );
+
+            tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
+            tvSubTotal.setText( getResources().getString( R.string.currency ) + total );
+        }
+        else
+        {
+             ArrayList<HashMap<String, String>> list = db_cart.getCartProduct(Integer.parseInt( product_id ));
+            HashMap<String,String> map = list.get( 0 );
+          double p = Double.parseDouble( ( map.get( "unit_price" ) ) );
+          double q = Double.parseDouble( ( map.get("qty") ) );
+            double t_price = p*q;
+             tvItems.setText("1");
+
+            tvMrp.setText( getResources().getString( R.string.currency ) + t_price );
+            total = t_price+deli_charges;
+            tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
+            tvSubTotal.setText( getResources().getString( R.string.currency ) + total );
+             Toast.makeText(getActivity() ,"" +list.size(),Toast.LENGTH_LONG ).show();
+        }
 
         //  tv_total.setText("" + db_cart.getTotalAmount());
         //tv_item.setText("" + db_cart.getWishlistCount());
@@ -137,6 +163,8 @@ public class Delivery_payment_detail_fragment extends Fragment {
                     args.putString("gettime", gettime);
                     args.putString("getlocationid", getlocation_id);
                     args.putString("getstoreid", getstore_id);
+                    args.putString( "checkout",checkout );
+                    args.putString( "product_id",product_id );
                     fm.setArguments(args);
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

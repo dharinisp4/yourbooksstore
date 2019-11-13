@@ -16,8 +16,17 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_my_profile"
-            android:icon="@drawable/ic_nav_profile"
+            android:icon="@drawable/ic_bookmark_black_24dp"
+            android:iconTint="@color/white"
             android:title="My Profile" />
+    </group>
+    <group
+        android:id="@+id/group_my_wishlist"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_wishlist"
+            android:icon="@drawable/ic_nav_profile"
+            android:title="My WishList" />
     </group>
     <group
         android:id="@+id/group_support"

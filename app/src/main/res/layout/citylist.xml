@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:gravity="center">
 
     <Fonts.LatoBLack
@@ -17,6 +18,9 @@
         android:text="Ram"
         android:textStyle="bold"
         android:textSize="18dp" />
+
+
+
 
 
 </LinearLayout>

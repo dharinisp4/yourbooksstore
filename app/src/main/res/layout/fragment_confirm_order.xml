@@ -321,7 +321,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:padding="2dp"
-                                        android:text="M.R.P. :"
+                                        android:text="Total Price :"
                                         android:textColor="@android:color/black"
                                         android:textSize="@dimen/space_14" />
 

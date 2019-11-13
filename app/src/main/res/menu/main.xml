@@ -14,14 +14,15 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/action_wish"
-        android:actionLayout="@layout/menu_cart_layout"
-        android:title="Cart"
+        android:icon="@drawable/ic_bookmark_black_24dp"
+        android:actionLayout="@layout/menu_wish_layout"
+        android:title="wishlist"
         app:actionLayout="@layout/menu_wish_layout"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_cart"
         android:actionLayout="@layout/menu_cart_layout"
-        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:icon="@drawable/icons8_shopping_bag_50px"
         android:title="Cart"
         app:actionLayout="@layout/menu_cart_layout"
         app:icon="@drawable/icons_cart"

@@ -44,10 +44,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Adapter.NewAdapter;
 import Adapter.Product_adapter;
 import Adapter.SortAdapter;
 import Config.BaseURL;
 import Model.Category_model;
+import Model.Deal_Of_Day_model;
 import Model.Product_model;
 import Model.Slider_subcat_model;
 import gogrocer.tcc.AppController;
@@ -57,13 +59,14 @@ import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
+import Module.Module;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 
 public class Product_fragment extends Fragment implements View.OnClickListener{
-    Dialog ProgressDialog;
+    Dialog loadingBar;
     private static String TAG = Product_fragment.class.getSimpleName();
     private RecyclerView rv_cat;
     private TabLayout tab_cat;
@@ -78,6 +81,9 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     SharedPreferences preferences;
     private DatabaseCartHandler dbcart;
     private SortAdapter sortAdapter ;
+    private boolean isSubcat = false;
+    NewAdapter new_adapter ;
+    private List<Deal_Of_Day_model> deal_of_day_models = new ArrayList<>();
     public Product_fragment() {
     }
 
@@ -91,10 +97,9 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         img_sort=(ImageView)view.findViewById(R.id.img_sort);
         img_filter=(ImageView)view.findViewById(R.id.img_filter);
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);
@@ -106,6 +111,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         String get_deal_id = getArguments().getString("cat_deal");
         String get_top_sale_id = getArguments().getString("cat_top_selling");
         String getcat_title = getArguments().getString("cat_title");
+        String view_all = getArguments().getString( "viewall" );
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_product_name));
         img_no_products=(ImageView)view.findViewById(R.id.img_no_items);
         img_sort.setOnClickListener(this);
@@ -120,10 +126,13 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
             makeGetCategoryRequest(getcat_id);
 
             //Deal Of The Day Products
-            makedealIconProductRequest(get_deal_id);
+            if (view_all.equalsIgnoreCase( "new" )) {
+                make_deal_od_the_day();
+            }
             //Top Sale Products
-            maketopsaleProductRequest(get_top_sale_id);
-
+            else  {
+                maketopsaleProductRequest( get_top_sale_id );
+            }
 
             //Slider
             //makeGetBannerSliderRequest();
@@ -175,7 +184,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     //Get Shop By Catogary
     private void makeGetCategoryRequest(final String parent_id) {
 
-        ProgressDialog.show();
+        loadingBar.show();
         String tag_json_obj = "json_category_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("parent", parent_id);
@@ -187,7 +196,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
 
                 try {
                     Boolean status = response.getBoolean("responce");
-                    ProgressDialog.dismiss();
+                    loadingBar.dismiss();
                     if (status) {
 
                         Gson gson = new Gson();
@@ -215,14 +224,14 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
 
                     }
                 } catch (JSONException e) {
-                    ProgressDialog.dismiss();
+                    loadingBar.dismiss();
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+             loadingBar.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
@@ -233,9 +242,70 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
+    private void make_deal_od_the_day() {
+        String tag_json_obj = "json_category_req";
+        isSubcat = false;
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("parent", "");
+        isSubcat = true;
+       /* if (parent_id != null && parent_id != "") {
+        }*/
+
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.GET,
+                BaseURL.GET_NEW_PRODUCT_URL, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    if (response != null && response.length() > 0) {
+                        Boolean status = response.getBoolean("responce");
+                        Gson gson = new Gson();
+                        if (status) {
+                            Type listType = new TypeToken<List<Deal_Of_Day_model>>() {
+                            }.getType();
+                            product_modelList = gson.fromJson(response.getString("new_product"), listType);
+                            new_adapter = new NewAdapter( getActivity(),product_modelList);
+                           rv_cat.setAdapter(new_adapter);
+                            new_adapter.notifyDataSetChanged();
+                            if (getActivity() != null) {
+                                if (product_modelList.isEmpty()) {
+                                    //  Toast.makeText(getActivity(), "No Deal For Day", Toast.LENGTH_SHORT).show();
+                                    rv_cat.setVisibility(View.GONE);
+
+                                    //  Deal_Frame_layout.setVisibility(View.GONE);
+                                    //Deal_Frame_layout1.setVisibility(View.GONE);
+                                    //Deal_Linear_layout.setVisibility(View.GONE);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "No Response", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+
+    }
+
     //Get Shop By Catogary Products
     private void makeGetProductRequest(String cat_id) {
-ProgressDialog.show();
+loadingBar.show();
         String tag_json_obj = "json_product_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("cat_id", cat_id);
@@ -248,7 +318,7 @@ ProgressDialog.show();
                 Log.d("qwerty", response.toString());
 
                 try {
-                    ProgressDialog.dismiss();
+                   loadingBar.dismiss();
                     Boolean status = response.getBoolean("responce");
                     if (status) {
                         Gson gson = new Gson();
@@ -270,7 +340,7 @@ ProgressDialog.show();
 
                     }
                 } catch (JSONException e) {
-                    ProgressDialog.dismiss();
+                    loadingBar.dismiss();
                     String msg=e.getMessage();
                     if(msg.equals("No value for data"))
                     {
@@ -284,7 +354,7 @@ ProgressDialog.show();
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+               loadingBar.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
@@ -535,6 +605,167 @@ ProgressDialog.show();
         AppController.getInstance().addToRequestQueue(req);
 
     }
+    private void makeDescendingProductRequest(String cat_id) {
+        String tag_json_obj = "json_product_desc_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("cat_id", cat_id);
+        loadingBar.show();
+        product_modelList.clear();
+
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_PRODUCT_DESC, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try {
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("data"), listType);
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+                        rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                //  Toast.makeText(getActivity(),""+response, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+    private void makeAscendingProductRequest(String cat_id) {
+        String tag_json_obj = "json_product_asc_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("cat_id", cat_id);
+        product_modelList.clear();
+        loadingBar.show();
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_PRODUCT_ASC, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try {
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("data"), listType);
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+                        rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                //  Toast.makeText(getActivity(),""+response, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+    private void makeNewestProductRequest(String cat_id) {
+        String tag_json_obj = "json_product_newest_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("cat_id", cat_id);
+        product_modelList.clear();
+        loadingBar.show();
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_PRODUCT_NEWEST, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try {
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("data"), listType);
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+                        rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                //  Toast.makeText(getActivity(),""+response, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+
+
 
     @Override
     public void onResume() {
@@ -597,30 +828,28 @@ ProgressDialog.show();
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ddlg.dismiss();
                     String item = sort_List.get( i ).toString();
+                    final String cat_id = getArguments().getString("cat_id");
 
                     if (item.equals( "Price Low - High" ))
                     {
-                        // ddlg.dismiss();
-                        //makeAscendingProductRequest( cat_id );
-                        //tab_grid.setImageResource( R.drawable.icons8_activity_grid_2_48px);
-                        //tab_grid.setTag( "grid" );
+                         ddlg.dismiss();
+                        makeAscendingProductRequest( cat_id );
+
                     }
                     else if(item.equals( "Price High - Low" ))
                     {
-                        // Toast.makeText( getActivity(), "category id :" +getcat_id, Toast.LENGTH_SHORT ).show();
-                        // ddlg.dismiss();
-                       // makeDescendingProductRequest(cat_id);
-                        //tab_grid.setImageResource( R.drawable.icons8_activity_grid_2_48px);
-                        //tab_grid.setTag( "grid" );
+                       //  Toast.makeText( getActivity(), "category id :" +cat_id, Toast.LENGTH_SHORT ).show();
+                         ddlg.dismiss();
+                        makeDescendingProductRequest(cat_id);
+
 
 
                     }
                     else if(item.equals( "Newest First" ))
                     {
-                        // ddlg.dismiss();
-                        //makeNewestProductRequest( cat_id );
-                        //tab_grid.setImageResource( R.drawable.icons8_activity_grid_2_48px);
-                    //    tab_grid.setTag( "grid" );
+                         ddlg.dismiss();
+                        makeNewestProductRequest( cat_id );
+
                     }
                     else if (item.equals( "Trending" ))
                     {
