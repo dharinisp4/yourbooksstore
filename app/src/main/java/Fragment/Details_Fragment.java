@@ -82,7 +82,7 @@ public class Details_Fragment extends Fragment {
 private List<Product_model> modelList ;
     private static String TAG = Details_Fragment.class.getSimpleName();
     private RecyclerView rv_cat;
-
+  Module module;
     int index;
     double tot_amt=0;
     ProgressDialog loadingBar;
@@ -149,7 +149,7 @@ private List<Product_model> modelList ;
 
         // Inflate the layout for this fragment
         View view= inflater.inflate( R.layout.fragment_details_, container, false);
-
+     module=new Module();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
         loadingBar=new ProgressDialog(getActivity());
@@ -334,6 +334,41 @@ private List<Product_model> modelList ;
         });
 
 
+        wish_before.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                wish_before.setVisibility(View.GONE);
+                wish_after.setVisibility(View.VISIBLE);
+
+                module.setIntoWish(getActivity(),product_id,
+                        product_images,cat_id,details_product_name,
+                        details_product_price,details_product_desc,details_product_inStock,details_product_status,details_product_rewards
+                        ,details_product_unit_value,details_product_unit,details_product_increament,prodcut_stock
+                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language);
+
+            }
+        });
+
+        wish_after.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wish_before.setVisibility(View.VISIBLE);
+                wish_after.setVisibility(View.GONE);
+
+                try {
+
+                    db_wish.removeItemFromWishlist(product_id);
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+
+
+            }
+        });
 
 
         return view;
@@ -372,6 +407,12 @@ private List<Product_model> modelList ;
             }
 
             updateData();
+
+            if(db_wish.isInWishlist(product_id))
+            {
+                wish_after.setVisibility(View.VISIBLE);
+                wish_before.setVisibility(View.GONE);
+            }
 //        else
 //        {
 //

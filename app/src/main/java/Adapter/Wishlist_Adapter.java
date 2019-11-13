@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,17 +18,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,20 +40,22 @@ import java.util.List;
 
 import Config.BaseURL;
 import Fragment.Details_Fragment;
+import Model.ProductVariantModel;
 import Model.Product_model;
+import Model.Wish_model;
+
 import Module.Module;
-import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
 
 import static android.content.Context.MODE_PRIVATE;
 
+public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyViewHolder> {
 
-public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyViewHolder> {
-
-    private List<Product_model> modelList = new ArrayList<>( );
-    private Context context;
+    ArrayList<HashMap<String, String>> list;
+    private List<Wish_model> wishList;
+    Activity context;
     private DatabaseCartHandler dbcart;
     private DatabaseHandlerWishList dbWish;
     String language;
@@ -85,7 +93,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 //            iv_remove.setVisibility(View.GONE);
 //            iv_minus.setOnClickListener(this);
 //            iv_plus.setOnClickListener(this);
-          //  tv_add.setOnClickListener(this);
+            //  tv_add.setOnClickListener(this);
             // iv_logo.setOnClickListener(this);
             rel_click.setOnClickListener(this);
             CardView cardView = (CardView) view.findViewById(R.id.card_view);
@@ -98,43 +106,39 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             int id = view.getId();
             int position = getAdapterPosition();
 
-             if(id== R.id.rel_click)
+            HashMap<String,String > map=list.get(position);
+            if(id== R.id.rel_click)
             {
-                int in_stock=Integer.parseInt(modelList.get(position).getIn_stock());
-                if(in_stock==0)
-                {
-                    Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
-                }
-                else {
+
                     Details_Fragment details_fragment = new Details_Fragment();
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
                     Bundle args = new Bundle();
 
                     //Intent intent=new Intent(context, Product_details.class);
-                    args.putString("product_id", modelList.get(position).getProduct_id());
-                    args.putString("product_name", modelList.get(position).getProduct_name());
-                    args.putString("category_id", modelList.get(position).getCategory_id());
-                    args.putString("product_description", modelList.get(position).getProduct_description());
+                    args.putString("product_id", map.get("product_id"));
+                    args.putString("product_name", map.get("product_name"));
+                    args.putString("category_id", map.get("category_id"));
+                    args.putString("product_description",map.get("product_description"));
                     //         args.putString("deal_price",modelList.get(position).getDeal_price());
                     //       args.putString("start_date",modelList.get(position).getStart_date());
                     //     args.putString("start_time",modelList.get(position).getStart_time());
                     //   args.putString("end_date",modelList.get(position).getEnd_date());
                     // args.putString("end_time",modelList.get(position).getEnd_time());
-                    args.putString("price", modelList.get(position).getPrice());
-                    args.putString("mrp", modelList.get(position).getMrp());
-                    args.putString("product_image", modelList.get(position).getProduct_image());
-                    args.putString("status", modelList.get(position).getStatus());
-                    args.putString("in_stock", modelList.get(position).getIn_stock());
-                    args.putString("unit_value", modelList.get(position).getUnit_value());
-                    args.putString("unit", modelList.get(position).getUnit());
-                    args.putString("increament", modelList.get(position).getIncreament());
-                    args.putString("rewards", modelList.get(position).getRewards());
-                    args.putString("stock", modelList.get(position).getStock());
-                    args.putString("title", modelList.get(position).getTitle());
-                    args.putString("seller_id", modelList.get(position).getSeller_id());
-                    args.putString("book_class", modelList.get(position).getBook_class());
-                    args.putString("language", modelList.get(position).getLanguage());
-                    args.putString("subject", modelList.get(position).getSubject());
+                    args.putString("price", map.get("price"));
+                    args.putString("mrp",map.get("mrp"));
+                    args.putString("product_image",map.get("product_image"));
+                    args.putString("status", map.get("status"));
+                    args.putString("in_stock", map.get("in_stock"));
+                    args.putString("unit_value", map.get("unit_value"));
+                    args.putString("unit", map.get("unit"));
+                    args.putString("increament", map.get("increament"));
+                    args.putString("rewards",map.get("rewards"));
+                    args.putString("stock",map.get("stock"));
+                    args.putString("title", map.get("title"));
+                    args.putString("seller_id", map.get("seller_id"));
+                    args.putString("book_class", map.get("book_class"));
+                    args.putString("language", map.get("language"));
+                    args.putString("subject", map.get("subject"));
 
                     details_fragment.setArguments(args);
                     FragmentManager fragmentManager = activity.getFragmentManager();
@@ -142,32 +146,34 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                             .addToBackStack(null).commit();
 
                 }
-            }
+
 
 
         }
     }
 
-    public Product_adapter(List<Product_model> modelList, Context context) {
-        this.modelList = modelList;
-        dbcart = new DatabaseCartHandler(context);
+    public Wishlist_Adapter(ArrayList<HashMap<String, String>> list, Activity context) {
+        this.list = list;
+        this.context = context;
+        dbcart=new DatabaseCartHandler(context);
         dbWish=new DatabaseHandlerWishList(context);
-        module=new Module();
     }
 
     @Override
-    public Product_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Wishlist_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product_rv, parent, false);
-        context = parent.getContext();
-        return new Product_adapter.MyViewHolder(itemView);
+        context = (Activity) parent.getContext();
+        return new Wishlist_Adapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final Product_adapter.MyViewHolder holder, final int position) {
-        final Product_model mList = modelList.get( position );
+    public void onBindViewHolder(final Wishlist_Adapter.MyViewHolder holder, final int position) {
+        final HashMap<String, String> map = list.get(position);
+        //imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.your_image));
+        holder.wish_before.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_close));
 
         Glide.with( context )
-                .load( BaseURL.IMG_PRODUCT_URL + mList.getProduct_image() )
+                .load( BaseURL.IMG_PRODUCT_URL + map.get("product_image"))
                 .fitCenter()
                 .placeholder( R.drawable.icon )
                 .crossFade()
@@ -176,18 +182,14 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                 .into( holder.iv_logo );
         preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
         language = preferences.getString( "language", "" );
-        Double price = Double.valueOf( mList.getPrice() );
+        Double price = Double.valueOf( map.get("price") );
         Double qty = Double.parseDouble( (String) holder.tv_contetiy.getText() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
 
-        if(dbWish.isInWishlist(mList.getProduct_id()))
-        {
-            holder.wish_after.setVisibility(View.VISIBLE);
-            holder.wish_before.setVisibility(View.GONE);
-        }
 
-   String bk_lang="";
-        String lang=mList.getLanguage().toString();
+
+        String bk_lang="";
+        String lang=map.get("language");
         if(lang.equals("") || lang.isEmpty() || lang.equals(null))
         {
 
@@ -199,30 +201,30 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 
 
         if (language.contains( "english" )) {
-            holder.tv_title.setText( mList.getProduct_name() +bk_lang );
+            holder.tv_title.setText( map.get("product_name") +bk_lang );
         } else {
-            holder.tv_title.setText( mList.getProduct_name() +bk_lang);
+            holder.tv_title.setText( map.get("product_name") +bk_lang);
 
         }
 
-        int in_stock=Integer.parseInt(mList.getIn_stock());
-        if(in_stock==0)
-        {
-            holder.rel_stock.setVisibility(View.VISIBLE);
-        }
+//        int in_stock=Integer.parseInt(mList.getIn_stock());
+//        if(in_stock==0)
+//        {
+//            holder.rel_stock.setVisibility(View.VISIBLE);
+//        }
 
 
-        holder.tv_reward_point.setText(""+Double.parseDouble(mList.getRewards()));
-      //  holder.tv_reward.setText( mList.getRewards() );
-        holder.tv_price.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
-        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
+        holder.tv_reward_point.setText(""+Double.parseDouble(map.get("rewards")));
+        //  holder.tv_reward.setText( mList.getRewards() );
+        holder.tv_price.setText( context.getResources().getString( R.string.currency ) + map.get("price") );
+        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + map.get("price") );
 
-        boolean is_inCart=dbcart.isInCart(mList.getProduct_id());
+        boolean is_inCart=dbcart.isInCart(map.get("product_id"));
         if (is_inCart)
         {
             holder.tv_add.setVisibility(View.GONE);
             holder.rel_no.setVisibility(View.VISIBLE);
-            String qt=dbcart.getCartItemQty(mList.getProduct_id());
+            String qt=dbcart.getCartItemQty(map.get("product_id"));
             holder.tv_contetiy.setText(qt);
         }
         else
@@ -231,12 +233,12 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         }
 
 
-        double mrp = Double.parseDouble( mList.getMrp() );
-        int discount=getDiscount(mList.getPrice(),mList.getMrp());
+        double mrp = Double.parseDouble( map.get("mrp") );
+        int discount=getDiscount(map.get("price"),map.get("mrp"));
         if(mrp>price) {
 
             holder.tv_subcat_mrp.setPaintFlags( holder.tv_subcat_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG );
-            holder.tv_subcat_mrp.setText( context.getResources().getString( R.string.currency ) + mList.getMrp() );
+            holder.tv_subcat_mrp.setText( context.getResources().getString( R.string.currency ) + map.get("mrp") );
             holder.tv_discount.setText( discount + "%" );
         }
         else
@@ -248,25 +250,20 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 //        else {
 //            holder.tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
 //        }
-        Double items = Double.parseDouble( dbcart.getInCartItemQty( mList.getProduct_id() ) );
+        Double items = Double.parseDouble( dbcart.getInCartItemQty(map.get("product_id") ) );
         // Double price = Double.parseDouble(mList.getPrice());
-        Double reward = Double.parseDouble( mList.getRewards() );
+        Double reward = Double.parseDouble( map.get("rewards") );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
-       // holder.tv_reward.setText( context.getResources().getString( R.string.currency ) + reward * items );
+        // holder.tv_reward.setText( context.getResources().getString( R.string.currency ) + reward * items );
 
         holder.tv_add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  Toast.makeText(context,"2nd",Toast.LENGTH_LONG).show();
-                int in_stock=Integer.parseInt(modelList.get(position).getIn_stock());
-                if(in_stock==0)
-                {
-                    Toast.makeText(context,"Out of Stock",Toast.LENGTH_LONG).show();
-                }
-                else {
-                    HashMap<String, String> map = new HashMap<>();
+                //  Toast.makeText(context,"2nd",Toast.LENGTH_LONG).show();
+
+                    HashMap<String, String> map = list.get(position);
                     int qty = Integer.valueOf(holder.tv_contetiy.getText().toString());
-                    Double price = Double.parseDouble(modelList.get(position).getPrice());
+                    Double price = Double.parseDouble(map.get("price").toString());
 
                     holder.tv_total.setText(context.getResources().getString(R.string.currency) + price);
 
@@ -274,20 +271,20 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                     language = preferences.getString("language", "");
 
 
-                    String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
+                    String unt=map.get("unit_value")+map.get("unit");
                     Module module=new Module();
-                   module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),modelList.get(position).getPrice(),modelList.get(position).getProduct_description(),modelList.get(position).getRewards(),
-                           modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),
-                           modelList.get(position).getStock(),modelList.get(position).getTitle(),modelList.get(position).getMrp(),
-                           modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
+                    module.setIntoCart(context,map.get("product_id"),map.get("product_id"),
+                            map.get("product_image"),map.get("category_id"),map.get("product_name"),map.get("price"),map.get("product_description"),map.get("rewards"),
+                            map.get("price"),unt,map.get("increament"),
+                            map.get("stock"),map.get("title"),map.get("mrp"),
+                         map.get("seller_id"),map.get("book_class"),map.get("subject"),map.get("language"),qty);
                     updateintent();
-                   holder.tv_add.setVisibility(View.GONE);
+                    holder.tv_add.setVisibility(View.GONE);
                     holder.rel_no.setVisibility( View.VISIBLE );
 
 
 
-                }
+
             }
         } );
         holder.iv_plus.setOnClickListener( new View.OnClickListener() {
@@ -301,20 +298,26 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                 language = preferences.getString( "language", "" );
 
 
-                String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
-                  double unit_price=Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
+                String unt=map.get("unit_value")+map.get("unit");
+                double unit_price=Double.parseDouble(dbcart.getUnitPrice(map.get("product_id")));
                 // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
                 Module module=new Module();
-                module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                        modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
-                        String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
-                        ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
-                        ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
-                updateintent();
-          //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
 
-             //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
-           //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
+                module.setIntoCart(context,map.get("product_id"),map.get("product_id"),
+                        map.get("product_image"),map.get("category_id"),map.get("product_name"),String.valueOf(qty*unit_price),map.get("product_description"),map.get("rewards"),
+                        map.get("price"),unt,map.get("increament"),
+                        map.get("stock"),map.get("title"),map.get("mrp"),
+                        map.get("seller_id"),map.get("book_class"),map.get("subject"),map.get("language"),qty);
+//                module.setIntoCart(context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
+//                        modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
+//                        String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
+//                        ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
+//                        ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
+                updateintent();
+                //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
+
+                //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
+                //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
 
             }
         } );
@@ -332,32 +335,33 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                     preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
                     language = preferences.getString( "language", "" );
 
-                    String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
-                    double unit_price=Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
+                    String unt=map.get("unit_value")+map.get("unit");
+                    double unit_price=Double.parseDouble(dbcart.getUnitPrice(map.get("product_id")));
                     // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
                     Module module=new Module();
-                    module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                            modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
-                            String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
-                            ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
-                            ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
+
+                    module.setIntoCart(context,map.get("product_id"),map.get("product_id"),
+                            map.get("product_image"),map.get("category_id"),map.get("product_name"),String.valueOf(qty*unit_price),map.get("product_description"),map.get("rewards"),
+                            map.get("price"),unt,map.get("increament"),
+                            map.get("stock"),map.get("title"),map.get("mrp"),
+                            map.get("seller_id"),map.get("book_class"),map.get("subject"),map.get("language"),qty);
                     updateintent();
                     //Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
-                        holder.tv_add.setVisibility( View.GONE );
-                        holder.rel_no.setVisibility( View.VISIBLE );
+                    holder.tv_add.setVisibility( View.GONE );
+                    holder.rel_no.setVisibility( View.VISIBLE );
 
-                    } else {
-                        dbcart.removeItemFromCart( modelList.get(position).getProduct_id() );
+                } else {
+                    dbcart.removeItemFromCart( map.get("product_id") );
                     updateintent();
-                        holder.rel_no.setVisibility( View.GONE );
-                        holder.tv_add.setVisibility( View.VISIBLE );
-                    }
-                    // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
-                    //  Double price = Double.parseDouble(map.get("price").trim());
-                    Double price = Double.parseDouble( modelList.get( position ).getPrice() );
-                    holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
-
+                    holder.rel_no.setVisibility( View.GONE );
+                    holder.tv_add.setVisibility( View.VISIBLE );
                 }
+                // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+                //  Double price = Double.parseDouble(map.get("price").trim());
+                Double price = Double.parseDouble( map.get("price") );
+                holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
+
+            }
 
         } );
 
@@ -366,31 +370,28 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             @Override
             public void onClick(View view) {
 
-                holder.wish_before.setVisibility(View.GONE);
-                holder.wish_after.setVisibility(View.VISIBLE);
+              dbWish.removeItemFromWishlist(map.get("product_id"));
+                list.remove(position);
+                notifyDataSetChanged();
 
-                module.setIntoWish((Activity) context,mList.getProduct_id(),
-                        mList.getProduct_image(),mList.getCategory_id(),mList.getProduct_name(),
-                        mList.getPrice(),mList.getProduct_description(),mList.getIn_stock(),mList.getStatus(),mList.getRewards()
-                        ,mList.getUnit_value(),mList.getUnit(),mList.getIncreament(),mList.getStock()
-                        ,mList.getTitle(),mList.getMrp(),mList.getSeller_id(),mList.getBook_class(),mList.getSubject(),mList.getLanguage());
+                updateintent();
             }
         });
 
-        holder.wish_after.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                holder.wish_before.setVisibility(View.VISIBLE);
-                holder.wish_after.setVisibility(View.GONE);
-
-                dbWish.removeItemFromWishlist(mList.getProduct_id());
-            }
-        });
+//        holder.wish_after.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                holder.wish_before.setVisibility(View.VISIBLE);
+//                holder.wish_after.setVisibility(View.GONE);
+//
+//                dbWish.removeItemFromWishlist(mList.getProduct_id());
+//            }
+//        });
     }
     @Override
     public int getItemCount() {
-        return modelList.size();
+        return list.size();
     }
 
 
@@ -447,7 +448,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             JSONArray array=new JSONArray(lan);
             for(int i=0; i<array.length();i++)
             {
-               String l=array.getString(i).toString();
+                String l=array.getString(i).toString();
                 list.add(l);
             }
         }

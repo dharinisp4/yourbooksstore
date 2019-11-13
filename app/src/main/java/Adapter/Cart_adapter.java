@@ -285,7 +285,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             @Override
             public void onClick(View view) {
 
-          //  Toast.makeText(activity,""+map.get("rewards").toString(),Toast.LENGTH_LONG).show();
+           // Toast.makeText(activity,""+dbHandler.getTotalRewards().toString(),Toast.LENGTH_LONG).show();
             }
         });
 

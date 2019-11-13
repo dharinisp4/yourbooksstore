@@ -13,6 +13,12 @@
         app:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_wish"
+        android:actionLayout="@layout/menu_cart_layout"
+        android:title="Cart"
+        app:actionLayout="@layout/menu_wish_layout"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_cart"
         android:actionLayout="@layout/menu_cart_layout"
         android:icon="@drawable/ic_shopping_cart_black_24dp"

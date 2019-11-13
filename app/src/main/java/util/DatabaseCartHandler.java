@@ -176,6 +176,20 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
         }
     }
 
+    public String getTotalRewards() {
+        db = getReadableDatabase();
+        String qry = "Select SUM(" + COLUMN_REWARDS + ") as total_amount  from " + CART_TABLE;
+        Cursor cursor = db.rawQuery(qry, null);
+        cursor.moveToFirst();
+        String total = cursor.getString(cursor.getColumnIndex("total_amount"));
+        if (total != null) {
+
+            return total;
+        } else {
+            return "0";
+        }
+    }
+
     public String getTotalMRP() {
         db = getReadableDatabase();
         String qry = "Select SUM(" + COLUMN_MRP + ") as total_mrp  from " + CART_TABLE;

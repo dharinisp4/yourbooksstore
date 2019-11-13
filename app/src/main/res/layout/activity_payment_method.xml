@@ -51,7 +51,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="140dp"
+                            android:layout_marginRight="10dp"
                             android:text=""
                             android:textColor="#000"
                             android:textSize="14sp" />
@@ -155,7 +155,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="140dp"
+                            android:layout_marginRight="10dp"
                             android:text=""
                             android:textStyle="bold"
                             android:textColor="#000"
@@ -237,7 +237,7 @@
                                         android:layout_alignParentRight="true"
                                         android:layout_marginRight="@dimen/space_12"
                                         android:layout_marginTop="@dimen/space_6"
-                                        android:text="Ram"
+                                        android:text=""
                                         android:textColor="#000"
                                         android:textSize="@dimen/text_size_normal" />
                                 </LinearLayout>
@@ -406,7 +406,7 @@
 
 
                         <CheckBox
-                            android:visibility="gone"
+
                             android:id="@+id/use_coupon"
                             style="@android:style/Widget.CompoundButton.RadioButton"
                             android:layout_width="wrap_content"

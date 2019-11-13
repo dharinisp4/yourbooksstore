@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 public class DatabaseHandlerWishList extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "bkwish_db";
+    private static String DB_NAME = "bkywish_db";
     private static int DB_VERSION = 2;
     private SQLiteDatabase db;
 
@@ -59,18 +59,18 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
                 + COLUMN_DESC + " TEXT NOT NULL, "
                 + COLUMN_PRICE + " DOUBLE NOT NULL, "
                 + COLUMN_MRP + " DOUBLE NOT NULL, "
-                + COLUMN_REWARDS + " DOUBLE NOT NULL, "
-                + COLUMN_UNIT_VALUE + " DOUBLE NOT NULL, "
-                + COLUMN_UNIT + " TEXT NOT NULL, "
-                + COLUMN_STATUS + " TEXT NOT NULL, "
-                + COLUMN_INCREAMENT + " DOUBLE NOT NULL, "
+                + COLUMN_REWARDS + " TEXT NOT NULL, "
+                + COLUMN_UNIT_VALUE + " TEXT NULL, "
+                + COLUMN_UNIT + " TEXT NULL, "
+                + COLUMN_STATUS + " TEXT NULL, "
+                + COLUMN_INCREAMENT + " TEXT NULL, "
                 + COLUMN_STOCK + " DOUBLE NOT NULL, "
                 + COLUMN_INSTOCK + " DOUBLE NOT NULL, "
-                + COLUMN_TITLE + " TEXT NOT NULL, "
+                + COLUMN_TITLE + " TEXT NULL, "
                 + COLUMN_SELLER_ID + " TEXT NOT NULL, "
-                + COLUMN_BOOK_CLASS + " TEXT NOT NULL, "
-                + COLUMN_SUBJECT + " TEXT NOT NULL, "
-                + COLUMN_LANGUAGE + " TEXT NOT NULL "
+                + COLUMN_BOOK_CLASS + " TEXT NULL, "
+                + COLUMN_SUBJECT + " TEXT NULL, "
+                + COLUMN_LANGUAGE + " TEXT NULL "
                 + ")";
 
         db.execSQL(exe);

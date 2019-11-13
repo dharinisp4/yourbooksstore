@@ -185,8 +185,8 @@ public class Payment_fragment extends Fragment {
         order_ammount = (TextView) view.findViewById(R.id.order_ammount);
         used_wallet_ammount = (TextView) view.findViewById(R.id.used_wallet_ammount);
         used_coupon_ammount = (TextView) view.findViewById(R.id.used_coupon_ammount);
-        payble_ammount.setText(total_amount+getActivity().getString(R.string.currency));
-        order_ammount.setText(order_total_amount+getActivity().getString(R.string.currency));
+        payble_ammount.setText(getActivity().getString(R.string.currency)+total_amount);
+        order_ammount.setText(getActivity().getString(R.string.currency)+order_total_amount);
 
 
         checkBox_Wallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

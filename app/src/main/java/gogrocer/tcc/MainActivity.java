@@ -64,16 +64,17 @@ import Fragment.Edit_profile_fragment;
 import Fragment.Shop_Now_fragment;
 import Fragment.Terms_and_Condition_fragment;
 import Fragment.Wallet_fragment;
-import Fragment.Search_fragment;
+import Fragment.*;
 import gogrocer.tcc.networkconnectivity.NetworkError;
 import util.ConnectivityReceiver;
 import util.DatabaseCartHandler;
+import util.DatabaseHandlerWishList;
 import util.Session_management;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private TextView totalBudgetCount, totalBudgetCount2, totalBudgetCount3, tv_name, powerd_text;
+    private TextView totalBudgetCount, totalBudgetCountwish, totalBudgetCount3, tv_name, powerd_text;
     private ImageView iv_profile;
     private DatabaseCartHandler dbcart;
     private Session_management sessionManagement;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String Store_Count;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    DatabaseHandlerWishList db_wish;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
         String token;
+        db_wish=new DatabaseHandlerWishList(MainActivity.this);
         token = FirebaseInstanceId.getInstance().getToken();
         Log.d("MYTAG", "This is your Firebase token" + token);
         sharedPreferences = getSharedPreferences("lan", Context.MODE_PRIVATE);
@@ -435,6 +438,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void setWishCounter(String totalitem) {
+        try {
+            totalBudgetCountwish.setText(totalitem);
+        } catch (Exception e) {
+
+        }
+    }
+
     public void setTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
@@ -446,8 +457,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         final MenuItem item = menu.findItem(R.id.action_cart);
         final MenuItem itemsearch = menu.findItem( R.id.action_search );
+        final MenuItem itemwish = menu.findItem( R.id.action_wish );
         item.setVisible(true);
         itemsearch.setVisible( true );
+        itemwish.setVisible(true);
 
         View count = item.getActionView();
         count.setOnClickListener(new View.OnClickListener() {
@@ -458,8 +471,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        final View wish=itemwish.getActionView();
+        wish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                menu.performIdentifierAction(itemwish.getItemId(),0);
+            }
+        });
+
         totalBudgetCount = (TextView) count.findViewById(R.id.actionbar_notifcation_textview);
         totalBudgetCount.setText("" + dbcart.getCartCount());
+        totalBudgetCountwish = (TextView) wish.findViewById(R.id.actionbar_wish_textview);
+        totalBudgetCountwish.setText("" + db_wish.getWishlistCount());
         return true;
     }
 
@@ -479,6 +503,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else  if (id == R.id.action_cart) {
             if (dbcart.getCartCount() > 0) {
                 Fragment fm = new Cart_fragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                        .addToBackStack(null).commit();
+            } else {
+                Fragment fm = new Empty_cart_fragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                        .addToBackStack(null).commit();
+            }
+            return true;
+        }
+
+        else  if (id == R.id.action_wish) {
+            if (db_wish.getWishlistCount() > 0) {
+                Fragment fm = new Wishlist_fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                         .addToBackStack(null).commit();
