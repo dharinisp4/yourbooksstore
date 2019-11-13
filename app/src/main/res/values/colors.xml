@@ -18,7 +18,7 @@
     <color name="yelow">#ffee05</color>
     <color name="purple">#ed0bc0</color>
 
-    <color name="green">#00CED1</color>
+
     <color name="light_gray">#faf5f5</color>
     <color name="contact_name">#333333</color>
     <color name="contact_number">#8c8c8c</color>
@@ -29,4 +29,7 @@
     <color name="in_stock">#348C8C8C</color>
     <color name="dialog">#90000000</color>
     <color name="first_col">#D50525</color>
+    <color name="darkOverlaySoft">#40000000</color>
+    <color name="green">#FF279B5E</color>
+    <color name="bgcolor2">#eff0f4</color>
 </resources>

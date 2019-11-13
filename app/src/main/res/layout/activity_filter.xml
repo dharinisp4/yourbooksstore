@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FilterActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50dp"
+        android:background="@color/colorPrimary">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="@dimen/dimen_30dp"
+                android:src="@drawable/previous"
+                android:layout_centerVertical="true"
+                android:layout_height="@dimen/dimen_40dp"/>
+            <TextView
+                android:text="Filter"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/img_back"
+                android:textSize="@dimen/dimen_25dp"
+                android:layout_marginLeft="@dimen/space_10"
+                android:textColor="@color/white"
+                android:fontFamily="@font/cabin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+
+<LinearLayout
+    android:layout_marginTop="@dimen/space_2"
+    android:weightSum="1"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="0dp"
+    android:layout_weight="7"
+    >
+
+    <LinearLayout
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_weight=".4"
+        android:orientation="vertical"
+        android:background="@drawable/liner_border_layout"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+          <CheckBox
+              android:id="@+id/chk_bk_class"
+              android:text="Class/Branch"
+              android:layout_centerHorizontal="true"
+             android:layout_centerVertical="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/chk_bk_subject"
+                android:text="Subject"
+                android:layout_marginTop="@dimen/space_10"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/chk_bk_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:layout_marginTop="@dimen/space_10"
+                android:id="@+id/chk_bk_language"
+                android:text="Language"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/chk_bk_subject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_weight=".59"
+        android:background="@drawable/liner_border_layout"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_class"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/rv_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/rv_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/liner_border_layout"
+            android:layout_height="@dimen/dimen_0dp"
+            android:layout_margin="@dimen/space_2"
+            android:orientation="vertical"
+            android:layout_weight="2.3">
+
+            <TextView
+                android:layout_marginTop="10dp"
+
+                android:text="Selected Fliter options"
+                android:textSize="@dimen/space_18"
+
+                android:fontFamily="@font/cabin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/txt_class"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:text="class"
+                android:visibility="gone"
+                android:textSize="@dimen/space_16"
+                android:textColor="@color/black"
+                android:fontFamily="@font/cabin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/txt_subject"
+                android:visibility="gone"
+
+                android:textAlignment="center"
+                android:text="class"
+                android:textSize="@dimen/space_16"
+                android:textColor="@color/black"
+                android:fontFamily="@font/cabin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/txt_language"
+                android:textAlignment="center"
+                android:text="class"
+                android:visibility="gone"
+
+                android:textSize="@dimen/space_16"
+                android:textColor="@color/black"
+                android:fontFamily="@font/cabin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:orientation="horizontal"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom"
+            android:layout_weight=".7"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+            <Button
+                android:id="@+id/btn_clear"
+                android:layout_weight="@integer/int_5"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="match_parent"
+                android:text="Clear All"
+                android:background="@color/darkOverlaySoft"/>
+            <Button
+                android:id="@+id/btn_apply"
+                android:layout_weight="@integer/int_5"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="match_parent"
+                android:text="Apply"
+                android:textColor="@color/white"
+                android:background="@color/green"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

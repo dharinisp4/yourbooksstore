@@ -54,6 +54,7 @@ import Model.Product_model;
 import Model.Slider_subcat_model;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.CustomSlider;
+import gogrocer.tcc.FilterActivity;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
@@ -77,6 +78,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private Product_adapter adapter_product;
     private SliderLayout  banner_slider;
     String language;
+    String getcat_id="";
     ImageView img_no_products,img_filter,img_sort;
     SharedPreferences preferences;
     private DatabaseCartHandler dbcart;
@@ -106,7 +108,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
         rv_cat = (RecyclerView) view.findViewById(R.id.rv_subcategory);
         rv_cat.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        String getcat_id = getArguments().getString("cat_id");
+        getcat_id = getArguments().getString("cat_id");
         String id = getArguments().getString("id");
         String get_deal_id = getArguments().getString("cat_deal");
         String get_top_sale_id = getArguments().getString("cat_top_selling");
@@ -859,6 +861,13 @@ loadingBar.show();
                     // Toast.makeText( getActivity(),"Showing items:" +item,Toast.LENGTH_LONG ).show();
                 }
             } );
+        }
+
+        else if(id==R.id.img_filter)
+        {
+         Intent intent=new Intent(getActivity(), FilterActivity.class);
+          intent.putExtra("category_id",getcat_id);
+          startActivity(intent);
         }
     }
 }

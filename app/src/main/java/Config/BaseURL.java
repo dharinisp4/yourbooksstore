@@ -47,7 +47,7 @@ public class BaseURL {
     public static final String STORE_ID = "STORE_ID";
 
    // public static String BASE_URL = "https://yourbooksstore.com/admin/";
-    public static String BASE_URL = "http://admin.anshuwap.com/yourbook/admin/";
+    public static String BASE_URL = "https://admin.anshuwap.com/yourbook/admin/";
 
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
     public static String IMG_CATEGORY_URL = BASE_URL + "uploads/category/";
@@ -134,5 +134,11 @@ public class BaseURL {
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     public static final String PUSH_NOTIFICATION = "pushNotification";
+
+    //Filter Urls
+
+    public static String GET_LANGUAGE_URL = BASE_URL + "index.php/api/get_language";
+    public static String GET_SUBJECT_URL = BASE_URL + "index.php/api/get_subject";
+    public static String GET_BOOK_CLASS_URL = BASE_URL + "index.php/api/get_book_class";
 
 }

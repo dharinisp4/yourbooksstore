@@ -3,6 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="gogrocer.tcc">
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:supportsRtl="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
+    <uses-permission-sdk-23 android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:name=".AppController"
         android:allowBackup="true"
@@ -15,6 +39,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
+        <activity android:name=".FilterActivity"></activity>
         <activity android:name="com.payumoney.sdkui.ui.activities.PayUmoneyActivity" />
         <activity
             android:name=".SplashActivity"
@@ -48,7 +73,6 @@
             android:name=".ForgotActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- ./Firebase Notifications -->
         <activity android:name=".My_Order_activity" />
-
         <activity android:name=".MyOrderDetail" />
         <activity android:name=".RechargeWallet" />
         <activity android:name=".ThanksOrder" />
@@ -64,7 +88,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Paytm" />
-
         <activity android:name=".networkconnectivity.NoInternetConnection" />
 
         <meta-data
@@ -79,6 +102,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <service
             android:name="fcm.MyFirebaseMessagingService"
             android:exported="false">
@@ -86,7 +110,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name="com.google.firebase.components.ComponentDiscoveryService">
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
@@ -100,30 +123,5 @@
             </intent-filter>
         </service>
     </application>
-
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:resizeable="true"
-        android:smallScreens="true"
-        android:supportsRtl="true" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
-
-    <uses-permission-sdk-23 android:name="android.permission.READ_PHONE_STATE" />
 
 </manifest>
