@@ -126,13 +126,13 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
             makeGetCategoryRequest(getcat_id);
 
             //Deal Of The Day Products
-            if (view_all.equalsIgnoreCase( "new" )) {
-                make_deal_od_the_day();
-            }
+//            if (view_all.equalsIgnoreCase( "new" )) {
+//                make_deal_od_the_day();
+//            }
             //Top Sale Products
-            else  {
+//            else  {
                 maketopsaleProductRequest( get_top_sale_id );
-            }
+//            }
 
             //Slider
             //makeGetBannerSliderRequest();
@@ -627,7 +627,7 @@ loadingBar.show();
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         adapter_product = new Product_adapter(product_modelList, getActivity());
-                        rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                       // rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
@@ -679,7 +679,7 @@ loadingBar.show();
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         adapter_product = new Product_adapter(product_modelList, getActivity());
-                        rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                 //       rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
@@ -732,7 +732,7 @@ loadingBar.show();
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         adapter_product = new Product_adapter(product_modelList, getActivity());
-                        rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                    //    rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
