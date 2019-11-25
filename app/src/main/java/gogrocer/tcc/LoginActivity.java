@@ -86,8 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void attemptLogin() {
 
-        tv_email.setText(getResources().getString(R.string.tv_login_email));
-        tv_password.setText(getResources().getString(R.string.tv_login_password));
+
         tv_password.setTextColor(getResources().getColor(R.color.black));
         tv_email.setTextColor(getResources().getColor(R.color.black));
         String getpassword = et_password.getText().toString();
@@ -95,24 +94,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         boolean cancel = false;
         View focusView = null;
         if (TextUtils.isEmpty(getpassword)) {
-            tv_password.setTextColor(getResources().getColor(R.color.black));
+            et_password.setError(getResources().getString(R.string.enter_password));
             focusView = et_password;
             cancel = true;
         } else if (!isPasswordValid(getpassword)) {
-            tv_password.setText(getResources().getString(R.string.password_too_short));
+            et_password.setError(getResources().getString(R.string.password_too_short));
             tv_password.setTextColor(getResources().getColor(R.color.black));
-            focusView = et_password;
+          //  focusView = et_password;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getemail)) {
-
-            tv_email.setTextColor(getResources().getColor(R.color.black));
+            et_email.setError(getResources().getString(R.string.enter_phone));
+           // tv_email.setTextColor(getResources().getColor(R.color.black));
             focusView = et_email;
             cancel = true;
-        } else if (!isEmailValid(getemail)) {
-            tv_email.setText(getResources().getString(R.string.invalide_email_address));
-            tv_email.setTextColor(getResources().getColor(R.color.black));
+        } else if (!isPhoneValid(getemail)) {
+            et_email.setError(getResources().getString(R.string.password_length));
+           // tv_email.setTextColor(getResources().getColor(R.color.black));
             focusView = et_email;
             cancel = true;
         }
@@ -143,6 +142,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return password.length() > 3;
     }
 
+    private boolean isPhoneValid(String phoneno) {
+        //TODO: Replace this with your own logic
+        return phoneno.length() > 9;
+    }
+
     /**
      * Method to make json object request where json response starts wtih
      */
@@ -151,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Tag used to cancel the request
         String tag_json_obj = "json_login_req";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("user_email", email);
+        params.put("user_phone", email);
         params.put("password", password);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
@@ -177,8 +181,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(i);
                         finish();
-                        MyFirebaseRegister myFirebaseRegister=new MyFirebaseRegister(LoginActivity.this);
-                        myFirebaseRegister.RegisterUser(user_id);
+//                        MyFirebaseRegister myFirebaseRegister=new MyFirebaseRegister(LoginActivity.this);
+//                        myFirebaseRegister.RegisterUser(user_id);
 
                         btn_continue.setEnabled(false);
 

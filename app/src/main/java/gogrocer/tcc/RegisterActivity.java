@@ -33,7 +33,7 @@ import util.CustomVolleyJsonRequest;
 public class RegisterActivity extends AppCompatActivity {
 
     private static String TAG = RegisterActivity.class.getSimpleName();
-    private EditText et_phone, et_name, et_password, et_email;
+    private EditText et_phone, et_name, et_password, et_email,et_con_password;
     private RelativeLayout btn_register;
     private TextView  tv_login ,tv_phone, tv_name, tv_password, tv_email;
     @Override
@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_phone = (EditText) findViewById(R.id.et_reg_phone);
         et_name = (EditText) findViewById(R.id.et_reg_name);
         et_password = (EditText) findViewById(R.id.et_reg_password);
+        et_con_password = (EditText) findViewById(R.id.et_con_password);
         et_email = (EditText) findViewById(R.id.et_reg_email);
         tv_login =(TextView)findViewById( R.id.btnSignin);
 //        tv_password = (TextView) findViewById(R.id.tv_reg_password);
@@ -91,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
         String getname = et_name.getText().toString();
         String getpassword = et_password.getText().toString();
         String getemail = et_email.getText().toString();
-
+        String getc_pass=et_con_password.getText().toString();
         boolean cancel = false;
         View focusView = null;
 
@@ -139,6 +140,19 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = et_password;
             cancel = true;
         }
+  if (TextUtils.isEmpty(getc_pass)) {
+            et_con_password.setError(getResources().getString(R.string.enter_password));
+            et_con_password.requestFocus();
+            focusView = et_con_password;
+            cancel = true;
+        } else if (!isPasswordValid(getc_pass)) {
+          //  tv_password.setText(getResources().getString(R.string.password_too_short));
+
+      et_con_password.setError( getResources().getString(R.string.password_length));
+      et_con_password.requestFocus();
+            focusView = et_con_password;
+            cancel = true;
+        }
 
         if (TextUtils.isEmpty(getemail)) {
             focusView = et_email;
@@ -160,9 +174,17 @@ public class RegisterActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 
-            if (ConnectivityReceiver.isConnected()) {
-                makeRegisterRequest(getname, getphone, getemail, getpassword);
+            if(getc_pass.equals(getpassword))
+            {
+                if (ConnectivityReceiver.isConnected()) {
+                    makeRegisterRequest(getname, getphone, getemail, getpassword);
+                }
             }
+            else
+            {
+                Toast.makeText(RegisterActivity.this,""+getResources().getString(R.string.enter_pass_notmatch),Toast.LENGTH_LONG).show();
+            }
+
         }
 
 

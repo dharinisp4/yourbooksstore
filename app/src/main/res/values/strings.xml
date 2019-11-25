@@ -247,6 +247,7 @@
     <string name="password_length" translatable="false">Password length must be between 6-32 characters</string>
     <string name="enter_username" translatable="false">Please Enter User name</string>
     <string name="enter_email" translatable="false">Please Enter Email address</string>
+    <string name="enter_phone" translatable="false">Please Enter Mobile number</string>
     <string name="enter_valid_email" translatable="false">Please Enter valid email address</string>
     <string name="enter_valid_phone" translatable="false">Please Enter valid mobile number</string>
     <string name="enter_password" translatable="false">Please Enter Password</string>

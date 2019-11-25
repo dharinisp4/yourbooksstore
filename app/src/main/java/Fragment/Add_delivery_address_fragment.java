@@ -45,7 +45,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private static String TAG = Add_delivery_address_fragment.class.getSimpleName();
 
     private EditText et_phone, et_name,  et_address;
-    private AutoCompleteTextView et_pin ;
+    private TextView et_pin ;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_house, tv_socity, select_city;
     private String getsocity = "";
@@ -83,7 +83,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         tv_phone = (TextView) view.findViewById(R.id.tv_add_adres_phone);
         tv_name = (TextView) view.findViewById(R.id.tv_add_adres_name);
         tv_pin = (TextView) view.findViewById(R.id.tv_add_adres_pin);
-        et_pin = (AutoCompleteTextView) view.findViewById(R.id.et_add_adres_pin);
+        et_pin = (TextView) view.findViewById(R.id.et_add_adres_pin);
         et_address = (EditText) view.findViewById(R.id.address);
         tv_house = (TextView) view.findViewById(R.id.tv_add_adres_home);
         tv_socity = (TextView) view.findViewById(R.id.tv_add_adres_socity);
@@ -127,15 +127,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         }
 
         btn_update.setOnClickListener(this);
-        select_city.setOnClickListener(this);
+       // select_city.setOnClickListener(this);
+        et_pin.setOnClickListener(this);
 
-        et_pin.setOnTouchListener( new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                et_pin.showDropDown();
-                return false;
-            }
-        } );
 
         return view;
     }
@@ -145,7 +139,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         int id = view.getId();
         if (id == R.id.btn_add_adres_edit) {
             attemptEditProfile();
-        } else if (id == R.id.select_city) {
+        } else if (id == R.id.et_add_adres_pin) {
 
             /*String getpincode = et_pin.getText().toString();
 
