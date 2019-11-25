@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -40,8 +41,9 @@ import util.Session_management;
 import static gogrocer.tcc.AppController.TAG;
 
 public class fragment_edit_details extends Fragment {
-    EditText name,address,pincode,phone;
+    EditText name,address,phone;
     RelativeLayout edit_address;
+    TextView pincode;
     Fonts.LatoBLack font,select_city;
     Session_management session_management;
     String getlocation_id;
@@ -55,10 +57,11 @@ public class fragment_edit_details extends Fragment {
         Bundle b = getArguments();
         getlocation_id = b.getString("location_id");
         name.setText(b.getString("name"));
-        pincode.setText(b.getString("pincode"));
+        pincode.setText(b.getString("socity_name"));
         phone.setText(b.getString("mobile"));
-        select_city.setText(getsocity_name);
-        select_city.setOnClickListener(new View.OnClickListener() {
+        address.setText(b.getString("house"));
+        select_city.setText("Gwalior");
+        pincode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment fm = new Socity_fragment();
@@ -101,34 +104,38 @@ public class fragment_edit_details extends Fragment {
         View focusView = null;
 
         if (TextUtils.isEmpty(getphone)) {
-            phone.setTextColor(getResources().getColor(R.color.colorPrimary));
+            phone.setError(getResources().getString(R.string.enter_phone));
+           // phone.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView =phone;
             cancel = true;
         } else if (!isPhoneValid(getphone)) {
-            Toast.makeText(getContext(), "Phone not valid", Toast.LENGTH_SHORT).show();
+            phone.setError(getResources().getString(R.string.phone_too_short));
             focusView = phone;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getname)) {
+            name.setError("Please Enter Name");
             focusView = name;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getpin)) {
-            Toast.makeText(getContext(), "Pincode not valid", Toast.LENGTH_SHORT).show();
+            pincode.setError("Please Choose any one society");
+           // Toast.makeText(getContext(), "Pincode not valid", Toast.LENGTH_SHORT).show();
             focusView = pincode;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(gethouse)) {
-            Toast.makeText(getContext(), "address not valid", Toast.LENGTH_SHORT).show();
+            address.setError("Please Enter Address");
             focusView = address;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getsocity) && getsocity == null) {
-            Toast.makeText(getContext(), "city can't be empty", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Society can't be empty", Toast.LENGTH_SHORT).show();
             focusView = select_city;
             cancel = true;
         }

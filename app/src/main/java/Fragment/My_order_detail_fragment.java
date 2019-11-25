@@ -2,6 +2,7 @@ package Fragment;
 
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -224,6 +225,10 @@ public class My_order_detail_fragment extends Fragment {
                         String msg = response.getString("message");
                         Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
 
+//                        Intent intent=new Intent(getActivity(),MainActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+//                        getActivity().finish();
                         ((MainActivity) getActivity()).onBackPressed();
 
                     } else {

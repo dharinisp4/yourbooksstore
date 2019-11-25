@@ -60,7 +60,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     public Add_delivery_address_fragment() {
         // Required empty public constructor
     }
-    String pincodes [] ={"111111","2222222","3333333","333445"};
+    //String pincodes [] ={"111111","2222222","3333333","333445"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,20 +109,21 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             } else {
                 isEdit = true;
 
-                Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
 
                 et_name.setText(get_name);
                 et_phone.setText(get_phone);
-                et_pin.setText(get_pine);
+                et_pin.setText(get_socity_name);
                 et_address.setText(get_house);
-                select_city.setText(get_socity_name);
+                select_city.setText("Gwalior");
 
                 sessionManagement.updateSocity(get_socity_name, get_socity_id);
             }
         }
 
         if (!TextUtils.isEmpty(getsocity_name)) {
-            select_city.setText(getsocity_name);
+            et_pin.setText(getsocity_name);
+            select_city.setText("Gwalior");
             sessionManagement.updateSocity(getsocity_name, getsocity_id);
         }
 
@@ -161,17 +162,17 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
     private void attemptEditProfile() {
 
-        tv_phone.setText(getResources().getString(R.string.receiver_mobile_number));
-        tv_pin.setText(getResources().getString(R.string.tv_reg_pincode));
-        tv_name.setText(getResources().getString(R.string.receiver_name_req));
-        tv_house.setText(getResources().getString(R.string.tv_reg_house));
-        tv_socity.setText(getResources().getString(R.string.tv_reg_socity));
+//        tv_phone.setText(getResources().getString(R.string.receiver_mobile_number));
+//        tv_pin.setText(getResources().getString(R.string.tv_reg_pincode));
+//        tv_name.setText(getResources().getString(R.string.receiver_name_req));
+//        tv_house.setText(getResources().getString(R.string.tv_reg_house));
+//        tv_socity.setText(getResources().getString(R.string.tv_reg_socity));
 
-        tv_name.setTextColor(getResources().getColor(R.color.dark_gray));
-        tv_phone.setTextColor(getResources().getColor(R.color.dark_gray));
-        tv_pin.setTextColor(getResources().getColor(R.color.dark_gray));
-        tv_house.setTextColor(getResources().getColor(R.color.dark_gray));
-        tv_socity.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_name.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_phone.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_pin.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_house.setTextColor(getResources().getColor(R.color.dark_gray));
+//        tv_socity.setTextColor(getResources().getColor(R.color.dark_gray));
 
         String getphone = et_phone.getText().toString();
         String getname = et_name.getText().toString();
@@ -183,39 +184,44 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         View focusView = null;
 
         if (TextUtils.isEmpty(getphone)) {
-            tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_phone.setError(getResources().getString(R.string.enter_phone));
+            //tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_phone;
             cancel = true;
         } else if (!isPhoneValid(getphone)) {
-            tv_phone.setText(getResources().getString(R.string.phone_too_short));
-            tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_phone.setError(getResources().getString(R.string.phone_too_short));
+//            tv_phone.setText(getResources().getString(R.string.phone_too_short));
+//            tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_phone;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getname)) {
-            tv_name.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_name.setError("Please Enter Name");
+         //   tv_name.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_name;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getpin)) {
-            tv_pin.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_pin.setError("Please Choose any one society");
+            //tv_pin.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_pin;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(gethouse)) {
-            tv_house.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_address.setError("Please Enter Address");
+           // tv_house.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_address;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(getsocity) && getsocity == null) {
-            tv_socity.setTextColor(getResources().getColor(R.color.colorPrimary));
-            focusView = select_city;
-            cancel = true;
-        }
+//        if (TextUtils.isEmpty(getsocity) && getsocity == null) {
+//            //tv_socity.setTextColor(getResources().getColor(R.color.colorPrimary));
+//            focusView = select_city;
+//            cancel = true;
+//        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first

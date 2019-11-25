@@ -322,8 +322,10 @@ public class Payment_fragment extends Fragment {
             if (ConnectivityReceiver.isConnected()) {
 
                 Log.e(TAG, "from:" + gettime + "\ndate:" + getdate +
-                        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id + getstore_id + "\ndata:" + passArray.toString());
+                        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id +"\n"+ getstore_id + "\ndata:" + passArray.toString());
 
+//                Toast.makeText(getActivity(),"from:" + gettime + "\ndate:" + getdate +
+//                        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id +"\n"+ getstore_id + "\ndata:" + passArray.toString(),Toast.LENGTH_LONG).show();
                 try {
 
                     makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, getstore_id, passArray);
@@ -352,7 +354,7 @@ public class Payment_fragment extends Fragment {
         params.put("total_ammount",total_amount);
         params.put("payment_method", getvalue);
         params.put("data", passArray.toString());
-     //   Toast.makeText(getActivity(),""+passArray,Toast.LENGTH_LONG).show();
+       // Toast.makeText(getActivity(),"\n t_amt:- "+total_amount+"\n p-method"+getvalue+"\n"+passArray,Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.ADD_ORDER_URL, params, new Response.Listener<JSONObject>() {
             @Override
@@ -364,13 +366,13 @@ public class Payment_fragment extends Fragment {
                     if (status) {
                         String msg = response.getString("data");
                         String msg_arb=response.getString("data_arb");
-                        if(checkout.equalsIgnoreCase( "null" )) {
+                      //  if(checkout.equalsIgnoreCase( "null" )) {
                             db_cart.clearCart();
-                        }
-                        else
-                        {
-                            db_cart.removeItemFromCart( product_id );
-                        }
+//                        }
+//                        else
+//                        {
+//                            db_cart.removeItemFromCart( product_id );
+//                        }
                         Bundle args = new Bundle();
                         Fragment fm = new Thanks_fragment();
                         args.putString("msg", msg);
@@ -392,6 +394,8 @@ public class Payment_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

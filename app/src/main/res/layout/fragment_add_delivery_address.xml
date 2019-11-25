@@ -40,6 +40,7 @@
 
             <EditText
                 android:id="@+id/et_add_adres_name"
+                android:hint="Enter Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space_5"
@@ -72,6 +73,7 @@
             <EditText
                 android:id="@+id/et_add_adres_phone"
                 android:layout_width="match_parent"
+                android:hint="Enter Mobile Number"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space_5"
                 android:layout_marginTop="@dimen/space_4"
@@ -173,11 +175,12 @@
             <EditText
                 android:id="@+id/address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginBottom="@dimen/space_5"
                 android:layout_marginTop="@dimen/space_4"
+                android:hint="Enter Address"
                 android:background="@drawable/xml_textbox_bg"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:textSize="@dimen/space_14" />
 
             <RelativeLayout

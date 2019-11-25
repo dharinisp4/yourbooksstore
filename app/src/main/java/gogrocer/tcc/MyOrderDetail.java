@@ -241,7 +241,10 @@ public class MyOrderDetail extends AppCompatActivity {
 
                         String msg = response.getString("message");
                         Toast.makeText(MyOrderDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
-
+                        Intent intent=new Intent(MyOrderDetail.this,MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
                         // ((MainActivity) getActivity()).onBackPressed();
 
                     } else {

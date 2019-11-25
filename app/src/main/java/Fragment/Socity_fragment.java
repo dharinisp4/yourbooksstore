@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -53,6 +54,7 @@ public class Socity_fragment extends Fragment {
     private AutoCompleteTextView et_search;
     private RecyclerView rv_socity;
 
+    TextView tv_view_all;
     private List<Socity_model> socity_modelList = new ArrayList<>();
     private Socity_adapter adapter;
 
@@ -73,6 +75,7 @@ public class Socity_fragment extends Fragment {
 
         //String getpincode = getArguments().getString("pincode");
 
+        tv_view_all=(TextView)view.findViewById(R.id.tv_view_all);
         et_search = (AutoCompleteTextView) view.findViewById(R.id.et_socity_search);
         et_search.setThreshold(1);
         et_search.setAdapter(new SocietyAdapter(getActivity(),et_search.getText().toString()));
@@ -80,6 +83,14 @@ public class Socity_fragment extends Fragment {
         rv_socity = (RecyclerView) view.findViewById(R.id.rv_socity);
         rv_socity.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        tv_view_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeGetSocityRequest();
+
+
+            }
+        });
        et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
