@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_10"
-                android:text="@string/tv_login_email"
+                android:text="Mobile Number"
                 android:textColor="#000"
                 android:textSize="14sp" />
             <ImageView
@@ -94,9 +94,11 @@
             android:layout_marginTop="@dimen/space_4"
             android:background="@drawable/xml_textbox_bg"
             android:ems="10"
+            android:maxLength="10"
             android:gravity="center_horizontal"
-            android:inputType="textEmailAddress"
+            android:inputType="number"
             android:padding="@dimen/space_10"
+            android:hint="Enter Mobile Number"
             android:textAlignment="center"
             android:textColor="#000"
             android:textColorHint="@color/dark_gray"
@@ -135,7 +137,8 @@
             android:ems="10"
             android:gravity="center_horizontal"
             android:inputType="textPassword"
-            android:maxLength="10"
+
+            android:hint="Enter Password"
             android:padding="@dimen/space_10"
             android:textAlignment="center"
             android:textColor="#000"
@@ -162,34 +165,9 @@
                 android:text="Sign In"
                 android:textColor="#fff"
                 android:textSize="@dimen/dimen_15sp" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
-
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="1dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/space_15"
-                android:layout_alignParentStart="true"
-                android:background="@color/black"/>
-            <TextView
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OR"/>
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="1dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/space_15"
-                android:layout_alignParentEnd="true"
-                android:background="@color/black"/>
-        </RelativeLayout>
 
         <Button
-
+           android:visibility="gone"
             android:id="@+id/btnfb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -202,7 +180,7 @@
             android:textColor="#fff"
             android:textSize="@dimen/dimen_15sp" />
         <Button
-
+   android:visibility="gone"
             android:id="@+id/btngoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -223,9 +201,7 @@
                 android:id="@+id/text_register"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:layout_margin="12dp"
                 android:layout_centerInParent="true"
-                android:padding="12dp"
                 android:gravity="center"
                 android:text="Not Registered ?"
                 android:textColor="@color/black"
@@ -236,8 +212,8 @@
             android:layout_toRightOf="@+id/text_register"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginTop="11dp"
-           android:layout_marginLeft="-15dp"
+
+           android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="Sign Up Now"
             android:textStyle="bold"

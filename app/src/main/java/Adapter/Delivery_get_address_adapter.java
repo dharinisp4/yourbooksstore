@@ -60,7 +60,7 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
     private String getsocity, gethouse, getphone, getpin, getname, getcharge;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_address, tv_name, tv_phone, tv_charges,edit_details;
+        public TextView tv_address, tv_name, tv_phone, tv_charges,edit_details,delete_details;
         public RadioButton rb_select;
 
         SwipeLayout swipeLayout;
@@ -73,6 +73,7 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
             buttonDelete = (Button) itemView.findViewById(R.id.delete);
             btn_edit = (Button) itemView.findViewById(R.id.edit);
             edit_details = (TextView)itemView.findViewById(R.id.edit_details);
+            delete_details = (TextView)itemView.findViewById(R.id.delete_details);
             tv_address = (TextView) view.findViewById(R.id.tv_adres_address);
             tv_name = (TextView) view.findViewById(R.id.tv_adres_username);
             tv_phone = (TextView) view.findViewById(R.id.tv_adres_phone);
@@ -181,23 +182,8 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
             context.sendBroadcast(updates);
         }
 
-        holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
 
-        holder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
-            @Override
-            public void onOpen(SwipeLayout layout) {
-                //YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
-            }
-        });
-
-        holder.swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-            @Override
-            public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+        holder.delete_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mItemManger.removeShownLayouts(holder.swipeLayout);
@@ -209,6 +195,14 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
                 if(ConnectivityReceiver.isConnected()){
                     makeDeleteAddressRequest(mList.getLocation_id(),position);
                 }
+
+            }
+        });
+
+        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
 
             }
         });

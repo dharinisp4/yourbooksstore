@@ -39,7 +39,7 @@ public class Socity_adapter extends RecyclerView.Adapter<Socity_adapter.MyViewHo
 
     public Socity_adapter(List<Socity_model> modelList) {
         this.modelList = modelList;
-        this.mFilteredList = modelList;
+        this.mFilteredList = new ArrayList<>(modelList);
     }
 
     @Override
@@ -56,12 +56,12 @@ public class Socity_adapter extends RecyclerView.Adapter<Socity_adapter.MyViewHo
     public void onBindViewHolder(Socity_adapter.MyViewHolder holder, int position) {
         Socity_model mList = modelList.get(position);
 
-        holder.title.setText(mList.getSocity_name());
+        holder.title.setText(mList.getSocity_name()+" - "+mList.getPincode());
     }
 
     @Override
     public int getItemCount() {
-        return mFilteredList.size();
+        return modelList.size();
     }
 
     @Override
@@ -70,23 +70,23 @@ public class Socity_adapter extends RecyclerView.Adapter<Socity_adapter.MyViewHo
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
+               // String charString = charSequence.toString();
+                ArrayList<Socity_model> filteredList = new ArrayList<>();
 
-                if (charString.isEmpty()) {
-                    Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show();
-                    mFilteredList = modelList;
-                } else {
-
-                    ArrayList<Socity_model> filteredList = new ArrayList<>();
-                    Toast.makeText(context, String.valueOf(modelList.size()), Toast.LENGTH_SHORT).show();
-                    for (Socity_model androidVersion : modelList) {
-                        if (androidVersion.getSocity_name().toLowerCase().contains(charString)) {
-                                filteredList.add(androidVersion);
-                        }
-                    }
-
-                    mFilteredList = filteredList;
-                }
+//                if (charSequence==null || charSequence.length()==0) {
+//                   // Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show();
+//                    filteredList.addAll(modelList);
+//                } else {
+//                    String filterPattern=charSequence.toString().toLowerCase().trim();
+//                  //  Toast.makeText(context, String.valueOf(modelList.size()), Toast.LENGTH_SHORT).show();
+//                    for (Socity_model androidVersion : modelList) {
+//                        if (androidVersion.getSocity_name().toLowerCase().contains(charString.toLowerCase()) || androidVersion.getSocity_name().contains(charSequence)) {
+//                                filteredList.add(androidVersion);
+//                        }
+//                    }
+//
+//                    mFilteredList = filteredList;
+//                }
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = mFilteredList;

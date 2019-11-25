@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/FORTSDKv1.5" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/payment" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

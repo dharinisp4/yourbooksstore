@@ -238,8 +238,20 @@
 
 
     <string name="status_stop">Powered By <font color="#f7941e">Your Books Store</font></string>
-    <string name="title_activity_main_bottom">MainActivity_bottom</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main_bottom" translatable="false">MainActivity_bottom</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
+
+    <string name="password_valid" translatable="false">Please enter password with letter &amp; numbers</string>
+    <string name="password_length" translatable="false">Password length must be between 6-32 characters</string>
+    <string name="enter_username" translatable="false">Please Enter User name</string>
+    <string name="enter_email" translatable="false">Please Enter Email address</string>
+    <string name="enter_phone" translatable="false">Please Enter Mobile number</string>
+    <string name="enter_valid_email" translatable="false">Please Enter valid email address</string>
+    <string name="enter_valid_phone" translatable="false">Please Enter valid mobile number</string>
+    <string name="enter_password" translatable="false">Please Enter Password</string>
+    <string name="enter_cnfpassword" translatable="false">Please Enter Confirm Password</string>
+    <string name="enter_pass_notmatch" translatable="false">Password &amp; Confirm Password does\'t match</string>
+
 </resources>

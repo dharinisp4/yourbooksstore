@@ -80,7 +80,7 @@ public class Socity_fragment extends Fragment {
         rv_socity = (RecyclerView) view.findViewById(R.id.rv_socity);
         rv_socity.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-       /* et_search.addTextChangedListener(new TextWatcher() {
+       et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -96,7 +96,9 @@ public class Socity_fragment extends Fragment {
 
             }
         });
-*/
+
+
+
         // check internet connection
         if (ConnectivityReceiver.isConnected()) {
             makeGetSocityRequest();

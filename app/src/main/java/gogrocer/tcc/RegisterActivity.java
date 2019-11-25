@@ -33,15 +33,11 @@ import util.CustomVolleyJsonRequest;
 public class RegisterActivity extends AppCompatActivity {
 
     private static String TAG = RegisterActivity.class.getSimpleName();
-
-    private EditText et_phone, et_name, et_password, et_email;
+    private EditText et_phone, et_name, et_password, et_email,et_con_password;
     private RelativeLayout btn_register;
     private TextView  tv_login ,tv_phone, tv_name, tv_password, tv_email;
     @Override
     protected void attachBaseContext(Context newBase) {
-
-
-
         newBase = LocaleHelper.onAttach(newBase);
         super.attachBaseContext(newBase);
     }
@@ -56,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_phone = (EditText) findViewById(R.id.et_reg_phone);
         et_name = (EditText) findViewById(R.id.et_reg_name);
         et_password = (EditText) findViewById(R.id.et_reg_password);
+        et_con_password = (EditText) findViewById(R.id.et_con_password);
         et_email = (EditText) findViewById(R.id.et_reg_email);
         tv_login =(TextView)findViewById( R.id.btnSignin);
 //        tv_password = (TextView) findViewById(R.id.tv_reg_password);
@@ -95,14 +92,13 @@ public class RegisterActivity extends AppCompatActivity {
         String getname = et_name.getText().toString();
         String getpassword = et_password.getText().toString();
         String getemail = et_email.getText().toString();
-
+        String getc_pass=et_con_password.getText().toString();
         boolean cancel = false;
         View focusView = null;
 
         if (TextUtils.isEmpty(getphone)) {
-            tv_phone.setTextColor(getResources().getColor(R.color.black));
             et_phone.requestFocus();
-            et_phone.setError( "invalid" );
+            et_phone.setError("Please Enter Mobile Number" );
             focusView = et_phone;
             cancel = true;
         }
@@ -114,28 +110,47 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = et_phone;
             cancel = true;
         }
+        else if(!isPhoneValid(getphone))
+        {
+            et_phone.setError(getResources().getString(R.string.enter_valid_phone));
+            //  et_phone.setText(getResources().getString(R.string.phone_too_short));
+            et_phone.setTextColor(getResources().getColor(R.color.black));
+            focusView = et_phone;
+            cancel = true;
+        }
 
 
         if (TextUtils.isEmpty(getname)) {
-            tv_name.setTextColor(getResources().getColor(R.color.black));
             et_name.requestFocus();
-            et_name.setError( "mandatory field" );
+            et_name.setError( getResources().getString(R.string.enter_username) );
             focusView = et_name;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getpassword)) {
-            tv_password.setTextColor(getResources().getColor(R.color.black));
-            et_password.setError( "mandatory field" );
+            et_password.setError(getResources().getString(R.string.enter_password));
             et_password.requestFocus();
             focusView = et_password;
             cancel = true;
         } else if (!isPasswordValid(getpassword)) {
           //  tv_password.setText(getResources().getString(R.string.password_too_short));
-            tv_password.setTextColor(getResources().getColor(R.color.black));
-            et_password.setError( "too short" );
+
+            et_password.setError( getResources().getString(R.string.password_length));
             et_password.requestFocus();
             focusView = et_password;
+            cancel = true;
+        }
+  if (TextUtils.isEmpty(getc_pass)) {
+            et_con_password.setError(getResources().getString(R.string.enter_password));
+            et_con_password.requestFocus();
+            focusView = et_con_password;
+            cancel = true;
+        } else if (!isPasswordValid(getc_pass)) {
+          //  tv_password.setText(getResources().getString(R.string.password_too_short));
+
+      et_con_password.setError( getResources().getString(R.string.password_length));
+      et_con_password.requestFocus();
+            focusView = et_con_password;
             cancel = true;
         }
 
@@ -144,8 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
             cancel = true;
         } else if (!isEmailValid(getemail)) {
            // et_email.setText(getResources().getString(R.string.invalide_email_address));
-            et_email.setTextColor(getResources().getColor(R.color.black));
-            et_email.setError( "invalid" );
+            et_email.setError(getResources().getString(R.string.email_not_valid) );
             et_email.requestFocus();
             focusView = et_email;
             cancel = true;
@@ -160,9 +174,17 @@ public class RegisterActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 
-            if (ConnectivityReceiver.isConnected()) {
-                makeRegisterRequest(getname, getphone, getemail, getpassword);
+            if(getc_pass.equals(getpassword))
+            {
+                if (ConnectivityReceiver.isConnected()) {
+                    makeRegisterRequest(getname, getphone, getemail, getpassword);
+                }
             }
+            else
+            {
+                Toast.makeText(RegisterActivity.this,""+getResources().getString(R.string.enter_pass_notmatch),Toast.LENGTH_LONG).show();
+            }
+
         }
 
 
@@ -210,29 +232,10 @@ public class RegisterActivity extends AppCompatActivity {
                     if (status) {
                         String msg = response.getString("message");
                         Toast.makeText(RegisterActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
-                        BackgroundMail.newBuilder(RegisterActivity.this)
-                                .withUsername("anshuwap1@gmail.com")
-                                .withPassword("Mynewpass@123")
-                                .withMailto(email)
-                                .withSubject("Your Book Store")
-                                .withBody("Congratulations ! your account has been created for yourbookstore")
-                                .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        Toast.makeText(RegisterActivity.this, "check your mail !", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                                        startActivity(i);
-                                        finish();
-                                    }
-                                }).withOnFailCallback(new BackgroundMail.OnFailCallback() {
-                            @Override
-                            public void onFail() {
-                                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                                startActivity(i);
-                                finish();
-                                Toast.makeText(RegisterActivity.this, "error", Toast.LENGTH_SHORT).show();
-                            }
-                        }).send();
+                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
+
                         /*  BackgroundMail.newBuilder(RegisterActivity.this)
                                 .withUsername("anshuwap1@gmail.com")
                                 .withPassword("Mynewpass@123")

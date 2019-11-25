@@ -140,5 +140,6 @@ public class BaseURL {
     public static String GET_LANGUAGE_URL = BASE_URL + "index.php/api/get_language";
     public static String GET_SUBJECT_URL = BASE_URL + "index.php/api/get_subject";
     public static String GET_BOOK_CLASS_URL = BASE_URL + "index.php/api/get_book_class";
+    public static String GET_PRODUCT_FILTER = BASE_URL + "index.php/api/get_products_filter";
 
 }

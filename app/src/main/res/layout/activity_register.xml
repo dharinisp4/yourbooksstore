@@ -45,63 +45,62 @@
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-smallcaps"
                 />
-<!--<LinearLayout-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:orientation="horizontal"-->
-<!--    android:layout_marginTop="@dimen/dimen_20dp"-->
-<!--    android:layout_height="wrap_content">-->
-<!--    <EditText-->
-<!--        android:id="@+id/tv_reg_name"-->
-<!--        android:textColor="#000"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/tv_reg_name_hint"-->
-<!--        android:textSize="14sp" />-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/dimen_20dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_reg_name"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_reg_name_hint"
+        android:textSize="14sp" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/iconname"-->
-<!--        android:src="@drawable/iconn"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="16dp" />-->
+    <ImageView
+        android:id="@+id/iconname"
+        android:src="@drawable/iconn"
+        android:layout_width="16dp"
+        android:layout_height="16dp" />
 
-<!--</LinearLayout>-->
+</LinearLayout>
+
 
             <EditText
                 android:id="@+id/et_reg_name"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/dimen_40dp"
                 android:textSize="14sp"
                 android:layout_height="@dimen/dimen_50dp"
                 android:hint="Name"
-                android:layout_marginBottom="@dimen/space_5"
-                android:drawableLeft="@drawable/icons8_change_user_52px"
-                android:drawableTint="@color/colorPrimaryDark"
+                android:background="@drawable/xml_textbox_bg"
+
                 android:drawablePadding="@dimen/space_5"
                 android:ems="10"
                 android:outlineProvider="bounds"
                 android:inputType="text" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_height="wrap_content">-->
-<!--                <Fonts.LatoBLack-->
-<!--                    android:id="@+id/tv_reg_email"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textColor="#000"-->
-<!--                    android:layout_marginTop="@dimen/space_10"-->
-<!--                    android:text="@string/tv_login_email"-->
-<!--                    android:textSize="14sp" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <Fonts.LatoBLack
+                    android:id="@+id/tv_reg_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:text="@string/tv_login_email"
+                    android:textSize="14sp" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/iconnemail"-->
-<!--                    android:layout_width="16dp"-->
-<!--                    android:layout_height="16dp"-->
-<!--                    android:layout_marginTop="@dimen/space_10"-->
-<!--                    android:src="@drawable/iconn" />-->
+                <ImageView
+                    android:id="@+id/iconnemail"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:src="@drawable/iconn" />
 
-<!--            </LinearLayout>-->
+            </LinearLayout>
 
 
             <EditText
@@ -110,47 +109,47 @@
                 android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
-                android:drawableLeft="@drawable/icons8_email_48px"
-                android:drawableTint="@color/colorPrimaryDark"
+                android:background="@drawable/xml_textbox_bg"
+
                 android:drawablePadding="@dimen/space_5"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/email"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_height="wrap_content">-->
-<!--                <Fonts.LatoBLack-->
-<!--                    android:textColor="#000"-->
-<!--                    android:id="@+id/tv_reg_phone"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/et_login_phone_hint"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:layout_marginTop="@dimen/space_10"/>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <Fonts.LatoBLack
+                    android:textColor="#000"
+                    android:id="@+id/tv_reg_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/et_login_phone_hint"
+                    android:textSize="14sp"
+                    android:layout_marginTop="@dimen/space_10"/>
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/iconp"-->
-<!--                    android:layout_width="16dp"-->
-<!--                    android:layout_height="16dp"-->
-<!--                    android:layout_marginTop="@dimen/space_10"-->
-<!--                    android:src="@drawable/iconn" />-->
+                <ImageView
+                    android:id="@+id/iconp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:src="@drawable/iconn" />
 
-<!--            </LinearLayout>-->
+            </LinearLayout>
 
 
             <EditText
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
+                android:background="@drawable/xml_textbox_bg"
                 android:id="@+id/et_reg_phone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginBottom="@dimen/space_10"
-                android:hint="Phone Numbe"
-                android:drawableLeft="@drawable/icons8_phonelink_ring_filled_50px"
-                android:drawableTint="@color/colorPrimaryDark"
+                android:hint="Phone Number"
+
                 android:drawablePadding="@dimen/space_5"
                 android:ems="10"
                 android:inputType="phone"
@@ -201,19 +200,76 @@
 <!--            </LinearLayout>-->
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <Fonts.LatoBLack
+                    android:textColor="#000"
+                    android:id="@+id/tv_reg_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textSize="14sp"
+                    android:layout_marginTop="@dimen/space_10"/>
+
+                <ImageView
+                    android:id="@+id/iconpass"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:src="@drawable/iconn" />
+
+            </LinearLayout>
 
 
             <EditText
                 android:textSize="14sp"
                 android:layout_marginTop="@dimen/space_4"
                 android:id="@+id/et_reg_password"
+                android:background="@drawable/xml_textbox_bg"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginBottom="5dp"
               android:hint="@string/password"
                 android:inputType="textPassword"
-                android:drawableLeft="@drawable/icons8_lock_2_filled_50px"
-                android:drawableTint="@color/colorPrimaryDark"
+
+                android:drawablePadding="@dimen/space_5"
+                android:maxLength="10"
+                android:ems="10"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <Fonts.LatoBLack
+                    android:textColor="#000"
+                    android:id="@+id/tv_c_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm Password"
+                    android:textSize="14sp"
+                    android:layout_marginTop="@dimen/space_10"/>
+
+                <ImageView
+                    android:id="@+id/iconcpass"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:src="@drawable/iconn" />
+
+            </LinearLayout>
+
+            <EditText
+                android:textSize="14sp"
+                android:layout_marginTop="@dimen/space_4"
+                android:id="@+id/et_con_password"
+                android:background="@drawable/xml_textbox_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50dp"
+                android:layout_marginBottom="5dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+
                 android:drawablePadding="@dimen/space_5"
                 android:maxLength="10"
                 android:ems="10"/>

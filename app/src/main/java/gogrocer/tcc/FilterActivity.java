@@ -1,14 +1,20 @@
 package gogrocer.tcc;
 
 import android.app.Dialog;
+import Fragment.*;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -32,7 +38,7 @@ import Config.BaseURL;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
 
-public class FilterActivity extends AppCompatActivity {
+public class FilterActivity extends Fragment {
 
     Dialog ProgressDialog;
     CheckBox chk_bk_class,chk_bk_subject,chk_bk_language;
@@ -51,39 +57,49 @@ public class FilterActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager1,layoutManager2,layoutManager3;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_filter, container, false);
 
-        chk_bk_class=(CheckBox)findViewById(R.id.chk_bk_class);
-        chk_bk_subject=(CheckBox)findViewById(R.id.chk_bk_subject);
-        chk_bk_language=(CheckBox)findViewById(R.id.chk_bk_language);
+        chk_bk_class=(CheckBox)view.findViewById(R.id.chk_bk_class);
+        chk_bk_subject=(CheckBox)view.findViewById(R.id.chk_bk_subject);
+        chk_bk_language=(CheckBox)view.findViewById(R.id.chk_bk_language);
 
-        btn_apply=(Button)findViewById(R.id.btn_apply);
-        btn_clear=(Button)findViewById(R.id.btn_clear);
+        btn_apply=(Button)view.findViewById(R.id.btn_apply);
+        btn_clear=(Button)view.findViewById(R.id.btn_clear);
 
-        txt_class=(TextView)findViewById(R.id.txt_class);
-        txt_subject=(TextView)findViewById(R.id.txt_subject);
-        txt_language=(TextView)findViewById(R.id.txt_language);
+        txt_class=(TextView)view.findViewById(R.id.txt_class);
+        txt_subject=(TextView)view.findViewById(R.id.txt_subject);
+        txt_language=(TextView)view.findViewById(R.id.txt_language);
 
-        img_back=(ImageView)findViewById(R.id.img_back);
+      //  img_back=(ImageView)view.findViewById(R.id.img_back);
 
-        ProgressDialog = new Dialog(FilterActivity.this, android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
         ProgressDialog.setContentView(R.layout.progressbar);
         ProgressDialog.setCancelable(false);
 
-        cat_id=getIntent().getStringExtra("category_id");
+//        view.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+//                    ((MainActivity) getActivity()).finish();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+        cat_id= getArguments().getString("category_id");
 
         list_class=new ArrayList<>();
         list_subject=new ArrayList<>();
         list_language=new ArrayList<>();
-        rv_language=findViewById(R.id.rv_language);
-        rv_subject=findViewById(R.id.rv_subject);
-        rv_class=findViewById(R.id.rv_subject);
+        rv_language=view.findViewById(R.id.rv_language);
+        rv_subject=view.findViewById(R.id.rv_subject);
+        rv_class=view.findViewById(R.id.rv_subject);
 
-        layoutManager1=new LinearLayoutManager(this);
-        layoutManager2=new LinearLayoutManager(this);
-        layoutManager3=new LinearLayoutManager(this);
+        layoutManager1=new LinearLayoutManager(getActivity());
+        layoutManager2=new LinearLayoutManager(getActivity());
+        layoutManager3=new LinearLayoutManager(getActivity());
 
         rv_language.setHasFixedSize(false);
         rv_subject.setHasFixedSize(false);
@@ -166,6 +182,39 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
+
+        btn_apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JSONObject object=new JSONObject();
+                try {
+
+                    object.put("cat_id",cat_id);
+                    object.put("book_class",book_class);
+                    object.put("subject",subject);
+                    object.put("language",language);
+
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+                JSONArray array=new JSONArray();
+                array.put(object);
+
+                String data=array.toString();
+                //String data=cat_id+"@"+book_class+","+subject+","+language;
+                Bundle args = new Bundle();
+                Fragment fm = new Product_fragment();
+                args.putString("filter", data);
+                fm.setArguments(args);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm).addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        return view;
     }
 
     private void createClassList(String cat_id) {
@@ -195,7 +244,7 @@ public class FilterActivity extends AppCompatActivity {
                             String bk=object.getString("book_class");
                             list_class.add(bk);
                         }
-                        filterAdapter=new FilterAdapter(list_class,FilterActivity.this,1);
+                        filterAdapter=new FilterAdapter(list_class,getActivity(),1);
                         rv_class.setVisibility(View.VISIBLE);
                         rv_class.setAdapter(filterAdapter);
 
@@ -208,14 +257,14 @@ public class FilterActivity extends AppCompatActivity {
                 catch (Exception ex)
                 {
                     ProgressDialog.dismiss();
-                    Toast.makeText(FilterActivity.this,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 ProgressDialog.dismiss();
-                Toast.makeText(FilterActivity.this,""+error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -228,7 +277,7 @@ public class FilterActivity extends AppCompatActivity {
 
         //Toast.makeText(FilterActivity.this,""+cat_id,Toast.LENGTH_LONG).show();
         ProgressDialog.show();
-        String json_tag="json_book_class";
+        String json_tag="json_subject";
         HashMap<String,String> map=new HashMap<>();
         map.put("category_id",cat_id);
 
@@ -251,7 +300,7 @@ public class FilterActivity extends AppCompatActivity {
                             String bk=object.getString("subject");
                             list_subject.add(bk);
                         }
-                        filterAdapter=new FilterAdapter(list_subject,FilterActivity.this,2);
+                        filterAdapter=new FilterAdapter(list_subject,getActivity(),2);
                         rv_subject.setVisibility(View.VISIBLE);
                         rv_subject.setAdapter(filterAdapter);
 
@@ -263,14 +312,14 @@ public class FilterActivity extends AppCompatActivity {
                 catch (Exception ex)
                 {
                     ProgressDialog.dismiss();
-                    Toast.makeText(FilterActivity.this,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 ProgressDialog.dismiss();
-                Toast.makeText(FilterActivity.this,""+error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -283,7 +332,7 @@ public class FilterActivity extends AppCompatActivity {
 
         //Toast.makeText(FilterActivity.this,""+cat_id,Toast.LENGTH_LONG).show();
         ProgressDialog.show();
-        String json_tag="json_book_class";
+        String json_tag="json_book_lang";
         HashMap<String,String> map=new HashMap<>();
         map.put("category_id",cat_id);
 
@@ -304,10 +353,10 @@ public class FilterActivity extends AppCompatActivity {
                         {
                             JSONObject object= (JSONObject) array.get(i);
                             String bk=object.getString("language");
-                            String l=JsonArrToString(bk);
-                            list_language.add(l);
+                            //String l=JsonArrToString(bk);
+                            list_language.add(bk);
                         }
-                        filterAdapter=new FilterAdapter(list_language,FilterActivity.this,3);
+                        filterAdapter=new FilterAdapter(list_language,getActivity(),3);
                         rv_language.setVisibility(View.VISIBLE);
                         rv_language.setAdapter(filterAdapter);
                         rv_subject.setVisibility(View.GONE);
@@ -320,14 +369,14 @@ public class FilterActivity extends AppCompatActivity {
                 catch (Exception ex)
                 {
                     ProgressDialog.dismiss();
-                    Toast.makeText(FilterActivity.this,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 ProgressDialog.dismiss();
-                Toast.makeText(FilterActivity.this,""+error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);

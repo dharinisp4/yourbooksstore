@@ -102,7 +102,7 @@
             </LinearLayout>
 
 
-            <AutoCompleteTextView
+            <TextView
                 android:id="@+id/et_add_adres_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
