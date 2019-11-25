@@ -63,6 +63,7 @@ import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import Module.Module;
+import util.DatabaseHandlerWishList;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -84,6 +85,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     ImageView img_no_products,img_filter,img_sort;
     SharedPreferences preferences;
     private DatabaseCartHandler dbcart;
+    private DatabaseHandlerWishList dbwish;
     private SortAdapter sortAdapter ;
     private boolean isSubcat = false;
     NewAdapter new_adapter ;
@@ -138,14 +140,13 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
                 return false;
             }
         });
+    dbwish=new DatabaseHandlerWishList( getActivity() );
         if (ConnectivityReceiver.isConnected()) {
             //Shop by Catogary
-            //Toast.makeText(getActivity(),""+filer_data,Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
            // makeGetSliderCategoryRequest(id);
             makeGetCategoryRequest(getcat_id);
 
-                makeGetProductFilterRequest(filer_data);
-           // makeGetProductFilterRequest(filer_data);
             //Deal Of The Day Products
 //            if (view_all.equalsIgnoreCase( "new" )) {
 //                make_deal_od_the_day();
@@ -197,11 +198,10 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         updateData();
+        updateWishData();
     }
 
-    /**
-     * Method to make json object request where json response starts wtih
-     */
+
     //Get Shop By Catogary
     private void makeGetCategoryRequest(final String parent_id) {
 
@@ -793,6 +793,8 @@ loadingBar.show();
         super.onResume();
         // register reciver
         getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+        getActivity().registerReceiver(mWish, new IntentFilter("Grocery_wish"));
+
     }
 
     // broadcast reciver for receive data
@@ -802,7 +804,7 @@ loadingBar.show();
 
             String type = intent.getStringExtra("type");
 
-            if (type.contentEquals("update")) {
+            if (type.contentEquals("cart")) {
                 updateData();
             }
         }
@@ -813,12 +815,31 @@ loadingBar.show();
         ((MainActivity) getActivity()).setCartCounter("" + dbcart.getCartCount());
     }
 
+    private BroadcastReceiver mWish = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("wish")) {
+                updateWishData();
+            }
+
+        }
+    };
+    private void updateWishData() {
+
+        ((MainActivity) getActivity()).setWishCounter("" + dbwish.getWishlistCount());
+    }
+
+
 
     @Override
     public void onPause() {
         super.onPause();
         // unregister reciver
         getActivity().unregisterReceiver(mCart);
+        getActivity().unregisterReceiver(mWish);
     }
 
 
@@ -842,7 +863,6 @@ loadingBar.show();
             //productVariantAdapter.notifyDataSetChanged();
             l1.setAdapter(sortAdapter);
             builder.setView(row);
-
             final AlertDialog ddlg=builder.create();
             ddlg.show();
             l1.setOnItemClickListener( new AdapterView.OnItemClickListener() {
@@ -850,8 +870,7 @@ loadingBar.show();
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ddlg.dismiss();
                     String item = sort_List.get( i ).toString();
-                    //final String cat_id = getArguments().getString("cat_id");
-                    final String cat_id = getcat_id;
+                    final String cat_id = getArguments().getString("cat_id");
 
                     if (item.equals( "Price Low - High" ))
                     {

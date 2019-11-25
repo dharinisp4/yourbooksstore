@@ -61,6 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
 //        tv_email = (TextView) findViewById(R.id.tv_reg_email);
         btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
 
+        String phone_number = getIntent().getStringExtra( "mobile" );
+        et_phone.setText( phone_number );
+        et_phone.setEnabled( false );
+
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

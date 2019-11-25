@@ -15,15 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/delete"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_margin="@dimen/space_10"
-        android:background="@drawable/icons8_delete_bin_60px"
-        android:backgroundTint="@color/dark_gray"
-        android:layout_alignParentEnd="true"/>
-
 
 
 
@@ -35,8 +26,8 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
             android:layout_marginTop="@dimen/space_5"
             android:src="@drawable/icon"
             android:layout_centerVertical="true"
@@ -79,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:layout_marginLeft="33dp"
+                    android:layout_marginLeft="@dimen/space_10"
                     android:text="Price :"
                     android:padding="5dp"
                     android:textColor="#837e7e"
@@ -95,94 +86,72 @@
                     android:text="Price"
                     android:textColor="@color/color_3"
                     android:textSize="15dp" />
-                <TextView
-                    android:id="@+id/dis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="5dp"
-                    android:textAlignment="center"
-                    android:padding="5dp"
-                    android:text="Price"
-                    android:textColor="#837e7e"
-                    android:textSize="15dp"
-                    android:textStyle="italic"/>
+
 
 
             </RelativeLayout>
 
 
 
-
-
-
             <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_3"
+                android:id="@+id/rel_rewards"
+                android:layout_marginTop="@dimen/space_4"
+                android:layout_marginLeft="@dimen/space_10"
+
+                android:background="@drawable/slider_shape"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_5"
+
+                >
+
+                <Fonts.LatoBLack
+                    android:id="@+id/text_rw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_3"
+                    android:text="@string/rewards_points"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_size_small"
+                    android:padding="@dimen/space_2"/>
+
+                <Fonts.LatoBLack
+
+                    android:id="@+id/tv_reward_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignRight="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_10"
+                    android:padding="@dimen/space_2"
+                    android:text=""
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_size_small" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_subcat_total"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" TextView"
+                android:layout_marginLeft="@dimen/space_10"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:padding="3dp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_marginLeft="25dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
 
                 >
-                <TextView
-                    android:id="@+id/txtId"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:textSize="10dp"
 
-                    android:text="Weight :"
-
-                    android:visibility="invisible"
-                    />
-                <TextView
-                    android:id="@+id/txtVar"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:textSize="10dp"
-
-                    android:text="Weight :"
-
-                    android:visibility="invisible"
-                    />
-                <TextView
-                    android:id="@+id/single_varient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1kg"
-                    android:visibility="gone"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/space_10"
-                    android:paddingRight="@dimen/space_2"
-                    />
-                <RelativeLayout
-                    android:id="@+id/rel_variant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginTop="@dimen/space_10"
-                    android:visibility="gone"
-                    android:background="@drawable/relative_unit_layout">
-                    <TextView
-                        android:id="@+id/unit_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-                    <ImageView
-                        android:layout_toRightOf="@id/unit_type"
-                        android:background="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp">
-
-                    </ImageView>
-
-                </RelativeLayout>
 
                 <Button
                     android:id="@+id/btn_add"
@@ -190,30 +159,57 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
-                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginRight="@dimen/space_10"
-                    android:layout_toRightOf="@+id/varient"
                     android:background="@drawable/bg_rounded_button"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:clickable="true"
                     android:text="Add"
                     android:textColor="@color/white" />
-                <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                    android:id="@+id/elegantButton"
-                    android:layout_width="80dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="@dimen/space_10"
-                    android:layout_toRightOf="@+id/varient"
-                    android:background="@drawable/bg_rounded_button"
-                    android:elevation="6dp"
-                    app:textSize="7dp"
-                    app:initialNumber="1"
-                    app:finalNumber="10"
-                    app:textColor="@color/white"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/rel_no"
                     android:visibility="gone"
-                    />
+                    >
+                    <ImageView
+                        android:id="@+id/iv_subcat_minus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentStart="true"
+                        app:srcCompat="@drawable/minus"
+                        android:tint="@color/colorPrimaryDark"/>
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_subcat_contetiy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="@dimen/space_10"
+                        android:layout_marginRight="@dimen/space_10"
+                        android:paddingTop="@dimen/space_5"
+                        android:textAlignment="center"
+                        android:text="1"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:layout_toRightOf="@id/iv_subcat_minus"/>
+
+                    <ImageView
+                        android:id="@+id/iv_subcat_plus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:tint="@color/colorPrimaryDark"
+                        android:layout_toRightOf="@id/tv_subcat_contetiy"
+                        app:srcCompat="@drawable/plus" />
+
+
+
+
+                </RelativeLayout>
             </RelativeLayout>
 
         </LinearLayout>
@@ -226,7 +222,29 @@
      android:background="@android:color/darker_gray"
         android:layout_marginTop="@dimen/space_5"></View>
     </RelativeLayout>
-
+    <ImageView
+        android:id="@+id/iv_subcat_remove"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:srcCompat="@drawable/icons8_delete_bin_60px"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/space_10"
+        android:layout_marginTop="@dimen/space_10"
+        />
+    <TextView
+        android:id="@+id/product_discount"
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_70dp"
+        android:layout_marginTop="-10dp"
+        android:text="10%"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="@dimen/dimen_15dp"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:background="@drawable/ic_bookmark_black_24dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        />
 
 </android.support.v7.widget.CardView>
 

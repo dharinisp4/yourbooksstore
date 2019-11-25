@@ -372,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void updateHeader() {
         if (sessionManagement.isLoggedIn()) {
+            viewpa.setVisibility( View.VISIBLE );
             String getname = sessionManagement.getUserDetails().get(BaseURL.KEY_NAME);
             String getimage = sessionManagement.getUserDetails().get(BaseURL.KEY_IMAGE);
             String getemail = sessionManagement.getUserDetails().get(BaseURL.KEY_EMAIL);

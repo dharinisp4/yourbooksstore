@@ -436,9 +436,16 @@ private List<Product_model> modelList ;
 
     private void updateintent() {
         Intent updates = new Intent("Grocery_cart");
-        updates.putExtra("type", "update");
+        updates.putExtra("type", "cart");
         getActivity().sendBroadcast(updates);
     }
+    private void updateWish()
+    {
+        Intent updates = new Intent("Grocery_wish");
+        updates.putExtra("type", "wish");
+        getActivity().sendBroadcast(updates);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -1099,6 +1106,7 @@ public boolean checkAttributeStatus(String atr)
         super.onPause();
         // unregister reciver
         getActivity().unregisterReceiver(mCart);
+        getActivity().unregisterReceiver( mWish );
     }
 
     @Override
@@ -1106,6 +1114,7 @@ public boolean checkAttributeStatus(String atr)
         super.onResume();
         // register reciver
         getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+        getActivity().registerReceiver( mWish,new IntentFilter( "Grocery_wish" ) );
     }
 
 
@@ -1115,15 +1124,32 @@ public boolean checkAttributeStatus(String atr)
 
             String type = intent.getStringExtra("type");
 
-            if (type.contentEquals("update")) {
+            if (type.contentEquals("cart")) {
                 updateData();
             }
+
         }
     };
 
     public void updateData()
     {
         ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
+    }
+    private BroadcastReceiver mWish = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("wish")) {
+                updateWishCount();
+            }
+
+        }
+    };
+    public void updateWishCount()
+    {
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishlistCount());
     }
 
 

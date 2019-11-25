@@ -25,9 +25,7 @@ import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
 
-/**
- * Created by Anas Mansoori on 12,November,2019
- */
+
 public class Wishlist_fragment extends Fragment {
 
     private static String TAG = Shop_Now_fragment.class.getSimpleName();
@@ -69,7 +67,7 @@ public class Wishlist_fragment extends Fragment {
 //        Log.d("cart all ",""+db_cart.getCartAll());
 
         Wishlist_Adapter adapter = new Wishlist_Adapter( map,getActivity() );
-        rv_wishlist.setLayoutManager(new GridLayoutManager(getActivity(),2));
+
         rv_wishlist.setAdapter( adapter );
         adapter.notifyDataSetChanged();
 
@@ -116,6 +114,8 @@ public class Wishlist_fragment extends Fragment {
         super.onResume();
         // register reciver
         getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+        getActivity().registerReceiver( mWish,new IntentFilter( "Grocery_wish" ) );
+
     }
 
     // broadcast reciver for receive data
@@ -125,7 +125,7 @@ public class Wishlist_fragment extends Fragment {
 
             String type = intent.getStringExtra("type");
 
-            if (type.contentEquals("update")) {
+            if (type.contentEquals("cart")) {
                 updateData();
             }
         }
@@ -142,5 +142,24 @@ public class Wishlist_fragment extends Fragment {
         super.onPause();
         // unregister reciver
         getActivity().unregisterReceiver(mCart);
+        getActivity().unregisterReceiver( mWish );
     }
+    private BroadcastReceiver mWish= new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("wish")) {
+                updateWishData();
+            }
+        }
+    };
+
+    private void updateWishData() {
+
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishlistCount());
+    }
+
+
 }

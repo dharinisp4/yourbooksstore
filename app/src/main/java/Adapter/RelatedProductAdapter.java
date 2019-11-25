@@ -185,9 +185,15 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 //        holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
 
         String bk_lang="";
-        String lang=mList.getLanguage().toString();
-            bk_lang=" | "+lang;
-
+//        String lang=mList.getLanguage().toString();
+//        if(lang.equals("") || lang.isEmpty() || lang.equals(null))
+//        {
+//
+//        }
+//        else
+//        {
+//            bk_lang=" | "+getBookLanguage(lang);
+//        }
 
 
         if (language.contains( "english" )) {
@@ -398,35 +404,35 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
     private void updateintent() {
         Intent updates = new Intent("Grocery_cart");
-        updates.putExtra("type", "update");
+        updates.putExtra("type", "cart");
         context.sendBroadcast(updates);
     }
 
-    public String getBookLanguage(String lan)
-    {
-        String lang="";
-        List<String> list=new ArrayList<>();
-        try
-        {
-            JSONArray array=new JSONArray(lan);
-            for(int i=0; i<array.length();i++)
-            {
-                String l=array.getString(i).toString();
-                list.add(l);
-            }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_LONG).show();
-        }
-        StringBuilder sb = new StringBuilder();
-
-        // Appends characters one by one
-        for (String  ch : list) {
-            sb.append(ch);
-            sb.append(",");
-        }
-        lang=sb.toString();
-        return lang.substring(0,lang.length()-1);
-    }
+//    public String getBookLanguage(String lan)
+//    {
+//        String lang="";
+//        List<String> list=new ArrayList<>();
+//        try
+//        {
+//            JSONArray array=new JSONArray(lan);
+//            for(int i=0; i<array.length();i++)
+//            {
+//                String l=array.getString(i).toString();
+//                list.add(l);
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+//        }
+//        StringBuilder sb = new StringBuilder();
+//
+//        // Appends characters one by one
+//        for (String  ch : list) {
+//            sb.append(ch);
+//            sb.append(",");
+//        }
+//        lang=sb.toString();
+//        return lang.substring(0,lang.length()-1);
+//    }
 }

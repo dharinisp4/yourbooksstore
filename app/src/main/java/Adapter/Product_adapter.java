@@ -368,6 +368,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                         mList.getPrice(),mList.getProduct_description(),mList.getIn_stock(),mList.getStatus(),mList.getRewards()
                         ,mList.getUnit_value(),mList.getUnit(),mList.getIncreament(),mList.getStock()
                         ,mList.getTitle(),mList.getMrp(),mList.getSeller_id(),mList.getBook_class(),mList.getSubject(),mList.getLanguage());
+                updatewish();
             }
         });
 
@@ -379,6 +380,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                 holder.wish_after.setVisibility(View.GONE);
 
                 dbWish.removeItemFromWishlist(mList.getProduct_id());
+                updatewish();
             }
         });
     }
@@ -428,8 +430,15 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 
     private void updateintent() {
         Intent updates = new Intent("Grocery_cart");
-        updates.putExtra("type", "update");
+        updates.putExtra("type", "cart");
         context.sendBroadcast(updates);
+    }
+    private  void updatewish()
+    {
+        Intent updates = new Intent("Grocery_wish");
+        updates.putExtra("type", "wish");
+        context.sendBroadcast(updates);
+
     }
 
     public String getBookLanguage(String lan)
