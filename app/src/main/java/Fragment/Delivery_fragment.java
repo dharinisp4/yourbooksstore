@@ -419,7 +419,7 @@ String language;
 
             String type = intent.getStringExtra("type");
 
-            if (type.contentEquals("update")) {
+            if (type.contentEquals("cart")) {
                 //updateData();
                 deli_charges = intent.getStringExtra("charge");
                 //Toast.makeText(getActivity(), deli_charges, Toast.LENGTH_SHORT).show();

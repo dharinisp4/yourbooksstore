@@ -119,7 +119,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
     // update UI
     private void updateData() {
-        tv_total.setText("" + db.getTotalAmount());
+        tv_total.setText("" + db.getTotalMRP());
         tv_item.setText("" + db.getCartCount());
         ((MainActivity) getActivity()).setCartCounter("" + db.getCartCount());
     }

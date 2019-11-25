@@ -49,6 +49,7 @@ import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
 
+import static Module.Module.updatewish;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyViewHolder> {
@@ -74,30 +75,25 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
             rel_no =(RelativeLayout)view.findViewById( R.id.rel_no );
             rel_stock =(RelativeLayout)view.findViewById( R.id.rel_stock );
-            tv_title = (TextView) view.findViewById(R.id.tv_subcat_title);
-            tv_price = (TextView) view.findViewById(R.id.tv_subcat_price);
+            tv_title = (TextView) view.findViewById(R.id.product_name);
+            tv_price = (TextView) view.findViewById(R.id.product_prize);
             tv_reward = (TextView) view.findViewById(R.id.tv_reward_point);
             tv_total = (TextView) view.findViewById(R.id.tv_subcat_total);
             tv_discount=(TextView)view.findViewById( R.id.product_discount );
             tv_reward_point=(TextView)view.findViewById( R.id.tv_reward_point );
             tv_contetiy = (TextView) view.findViewById(R.id.tv_subcat_contetiy);
-            tv_subcat_mrp = (TextView) view.findViewById(R.id.tv_subcat_mrp);
-            tv_add = (Button) view.findViewById(R.id.tv_subcat_add);
-            iv_logo = (ImageView) view.findViewById(R.id.iv_subcat_img);
+            tv_subcat_mrp = (TextView) view.findViewById(R.id.product_mrp);
+            tv_add = (Button) view.findViewById(R.id.btn_add);
+            iv_logo = (ImageView) view.findViewById(R.id.iv_icon);
             iv_plus = (ImageView) view.findViewById(R.id.iv_subcat_plus);
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
-            wish_before = (ImageView) view.findViewById(R.id.wish_before);
-            wish_after = (ImageView) view.findViewById(R.id.wish_after);
-            rel_click = (RelativeLayout) view.findViewById(R.id.rel_click);
-//            iv_remove.setVisibility(View.GONE);
-//            iv_minus.setOnClickListener(this);
-//            iv_plus.setOnClickListener(this);
-            //  tv_add.setOnClickListener(this);
-            // iv_logo.setOnClickListener(this);
+
+            rel_click = (RelativeLayout) view.findViewById(R.id.rel_wish);
+           // iv_remove.setOnClickListener( this );
+
             rel_click.setOnClickListener(this);
-            CardView cardView = (CardView) view.findViewById(R.id.card_view);
-            cardView.setOnClickListener(this);
+
 
         }
 
@@ -114,16 +110,12 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
                     Bundle args = new Bundle();
 
-                    //Intent intent=new Intent(context, Product_details.class);
+
                     args.putString("product_id", map.get("product_id"));
                     args.putString("product_name", map.get("product_name"));
                     args.putString("category_id", map.get("category_id"));
                     args.putString("product_description",map.get("product_description"));
-                    //         args.putString("deal_price",modelList.get(position).getDeal_price());
-                    //       args.putString("start_date",modelList.get(position).getStart_date());
-                    //     args.putString("start_time",modelList.get(position).getStart_time());
-                    //   args.putString("end_date",modelList.get(position).getEnd_date());
-                    // args.putString("end_time",modelList.get(position).getEnd_time());
+
                     args.putString("price", map.get("price"));
                     args.putString("mrp",map.get("mrp"));
                     args.putString("product_image",map.get("product_image"));
@@ -161,7 +153,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
     @Override
     public Wishlist_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product_rv, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_wishlist, parent, false);
         context = (Activity) parent.getContext();
         return new Wishlist_Adapter.MyViewHolder(itemView);
     }
@@ -170,7 +162,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
     public void onBindViewHolder(final Wishlist_Adapter.MyViewHolder holder, final int position) {
         final HashMap<String, String> map = list.get(position);
         //imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.your_image));
-        holder.wish_before.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_close));
+    //    holder.wish_before.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_close));
 
         Glide.with( context )
                 .load( BaseURL.IMG_PRODUCT_URL + map.get("product_image"))
@@ -184,20 +176,21 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         language = preferences.getString( "language", "" );
         Double price = Double.valueOf( map.get("price") );
         Double qty = Double.parseDouble( (String) holder.tv_contetiy.getText() );
+        Double total = price *qty ;
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
 
 
 
         String bk_lang="";
         String lang=map.get("language");
-        if(lang.equals("") || lang.isEmpty() || lang.equals(null))
-        {
-
-        }
-        else
-        {
-            bk_lang=" | "+getBookLanguage(lang);
-        }
+//        if(lang.equals("") || lang.isEmpty() || lang.equals(null))
+//        {
+//
+//        }
+//        else
+//        {
+//         //   bk_lang=" | "+getBookLanguage(lang);
+//        }
 
 
         if (language.contains( "english" )) {
@@ -365,29 +358,18 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
         } );
 
-
-        holder.wish_before.setOnClickListener(new View.OnClickListener() {
+        holder.iv_remove.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-              dbWish.removeItemFromWishlist(map.get("product_id"));
+                dbWish.removeItemFromWishlist( map.get( "product_id" ) );
                 list.remove(position);
                 notifyDataSetChanged();
+                updatewish();
 
-                updateintent();
             }
-        });
+        } );
 
-//        holder.wish_after.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                holder.wish_before.setVisibility(View.VISIBLE);
-//                holder.wish_after.setVisibility(View.GONE);
-//
-//                dbWish.removeItemFromWishlist(mList.getProduct_id());
-//            }
-//        });
+
     }
     @Override
     public int getItemCount() {
@@ -435,35 +417,41 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
     private void updateintent() {
         Intent updates = new Intent("Grocery_cart");
-        updates.putExtra("type", "update");
+        updates.putExtra("type", "cart");
         context.sendBroadcast(updates);
     }
-
-    public String getBookLanguage(String lan)
+    private  void updatewish()
     {
-        String lang="";
-        List<String> list=new ArrayList<>();
-        try
-        {
-            JSONArray array=new JSONArray(lan);
-            for(int i=0; i<array.length();i++)
-            {
-                String l=array.getString(i).toString();
-                list.add(l);
-            }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_LONG).show();
-        }
-        StringBuilder sb = new StringBuilder();
-
-        // Appends characters one by one
-        for (String  ch : list) {
-            sb.append(ch);
-            sb.append(",");
-        }
-        lang=sb.toString();
-        return lang.substring(0,lang.length()-1);
+        Intent updates = new Intent( "Grocery_wish" );
+        updates.putExtra( "type","wish" );
+        context.sendBroadcast( updates );
     }
+
+//    public String getBookLanguage(String lan)
+//    {
+//        String lang="";
+//        List<String> list=new ArrayList<>();
+//        try
+//        {
+//            JSONArray array=new JSONArray(lan);
+//            for(int i=0; i<array.length();i++)
+//            {
+//                String l=array.getString(i).toString();
+//                list.add(l);
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+//        }
+//        StringBuilder sb = new StringBuilder();
+//
+//        // Appends characters one by one
+//        for (String  ch : list) {
+//            sb.append(ch);
+//            sb.append(",");
+//        }
+//        lang=sb.toString();
+//        return lang.substring(0,lang.length()-1);
+//    }
 }

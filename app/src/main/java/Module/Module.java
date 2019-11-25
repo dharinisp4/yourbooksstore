@@ -29,6 +29,7 @@ import java.util.List;
 import Model.ProductVariantModel;
 
 import gogrocer.tcc.MainActivity;
+import gogrocer.tcc.MobileVerify;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
@@ -36,8 +37,11 @@ import util.DatabaseHandlerWishList;
 public class Module {
 
 
+    public Module() {
+    }
+
     public static void setIntoCart(Activity activity, String cart_id, String product_id, String product_images, String cat_id, String details_product_name, String details_product_price, String details_product_desc, String details_product_rewards, String details_product_unit_price, String details_product_unit,
-                                   String details_product_increament, String details_product_inStock, String details_product_title, String details_product_mrp, String seller_id,String book_class,String subject,String language, float qty)
+                                   String details_product_increament, String details_product_inStock, String details_product_title, String details_product_mrp, String seller_id, String book_class, String subject, String language, float qty)
     {
         DatabaseCartHandler db_cart=new DatabaseCartHandler(activity);
         HashMap<String, String> mapProduct=new HashMap<String, String>();
@@ -92,8 +96,15 @@ public class Module {
 
     public static void updateintent(Activity activity) {
         Intent updates = new Intent("Grocery_cart");
-        updates.putExtra("type", "update");
+        updates.putExtra("type", "cart");
         activity.sendBroadcast(updates);
+    }
+    public static  void updatewish(Activity activity)
+    {
+        Intent updates = new Intent("Grocery_wish");
+        updates.putExtra("type", "wish");
+        activity.sendBroadcast(updates);
+
     }
 
     public static String VolleyErrorMessage(VolleyError error)
@@ -175,11 +186,11 @@ public class Module {
                 //   context.setCartCounter("" + holder.db_cart.getCartCount());
                 Toast.makeText(activity, "Added to WishList" +db_cart.getWishlistCount(), Toast.LENGTH_LONG).show();
                 int n = db_cart.getWishlistCount();
-                updateintent(activity);
+                updatewish(activity);
                 //      txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
 
             } else if (tr == false) {
-                Toast.makeText(activity, "WishList updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Something went wrong", Toast.LENGTH_LONG).show();
                 // txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
             }
 

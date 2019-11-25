@@ -276,7 +276,6 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 dbHandler.removeItemFromCart(map.get("product_id"));
                 list.remove(position);
                 notifyDataSetChanged();
-
                 updateintent();
             }
         });
@@ -328,7 +327,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
 
     private void updateintent() {
         Intent updates = new Intent("Grocery_cart");
-        updates.putExtra("type", "update");
+        updates.putExtra("type", "cart");
         activity.sendBroadcast(updates);
     }
 

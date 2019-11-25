@@ -20,8 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/space_20"
-        android:layout_marginBottom="@dimen/space_10"
         android:paddingBottom="2dp"
        >
 
@@ -239,9 +237,9 @@
     </RelativeLayout>
     <ImageView
         android:id="@+id/iv_subcat_remove"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        app:srcCompat="@drawable/ic_close"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:srcCompat="@drawable/icons8_delete_bin_60px"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/space_10"
         android:layout_marginTop="@dimen/space_10"
