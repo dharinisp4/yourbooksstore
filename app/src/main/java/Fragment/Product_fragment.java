@@ -3,6 +3,7 @@ package Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +87,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private SortAdapter sortAdapter ;
     private boolean isSubcat = false;
     NewAdapter new_adapter ;
+
     private List<Deal_Of_Day_model> deal_of_day_models = new ArrayList<>();
     public Product_fragment() {
     }
@@ -114,6 +117,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         String get_top_sale_id = getArguments().getString("cat_top_selling");
         String getcat_title = getArguments().getString("cat_title");
         String view_all = getArguments().getString( "viewall" );
+        String filer_data=getArguments().getString("filter");
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_product_name));
         img_no_products=(ImageView)view.findViewById(R.id.img_no_items);
         img_sort.setOnClickListener(this);
@@ -121,12 +125,27 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         // check internet connection
     dbcart=new DatabaseCartHandler(getActivity());
 
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    Fragment fm = new Shop_Now_fragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                            .addToBackStack(null).commit();
+                    return true;
+                }
+                return false;
+            }
+        });
         if (ConnectivityReceiver.isConnected()) {
             //Shop by Catogary
-          //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(),""+filer_data,Toast.LENGTH_LONG).show();
            // makeGetSliderCategoryRequest(id);
             makeGetCategoryRequest(getcat_id);
 
+                makeGetProductFilterRequest(filer_data);
+           // makeGetProductFilterRequest(filer_data);
             //Deal Of The Day Products
 //            if (view_all.equalsIgnoreCase( "new" )) {
 //                make_deal_od_the_day();
@@ -823,6 +842,7 @@ loadingBar.show();
             //productVariantAdapter.notifyDataSetChanged();
             l1.setAdapter(sortAdapter);
             builder.setView(row);
+
             final AlertDialog ddlg=builder.create();
             ddlg.show();
             l1.setOnItemClickListener( new AdapterView.OnItemClickListener() {
@@ -830,7 +850,8 @@ loadingBar.show();
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ddlg.dismiss();
                     String item = sort_List.get( i ).toString();
-                    final String cat_id = getArguments().getString("cat_id");
+                    //final String cat_id = getArguments().getString("cat_id");
+                    final String cat_id = getcat_id;
 
                     if (item.equals( "Price Low - High" ))
                     {
@@ -865,11 +886,104 @@ loadingBar.show();
 
         else if(id==R.id.img_filter)
         {
-         Intent intent=new Intent(getActivity(), FilterActivity.class);
-          intent.putExtra("category_id",getcat_id);
-          startActivity(intent);
+            Bundle args = new Bundle();
+            Fragment fm = new FilterActivity();
+            args.putString("category_id", getcat_id);
+            fm.setArguments(args);
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                    .addToBackStack(null).commit();
+//         Intent intent=new Intent(getActivity(), FilterActivity.class);
+//          intent.putExtra("",getcat_id);
+//          startActivity(intent);
         }
     }
+
+    private void makeGetProductFilterRequest(String filter_data) {
+        loadingBar.show();
+
+
+        String book_class="";
+        String subject="";
+        String language="";
+        try
+        {
+            JSONArray array=new JSONArray(filter_data);
+            for(int i=0;i<array.length();i++)
+            {
+                JSONObject object=array.getJSONObject(i);
+                getcat_id=object.getString("cat_id");
+                book_class=object.getString("book_class");
+                subject=object.getString("subject");
+                language=object.getString("language");
+
+            }
+        }
+        catch (Exception ex)
+        {
+            //Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        String tag_json_obj = "json_product_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("cat_id", getcat_id);
+        params.put("book_class", book_class);
+        params.put("subject", subject);
+        params.put("language", language);
+
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_PRODUCT_FILTER, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("filter", response.toString());
+
+                try {
+                    loadingBar.dismiss();
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList.clear();
+                        product_modelList = gson.fromJson(response.getString("data"), listType);
+
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+
+                        img_no_products.setVisibility(View.GONE);
+                        rv_cat.setVisibility(View.VISIBLE);
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+
+
+
+
+
+                    }
+                } catch (JSONException e) {
+                    loadingBar.dismiss();
+                    String msg=e.getMessage();
+                    if(msg.equals("No value for data"))
+                    {
+                        rv_cat.setVisibility(View.GONE);
+                        img_no_products.setVisibility(View.VISIBLE);
+                    }
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
 }
 
 

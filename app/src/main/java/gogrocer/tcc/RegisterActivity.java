@@ -33,15 +33,11 @@ import util.CustomVolleyJsonRequest;
 public class RegisterActivity extends AppCompatActivity {
 
     private static String TAG = RegisterActivity.class.getSimpleName();
-
     private EditText et_phone, et_name, et_password, et_email;
     private RelativeLayout btn_register;
     private TextView  tv_login ,tv_phone, tv_name, tv_password, tv_email;
     @Override
     protected void attachBaseContext(Context newBase) {
-
-
-
         newBase = LocaleHelper.onAttach(newBase);
         super.attachBaseContext(newBase);
     }
@@ -100,9 +96,8 @@ public class RegisterActivity extends AppCompatActivity {
         View focusView = null;
 
         if (TextUtils.isEmpty(getphone)) {
-            tv_phone.setTextColor(getResources().getColor(R.color.black));
             et_phone.requestFocus();
-            et_phone.setError( "invalid" );
+            et_phone.setError("Please Enter Mobile Number" );
             focusView = et_phone;
             cancel = true;
         }
@@ -114,26 +109,32 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = et_phone;
             cancel = true;
         }
+        else if(!isPhoneValid(getphone))
+        {
+            et_phone.setError(getResources().getString(R.string.enter_valid_phone));
+            //  et_phone.setText(getResources().getString(R.string.phone_too_short));
+            et_phone.setTextColor(getResources().getColor(R.color.black));
+            focusView = et_phone;
+            cancel = true;
+        }
 
 
         if (TextUtils.isEmpty(getname)) {
-            tv_name.setTextColor(getResources().getColor(R.color.black));
             et_name.requestFocus();
-            et_name.setError( "mandatory field" );
+            et_name.setError( getResources().getString(R.string.enter_username) );
             focusView = et_name;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getpassword)) {
-            tv_password.setTextColor(getResources().getColor(R.color.black));
-            et_password.setError( "mandatory field" );
+            et_password.setError(getResources().getString(R.string.enter_password));
             et_password.requestFocus();
             focusView = et_password;
             cancel = true;
         } else if (!isPasswordValid(getpassword)) {
           //  tv_password.setText(getResources().getString(R.string.password_too_short));
-            tv_password.setTextColor(getResources().getColor(R.color.black));
-            et_password.setError( "too short" );
+
+            et_password.setError( getResources().getString(R.string.password_length));
             et_password.requestFocus();
             focusView = et_password;
             cancel = true;
@@ -144,8 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
             cancel = true;
         } else if (!isEmailValid(getemail)) {
            // et_email.setText(getResources().getString(R.string.invalide_email_address));
-            et_email.setTextColor(getResources().getColor(R.color.black));
-            et_email.setError( "invalid" );
+            et_email.setError(getResources().getString(R.string.email_not_valid) );
             et_email.requestFocus();
             focusView = et_email;
             cancel = true;
@@ -210,29 +210,10 @@ public class RegisterActivity extends AppCompatActivity {
                     if (status) {
                         String msg = response.getString("message");
                         Toast.makeText(RegisterActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
-                        BackgroundMail.newBuilder(RegisterActivity.this)
-                                .withUsername("anshuwap1@gmail.com")
-                                .withPassword("Mynewpass@123")
-                                .withMailto(email)
-                                .withSubject("Your Book Store")
-                                .withBody("Congratulations ! your account has been created for yourbookstore")
-                                .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        Toast.makeText(RegisterActivity.this, "check your mail !", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                                        startActivity(i);
-                                        finish();
-                                    }
-                                }).withOnFailCallback(new BackgroundMail.OnFailCallback() {
-                            @Override
-                            public void onFail() {
-                                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                                startActivity(i);
-                                finish();
-                                Toast.makeText(RegisterActivity.this, "error", Toast.LENGTH_SHORT).show();
-                            }
-                        }).send();
+                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
+
                         /*  BackgroundMail.newBuilder(RegisterActivity.this)
                                 .withUsername("anshuwap1@gmail.com")
                                 .withPassword("Mynewpass@123")

@@ -186,14 +186,8 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
         String bk_lang="";
         String lang=mList.getLanguage().toString();
-        if(lang.equals("") || lang.isEmpty() || lang.equals(null))
-        {
+            bk_lang=" | "+lang;
 
-        }
-        else
-        {
-            bk_lang=" | "+getBookLanguage(lang);
-        }
 
 
         if (language.contains( "english" )) {
