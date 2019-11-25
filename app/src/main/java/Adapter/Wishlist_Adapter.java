@@ -74,16 +74,16 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
             rel_no =(RelativeLayout)view.findViewById( R.id.rel_no );
             rel_stock =(RelativeLayout)view.findViewById( R.id.rel_stock );
-            tv_title = (TextView) view.findViewById(R.id.tv_subcat_title);
-            tv_price = (TextView) view.findViewById(R.id.tv_subcat_price);
+            tv_title = (TextView) view.findViewById(R.id.product_name);
+            tv_price = (TextView) view.findViewById(R.id.product_prize);
             tv_reward = (TextView) view.findViewById(R.id.tv_reward_point);
             tv_total = (TextView) view.findViewById(R.id.tv_subcat_total);
-            tv_discount=(TextView)view.findViewById( R.id.product_discount );
+            tv_discount=(TextView)view.findViewById( R.id.dis );
             tv_reward_point=(TextView)view.findViewById( R.id.tv_reward_point );
             tv_contetiy = (TextView) view.findViewById(R.id.tv_subcat_contetiy);
-            tv_subcat_mrp = (TextView) view.findViewById(R.id.tv_subcat_mrp);
+            tv_subcat_mrp = (TextView) view.findViewById(R.id.product_mrp);
             tv_add = (Button) view.findViewById(R.id.tv_subcat_add);
-            iv_logo = (ImageView) view.findViewById(R.id.iv_subcat_img);
+            iv_logo = (ImageView) view.findViewById(R.id.iv_icon);
             iv_plus = (ImageView) view.findViewById(R.id.iv_subcat_plus);
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
@@ -161,7 +161,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
     @Override
     public Wishlist_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product_rv, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_wishlist, parent, false);
         context = (Activity) parent.getContext();
         return new Wishlist_Adapter.MyViewHolder(itemView);
     }
@@ -190,14 +190,14 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
         String bk_lang="";
         String lang=map.get("language");
-        if(lang.equals("") || lang.isEmpty() || lang.equals(null))
-        {
-
-        }
-        else
-        {
-            bk_lang=" | "+getBookLanguage(lang);
-        }
+//        if(lang.equals("") || lang.isEmpty() || lang.equals(null))
+//        {
+//
+//        }
+//        else
+//        {
+//         //   bk_lang=" | "+getBookLanguage(lang);
+//        }
 
 
         if (language.contains( "english" )) {
@@ -439,31 +439,31 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         context.sendBroadcast(updates);
     }
 
-    public String getBookLanguage(String lan)
-    {
-        String lang="";
-        List<String> list=new ArrayList<>();
-        try
-        {
-            JSONArray array=new JSONArray(lan);
-            for(int i=0; i<array.length();i++)
-            {
-                String l=array.getString(i).toString();
-                list.add(l);
-            }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_LONG).show();
-        }
-        StringBuilder sb = new StringBuilder();
-
-        // Appends characters one by one
-        for (String  ch : list) {
-            sb.append(ch);
-            sb.append(",");
-        }
-        lang=sb.toString();
-        return lang.substring(0,lang.length()-1);
-    }
+//    public String getBookLanguage(String lan)
+//    {
+//        String lang="";
+//        List<String> list=new ArrayList<>();
+//        try
+//        {
+//            JSONArray array=new JSONArray(lan);
+//            for(int i=0; i<array.length();i++)
+//            {
+//                String l=array.getString(i).toString();
+//                list.add(l);
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+//        }
+//        StringBuilder sb = new StringBuilder();
+//
+//        // Appends characters one by one
+//        for (String  ch : list) {
+//            sb.append(ch);
+//            sb.append(",");
+//        }
+//        lang=sb.toString();
+//        return lang.substring(0,lang.length()-1);
+//    }
 }

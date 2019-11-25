@@ -522,7 +522,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                         .addToBackStack(null).commit();
             } else {
-                Fragment fm = new Empty_cart_fragment();
+                Fragment fm = new Empty_wishlist_fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                         .addToBackStack(null).commit();
