@@ -198,12 +198,12 @@ session_management=new Session_management(getActivity());
 
         //Top Selling Products
         rv_top_selling = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
-        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager gridLayoutManager2= new GridLayoutManager(getActivity(), 2);
        // LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.HORIZONTAL,false );
         rv_top_selling.setLayoutManager(gridLayoutManager2);
         rv_top_selling.setItemAnimator(new DefaultItemAnimator());
         rv_top_selling.setNestedScrollingEnabled(false);
-     //   rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
+        rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
 
 
         //make_menu_items Icons
@@ -307,6 +307,7 @@ session_management=new Session_management(getActivity());
                 Fragment fm = new SubCategory_Fragment();
                 args.putString("cat_id", getid);
                 args.putString( "title" ,title );
+
                 // args.putString( "" );
                 // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
                 fm.setArguments(args);

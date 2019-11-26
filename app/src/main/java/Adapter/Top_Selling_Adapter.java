@@ -36,7 +36,7 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
 SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView product_nmae, product_prize, product_mrp , product_discount;
-        public ImageView image;
+        public ImageView image ,img_out_of_stock;
         public CardView card_view_top;
 
         public MyViewHolder(View view) {
@@ -47,6 +47,7 @@ SharedPreferences preferences;
             product_discount=(TextView)view.findViewById( R.id.product_discount );
             product_mrp = (TextView) view.findViewById( R.id.product_mrp );
             card_view_top = (CardView) view.findViewById( R.id.card_view_top );
+            img_out_of_stock=view.findViewById( R.id.img_out_of_stock );
             card_view_top.setOnClickListener( this );
         }
 
@@ -121,10 +122,19 @@ SharedPreferences preferences;
         holder.product_prize.setText(context.getResources().getString(R.string.tv_toolbar_price) + context.getResources().getString(R.string.currency) + mList.getPrice());
         String p_id = mList.getProduct_id();
        int stock = Integer.parseInt( mList.getStock() );
-       if (stock <= 0 || mList.getStock().isEmpty())
+       if (stock <= 0 )
        {
-            modelList.remove( p_id );
+
+           holder.img_out_of_stock.setVisibility( View.VISIBLE );
+           holder.card_view_top.setEnabled( false );
+
        }
+       else
+       {
+           holder.img_out_of_stock.setVisibility( View.GONE );
+           holder.card_view_top.setEnabled( true );
+       }
+
 
 
 

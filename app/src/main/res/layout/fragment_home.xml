@@ -68,7 +68,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -110,12 +110,11 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/top_selling_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_8"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-
                 android:scrollbars="none"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -127,7 +126,7 @@
                     android:id="@+id/relative_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginTop="@dimen/space_5"
+                    android:layout_marginTop="@dimen/dimen_30dp"
                     >
 
                 </com.daimajia.slider.library.SliderLayout>
@@ -157,6 +156,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_30dp"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -193,7 +193,6 @@
                     android:fontFamily="@font/chivo"
                     android:textAlignment="gravity"
                     android:textColor="@color/black"
-
                     android:textSize="12dp"
 
 
@@ -211,27 +210,7 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 
-
-
-
-
         </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     </ScrollView>

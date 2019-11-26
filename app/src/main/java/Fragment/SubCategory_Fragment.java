@@ -95,6 +95,7 @@ public class SubCategory_Fragment extends Fragment {
                 Fragment fm = new Product_fragment();
                 args.putString("cat_id", getid);
                 args.putString( "title" , title);
+                args.putString( "viewall","category" );
                 // args.putString( "" );
                 // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
                 fm.setArguments(args);

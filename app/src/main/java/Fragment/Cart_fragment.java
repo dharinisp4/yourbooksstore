@@ -267,7 +267,7 @@ Dialog ProgressDialog ;
 
             String type = intent.getStringExtra("type");
 
-            if (type.contentEquals("update")) {
+            if (type.contentEquals("cart")) {
                 updateData();
             }
         }

@@ -47,7 +47,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView product_nmae, product_prize, product_mrp , product_discount;
-        public ImageView image;
+        public ImageView image, img_out_of_stock;
         public CardView card_view_top;
 
         public MyViewHolder(View view) {
@@ -59,6 +59,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
             product_discount=(TextView)view.findViewById( R.id.product_discount );
             product_mrp = (TextView) view.findViewById( R.id.product_mrp );
             card_view_top = (CardView) view.findViewById( R.id.card_view_top );
+            img_out_of_stock = view.findViewById( R.id.img_out_of_stock );
            card_view_top.setOnClickListener(this);
         }
 
@@ -78,11 +79,6 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
                 args.putString( "product_name", modelList.get( position ).getProduct_name() );
                 args.putString( "category_id", modelList.get( position ).getCategory_id() );
                 args.putString( "product_description", modelList.get( position ).getProduct_description() );
-//                args.putString( "deal_price", modelList.get( position ).getDeal_price() );
-//                args.putString( "start_date", modelList.get( position ).getStart_date() );
-//                args.putString( "start_time", modelList.get( position ).getStart_time() );
-//                args.putString( "end_date", modelList.get( position ).getEnd_date() );
-//                args.putString( "end_time", modelList.get( position ).getEnd_time() );
                 args.putString( "price", modelList.get( position ).getPrice() );
                 args.putString( "mrp", modelList.get( position ).getMrp() );
                 args.putString( "product_image", modelList.get( position ).getProduct_image() );
@@ -127,17 +123,6 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");
 
-
-        String p_id = mList.getProduct_id();
-        int stock = Integer.parseInt( mList.getStock() );
-        if (stock <= 0 || mList.getStock().isEmpty())
-        {
-            modelList.remove( p_id );
-        }
-
-
-
-
         Glide.with(context)
                 .load(BaseURL.IMG_PRODUCT_URL + mList.getProduct_image())
                 .placeholder(R.drawable.icon)
@@ -146,6 +131,21 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
                 .dontAnimate()
                 .into(holder.image);
         holder.product_prize.setText(context.getResources().getString(R.string.currency) + mList.getPrice());
+
+        String p_id = mList.getProduct_id();
+        int stock = Integer.parseInt( mList.getStock() );
+        if (stock <= 0 )
+        {
+
+          holder.img_out_of_stock.setVisibility( View.VISIBLE );
+          holder.card_view_top.setEnabled( false );
+        }
+        else
+        {
+            holder.img_out_of_stock.setVisibility( View.GONE );
+            holder.card_view_top.setEnabled( true );
+        }
+
         if (language.contains("english")) {
             holder.product_nmae.setText(mList.getProduct_name());
             holder.product_prize.setText( context.getResources().getString(R.string.currency) + mList.getPrice());

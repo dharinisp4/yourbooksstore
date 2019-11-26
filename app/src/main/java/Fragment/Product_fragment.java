@@ -82,6 +82,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private List<Product_model> product_modelList = new ArrayList<>();
     private Product_adapter adapter_product;
     private SliderLayout  banner_slider;
+    String view_all ;
     String language;
     Session_management session_management;
     String getcat_id="";
@@ -93,6 +94,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private SortAdapter sortAdapter ;
     private boolean isSubcat = false;
     NewAdapter new_adapter ;
+    String get_top_sale_id ;
 
     private List<Deal_Of_Day_model> deal_of_day_models = new ArrayList<>();
     public Product_fragment() {
@@ -121,9 +123,9 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         getcat_id = getArguments().getString("cat_id");
         String id = getArguments().getString("id");
         String get_deal_id = getArguments().getString("cat_deal");
-        String get_top_sale_id = getArguments().getString("cat_top_selling");
+        get_top_sale_id = getArguments().getString("cat_top_selling");
         String getcat_title = getArguments().getString("cat_title");
-        String view_all = getArguments().getString( "viewall" );
+        view_all = getArguments().getString( "viewall" );
         String filer_data=getArguments().getString("filter");
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_product_name));
         img_no_products=(ImageView)view.findViewById(R.id.img_no_items);
@@ -684,6 +686,58 @@ loadingBar.show();
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
+    private void makeDescendingTop() {
+        String tag_json_obj = "json_product_desc_top";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("top_selling_product", "2");
+        product_modelList.clear();
+        loadingBar.show();
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_TOP_SELLING_HIGH, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try {
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("top_selling_product"), listType);
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+                        //       rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                //  Toast.makeText(getActivity(),""+response, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
     private void makeAscendingProductRequest(String cat_id) {
         String tag_json_obj = "json_product_asc_req";
         Map<String, String> params = new HashMap<String, String>();
@@ -706,6 +760,58 @@ loadingBar.show();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         adapter_product = new Product_adapter(product_modelList, getActivity());
                  //       rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                //  Toast.makeText(getActivity(),""+response, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+    private void makeAscendingTop() {
+        String tag_json_obj = "json_product_asc_top";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("top_selling_product", "2");
+        product_modelList.clear();
+        loadingBar.show();
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_TOP_SELLING_LOW, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try {
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("top_selling_product"), listType);
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+                        //       rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
@@ -759,6 +865,58 @@ loadingBar.show();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         adapter_product = new Product_adapter(product_modelList, getActivity());
                     //    rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                //  Toast.makeText(getActivity(),""+response, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+    private void makeNewestTop() {
+        String tag_json_obj = "json_product_new_top";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("top_selling_product", "2");
+        product_modelList.clear();
+        loadingBar.show();
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_TOP_SELLING_NEW, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try {
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("top_selling_product"), listType);
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+                        //       rv_cat.setLayoutManager( new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
@@ -880,23 +1038,45 @@ loadingBar.show();
 
                     if (item.equals( "Price Low - High" ))
                     {
-                         ddlg.dismiss();
-                        makeAscendingProductRequest( cat_id );
+
+                         if (view_all.equals( "top" ))
+                         {
+                             ddlg.dismiss();
+                             makeAscendingTop(  );
+                         }
+                         else if (view_all.equals( "category" )) {
+                             ddlg.dismiss();
+                             makeAscendingProductRequest( cat_id );
+                         }
 
                     }
                     else if(item.equals( "Price High - Low" ))
                     {
                        //  Toast.makeText( getActivity(), "category id :" +cat_id, Toast.LENGTH_SHORT ).show();
-                         ddlg.dismiss();
-                        makeDescendingProductRequest(cat_id);
 
+                        if (view_all.equals( "top" ))
+                        {
+                            ddlg.dismiss();
+                            makeDescendingTop(  );
+                        }
+                        else if (view_all.equals( "category" )) {
+                            ddlg.dismiss();
+                            makeDescendingProductRequest( cat_id );
+                        }
 
 
                     }
                     else if(item.equals( "Newest First" ))
                     {
-                         ddlg.dismiss();
-                        makeNewestProductRequest( cat_id );
+                        if (view_all.equals( "top" ))
+                        {
+                            ddlg.dismiss();
+                            makeNewestTop();
+                        }
+                        else if (view_all.equals( "category" )) {
+                            ddlg.dismiss();
+                            makeNewestProductRequest( cat_id );
+                        }
 
                     }
                     else if (item.equals( "Trending" ))

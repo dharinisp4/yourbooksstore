@@ -77,6 +77,9 @@ public class BaseURL {
     public static String GET_ALL_DEAL_OF_DAY_PRODUCTS = BASE_URL + "index.php/api/get_all_deal_product";
     public static String GET_TOP_SELLING_PRODUCTS = BASE_URL + "index.php/api/top_selling_product";
     public static String GET_ALL_TOP_SELLING_PRODUCTS = BASE_URL + "index.php/api/get_all_top_selling_product";
+    public static String GET_TOP_SELLING_LOW = BASE_URL + "index.php/api/get_all_top_selling_product_low";
+    public static String GET_TOP_SELLING_HIGH = BASE_URL + "index.php/api/get_all_top_selling_product_high";
+    public static String GET_TOP_SELLING_NEW = BASE_URL + "index.php/api/get_all_top_selling_product_new";
 
 
     public static String GET_PRODUCT_URL = BASE_URL + "index.php/api/get_products";
