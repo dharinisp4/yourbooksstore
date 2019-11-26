@@ -40,8 +40,10 @@ Dialog loadingBar ;
         Shop_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingBar.show();
                 android.app.Fragment fm = new Home_fragment();
                 FragmentManager fragmentManager = getFragmentManager();
+                loadingBar.dismiss();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                         .addToBackStack(null).commit();
             }

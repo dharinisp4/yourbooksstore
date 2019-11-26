@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -49,7 +50,7 @@ public class Change_password_fragment extends Fragment {
     private Button btn_change_pass;
 
     private Session_management sessionManagement;
-
+    Dialog ProgressDialog ;
     public Change_password_fragment() {
         // Required empty public constructor
     }
@@ -69,6 +70,9 @@ public class Change_password_fragment extends Fragment {
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.change_password));
 
         sessionManagement = new Session_management(getActivity());
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
 
         tv_new_pass = (TextView) view.findViewById(R.id.tv_change_new_password);
         tv_old_pass = (TextView) view.findViewById(R.id.tv_change_old_password);
@@ -169,7 +173,7 @@ public class Change_password_fragment extends Fragment {
      */
     private void makeChangePasswordRequest(String user_id, String new_password,
                                            String current_password) {
-
+        ProgressDialog.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_change_password_req";
 
@@ -200,6 +204,7 @@ public class Change_password_fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                ProgressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 

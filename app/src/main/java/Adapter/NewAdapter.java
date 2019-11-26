@@ -127,23 +127,14 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");
 
-//         if (mList.getStatus().equals("1")) {
-//
-//            holder.offer_product_prize.setText(context.getResources().getString(R.string.currency) + mList.getDeal_price());
-//            holder.offer_product_prize.setTextColor(context.getResources().getColor(R.color.green));
-//            holder.offer_textview.setTextColor(context.getResources().getColor(R.color.green));
-//            holder.end_time.setText(mList.getEnd_time());
-//            holder.end_time.setTextColor(context.getResources().getColor(R.color.green));
-//
-//        } else if (mList.getStatus().equals("0")) {
-//
-//            holder.offer_product_prize.setText("Expired");
-//            holder.offer_product_prize.setTextColor(context.getResources().getColor(R.color.color_3));
-//            holder.offer_textview.setTextColor(context.getResources().getColor(R.color.color_3));
-//            holder.end_time.setText("Expired");
-//            holder.end_time.setTextColor(context.getResources().getColor(R.color.color_3));
-//
-//        }
+
+        String p_id = mList.getProduct_id();
+        int stock = Integer.parseInt( mList.getStock() );
+        if (stock <= 0 || mList.getStock().isEmpty())
+        {
+            modelList.remove( p_id );
+        }
+
 
 
 
@@ -202,11 +193,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
                 args.putString( "product_name", modelList.get( position ).getProduct_name() );
                 args.putString( "category_id", modelList.get( position ).getCategory_id() );
                 args.putString( "product_description", modelList.get( position ).getProduct_description() );
-//                args.putString( "deal_price", modelList.get( position ).getDeal_price() );
-//                args.putString( "start_date", modelList.get( position ).getStart_date() );
-//                args.putString( "start_time", modelList.get( position ).getStart_time() );
-//                args.putString( "end_date", modelList.get( position ).getEnd_date() );
-//                args.putString( "end_time", modelList.get( position ).getEnd_time() );
+//
                 args.putString( "price", modelList.get( position ).getPrice() );
                 args.putString( "mrp", modelList.get( position ).getMrp() );
                 args.putString( "product_image", modelList.get( position ).getProduct_image() );

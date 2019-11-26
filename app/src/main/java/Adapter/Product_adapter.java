@@ -55,7 +55,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
     SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp ,tv_discount,tv_reward_point;
-        public ImageView iv_logo, iv_plus, iv_minus, iv_remove,wish_before,wish_after;
+        public ImageView iv_logo, iv_plus, iv_minus, iv_remove,wish_before,wish_after ,out_of_stock;
         public RelativeLayout rel_click;
         public Double reward;
         RelativeLayout rel_no,rel_stock;
@@ -82,6 +82,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             wish_before = (ImageView) view.findViewById(R.id.wish_before);
             wish_after = (ImageView) view.findViewById(R.id.wish_after);
             rel_click = (RelativeLayout) view.findViewById(R.id.rel_click);
+            out_of_stock= view.findViewById( R.id.img_out_of_stock );
 //            iv_remove.setVisibility(View.GONE);
 //            iv_minus.setOnClickListener(this);
 //            iv_plus.setOnClickListener(this);
@@ -199,10 +200,18 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 
         }
 
-        int in_stock=Integer.parseInt(mList.getIn_stock());
-        if(in_stock==0)
+        int stock=Integer.parseInt(mList.getStock());
+        if(stock<=0)
         {
-            holder.rel_stock.setVisibility(View.VISIBLE);
+            holder.out_of_stock.setVisibility(View.VISIBLE);
+            holder.rel_click.setEnabled( false );
+
+            holder.tv_add.setVisibility( View.INVISIBLE );
+            holder.rel_no.setVisibility( View.GONE );
+
+            holder.wish_before.setVisibility( View.GONE );
+            holder.wish_after.setVisibility( View.GONE );
+
         }
 
 
@@ -211,13 +220,23 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         holder.tv_price.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + mList.getPrice() );
 
+
+
         boolean is_inCart=dbcart.isInCart(mList.getProduct_id());
         if (is_inCart)
         {
-            holder.tv_add.setVisibility(View.GONE);
-            holder.rel_no.setVisibility(View.VISIBLE);
-            String qt=dbcart.getCartItemQty(mList.getProduct_id());
-            holder.tv_contetiy.setText(qt);
+            if (!(stock<=0))
+            {
+
+                holder.tv_add.setVisibility( View.GONE );
+                holder.rel_no.setVisibility( View.VISIBLE );
+                String qt = dbcart.getCartItemQty( mList.getProduct_id() );
+                holder.tv_contetiy.setText( qt );
+            }
+            else
+            {
+                holder.tv_add.setVisibility( View.GONE );
+            }
         }
         else
         {

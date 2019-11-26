@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
@@ -38,6 +39,7 @@ public class Contact_Us_fragment extends Fragment {
     private static String TAG = Contact_Us_fragment.class.getSimpleName();
 
     private TextView tv_info;
+    Dialog ProgressDialog ;
 
     public Contact_Us_fragment() {
         // Required empty public constructor
@@ -55,6 +57,9 @@ public class Contact_Us_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_terms_condition, container, false);
 
         tv_info = (TextView) view.findViewById(R.id.tv_info);
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
 
         String geturl = getArguments().getString("url");
         //   String title = getArguments().getString("title");
@@ -78,7 +83,7 @@ public class Contact_Us_fragment extends Fragment {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_info_req";
-
+        ProgressDialog.show();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -113,6 +118,7 @@ public class Contact_Us_fragment extends Fragment {
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
+                ProgressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override

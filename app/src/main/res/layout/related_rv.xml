@@ -87,6 +87,7 @@
                     android:textSize="@dimen/space_13" /></RelativeLayout>
 
         </LinearLayout>
+
     </RelativeLayout>
 
     <TextView
@@ -103,6 +104,21 @@
         android:background="@drawable/ic_bookmark_black_24dp"
         android:backgroundTint="@color/colorPrimary"
         />
+    <RelativeLayout
+        android:id="@+id/rel_stock"
+        android:clickable="false"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_out_of_stock"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:background="@drawable/out_of_stock"/>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
 

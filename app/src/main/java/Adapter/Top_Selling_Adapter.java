@@ -119,6 +119,12 @@ SharedPreferences preferences;
                 .into(holder.image);
 
         holder.product_prize.setText(context.getResources().getString(R.string.tv_toolbar_price) + context.getResources().getString(R.string.currency) + mList.getPrice());
+        String p_id = mList.getProduct_id();
+       int stock = Integer.parseInt( mList.getStock() );
+       if (stock <= 0 || mList.getStock().isEmpty())
+       {
+            modelList.remove( p_id );
+       }
 
 
 

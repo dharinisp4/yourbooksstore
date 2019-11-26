@@ -54,7 +54,7 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
     SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp ,tv_discount,tv_reward_point;
-        public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
+        public ImageView iv_logo, iv_plus, iv_minus, iv_remove ,out_of_stock;
         public RelativeLayout rel_click;
         public Double reward;
         RelativeLayout rel_no,rel_stock;
@@ -79,6 +79,7 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
             rel_click = (RelativeLayout) view.findViewById(R.id.rel_click);
+            out_of_stock=view.findViewById( R.id.img_out_of_stock );
 //            iv_remove.setVisibility(View.GONE);
 //            iv_minus.setOnClickListener(this);
 //            iv_plus.setOnClickListener(this);
@@ -203,10 +204,15 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
         }
 
-        int in_stock=Integer.parseInt(mList.getIn_stock());
-        if(in_stock==0)
+        int in_stock=Integer.parseInt(mList.getStock());
+        if(in_stock<=0)
         {
-            holder.rel_stock.setVisibility(View.VISIBLE);
+            holder.out_of_stock.setVisibility(View.VISIBLE);
+            holder.rel_click.setEnabled( false );
+        }
+        else
+        {
+            holder.rel_click.setEnabled( true );
         }
 
 

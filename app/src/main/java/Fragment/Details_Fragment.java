@@ -85,7 +85,7 @@ private List<Product_model> modelList ;
   Module module;
     int index;
     double tot_amt=0;
-    ProgressDialog loadingBar;
+    Dialog ProgressDialog;
     double tot=0;
    // RelativeLayout rel_variant;
     SharedPreferences preferences ;
@@ -154,9 +154,9 @@ private List<Product_model> modelList ;
      module=new Module();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
-        loadingBar=new ProgressDialog(getActivity());
-        loadingBar.setMessage("Loading...");
-        loadingBar.setCanceledOnTouchOutside(false);
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
        //    tabLayout =(TabLayout)view.findViewById(R.id.desc_tablayout);
        rv_cat = (RecyclerView) view.findViewById(R.id.related_recycler);
      //    gifImageView=(ImageView) view.findViewById(R.id.gifImageView);
@@ -250,6 +250,7 @@ private List<Product_model> modelList ;
        // txtrate=(TextView)view.findViewById(R.id.product_rate);
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
+        numberButton.setRange( 1, Integer.valueOf( prodcut_stock )+1 );
 
         rel_rewards.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -309,6 +310,8 @@ private List<Product_model> modelList ;
             @Override
             public void onClick(View view) {
                 float qty = Float.parseFloat( numberButton.getNumber() );
+                float stocks = Float.parseFloat( prodcut_stock );
+
                 String unt=details_product_unit_value+details_product_unit;
                 final Module module=new Module();
                 module.setIntoCart(getActivity(),product_id,product_id,
@@ -319,6 +322,18 @@ private List<Product_model> modelList ;
 //                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());
                // Toast.makeText(getActivity(), "Added to Cart" +db_cart.getCartCount(), Toast.LENGTH_LONG).show();
               //  Toast.makeText( getActivity() ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
+            }
+        } );
+        numberButton.setOnValueChangeListener( new ElegantNumberButton.OnValueChangeListener() {
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                int stocks = Integer.parseInt(prodcut_stock);
+                if (newValue>stocks)
+                {
+                    Toast.makeText( getActivity(),"Seller does not have this much quantity of product in stock ",Toast.LENGTH_LONG  ).show();
+                    numberButton.setNumber( String.valueOf( oldValue ) );
+                }
+
             }
         } );
 
@@ -551,7 +566,7 @@ private List<Product_model> modelList ;
         String json_tag="json_seller";
         HashMap<String,String> map=new HashMap<>();
         map.put("user_id",String.valueOf(sell));
-
+ProgressDialog.show();
 
         CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_SELLER_URL, map, new Response.Listener<JSONObject>() {
             @Override
@@ -586,6 +601,7 @@ private List<Product_model> modelList ;
                 {
                     Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
+                ProgressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -952,7 +968,7 @@ public boolean checkAttributeStatus(String atr)
     return sts;
 }
     private void makeRelatedProductRequest(String cat_id) {
-        loadingBar.show();
+        ProgressDialog.show();
         String tag_json_obj = "json_product_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("cat_id", cat_id);
@@ -975,7 +991,7 @@ public boolean checkAttributeStatus(String atr)
                         Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
-                        loadingBar.dismiss();
+                        ProgressDialog.dismiss();
                         adapter_product = new RelatedProductAdapter( product_modelList,getActivity(),product_id);
 
                         rv_cat.setAdapter(adapter_product);
@@ -983,14 +999,14 @@ public boolean checkAttributeStatus(String atr)
                         if (getActivity() != null) {
                             if (product_modelList.isEmpty()) {
 
-                                loadingBar.dismiss();
+                                ProgressDialog.dismiss();
                                 //  Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                     }
                 } catch (JSONException e) {
-                    loadingBar.dismiss();
+                   ProgressDialog.dismiss();
                     //   e.printStackTrace();
                     String ex=e.getMessage();
 
@@ -1006,7 +1022,7 @@ public boolean checkAttributeStatus(String atr)
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 //loadingBar.dismiss();
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    loadingBar.dismiss();
+                   ProgressDialog.dismiss();
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
                 }
 
@@ -1018,6 +1034,7 @@ public boolean checkAttributeStatus(String atr)
 
 
     private void makeGetLimiteRequest() {
+        ProgressDialog.show();
 
         JsonArrayRequest req = new JsonArrayRequest( BaseURL.GET_LIMITE_SETTING_URL,
                 new Response.Listener<JSONArray>() {
@@ -1085,6 +1102,7 @@ public boolean checkAttributeStatus(String atr)
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
+                        ProgressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override

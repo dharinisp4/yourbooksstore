@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
@@ -54,7 +55,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
     RelativeLayout btn_checkout;
 
    DatabaseCartHandler db;
-
+Dialog ProgressDialog ;
    Session_management sessionManagement;
 
     public Cart_fragment() {
@@ -64,6 +65,9 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
     }
 
     @Override
@@ -75,7 +79,9 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
 
-
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
         tv_clear = (TextView) view.findViewById(R.id.tv_cart_clear);
         tv_total = (TextView) view.findViewById(R.id.tv_cart_total);
         tv_item = (TextView) view.findViewById(R.id.tv_cart_item);
@@ -119,7 +125,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
     // update UI
     private void updateData() {
-        tv_total.setText("" + db.getTotalMRP());
+        tv_total.setText("" + db.getTotalAmount());
         tv_item.setText("" + db.getCartCount());
         ((MainActivity) getActivity()).setCartCounter("" + db.getCartCount());
     }
@@ -156,7 +162,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
      * Method to make json array request where json response starts wtih
      */
     private void makeGetLimiteRequest() {
-
+        ProgressDialog.show();
         JsonArrayRequest req = new JsonArrayRequest(BaseURL.GET_LIMITE_SETTING_URL,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -223,6 +229,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
+                        ProgressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override

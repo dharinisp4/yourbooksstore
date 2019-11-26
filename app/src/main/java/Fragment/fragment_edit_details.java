@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class fragment_edit_details extends Fragment {
     RelativeLayout edit_address;
     TextView pincode;
     Fonts.LatoBLack font,select_city;
+    Dialog ProgressDialog ;
     Session_management session_management;
     String getlocation_id;
     @Nullable
@@ -54,6 +56,10 @@ public class fragment_edit_details extends Fragment {
         initUi(view);
         session_management = new Session_management(getActivity());
         String getsocity_name = session_management.getUserDetails().get(BaseURL.KEY_SOCITY_NAME);
+
+        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        ProgressDialog.setContentView(R.layout.progressbar);
+        ProgressDialog.setCancelable(false);
         Bundle b = getArguments();
         getlocation_id = b.getString("location_id");
         name.setText(b.getString("name"));
@@ -94,7 +100,7 @@ public class fragment_edit_details extends Fragment {
         pincode.setTextColor(getResources().getColor(R.color.dark_gray));
         address.setTextColor(getResources().getColor(R.color.dark_gray));
         select_city.setTextColor(getResources().getColor(R.color.dark_gray));
-*/
+*/      ProgressDialog.show();
         String getphone = phone.getText().toString();
         String getname = name.getText().toString();
         String getpin = pincode.getText().toString();
@@ -105,39 +111,49 @@ public class fragment_edit_details extends Fragment {
 
         if (TextUtils.isEmpty(getphone)) {
             phone.setError(getResources().getString(R.string.enter_phone));
-           // phone.setTextColor(getResources().getColor(R.color.colorPrimary));
+          //  phone.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView =phone;
             cancel = true;
+            ProgressDialog.dismiss();
         } else if (!isPhoneValid(getphone)) {
+            Toast.makeText(getActivity(), "Phone not valid", Toast.LENGTH_SHORT).show();
             phone.setError(getResources().getString(R.string.phone_too_short));
             focusView = phone;
             cancel = true;
+            ProgressDialog.dismiss();
         }
 
         if (TextUtils.isEmpty(getname)) {
             name.setError("Please Enter Name");
             focusView = name;
             cancel = true;
+            ProgressDialog.dismiss();
         }
 
         if (TextUtils.isEmpty(getpin)) {
             pincode.setError("Please Choose any one society");
            // Toast.makeText(getContext(), "Pincode not valid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Pincode not valid", Toast.LENGTH_SHORT).show();
             focusView = pincode;
             cancel = true;
+            ProgressDialog.dismiss();
         }
 
         if (TextUtils.isEmpty(gethouse)) {
             address.setError("Please Enter Address");
+            Toast.makeText(getActivity(), "address not valid", Toast.LENGTH_SHORT).show();
             focusView = address;
             cancel = true;
+            ProgressDialog.dismiss();
         }
 
         if (TextUtils.isEmpty(getsocity) && getsocity == null) {
 
             Toast.makeText(getActivity(), "Society can't be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "city can't be empty", Toast.LENGTH_SHORT).show();
             focusView = select_city;
             cancel = true;
+            ProgressDialog.dismiss();
         }
 
         if (cancel) {
@@ -165,7 +181,7 @@ public class fragment_edit_details extends Fragment {
     }
     private void makeEditAddressRequest(String location_id, String pincode, String socity_id,
                                         String house_no, String receiver_name, String receiver_mobile) {
-
+    ProgressDialog.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_edit_address_req";
 
@@ -197,6 +213,7 @@ public class fragment_edit_details extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                ProgressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 
