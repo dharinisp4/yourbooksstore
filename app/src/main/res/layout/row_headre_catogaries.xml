@@ -32,6 +32,7 @@
                 android:layout_alignParentBottom="true"
                 android:text="Ram"
                 android:padding="@dimen/space_2"
+                android:fontFamily="@font/chivo"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"

@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:padding="10dp">
     <TextView
+        android:fontFamily="@font/chivo"
         android:id="@+id/l_english"
         android:text="English"
         android:textSize="17sp"
@@ -20,6 +21,7 @@
         android:layout_height="0.08dp"
         android:background="@color/colorPrimary"/>
     <TextView
+        android:fontFamily="@font/chivo"
         android:id="@+id/l_arabic"
         android:text="Arabic"
         android:textSize="17sp"

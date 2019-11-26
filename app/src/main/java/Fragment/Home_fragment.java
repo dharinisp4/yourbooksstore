@@ -67,6 +67,7 @@ import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
+import util.Session_management;
 
 
 public class Home_fragment extends Fragment {
@@ -84,6 +85,7 @@ public class Home_fragment extends Fragment {
     ScrollView scrollView;
     SharedPreferences sharedpreferences;
 
+    Session_management session_management;
     //Home Icons
     private Home_Icon_Adapter menu_adapter;
     private List<Home_Icon_model> menu_models = new ArrayList<>();
@@ -128,6 +130,7 @@ public class Home_fragment extends Fragment {
         view.setFocusableInTouchMode(true);
         view.requestFocus();
 module=new Module();
+session_management=new Session_management(getActivity());
         ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
         ProgressDialog.setContentView(R.layout.progressbar);
         ProgressDialog.setCancelable(false);
@@ -476,6 +479,7 @@ module=new Module();
                                         Bundle args = new Bundle();
                                         Fragment fm = new Product_fragment();
                                         args.putString("id", sub_cat);
+                                        session_management.setCategoryId(sub_cat);
                                         fm.setArguments(args);
                                         FragmentManager fragmentManager = getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

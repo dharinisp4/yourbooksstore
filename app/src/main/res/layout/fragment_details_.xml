@@ -33,7 +33,7 @@
                 android:textColor="@color/text_color"
                 android:padding="3dp"
                 android:maxLines="3"
-                android:fontFamily="@font/cabin"
+                android:fontFamily="@font/chivo"
                 android:text="Name"/>
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 android:padding="@dimen/space_2"
                 android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/space_5"
-                android:fontFamily="@font/cabin"
+                android:fontFamily="@font/chivo"
                 android:text="Name"
                 />
 
@@ -59,7 +59,7 @@
                 android:textSize="13dp"
                 android:layout_marginTop="3dp"
                 android:padding="2dp"
-                android:fontFamily="@font/cabin"
+                android:fontFamily="@font/chivo"
                 android:layout_toRightOf="@id/details_product_price"
                 android:text="Name"
 
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/space_5"
-
+                    android:fontFamily="@font/chivo"
                     android:text="10%"
                     android:textColor="@color/red"
                     android:textStyle="bold"
@@ -180,6 +180,7 @@
                         android:layout_centerHorizontal="true"
                         />
                     <TextView
+                        android:fontFamily="@font/chivo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rewards"
@@ -208,6 +209,7 @@
                     android:layout_centerHorizontal="true"
                     />
                     <TextView
+                        android:fontFamily="@font/chivo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Description"
@@ -237,6 +239,7 @@
                         android:layout_centerHorizontal="true"
                         />
                     <TextView
+                        android:fontFamily="@font/chivo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Seller Info"
@@ -265,6 +268,7 @@
                         android:layout_centerHorizontal="true"
                         />
                     <TextView
+                        android:fontFamily="@font/chivo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Related Products"
@@ -303,13 +307,14 @@
                 >
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtQty"
                     android:text="Quantity:"
                     android:textSize="18dp"
                     android:padding="5dp"
-                    android:fontFamily="@font/cabin"
+                    android:fontFamily="@font/chivo"
                     android:textColor="@color/black"
 
                     />
@@ -340,6 +345,7 @@
                         android:textAlignment="center"
                         android:text="1"
                         android:textSize="20dp"
+                        android:fontFamily="@font/chivo"
                         android:textStyle="bold"
                         android:gravity="center_vertical"
                         />
@@ -400,7 +406,7 @@
                     android:text="Description :"
                     android:textSize="18dp"
                     android:padding="5dp"
-                    android:fontFamily="@font/cabin"
+                    android:fontFamily="@font/chivo"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -424,7 +430,7 @@
                         android:layout_marginRight="10dp"
                         android:textSize="16sp"
                         android:text="@string/app_name"
-                        android:fontFamily="@font/cabin"
+                        android:fontFamily="@font/chivo"
                         android:textColor="#666666" />
                     <ImageButton
                         android:id="@id/expand_collapse"
@@ -470,7 +476,7 @@
                     android:text="Seller Info:"
                     android:textSize="18dp"
                     android:padding="5dp"
-                    android:fontFamily="@font/cabin"
+                    android:fontFamily="@font/chivo"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -483,7 +489,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:fontFamily="@font/cabin"
+                    android:fontFamily="@font/chivo"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
@@ -523,7 +529,7 @@
             android:text="Rewards :"
             android:textSize="18dp"
             android:padding="5dp"
-            android:fontFamily="@font/cabin"
+            android:fontFamily="@font/chivo"
             android:textColor="@color/black"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -540,7 +546,7 @@
                 android:text="00.00"
                 android:textSize="16dp"
                 android:padding="5dp"
-                android:fontFamily="@font/cabin"
+                android:fontFamily="@font/chivo"
                 android:textColor="@color/black"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
@@ -570,6 +576,7 @@
             android:layout_marginLeft="@dimen/space_15"
             android:layout_marginRight="@dimen/space_15"
             android:layout_marginTop="@dimen/space_10"
+            android:fontFamily="@font/chivo"
             android:background="@drawable/bg_rounded_button"
             android:clickable="true"
             android:text="Add To Cart"
@@ -581,6 +588,7 @@
             android:layout_marginRight="@dimen/space_15"
             android:layout_marginLeft="@dimen/space_15"
             android:layout_marginTop="@dimen/space_5"
+            android:fontFamily="@font/chivo"
             android:background="@drawable/bg_rounded_button"
             android:clickable="true"
             android:text="Buy Now"
@@ -594,13 +602,14 @@
 
                 >
                 <TextView
+
                     android:id="@+id/relatedtext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Related Products :"
                     android:textSize="18dp"
                     android:padding="5dp"
-                    android:fontFamily="@font/cabin"
+                    android:fontFamily="@font/chivo"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -674,6 +683,7 @@
                         android:textAlignment="center"
                         android:text="0"
                         android:textSize="@dimen/space_18"
+                        android:fontFamily="@font/chivo"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold|italic"
 
@@ -692,6 +702,7 @@
                 android:background="@color/colorPrimary"
                 android:textColor="@color/white"
                 android:text="Checkout"
+                android:fontFamily="@font/chivo"
                 android:visibility="gone"/>
         </RelativeLayout>
 

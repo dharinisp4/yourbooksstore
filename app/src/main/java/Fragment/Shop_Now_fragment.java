@@ -42,6 +42,7 @@ import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
+import util.Session_management;
 
 
 public class Shop_Now_fragment extends Fragment {
@@ -52,6 +53,7 @@ public class Shop_Now_fragment extends Fragment {
     private boolean isSubcat = false;
     String getid;
     String getcat_title;
+    Session_management session_management;
 
 
     public Shop_Now_fragment() {
@@ -69,7 +71,7 @@ public class Shop_Now_fragment extends Fragment {
         setHasOptionsMenu(true);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.shop_now));
-
+         session_management=new Session_management(getActivity());
 
         if (ConnectivityReceiver.isConnected()) {
             makeGetCategoryRequest();
@@ -95,6 +97,7 @@ public class Shop_Now_fragment extends Fragment {
                 Fragment fm = new SubCategory_Fragment();
                 args.putString("cat_id", getid);
                 args.putString("cat_title", getcat_title);
+                session_management.setCategoryId(getid);
                 fm.setArguments(args);
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

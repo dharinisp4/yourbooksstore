@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-
+            android:fontFamily="@font/chivo"
             android:padding="@dimen/space_5"
             android:background="@drawable/bg_rounded_button"
             android:layout_margin="@dimen/space_10"
@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_10"
         android:layout_marginTop="@dimen/space_14"
+        android:fontFamily="@font/chivo"
         android:background="@drawable/xml_textbox_bg"
         android:ems="10"
         android:hint="@string/et_sea"

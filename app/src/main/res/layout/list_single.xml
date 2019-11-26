@@ -29,6 +29,7 @@
             android:layout_marginLeft="16dp"
             android:paddingLeft="16dp"
             android:text="hjsjhdhjhajhd"
+            android:fontFamily="@font/chivo"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_small" />
 

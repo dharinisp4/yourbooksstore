@@ -9,7 +9,9 @@ import java.util.HashMap;
 import gogrocer.tcc.LoginActivity;
 import gogrocer.tcc.MainActivity;
 
+import static Config.BaseURL.BASE_URL;
 import static Config.BaseURL.IS_LOGIN;
+import static Config.BaseURL.KEY_CAT;
 import static Config.BaseURL.KEY_DATE;
 import static Config.BaseURL.KEY_EMAIL;
 import static Config.BaseURL.KEY_HOUSE;
@@ -198,4 +200,13 @@ public class Session_management {
         return prefs.getBoolean(IS_LOGIN, false);
     }
 
+    public void setCategoryId(String categoryId){
+
+        editor2.putString(KEY_CAT,categoryId);
+        editor2.commit();
+    }
+    public String getCategoryId()
+    {
+        return prefs2.getString(KEY_CAT,"");
+    }
 }

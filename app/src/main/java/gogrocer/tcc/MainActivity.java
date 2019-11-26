@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "Font/Bold.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "Font/Chivo-Regular.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
@@ -766,6 +766,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // register reciver
 
     }
+
 
 
 }

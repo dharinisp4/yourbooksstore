@@ -37,6 +37,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="#000"
+                android:fontFamily="@font/chivo"
                 android:textSize="@dimen/text_size_XX_small" />
 
         </RelativeLayout>

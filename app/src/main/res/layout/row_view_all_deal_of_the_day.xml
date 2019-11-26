@@ -118,6 +118,7 @@
                         android:gravity="right"
                         android:paddingRight="@dimen/space_8"
                         android:text="Price"
+                        android:fontFamily="@font/chivo"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -136,6 +137,7 @@
                         android:paddingLeft="@dimen/space_8"
                         android:paddingRight="@dimen/space_8"
                         android:text="Price"
+                        android:fontFamily="@font/chivo"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -161,6 +163,7 @@
                         android:gravity="right"
                         android:paddingRight="@dimen/space_8"
                         android:text="Offer"
+                        android:fontFamily="@font/chivo"
                         android:textColor="@color/color_1"
                         android:textSize="@dimen/text_size_large" />
 
@@ -178,6 +181,7 @@
                         android:paddingLeft="@dimen/space_8"
                         android:paddingRight="@dimen/space_8"
                         android:text="Price"
+                        android:fontFamily="@font/chivo"
                         android:textColor="@color/color_1"
                         android:textSize="@dimen/text_size_large" />
 

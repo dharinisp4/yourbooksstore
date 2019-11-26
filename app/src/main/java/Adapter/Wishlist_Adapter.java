@@ -103,39 +103,9 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
             int position = getAdapterPosition();
 
             HashMap<String,String > map=list.get(position);
-            if(id== R.id.rel_click)
+            if(id == R.id.rel_click)
             {
 
-                    Details_Fragment details_fragment = new Details_Fragment();
-                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                    Bundle args = new Bundle();
-
-
-                    args.putString("product_id", map.get("product_id"));
-                    args.putString("product_name", map.get("product_name"));
-                    args.putString("category_id", map.get("category_id"));
-                    args.putString("product_description",map.get("product_description"));
-
-                    args.putString("price", map.get("price"));
-                    args.putString("mrp",map.get("mrp"));
-                    args.putString("product_image",map.get("product_image"));
-                    args.putString("status", map.get("status"));
-                    args.putString("in_stock", map.get("in_stock"));
-                    args.putString("unit_value", map.get("unit_value"));
-                    args.putString("unit", map.get("unit"));
-                    args.putString("increament", map.get("increament"));
-                    args.putString("rewards",map.get("rewards"));
-                    args.putString("stock",map.get("stock"));
-                    args.putString("title", map.get("title"));
-                    args.putString("seller_id", map.get("seller_id"));
-                    args.putString("book_class", map.get("book_class"));
-                    args.putString("language", map.get("language"));
-                    args.putString("subject", map.get("subject"));
-
-                    details_fragment.setArguments(args);
-                    FragmentManager fragmentManager = activity.getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
-                            .addToBackStack(null).commit();
 
                 }
 
@@ -368,6 +338,42 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
             }
         } );
+
+        holder.rel_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Details_Fragment details_fragment = new Details_Fragment();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Bundle args = new Bundle();
+
+
+                args.putString("product_id", map.get("product_id"));
+                args.putString("product_name", map.get("product_name"));
+                args.putString("category_id", map.get("category_id"));
+                args.putString("product_description",map.get("product_description"));
+                args.putString("price", map.get("price"));
+                args.putString("mrp",map.get("mrp"));
+                args.putString("product_image",map.get("product_image"));
+                args.putString("status", map.get("status"));
+                args.putString("in_stock", map.get("in_stock"));
+                args.putString("unit_value", map.get("unit_value"));
+                args.putString("unit", map.get("unit"));
+                args.putString("increament", map.get("increament"));
+                args.putString("rewards",map.get("rewards"));
+                args.putString("stock",map.get("stock"));
+                args.putString("title", map.get("title"));
+                args.putString("seller_id", map.get("seller_id"));
+                args.putString("book_class", map.get("book_class"));
+                args.putString("language", map.get("language"));
+                args.putString("subject", map.get("subject"));
+                details_fragment.setArguments(args);
+                FragmentManager fragmentManager = activity.getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
+                        .addToBackStack(null).commit();
+
+            }
+        });
 
 
     }

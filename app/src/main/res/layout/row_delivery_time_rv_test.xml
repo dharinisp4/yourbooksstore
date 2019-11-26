@@ -190,7 +190,7 @@
                     android:id="@+id/edit_details"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-
+                    android:fontFamily="@font/chivo"
                     android:layout_margin="5dp"
                     android:paddingLeft="@dimen/space_15"
                     android:text="EDIT"
@@ -204,7 +204,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_marginTop="@dimen/space_5"
-
+                    android:fontFamily="@font/chivo"
                     android:text="DELETE"
                     android:textColor="@color/primary_color" />
 

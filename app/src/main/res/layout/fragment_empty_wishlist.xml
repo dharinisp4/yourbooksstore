@@ -19,7 +19,7 @@
         android:layout_marginLeft="150dp"/>
 
     <TextView
-        android:fontFamily="@font/cabin"
+        android:fontFamily="@font/chivo"
         android:layout_width="348dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -43,7 +43,7 @@
         android:gravity="center"
         android:shadowDx="1"
         android:shadowDy="1"
-        android:fontFamily="@font/cabin"
+        android:fontFamily="@font/chivo"
         android:text="@string/add_cart"
         android:textAlignment="center"
         android:textColor="@color/dark_gray"
@@ -67,7 +67,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Explore"
-            android:fontFamily="@font/cabin"
+            android:fontFamily="@font/chivo"
             android:textColor="#fff"
             android:textSize="@dimen/space_16" />
 

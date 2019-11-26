@@ -38,6 +38,7 @@
             android:gravity="center"
             android:padding="1dp"
             android:text="99"
+            android:fontFamily="@font/chivo"
             android:textColor="#ffffff"
             android:textSize="9sp" />
 

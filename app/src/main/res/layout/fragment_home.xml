@@ -102,7 +102,7 @@
                         android:text="@string/view_all"
                           android:textAlignment="gravity"
                         android:textColor="@color/black"
-
+                        android:fontFamily="@font/chivo"
                         android:textSize="12dp"
 
 
@@ -143,6 +143,7 @@
                 android:paddingTop="@dimen/space_5"
                 android:paddingLeft="@dimen/space_5"
                 android:textSize="16dp"
+                android:fontFamily="@font/chivo"
                 android:visibility="gone"/>
 
             <com.daimajia.slider.library.SliderLayout
@@ -172,11 +173,13 @@
                     android:textStyle="italic"
                     android:layout_alignParentStart="true"
                     android:paddingTop="@dimen/space_5"
+                    android:fontFamily="@font/chivo"
                     android:paddingLeft="@dimen/space_5"
                     android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/view_all_deals"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
@@ -187,6 +190,7 @@
                     android:layout_alignParentEnd="true"
                     android:elevation="@dimen/space_5"
                     android:text="@string/view_all"
+                    android:fontFamily="@font/chivo"
                     android:textAlignment="gravity"
                     android:textColor="@color/black"
 

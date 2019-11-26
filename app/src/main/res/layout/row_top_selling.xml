@@ -57,6 +57,7 @@
                 android:text="Product Name"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_18"
+                android:fontFamily="@font/chivo"
                 android:textStyle="bold" />
 <RelativeLayout
     android:layout_width="match_parent"
@@ -64,6 +65,7 @@
             <TextView
                 android:id="@+id/product_prize"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/chivo"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="@dimen/space_4"
@@ -81,6 +83,7 @@
         android:layout_marginTop="@dimen/space_4"
         android:text="mrp"
         android:paddingTop="@dimen/space_2"
+        android:fontFamily="@font/chivo"
         android:textColor="@color/dark_gray"
         android:textStyle="bold"
         android:layout_marginLeft="@dimen/space_10"
@@ -95,6 +98,7 @@
         android:layout_height="@dimen/dimen_70dp"
         android:layout_marginTop="-10dp"
         android:text="10%"
+        android:fontFamily="@font/chivo"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="@dimen/dimen_15dp"

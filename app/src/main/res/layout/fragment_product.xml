@@ -59,7 +59,7 @@
             android:layout_gravity="center_vertical"
             android:padding="@dimen/space_5"
             android:tag="sort"
-
+            android:fontFamily="@font/chivo"
             android:layout_weight="1"
 
             />
