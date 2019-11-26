@@ -45,12 +45,18 @@
 
         >
 
-        <ImageView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/img_sort"
-            app:srcCompat="@drawable/ic_sort_black_24dp"
-
+            android:drawableLeft="@drawable/ic_sort_black_24dp"
+            android:text="Sort"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="@dimen/space_18"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
             android:padding="@dimen/space_5"
             android:tag="sort"
 
@@ -68,7 +74,7 @@
             android:layout_height="match_parent"
             android:id="@+id/img_filter"
             android:tag="filter"
-
+            android:visibility="gone"
             android:padding="@dimen/space_10"
             android:layout_weight="1"
             app:srcCompat="@drawable/filter"/>

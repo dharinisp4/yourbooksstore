@@ -366,13 +366,13 @@ public class Payment_fragment extends Fragment {
                     if (status) {
                         String msg = response.getString("data");
                         String msg_arb=response.getString("data_arb");
-                      //  if(checkout.equalsIgnoreCase( "null" )) {
+                        if(checkout.equalsIgnoreCase( "null" )) {
                             db_cart.clearCart();
-//                        }
-//                        else
-//                        {
-//                            db_cart.removeItemFromCart( product_id );
-//                        }
+                        }
+                        else
+                        {
+                            db_cart.removeItemFromCart( product_id );
+                        }
                         Bundle args = new Bundle();
                         Fragment fm = new Thanks_fragment();
                         args.putString("msg", msg);

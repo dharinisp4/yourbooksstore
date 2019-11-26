@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -82,7 +83,8 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private SliderLayout  banner_slider;
     String language;
     String getcat_id="";
-    ImageView img_no_products,img_filter,img_sort;
+    ImageView img_no_products,img_filter;
+    TextView img_sort;
     SharedPreferences preferences;
     private DatabaseCartHandler dbcart;
     private DatabaseHandlerWishList dbwish;
@@ -107,7 +109,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-        img_sort=(ImageView)view.findViewById(R.id.img_sort);
+        img_sort=(TextView) view.findViewById(R.id.img_sort);
         img_filter=(ImageView)view.findViewById(R.id.img_filter);
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);
         banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
@@ -144,7 +146,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         if (ConnectivityReceiver.isConnected()) {
             //Shop by Catogary
           //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
-           // makeGetSliderCategoryRequest(id);
+            makeGetSliderCategoryRequest(id);
             makeGetCategoryRequest(getcat_id);
 
             //Deal Of The Day Products

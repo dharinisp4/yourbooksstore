@@ -519,9 +519,28 @@ module=new Module();
                                 url_maps.put("slider_title", jsonObject.getString("slider_title"));
                                 url_maps.put("sub_cat", jsonObject.getString("sub_cat"));
                                 url_maps.put("slider_image", BaseURL.IMG_SLIDER_URL + jsonObject.getString("slider_image"));
+                                url_maps.put("product_id",jsonObject.getString("product_id"));
+                                url_maps.put("product_name",jsonObject.getString("product_name"));
+                                url_maps.put("product_description",jsonObject.getString("product_description"));
+                                url_maps.put("product_image",jsonObject.getString("product_image"));
+                                url_maps.put("category_id",jsonObject.getString("category_id"));
+                                url_maps.put("in_stock",jsonObject.getString("in_stock"));
+                                url_maps.put("price",jsonObject.getString("price"));
+                                url_maps.put("mrp",jsonObject.getString("mrp"));
+                                url_maps.put("unit_value",jsonObject.getString("unit_value"));
+                                url_maps.put("unit",jsonObject.getString("unit"));
+                                url_maps.put("increament",jsonObject.getString("increament"));
+                                url_maps.put("rewards",jsonObject.getString("rewards"));
+                                url_maps.put("seller_id",jsonObject.getString("seller_id"));
+                                url_maps.put("book_class",jsonObject.getString("book_class"));
+                                url_maps.put("language",jsonObject.getString("language"));
+                                url_maps.put("subject",jsonObject.getString("subject"));
+                                url_maps.put("stock",jsonObject.getString("stock"));
+                                url_maps.put("title",jsonObject.getString("title"));
+                                url_maps.put("status","0");
                                 listarray.add(url_maps);
                             }
-                            for (HashMap<String, String> name : listarray) {
+                            for (final HashMap<String, String> name : listarray) {
                                 CustomSlider textSliderView = new CustomSlider(getActivity());
                                 textSliderView.description(name.get("")).image(name.get("slider_image")).setScaleType(BaseSliderView.ScaleType.Fit);
                                 textSliderView.bundle(new Bundle());
@@ -534,8 +553,34 @@ module=new Module();
                                     public void onSliderClick(BaseSliderView slider) {
                                         //   Toast.makeText(getActivity(), "" + sub_cat, Toast.LENGTH_SHORT).show();
                                         Bundle args = new Bundle();
-                                        Fragment fm = new Product_fragment();
-                                        args.putString("id", sub_cat);
+                                        Fragment fm = new Details_Fragment();
+
+                                        //Intent intent=new Intent(context, Product_details.class);
+                                        args.putString("product_id", name.get("product_id").toString());
+                                        args.putString("product_name", name.get("product_name").toString());
+                                        args.putString("category_id", name.get("category_id").toString());
+                                        args.putString("product_description", name.get("product_description").toString());
+                                        //         args.putString("deal_price",modelList.get(position).getDeal_price());
+                                        //       args.putString("start_date",modelList.get(position).getStart_date());
+                                        //     args.putString("start_time",modelList.get(position).getStart_time());
+                                        //   args.putString("end_date",modelList.get(position).getEnd_date());
+                                        // args.putString("end_time",modelList.get(position).getEnd_time());
+                                        args.putString("price", name.get("price").toString());
+                                        args.putString("mrp",name.get("mrp").toString());
+                                        args.putString("product_image",name.get("product_image").toString());
+                                        args.putString("status", name.get("status").toString());
+                                        args.putString("in_stock", name.get("in_stock").toString());
+                                        args.putString("unit_value", name.get("unit_value").toString());
+                                        args.putString("unit", name.get("unit").toString());
+                                        args.putString("increament", name.get("increament").toString());
+                                        args.putString("rewards", name.get("rewards").toString());
+                                        args.putString("stock",name.get("stock").toString());
+                                        args.putString("title", name.get("title").toString());
+                                        args.putString("seller_id", name.get("seller_id").toString());
+                                        args.putString("book_class", name.get("book_class").toString());
+                                        args.putString("language", name.get("language").toString());
+                                        args.putString("subject", name.get("subject").toString());
+
                                         fm.setArguments(args);
                                         FragmentManager fragmentManager = getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
