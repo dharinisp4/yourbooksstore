@@ -32,9 +32,10 @@
                 android:layout_marginLeft="@dimen/space_20"
                 android:gravity="center"
                 android:text="text"
+                android:fontFamily="@font/chivo"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:fontFamily="@font/cabin" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"

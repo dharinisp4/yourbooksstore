@@ -24,10 +24,11 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/space_5"
             android:id="@+id/toast_text"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This is custom text"
-            android:fontFamily="@font/cabin"
+            android:fontFamily="@font/chivo"
             android:textSize="16sp"
 
             android:textColor="@color/white"/>

@@ -77,7 +77,7 @@ public class View_time_fragment extends Fragment {
 
         // check internet connection
         if (ConnectivityReceiver.isConnected()) {
-            Toast.makeText(getActivity(),""+getdate,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(),""+getdate,Toast.LENGTH_LONG).show();
             makeGetTimeRequest(getdate);
         } else {
             ((MainActivity) getActivity()).onNetworkConnectionChanged(false);

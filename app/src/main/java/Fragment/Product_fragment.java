@@ -65,6 +65,7 @@ import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import Module.Module;
 import util.DatabaseHandlerWishList;
+import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -82,6 +83,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private Product_adapter adapter_product;
     private SliderLayout  banner_slider;
     String language;
+    Session_management session_management;
     String getcat_id="";
     ImageView img_no_products,img_filter;
     TextView img_sort;
@@ -115,6 +117,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
         rv_cat = (RecyclerView) view.findViewById(R.id.rv_subcategory);
         rv_cat.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        session_management=new Session_management(getActivity());
         getcat_id = getArguments().getString("cat_id");
         String id = getArguments().getString("id");
         String get_deal_id = getArguments().getString("cat_deal");
@@ -872,7 +875,8 @@ loadingBar.show();
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ddlg.dismiss();
                     String item = sort_List.get( i ).toString();
-                    final String cat_id = getArguments().getString("cat_id");
+                    //final String cat_id = getArguments().getString("cat_id");
+                    final String cat_id = session_management.getCategoryId();
 
                     if (item.equals( "Price Low - High" ))
                     {

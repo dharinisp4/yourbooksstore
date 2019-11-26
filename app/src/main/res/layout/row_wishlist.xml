@@ -11,23 +11,22 @@
     android:background="@color/white"
     card_view:cardUseCompatPadding="true">
     <RelativeLayout
+
         android:id="@+id/rel_wish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
-
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rel1"
-
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/space_5"
+        android:weightSum="10"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_icon"
-            android:layout_width="180dp"
-            android:layout_height="200dp"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="150dp"
             android:layout_marginTop="@dimen/space_5"
             android:src="@drawable/icon"
             android:layout_centerVertical="true"
@@ -36,7 +35,8 @@
 
         <LinearLayout
             android:layout_toRightOf="@+id/iv_icon"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginTop="10dp"
@@ -48,6 +48,7 @@
             <TextView
                 android:layout_marginLeft="10dp"
                 android:id="@+id/product_name"
+                android:fontFamily="@font/chivo"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -55,9 +56,10 @@
                 android:padding="5dp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textColor="#837e7e"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
+
+                 android:textColor="@color/black"
+                android:textSize="16dp"
+               />
 
 
             <RelativeLayout
@@ -69,23 +71,23 @@
                     android:id="@+id/product_prize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:layout_marginLeft="@dimen/space_10"
                     android:text="Price :"
-                    android:padding="5dp"
-                    android:textColor="#837e7e"
-                    android:textSize="15dp" />
+                    android:padding="3dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/chivo"
+                    android:textSize="14dp" />
                 <TextView
                     android:id="@+id/product_mrp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/product_prize"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="5dp"
-                    android:padding="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:padding="3dp"
+                    android:layout_marginTop="@dimen/space_3"
                     android:text="Price"
                     android:textColor="@color/color_3"
-                    android:textSize="15dp" />
+                    android:textSize="12dp" />
 
 
 
@@ -96,9 +98,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_3"
                 android:id="@+id/rel_rewards"
-                android:layout_marginTop="@dimen/space_4"
+                android:layout_marginTop="@dimen/space_2"
                 android:layout_marginLeft="@dimen/space_10"
 
                 android:background="@drawable/slider_shape"
@@ -138,9 +139,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" TextView"
+                android:visibility="gone"
                 android:layout_marginLeft="@dimen/space_10"
                 android:textColor="#000"
-                android:textSize="16dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/chivo"
                 android:padding="3dp"
                 />
             <RelativeLayout
@@ -154,11 +157,13 @@
 
 
                 <Button
+
                     android:id="@+id/btn_add"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/chivo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="@dimen/space_10"
                     android:background="@drawable/bg_rounded_button"
@@ -186,14 +191,14 @@
                         android:id="@+id/tv_subcat_contetiy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="19dp"
+                        android:fontFamily="@font/chivo"
                         android:layout_marginLeft="@dimen/space_10"
                         android:layout_marginRight="@dimen/space_10"
                         android:paddingTop="@dimen/space_5"
                         android:textAlignment="center"
                         android:text="1"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
+                        android:textSize="16dp"
                         android:gravity="center_vertical"
                         android:layout_toRightOf="@id/iv_subcat_minus"/>
 
@@ -213,7 +218,7 @@
             </RelativeLayout>
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
     <View
         android:layout_below="@+id/rel1"
         android:layout_width="match_parent"

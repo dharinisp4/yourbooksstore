@@ -55,6 +55,7 @@
                 android:text="NAme"
                 android:maxLines="2"
                 android:ellipsize="end"
+                android:fontFamily="@font/chivo"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18dp"
                 android:padding="3dp"/>
@@ -66,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="price"
+                android:fontFamily="@font/chivo"
                 android:layout_alignParentStart="true"
                 android:textColor="#000"
                 android:textSize="16dp"
@@ -78,6 +80,7 @@
                 android:textColor="@color/dark_gray"
                 android:layout_marginEnd="@dimen/space_20"
                 android:textSize="16dp"
+                android:fontFamily="@font/chivo"
                android:layout_toRightOf="@+id/tv_subcat_price"
                 android:padding="3dp" /></RelativeLayout>
 
@@ -91,6 +94,7 @@
 
                 <TextView
                     android:id="@+id/textView4"
+                    android:fontFamily="@font/chivo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tv_cart_total"
@@ -103,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" TextView"
+                    android:fontFamily="@font/chivo"
                     android:textColor="#000"
                     android:textSize="16dp"
                     android:padding="3dp" />
@@ -139,12 +144,14 @@
                     android:textColor="#000"
                     android:textSize="@dimen/text_size_small"
                     android:padding="@dimen/space_2"
+                    android:fontFamily="@font/chivo"
                    />
 
                 <TextView
 
                     android:id="@+id/tv_reward_point"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/chivo"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignRight="@dimen/space_18"
@@ -185,6 +192,7 @@
                     android:textAlignment="gravity"
                     android:text="1"
                     android:textSize="16dp"
+                    android:fontFamily="@font/chivo"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:layout_toRightOf="@id/iv_subcat_minus"/>
@@ -220,6 +228,7 @@
             android:text="@string/tv_pro_add"
             android:textColor="@color/white"
             android:textSize="15dp"
+            android:fontFamily="@font/chivo"
             android:visibility="gone"
             />
 
@@ -255,6 +264,7 @@
         android:textSize="@dimen/dimen_15dp"
         android:textAlignment="gravity"
         android:gravity="center"
+        android:fontFamily="@font/chivo"
         android:background="@drawable/ic_bookmark_black_24dp"
         android:backgroundTint="@color/colorPrimaryDark"
         />

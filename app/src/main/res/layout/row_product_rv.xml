@@ -43,10 +43,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="@font/cabin"
+
                 android:padding="3dp"
                 android:maxLines="2"
                 android:text="NAme"
+                android:fontFamily="@font/chivo"
                 android:textColor="@color/primary_color"
                 android:textSize="16dp" />
 <RelativeLayout
@@ -57,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="price"
-                android:fontFamily="@font/cabin"
+                android:fontFamily="@font/chivo"
                 android:layout_alignParentStart="true"
                 android:textColor="@color/primary_color"
                 android:textSize="16dp"
@@ -70,7 +71,7 @@
         android:layout_marginTop="@dimen/space_4"
         android:textColor="@color/black"
         android:textSize="13dp"
-        android:fontFamily="@font/cabin"
+        android:fontFamily="@font/chivo"
         android:layout_toRightOf="@+id/tv_subcat_price"
         android:padding="3dp" />
     <TextView
@@ -84,7 +85,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/space_13"
         android:textAlignment="gravity"
-        android:fontFamily="@font/cabin"
+        android:fontFamily="@font/chivo"
         android:gravity="center"
         />
 
@@ -105,6 +106,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/tv_cart_total"
                     android:textColor="#000"
+                    android:fontFamily="@font/chivo"
                     android:textSize="16dp"
                     android:padding="3dp"
                    />
@@ -116,6 +118,7 @@
                     android:text=" TextView"
                     android:textColor="#000"
                     android:textSize="16dp"
+                    android:fontFamily="@font/chivo"
                     android:padding="3dp"
                     />
                 <TextView
@@ -124,6 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:text="@string/currency"
+                    android:fontFamily="@font/chivo"
                     android:textColor="#000"
                     android:textSize="16dp"
                     android:padding="3dp"
@@ -200,6 +204,7 @@
                 android:textAlignment="center"
                 android:text="1"
                 android:textSize="18dp"
+                android:fontFamily="@font/chivo"
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:layout_toRightOf="@id/iv_subcat_minus"/>
@@ -226,9 +231,10 @@
 
             android:background="@drawable/bg_rounded_button"
             android:gravity="center"
-            android:fontFamily="@font/cabin"
+
             android:layout_centerHorizontal="true"
             android:text="@string/tv_pro_add"
+            android:fontFamily="@font/chivo"
             android:textColor="@color/white"
             android:textSize="15dp"
 
@@ -265,7 +271,6 @@
             android:id="@+id/wish_before"
             android:layout_width="30dp"
             android:layout_height="30dp"
-
             app:srcCompat="@drawable/wish_before"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/space_5"
@@ -302,6 +307,7 @@
             android:layout_centerVertical="true"
             android:textAlignment="center"
             android:textSize="@dimen/dimen_26dp"
+            android:fontFamily="@font/chivo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </RelativeLayout>

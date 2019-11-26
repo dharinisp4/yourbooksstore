@@ -55,6 +55,7 @@
                         android:inputType="text"
                         android:textColor="#000"
                         android:textColorHint="#000"
+                        android:fontFamily="@font/chivo"
                         android:textSize="@dimen/space_14"
                         tools:ignore="LabelFor" />
 

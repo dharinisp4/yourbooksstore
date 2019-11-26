@@ -43,7 +43,7 @@
                 android:textSize="@dimen/dimen_30dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-smallcaps"
+                android:fontFamily="@font/chivo"
                 />
 <LinearLayout
     android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                 android:layout_height="@dimen/dimen_50dp"
                 android:hint="Name"
                 android:background="@drawable/xml_textbox_bg"
-
+               android:fontFamily="@font/chivo"
                 android:drawablePadding="@dimen/space_5"
                 android:ems="10"
                 android:outlineProvider="bounds"
@@ -110,7 +110,7 @@
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
                 android:background="@drawable/xml_textbox_bg"
-
+                android:fontFamily="@font/chivo"
                 android:drawablePadding="@dimen/space_5"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/email"
@@ -143,6 +143,7 @@
             <EditText
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
+                android:fontFamily="@font/chivo"
                 android:background="@drawable/xml_textbox_bg"
                 android:id="@+id/et_reg_phone"
                 android:layout_width="match_parent"
@@ -230,6 +231,7 @@
                 android:background="@drawable/xml_textbox_bg"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50dp"
+                android:fontFamily="@font/chivo"
                 android:layout_marginBottom="5dp"
               android:hint="@string/password"
                 android:inputType="textPassword"
@@ -269,7 +271,7 @@
                 android:layout_marginBottom="5dp"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
-
+                android:fontFamily="@font/chivo"
                 android:drawablePadding="@dimen/space_5"
                 android:maxLength="10"
                 android:ems="10"/>
@@ -303,6 +305,7 @@
                     android:layout_margin="12dp"
                     android:layout_centerInParent="true"
                     android:padding="12dp"
+                    android:fontFamily="@font/chivo"
                     android:gravity="center"
                     android:text="Already Registered ?"
                     android:textColor="@color/black"
@@ -318,6 +321,7 @@
                     android:gravity="center"
                     android:text="Sign In "
                     android:textStyle="bold"
+                    android:fontFamily="@font/chivo"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/dimen_15dp"/>        </RelativeLayout>
         </LinearLayout>

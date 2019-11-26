@@ -301,7 +301,7 @@ String language;
         }*/
 
         if (!cancel) {
-            //Toast.makeText(getActivity(), "date:"+getdate+"Fromtime:"+getfrom_time+"Todate:"+getto_time, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "date:"+deli_charges, Toast.LENGTH_SHORT).show();
 
             sessionManagement.cleardatetime();
 
@@ -419,10 +419,10 @@ String language;
 
             String type = intent.getStringExtra("type");
 
-            if (type.contentEquals("cart")) {
+            if (type.contentEquals("update")) {
                 //updateData();
                 deli_charges = intent.getStringExtra("charge");
-                //Toast.makeText(getActivity(), deli_charges, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getActivity(), deli_charges, Toast.LENGTH_SHORT).show();
 
                 Double total = Double.parseDouble(db_cart.getTotalAmount()) + Integer.parseInt(deli_charges);
 

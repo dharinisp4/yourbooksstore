@@ -77,7 +77,8 @@
         android:background="@drawable/xml_textbox_bg"
         android:layout_margin="@dimen/space_15"
         android:maxLength="6"
-
+        android:fontFamily="@font/chivo"
+        android:hint="Enter One Time Password(OTP)"
         android:inputType="number"
         />
     <Fonts.LatoBLack
@@ -95,6 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Verify"
+        android:fontFamily="@font/chivo"
         android:layout_margin="@dimen/space_15"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"/>

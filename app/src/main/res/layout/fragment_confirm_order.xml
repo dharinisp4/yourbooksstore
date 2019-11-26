@@ -68,6 +68,7 @@
                             android:orientation="vertical"
                             >
                             <TextView
+                                android:fontFamily="@font/chivo"
                                 android:id="@+id/textTimeSlot"
                                 android:visibility="gone"
                                 android:layout_width="match_parent"
@@ -97,6 +98,7 @@
                                     >
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/textname"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -106,6 +108,7 @@
                                         android:textSize="14dp" />
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/recivername"
                                         android:layout_toRightOf="@id/textname"
                                         android:layout_width="wrap_content"
@@ -126,6 +129,7 @@
                                     android:layout_margin="@dimen/space_2"
                                     >
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtmobile"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -135,6 +139,7 @@
                                         android:text="Mobile No. :"/>
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/mobileno"
                                         android:layout_toRightOf="@id/txtmobile"
                                         android:layout_width="wrap_content"
@@ -156,6 +161,7 @@
                                     >
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtpin"
                                         android:layout_width="67dp"
                                         android:layout_height="match_parent"
@@ -167,6 +173,7 @@
                                         android:textSize="@dimen/space_14" />
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/pincode"
                                         android:layout_toRightOf="@id/txtpin"
                                         android:layout_width="wrap_content"
@@ -189,6 +196,7 @@
                                     >
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtHouse"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -201,6 +209,7 @@
                                         android:visibility="gone"/>
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/Houseno"
                                         android:layout_toRightOf="@id/txtHouse"
                                         android:layout_width="wrap_content"
@@ -223,6 +232,7 @@
                                     android:layout_margin="@dimen/space_2"
                                     >
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtAddress"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -233,6 +243,7 @@
 
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/Address"
                                         android:layout_toRightOf="@id/txtAddress"
                                         android:layout_width="wrap_content"
@@ -287,6 +298,7 @@
                                     android:layout_margin="@dimen/space_2"
                                     >
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtitmes"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -296,6 +308,7 @@
                                         android:text="Total no. of items :"/>
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/tvItems"
                                         android:layout_toRightOf="@id/txtitmes"
                                         android:layout_width="wrap_content"
@@ -317,6 +330,7 @@
                                     >
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtmrp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -326,6 +340,7 @@
                                         android:textSize="@dimen/space_14" />
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/tvMrp"
                                         android:layout_toRightOf="@id/txtmrp"
                                         android:layout_width="wrap_content"
@@ -347,6 +362,7 @@
                                     >
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtDis"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -358,6 +374,7 @@
                                         android:visibility="gone"/>
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/tvDiscount"
                                         android:layout_toRightOf="@id/txtDis"
                                         android:layout_width="wrap_content"
@@ -380,6 +397,7 @@
                                     android:layout_margin="@dimen/space_2"
                                     >
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtDel"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -389,6 +407,7 @@
                                         android:text="Delivery Charges :"/>
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/tvDelivary"
                                         android:layout_width="wrap_content"
                                         android:layout_alignParentRight="true"
@@ -414,6 +433,7 @@
                                     android:layout_margin="@dimen/space_2"
                                     >
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/txtsub"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -425,6 +445,7 @@
 
 
                                     <TextView
+                                        android:fontFamily="@font/chivo"
                                         android:id="@+id/tvSubTotal"
                                         android:layout_toRightOf="@id/txtsub"
                                         android:layout_width="match_parent"
