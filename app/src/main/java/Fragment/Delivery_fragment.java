@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -87,7 +88,8 @@ SharedPreferences preferences;
 
     private String deli_charges ,checkout;
     String store_id ,product_id;
-    Dialog ProgressDialog ;
+
+    ProgressDialog progressDialog;
 String language;
     public Delivery_fragment() {
         // Required empty public constructor
@@ -96,9 +98,7 @@ String language;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+
     }
 
     @Override
@@ -114,10 +114,9 @@ String language;
 
         store_id = SharedPref.getString(getActivity(), BaseURL.STORE_ID);
         preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         tv_date = (TextView) view.findViewById(R.id.tv_deli_date);
         tv_time = (TextView) view.findViewById(R.id.tv_deli_fromtime);
         tv_add_adress = (RelativeLayout) view.findViewById(R.id.tv_deli_add_address);
@@ -276,7 +275,7 @@ String language;
     private void attemptOrder() {
 
         //String getaddress = et_address.getText().toString();
-        ProgressDialog.show();
+        progressDialog.show();
         String location_id = "";
         String address = "";
 
@@ -285,27 +284,27 @@ String language;
         if (TextUtils.isEmpty(getdate)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
             cancel = true;
-            ProgressDialog.dismiss();
+            progressDialog.dismiss();
         } else if (TextUtils.isEmpty(gettime)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
             cancel = true;
-            ProgressDialog.dismiss();
+            progressDialog.dismiss();
         }
 
         if (!delivery_address_modelList.isEmpty()) {
             if (adapter.ischeckd()) {
                 location_id = adapter.getlocation_id();
                 address = adapter.getaddress();
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             } else {
                 Toast.makeText(getActivity(), getResources().getString(R.string.please_select_address), Toast.LENGTH_SHORT).show();
                 cancel = true;
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         } else {
             Toast.makeText(getActivity(), getResources().getString(R.string.please_add_address), Toast.LENGTH_SHORT).show();
             cancel = true;
-            ProgressDialog.dismiss();
+            progressDialog.dismiss();
         }
 
         /*if (TextUtils.isEmpty(getaddress)) {
@@ -354,7 +353,7 @@ String language;
 
         // Tag used to cancel the request
         String tag_json_obj = "json_get_address_req";
-ProgressDialog.show();
+        progressDialog.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", user_id);
 
@@ -393,12 +392,13 @@ ProgressDialog.show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     if (getActivity() != null) {

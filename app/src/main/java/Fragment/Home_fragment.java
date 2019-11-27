@@ -3,6 +3,7 @@ package Fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -78,7 +79,7 @@ public class Home_fragment extends Fragment {
     private Home_adapter adapter;
     private boolean isSubcat = false;
     LinearLayout Search_layout;
-    Dialog ProgressDialog;
+
     String getid;
     Module module;
     String getcat_title;
@@ -112,6 +113,7 @@ public class Home_fragment extends Fragment {
 
     View view;
 
+    ProgressDialog loadingbar;
     public Home_fragment() {
 
     }
@@ -131,9 +133,9 @@ public class Home_fragment extends Fragment {
         view.requestFocus();
 module=new Module();
 session_management=new Session_management(getActivity());
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+        loadingbar =new ProgressDialog(getActivity());
+        loadingbar.setMessage("Loading...");
+        loadingbar.setCanceledOnTouchOutside(false);
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -198,12 +200,13 @@ session_management=new Session_management(getActivity());
 
         //Top Selling Products
         rv_top_selling = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
-        GridLayoutManager gridLayoutManager2= new GridLayoutManager(getActivity(), 2);
+        RecyclerView.LayoutManager layoutManager2=new GridLayoutManager(getActivity(),2);
+        //GridLayoutManager gridLayoutManager2= new GridLayoutManager(getActivity(), 2);
        // LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.HORIZONTAL,false );
-        rv_top_selling.setLayoutManager(gridLayoutManager2);
+        rv_top_selling.setLayoutManager(layoutManager2);
         rv_top_selling.setItemAnimator(new DefaultItemAnimator());
-        rv_top_selling.setNestedScrollingEnabled(false);
-        rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
+//        rv_top_selling.setNestedScrollingEnabled(false);
+       // rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
 
 
         //make_menu_items Icons
@@ -676,8 +679,9 @@ session_management=new Session_management(getActivity());
 
 
     private void makeGetCategoryRequest() {
-        ProgressDialog.show();
-        String tag_json_obj = "json_category_req";
+
+    loadingbar.show();
+    String tag_json_obj = "json_category_req";
         isSubcat = false;
         Map<String, String> params = new HashMap<String, String>();
         params.put("parent", "");
@@ -692,7 +696,7 @@ session_management=new Session_management(getActivity());
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
                 try {
-                    ProgressDialog.dismiss();
+                    loadingbar.dismiss();
                    // module.showToast("asdasdasds",getActivity());
                     if (response != null && response.length() > 0) {
                         Boolean status = response.getBoolean("responce");
@@ -707,7 +711,7 @@ session_management=new Session_management(getActivity());
                         }
                     }
                 } catch (JSONException e) {
-                    ProgressDialog.dismiss();
+                    loadingbar.dismiss();
                     e.printStackTrace();
                 }
             }
@@ -715,7 +719,7 @@ session_management=new Session_management(getActivity());
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+                loadingbar.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

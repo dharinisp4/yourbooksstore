@@ -2,6 +2,7 @@ package Fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -85,6 +86,7 @@ public class Payment_fragment extends Fragment {
     LinearLayout Promo_code_layout, Coupon_and_wallet;
     RelativeLayout Apply_Coupon_Code, Relative_used_wallet, Relative_used_coupon;
 
+    ProgressDialog progressDialog;
     public Payment_fragment() {
 
     }
@@ -107,7 +109,9 @@ public class Payment_fragment extends Fragment {
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.payment));
 
         Prefrence_TotalAmmount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -344,6 +348,7 @@ public class Payment_fragment extends Fragment {
 
     private void makeAddOrderRequest(String date, String gettime, String userid, String
             location, String store_id, JSONArray passArray) {
+        progressDialog.show();
         String tag_json_obj = "json_add_order_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("date", date);
@@ -362,6 +367,7 @@ public class Payment_fragment extends Fragment {
                 Log.d(TAG, response.toString());
 
                 try {
+                    progressDialog.dismiss();
                     Boolean status = response.getBoolean("responce");
                     if (status) {
                         String msg = response.getString("data");
@@ -386,6 +392,7 @@ public class Payment_fragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
+                    progressDialog.dismiss();
                     Toast.makeText(getActivity(),""+e.getMessage(),Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
@@ -395,6 +402,7 @@ public class Payment_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                progressDialog.dismiss();
                 Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {

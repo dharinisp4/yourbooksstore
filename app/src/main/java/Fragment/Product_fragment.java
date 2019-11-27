@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -72,7 +73,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class Product_fragment extends Fragment implements View.OnClickListener{
-    Dialog loadingBar;
+    ProgressDialog loadingBar;
     private static String TAG = Product_fragment.class.getSimpleName();
     private RecyclerView rv_cat;
     private TabLayout tab_cat;
@@ -110,9 +111,9 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
-        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
-        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar=new ProgressDialog(getActivity());
         loadingBar.setCanceledOnTouchOutside(false);
+        loadingBar.setMessage("Loading...");
         img_sort=(TextView) view.findViewById(R.id.img_sort);
         img_filter=(ImageView)view.findViewById(R.id.img_filter);
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);

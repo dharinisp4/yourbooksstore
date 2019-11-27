@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -49,7 +50,7 @@ public class My_Past_Order extends Fragment {
 
     private List<My_Past_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
-    Dialog ProgressDialog ;
+    ProgressDialog progressDialog;
 
     public My_Past_Order() {
         // Required empty public constructor
@@ -58,9 +59,7 @@ public class My_Past_Order extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+
     }
 
     @Override
@@ -68,10 +67,9 @@ public class My_Past_Order extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_past_order, container, false);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         // ((My_Order_activity) getActivity()).setTitle(getResources().getString(R.string.my_order));
 
 
@@ -154,7 +152,7 @@ public class My_Past_Order extends Fragment {
         String tag_json_obj = "json_socity_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", userid);
-        ProgressDialog.show();
+        progressDialog.show();
         CustomVolleyJsonArrayRequest jsonObjReq = new CustomVolleyJsonArrayRequest(Request.Method.POST,
                 BaseURL.GET_DELIVERD_ORDER_URL, params, new Response.Listener<JSONArray>() {
 
@@ -170,11 +168,12 @@ public class My_Past_Order extends Fragment {
                 if (my_order_modelList.isEmpty()) {
                    // Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
                 }
