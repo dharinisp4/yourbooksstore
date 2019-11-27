@@ -140,7 +140,7 @@ public class Reward_fragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        progressDialog.show();
+                        progressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
 
