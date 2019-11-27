@@ -1,12 +1,9 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +18,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import Config.BaseURL;
-import Fragment.Details_Fragment;
 import Model.Top_Selling_model;
 import gogrocer.tcc.R;
 
@@ -55,43 +51,43 @@ SharedPreferences preferences;
         public void onClick(View view) {
             int id = view.getId();
             int position = getAdapterPosition();
-            if (id == R.id.card_view_top) {
-
-                Details_Fragment details_fragment = new Details_Fragment();
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Bundle args = new Bundle();
-
-                //Intent intent=new Intent(context, Product_details.class);
-                args.putString("product_id", modelList.get(position).getProduct_id());
-                args.putString("product_name", modelList.get(position).getProduct_name());
-                args.putString("category_id", modelList.get(position).getCategory_id());
-                args.putString("product_description", modelList.get(position).getProduct_description());
-                //         args.putString("deal_price",modelList.get(position).getDeal_price());
-                //       args.putString("start_date",modelList.get(position).getStart_date());
-                //     args.putString("start_time",modelList.get(position).getStart_time());
-                //   args.putString("end_date",modelList.get(position).getEnd_date());
-                // args.putString("end_time",modelList.get(position).getEnd_time());
-                args.putString("price", modelList.get(position).getPrice());
-                args.putString("mrp", modelList.get(position).getMrp());
-                args.putString("product_image", modelList.get(position).getProduct_image());
-                args.putString("status", modelList.get(position).getStatus());
-                args.putString("in_stock", modelList.get(position).getIn_stock());
-                args.putString("unit_value", modelList.get(position).getUnit_value());
-                args.putString("unit", modelList.get(position).getUnit());
-                args.putString("increament", modelList.get(position).getIncreament());
-                args.putString("rewards", modelList.get(position).getRewards());
-                args.putString("stock", modelList.get(position).getStock());
-                args.putString("title", modelList.get(position).getTitle());
-                args.putString("seller_id", modelList.get(position).getSeller_id());
-                args.putString("book_class", modelList.get(position).getBook_class());
-                args.putString("language", modelList.get(position).getLanguage());
-                args.putString("subject", modelList.get(position).getSubject());
-
-                details_fragment.setArguments(args);
-                FragmentManager fragmentManager = activity.getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
-                        .addToBackStack(null).commit();
-            }
+//            if (id == R.id.card_view_top) {
+//
+//                Details_Fragment details_fragment = new Details_Fragment();
+//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                Bundle args = new Bundle();
+//
+//                //Intent intent=new Intent(context, Product_details.class);
+//                args.putString("product_id", modelList.get(position).getProduct_id());
+//                args.putString("product_name", modelList.get(position).getProduct_name());
+//                args.putString("category_id", modelList.get(position).getCategory_id());
+//                args.putString("product_description", modelList.get(position).getProduct_description());
+//                //         args.putString("deal_price",modelList.get(position).getDeal_price());
+//                //       args.putString("start_date",modelList.get(position).getStart_date());
+//                //     args.putString("start_time",modelList.get(position).getStart_time());
+//                //   args.putString("end_date",modelList.get(position).getEnd_date());
+//                // args.putString("end_time",modelList.get(position).getEnd_time());
+//                args.putString("price", modelList.get(position).getPrice());
+//                args.putString("mrp", modelList.get(position).getMrp());
+//                args.putString("product_image", modelList.get(position).getProduct_image());
+//                args.putString("status", modelList.get(position).getStatus());
+//                args.putString("in_stock", modelList.get(position).getIn_stock());
+//                args.putString("unit_value", modelList.get(position).getUnit_value());
+//                args.putString("unit", modelList.get(position).getUnit());
+//                args.putString("increament", modelList.get(position).getIncreament());
+//                args.putString("rewards", modelList.get(position).getRewards());
+//                args.putString("stock", modelList.get(position).getStock());
+//                args.putString("title", modelList.get(position).getTitle());
+//                args.putString("seller_id", modelList.get(position).getSeller_id());
+//                args.putString("book_class", modelList.get(position).getBook_class());
+//                args.putString("language", modelList.get(position).getLanguage());
+//                args.putString("subject", modelList.get(position).getSubject());
+//
+//                details_fragment.setArguments(args);
+//                FragmentManager fragmentManager = activity.getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
+//                        .addToBackStack(null).commit();
+//            }
         }
     }
 
@@ -126,13 +122,13 @@ SharedPreferences preferences;
        {
 
            holder.img_out_of_stock.setVisibility( View.VISIBLE );
-           holder.card_view_top.setEnabled( false );
+
 
        }
        else
        {
            holder.img_out_of_stock.setVisibility( View.GONE );
-           holder.card_view_top.setEnabled( true );
+
        }
 
 

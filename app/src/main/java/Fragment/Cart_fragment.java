@@ -1,8 +1,8 @@
 package Fragment;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,7 +55,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
     RelativeLayout btn_checkout;
 
    DatabaseCartHandler db;
-Dialog ProgressDialog ;
+   ProgressDialog progressDialog;
    Session_management sessionManagement;
 
     public Cart_fragment() {
@@ -65,9 +65,10 @@ Dialog ProgressDialog ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -79,9 +80,10 @@ Dialog ProgressDialog ;
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
 
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
         tv_clear = (TextView) view.findViewById(R.id.tv_cart_clear);
         tv_total = (TextView) view.findViewById(R.id.tv_cart_total);
         tv_item = (TextView) view.findViewById(R.id.tv_cart_item);
@@ -106,6 +108,12 @@ Dialog ProgressDialog ;
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateData();
+    }
+
+    @Override
     public void onClick(View view) {
         int id = view.getId();
 
@@ -125,7 +133,7 @@ Dialog ProgressDialog ;
 
     // update UI
     private void updateData() {
-        tv_total.setText("" + db.getTotalAmount());
+        tv_total.setText(getActivity().getResources().getString(R.string.currency) + db.getTotalAmount());
         tv_item.setText("" + db.getCartCount());
         ((MainActivity) getActivity()).setCartCounter("" + db.getCartCount());
     }
@@ -162,7 +170,7 @@ Dialog ProgressDialog ;
      * Method to make json array request where json response starts wtih
      */
     private void makeGetLimiteRequest() {
-        ProgressDialog.show();
+        progressDialog.show();
         JsonArrayRequest req = new JsonArrayRequest(BaseURL.GET_LIMITE_SETTING_URL,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -229,11 +237,12 @@ Dialog ProgressDialog ;
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
-                        ProgressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), "Connection Time out", Toast.LENGTH_SHORT).show();

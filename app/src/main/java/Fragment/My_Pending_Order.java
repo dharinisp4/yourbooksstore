@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,6 +51,7 @@ public class My_Pending_Order extends Fragment {
 
     private List<My_Pending_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
+    ProgressDialog progressDialog;
 
     public My_Pending_Order() {
 
@@ -65,7 +67,9 @@ public class My_Pending_Order extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_pending_order, container, false);
 
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -139,7 +143,7 @@ public class My_Pending_Order extends Fragment {
      */
     private void makeGetOrderRequest(String userid) {
         String tag_json_obj = "json_socity_req";
-
+         progressDialog.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", userid);
 
@@ -149,7 +153,7 @@ public class My_Pending_Order extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
-
+                 progressDialog.dismiss();
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<My_Pending_order_model>>() {
                 }.getType();
@@ -166,6 +170,7 @@ public class My_Pending_Order extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

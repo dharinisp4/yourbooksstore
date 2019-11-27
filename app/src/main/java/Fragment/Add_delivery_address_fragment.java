@@ -1,16 +1,14 @@
 package Fragment;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,8 +54,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private boolean isEdit = false;
 
     private String getlocation_id;
-    Dialog ProgressDialog ;
-
+    ProgressDialog progressDialog;
 
     public Add_delivery_address_fragment() {
         // Required empty public constructor
@@ -67,9 +64,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+
     }
 
     @Override
@@ -82,9 +77,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
         sessionManagement = new Session_management(getActivity());
 
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         et_phone = (EditText) view.findViewById(R.id.et_add_adres_phone);
         et_name = (EditText) view.findViewById(R.id.et_add_adres_name);
         tv_phone = (TextView) view.findViewById(R.id.tv_add_adres_phone);
@@ -265,6 +260,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
      */
     private void makeAddAddressRequest(String user_id, String pincode, String socity_id,
                                        String house_no, String receiver_name, String receiver_mobile) {
+        progressDialog.show();
 
         // Tag used to cancel the request
         String tag_json_obj = "json_add_address_req";
@@ -283,7 +279,6 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ProgressDialog.show();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
@@ -294,12 +289,13 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
@@ -319,7 +315,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
         // Tag used to cancel the request
         String tag_json_obj = "json_edit_address_req";
-        ProgressDialog.show();
+        progressDialog.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("location_id", location_id);
         params.put("pincode", pincode);
@@ -348,12 +344,13 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

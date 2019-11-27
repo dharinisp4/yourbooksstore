@@ -1,7 +1,7 @@
 package Fragment;
 
-import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -39,8 +39,7 @@ public class Contact_Us_fragment extends Fragment {
     private static String TAG = Contact_Us_fragment.class.getSimpleName();
 
     private TextView tv_info;
-    Dialog ProgressDialog ;
-
+  ProgressDialog progressDialog;
     public Contact_Us_fragment() {
         // Required empty public constructor
     }
@@ -57,10 +56,9 @@ public class Contact_Us_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_terms_condition, container, false);
 
         tv_info = (TextView) view.findViewById(R.id.tv_info);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         String geturl = getArguments().getString("url");
         //   String title = getArguments().getString("title");
 
@@ -83,7 +81,7 @@ public class Contact_Us_fragment extends Fragment {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_info_req";
-        ProgressDialog.show();
+        progressDialog.show();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -118,11 +116,12 @@ public class Contact_Us_fragment extends Fragment {
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

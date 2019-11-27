@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -51,9 +50,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Adapter.NewAdapter;
-import Adapter.Home_adapter;
 import Adapter.Home_Icon_Adapter;
+import Adapter.Home_adapter;
+import Adapter.NewAdapter;
 import Adapter.Top_Selling_Adapter;
 import Config.BaseURL;
 import Model.Category_model;
@@ -199,11 +198,11 @@ session_management=new Session_management(getActivity());
 
         //Top Selling Products
         rv_top_selling = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
-       // GridLayoutManager gridLayoutManager2= new GridLayoutManager(getActivity(), 2);
-       LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.HORIZONTAL,false );
-        rv_top_selling.setLayoutManager(layoutManager1);
+        GridLayoutManager gridLayoutManager2= new GridLayoutManager(getActivity(), 2);
+       // LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.HORIZONTAL,false );
+        rv_top_selling.setLayoutManager(gridLayoutManager2);
         rv_top_selling.setItemAnimator(new DefaultItemAnimator());
-       // rv_top_selling.setNestedScrollingEnabled(false);
+        rv_top_selling.setNestedScrollingEnabled(false);
         rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
 
 

@@ -1,8 +1,8 @@
 package Fragment;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import Config.BaseURL;
 import Config.SharedPref;
@@ -23,8 +22,6 @@ import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.DatabaseCartHandler;
 import util.Session_management;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class Delivery_payment_detail_fragment extends Fragment {
 
@@ -47,7 +44,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
     SharedPreferences preferences;
     private DatabaseCartHandler db_cart;
     private Session_management sessionManagement;
-    Dialog ProgressDialog ;
+    ProgressDialog progressDialog;
 
     public Delivery_payment_detail_fragment() {
         // Required empty public constructor
@@ -56,9 +53,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+
     }
 
     @Override
@@ -71,10 +66,9 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
         db_cart = new DatabaseCartHandler(getActivity());
         sessionManagement = new Session_management(getActivity());
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         tv_timeslot = (TextView) view.findViewById(R.id.textTimeSlot);
         // tv_address = (TextView) view.findViewById(R.id.txtAddress);
         //tv_item = (TextView) view.findViewById(R.id.textItems);
@@ -163,7 +157,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProgressDialog.show();
+                progressDialog.show();
                 if (ConnectivityReceiver.isConnected()) {
                     Fragment fm = new Payment_fragment();
                     Bundle args = new Bundle();
@@ -175,14 +169,14 @@ public class Delivery_payment_detail_fragment extends Fragment {
                     args.putString( "checkout",checkout );
                     args.putString( "product_id",product_id );
                     fm.setArguments(args);
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                             .addToBackStack(null).commit();
                     SharedPref.putString(getActivity(), BaseURL.TOTAL_AMOUNT, String.valueOf(total));
                 } else {
                     ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                 }
             }
         });

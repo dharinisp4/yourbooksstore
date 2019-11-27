@@ -1,9 +1,8 @@
 package Fragment;
 
-import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,7 +37,6 @@ import java.util.Map;
 import Adapter.My_order_detail_adapter;
 import Config.BaseURL;
 import Model.My_order_detail_model;
-
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -60,8 +58,8 @@ public class My_order_detail_fragment extends Fragment {
     private RecyclerView rv_detail_order;
 
     private String sale_id;
-    Dialog ProgressDialog;
 
+    ProgressDialog progressDialog;
     private List<My_order_detail_model> my_order_detail_modelList = new ArrayList<>();
 
     public My_order_detail_fragment() {
@@ -86,10 +84,9 @@ public class My_order_detail_fragment extends Fragment {
         btn_cancle = (RelativeLayout) view.findViewById(R.id.btn_order_detail_cancle);
         rv_detail_order = (RecyclerView) view.findViewById(R.id.rv_order_detail);
 
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         rv_detail_order.setLayoutManager(new LinearLayoutManager(getActivity()));
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.order_fail));
 
@@ -164,7 +161,7 @@ public class My_order_detail_fragment extends Fragment {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_order_detail_req";
-        ProgressDialog.show();
+        progressDialog.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("sale_id", sale_id);
 
@@ -188,13 +185,14 @@ public class My_order_detail_fragment extends Fragment {
                 if (my_order_detail_modelList.isEmpty()) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                progressDialog.dismiss();
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
                 }
@@ -213,7 +211,7 @@ public class My_order_detail_fragment extends Fragment {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_delete_order_req";
-        ProgressDialog.show();
+        progressDialog.show();
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("sale_id", sale_id);
@@ -246,12 +244,13 @@ public class My_order_detail_fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

@@ -15,19 +15,26 @@
 
 
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/space_5"
-        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:layout_height="180dp"
         >
 
 
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="120dp"
+<<<<<<< HEAD
             android:layout_height="130dp"
+=======
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="6"
+>>>>>>> origin/master
             android:src="@mipmap/ic_launcher"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/space_5"
             android:layout_marginBottom="@dimen/space_5"
             android:scaleType="fitXY"/>
@@ -35,12 +42,10 @@
 
 
         <LinearLayout
+            android:layout_weight="5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_5"
-            android:layout_gravity="top"
+            android:layout_height="0dp"
             android:layout_below="@+id/iv_icon"
-            android:gravity="top|center"
             android:orientation="vertical"
             android:layout_centerHorizontal="true"
             >
@@ -50,8 +55,6 @@
                 android:id="@+id/product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_12"
-                android:layout_marginEnd="@dimen/space_20"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:paddingLeft="@dimen/space_10"
@@ -91,7 +94,7 @@
         android:textSize="@dimen/space_13" /></RelativeLayout>
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/product_discount"

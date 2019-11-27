@@ -54,10 +54,8 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.Produccts_images_adapter;
-
 import Adapter.RelatedProductAdapter;
 import Config.BaseURL;
-
 import Config.ExpandableSecondTextView;
 import Model.Product_model;
 import Model.SellerModel;
@@ -66,7 +64,6 @@ import gogrocer.tcc.AppController;
 import gogrocer.tcc.LoginActivity;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
-
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
@@ -85,7 +82,6 @@ private List<Product_model> modelList ;
   Module module;
     int index;
     double tot_amt=0;
-    Dialog ProgressDialog;
     double tot=0;
    // RelativeLayout rel_variant;
     SharedPreferences preferences ;
@@ -138,6 +134,7 @@ private List<Product_model> modelList ;
     private Session_management sessionManagement;
     private String details_product_unit_price;
 
+    ProgressDialog progressDialog;
     public Details_Fragment() {
         // Required empty public constructor
     }
@@ -154,9 +151,9 @@ private List<Product_model> modelList ;
      module=new Module();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
        //    tabLayout =(TabLayout)view.findViewById(R.id.desc_tablayout);
        rv_cat = (RecyclerView) view.findViewById(R.id.related_recycler);
      //    gifImageView=(ImageView) view.findViewById(R.id.gifImageView);
@@ -566,7 +563,7 @@ private List<Product_model> modelList ;
         String json_tag="json_seller";
         HashMap<String,String> map=new HashMap<>();
         map.put("user_id",String.valueOf(sell));
-ProgressDialog.show();
+progressDialog.show();
 
         CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_SELLER_URL, map, new Response.Listener<JSONObject>() {
             @Override
@@ -601,12 +598,13 @@ ProgressDialog.show();
                 {
                     Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -968,7 +966,7 @@ public boolean checkAttributeStatus(String atr)
     return sts;
 }
     private void makeRelatedProductRequest(String cat_id) {
-        ProgressDialog.show();
+        progressDialog.show();
         String tag_json_obj = "json_product_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("cat_id", cat_id);
@@ -991,7 +989,7 @@ public boolean checkAttributeStatus(String atr)
                         Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
-                        ProgressDialog.dismiss();
+                        progressDialog.dismiss();
                         adapter_product = new RelatedProductAdapter( product_modelList,getActivity(),product_id);
 
                         rv_cat.setAdapter(adapter_product);
@@ -999,14 +997,14 @@ public boolean checkAttributeStatus(String atr)
                         if (getActivity() != null) {
                             if (product_modelList.isEmpty()) {
 
-                                ProgressDialog.dismiss();
+                                progressDialog.dismiss();
                                 //  Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                     }
                 } catch (JSONException e) {
-                   ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     //   e.printStackTrace();
                     String ex=e.getMessage();
 
@@ -1022,7 +1020,7 @@ public boolean checkAttributeStatus(String atr)
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 //loadingBar.dismiss();
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                   ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
                 }
 
@@ -1034,7 +1032,7 @@ public boolean checkAttributeStatus(String atr)
 
 
     private void makeGetLimiteRequest() {
-        ProgressDialog.show();
+        progressDialog.show();
 
         JsonArrayRequest req = new JsonArrayRequest( BaseURL.GET_LIMITE_SETTING_URL,
                 new Response.Listener<JSONArray>() {
@@ -1102,12 +1100,13 @@ public boolean checkAttributeStatus(String atr)
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
-                        ProgressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                progressDialog.dismiss();
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), "Connection Time out", Toast.LENGTH_SHORT).show();
                 }

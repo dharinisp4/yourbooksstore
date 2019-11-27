@@ -1,7 +1,7 @@
 package Fragment;
 
-import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -11,12 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,7 +37,7 @@ public class About_us_fragment extends Fragment {
     private static String TAG = About_us_fragment.class.getSimpleName();
 
     private TextView tv_info;
-    Dialog ProgressDialog;
+   ProgressDialog progressDialog;
     Module module;
     public About_us_fragment() {
         // Required empty public constructor
@@ -57,9 +54,9 @@ public class About_us_fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_terms_condition, container, false);
 
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         module=new Module();
         tv_info = (TextView) view.findViewById(R.id.tv_info);
 
@@ -83,7 +80,7 @@ public class About_us_fragment extends Fragment {
      */
     private void makeGetInfoRequest(String url) {
 
-        ProgressDialog.show();
+        progressDialog.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_info_req";
 
@@ -94,7 +91,7 @@ public class About_us_fragment extends Fragment {
                 Log.d(TAG, response.toString());
 
                 try {
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     // Parsing json array response
                     // loop through each json object
 
@@ -117,7 +114,7 @@ public class About_us_fragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     e.printStackTrace();
                     Toast.makeText(getActivity(),
                             "Error: " + e.getMessage(),
@@ -127,6 +124,8 @@ public class About_us_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+
                 String msg=module.VolleyErrorMessage(error);
                 Toast.makeText(getActivity(), ""+msg, Toast.LENGTH_SHORT).show();
 //                VolleyLog.d(TAG, "Error: " + error.getMessage());
