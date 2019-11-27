@@ -102,7 +102,7 @@ SharedPreferences preferences;
     @Override
     public Top_Selling_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_top_selling, parent, false);
+                .inflate(R.layout.related_rv, parent, false);
         context = parent.getContext();
         return new Top_Selling_Adapter.MyViewHolder(itemView);
     }

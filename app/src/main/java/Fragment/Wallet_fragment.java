@@ -27,9 +27,6 @@ import gogrocer.tcc.RechargeWallet;
 import util.ConnectivityReceiver;
 import util.Session_management;
 
-/**
- * Created by Rajesh Dabhi on 29/6/2017.
- */
 
 public class Wallet_fragment extends Fragment {
 

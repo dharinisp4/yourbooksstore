@@ -82,11 +82,11 @@
                 android:gravity="center_vertical"
                 android:text="@string/selling_product"
                 android:textColor="@color/text_color"
-                android:textStyle="italic"
+
                 android:layout_alignParentStart="true"
                 android:paddingTop="@dimen/space_5"
                 android:paddingLeft="@dimen/space_5"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/view_all_topselling"
@@ -170,12 +170,11 @@
                     android:gravity="center_vertical"
                     android:text="Newly Added"
                     android:textColor="@color/text_color"
-                    android:textStyle="italic"
                     android:layout_alignParentStart="true"
                     android:paddingTop="@dimen/space_5"
                     android:fontFamily="@font/chivo"
                     android:paddingLeft="@dimen/space_5"
-                    android:textSize="16dp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/view_all_deals"

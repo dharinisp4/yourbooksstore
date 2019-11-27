@@ -314,7 +314,7 @@ String language;
         }*/
 
         if (!cancel) {
-            Toast.makeText(getActivity(), "date:"+deli_charges, Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getActivity(), "date:"+deli_charges, Toast.LENGTH_SHORT).show();
 
             sessionManagement.cleardatetime();
 

@@ -152,12 +152,12 @@ public class Payment_fragment extends Fragment {
         Relative_used_wallet = (RelativeLayout) view.findViewById(R.id.relative_used_wallet);
         Relative_used_coupon = (RelativeLayout) view.findViewById(R.id.relative_used_coupon);
 
-        getRefresrh();
+
         final String WAmmount = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
         //Show  Wallet
         getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
         my_wallet_ammount = (TextView) view.findViewById(R.id.user_wallet);
-        my_wallet_ammount.setText(getActivity().getString(R.string.currency)+WAmmount);
+      //  my_wallet_ammount.setText(getActivity().getString(R.string.currency)+WAmmount);
         db_cart = new DatabaseCartHandler(getActivity());
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -195,11 +195,14 @@ public class Payment_fragment extends Fragment {
         payble_ammount.setText(getActivity().getString(R.string.currency)+total_amount);
         order_ammount.setText(getActivity().getString(R.string.currency)+order_total_amount);
 
+        getRefresrh();
+
 
         checkBox_Wallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
+                if (isChecked)
+                {
                     Use_Wallet_Ammont();
 
                     Coupon_and_wallet.setVisibility(View.VISIBLE);
@@ -209,7 +212,8 @@ public class Payment_fragment extends Fragment {
                         rb_Netbanking.setChecked(false);
                         rb_paytm.setChecked(false);
                     }
-                } else {
+                }
+                else {
                     if (payble_ammount != null) {
                         rb_Cod.setText(getResources().getString(R.string.cash));
                         rb_card.setClickable(true);
@@ -672,7 +676,7 @@ public class Payment_fragment extends Fragment {
                             JSONObject jObj = new JSONObject(response);
                             if (jObj.optString("success").equalsIgnoreCase("success")) {
                                 String wallet_amount = jObj.getString("wallet");
-                               // Wallet_Ammount.setText(wallet_amount);
+                               my_wallet_ammount.setText(wallet_amount);
                                 SharedPref.putString(getActivity(), BaseURL.KEY_WALLET_Ammount, wallet_amount);
                             } else {
                                 // Toast.makeText(DashboardPage.this, "" + jObj.optString("msg"), Toast.LENGTH_LONG).show();
