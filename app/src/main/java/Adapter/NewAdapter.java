@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,7 +25,6 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Deal_Of_Day_model;
 import Model.Product_model;
-import Model.Top_Selling_model;
 import gogrocer.tcc.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -49,6 +48,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
         public TextView product_nmae, product_prize, product_mrp , product_discount;
         public ImageView image, img_out_of_stock;
         public CardView card_view_top;
+        public RelativeLayout rel_click ;
 
         public MyViewHolder(View view) {
             super(view);
@@ -60,6 +60,8 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
             product_mrp = (TextView) view.findViewById( R.id.product_mrp );
             card_view_top = (CardView) view.findViewById( R.id.card_view_top );
             img_out_of_stock = view.findViewById( R.id.img_out_of_stock );
+            rel_click=view.findViewById( R.id.rel_click );
+            rel_click.setOnClickListener( this );
            card_view_top.setOnClickListener(this);
         }
 
@@ -68,40 +70,43 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
         public void onClick(View view) {
             int id = view.getId();
             int position = getAdapterPosition();
-            if (id == R.id.card_view_top) {
+            int stock = Integer.parseInt( modelList.get( position ).getStock() );
+            if (id == R.id.rel_click) {
 
-                Details_Fragment details_fragment = new Details_Fragment();
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Bundle args = new Bundle();
+                    Details_Fragment details_fragment = new Details_Fragment();
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Bundle args = new Bundle();
 
-                //Intent intent=new Intent(context, Product_details.class);
-                args.putString( "product_id", modelList.get( position ).getProduct_id() );
-                args.putString( "product_name", modelList.get( position ).getProduct_name() );
-                args.putString( "category_id", modelList.get( position ).getCategory_id() );
-                args.putString( "product_description", modelList.get( position ).getProduct_description() );
-                args.putString( "price", modelList.get( position ).getPrice() );
-                args.putString( "mrp", modelList.get( position ).getMrp() );
-                args.putString( "product_image", modelList.get( position ).getProduct_image() );
-                args.putString( "status", modelList.get( position ).getStatus() );
-                args.putString( "in_stock", modelList.get( position ).getIn_stock() );
-                args.putString( "unit_value", modelList.get( position ).getUnit_value() );
-                args.putString( "unit", modelList.get( position ).getUnit() );
-                args.putString( "increment", modelList.get( position ).getIncreament() );
-                args.putString( "rewards", modelList.get( position ).getRewards() );
-                args.putString( "stock", modelList.get( position ).getStock() );
-                args.putString( "title", modelList.get( position ).getTitle() );
-                args.putString( "seller_id", modelList.get( position ).getSeller_id() );
-                args.putString("book_class", modelList.get(position).getBook_class());
-                args.putString("language", modelList.get(position).getLanguage());
-                args.putString("subject", modelList.get(position).getSubject());
+                    //Intent intent=new Intent(context, Product_details.class);
+                    args.putString( "product_id", modelList.get( position ).getProduct_id() );
+                    args.putString( "product_name", modelList.get( position ).getProduct_name() );
+                    args.putString( "category_id", modelList.get( position ).getCategory_id() );
+                    args.putString( "product_description", modelList.get( position ).getProduct_description() );
+                    args.putString( "price", modelList.get( position ).getPrice() );
+                    args.putString( "mrp", modelList.get( position ).getMrp() );
+                    args.putString( "product_image", modelList.get( position ).getProduct_image() );
+                    args.putString( "status", modelList.get( position ).getStatus() );
+                    args.putString( "in_stock", modelList.get( position ).getIn_stock() );
+                    args.putString( "unit_value", modelList.get( position ).getUnit_value() );
+                    args.putString( "unit", modelList.get( position ).getUnit() );
+                    args.putString( "increment", modelList.get( position ).getIncreament() );
+                    args.putString( "rewards", modelList.get( position ).getRewards() );
+                    args.putString( "stock", modelList.get( position ).getStock() );
+                    args.putString( "title", modelList.get( position ).getTitle() );
+                    args.putString( "seller_id", modelList.get( position ).getSeller_id() );
+                    args.putString( "book_class", modelList.get( position ).getBook_class() );
+                    args.putString( "language", modelList.get( position ).getLanguage() );
+                    args.putString( "subject", modelList.get( position ).getSubject() );
 
-                details_fragment.setArguments( args );
-                FragmentManager fragmentManager = activity.getFragmentManager();
-                fragmentManager.beginTransaction().replace( R.id.contentPanel, details_fragment )
-                        .addToBackStack( null ).commit();
+                    details_fragment.setArguments( args );
+                    FragmentManager fragmentManager = activity.getFragmentManager();
+                    fragmentManager.beginTransaction().replace( R.id.contentPanel, details_fragment )
+                            .addToBackStack( null ).commit();
+                }
+
             }
         }
-    }
+
 
     public NewAdapter(List<Deal_Of_Day_model> modelList, Activity activity) {
         this.modelList = modelList;
@@ -139,6 +144,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
 
           holder.img_out_of_stock.setVisibility( View.VISIBLE );
           holder.card_view_top.setEnabled( false );
+          holder.rel_click.setEnabled( false );
         }
         else
         {
@@ -180,45 +186,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
 
         }
 
-        holder.card_view_top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Details_Fragment details_fragment = new Details_Fragment();
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Bundle args = new Bundle();
-
-                //Intent intent=new Intent(context, Product_details.class);
-                args.putString( "product_id", modelList.get( position ).getProduct_id() );
-                args.putString( "product_name", modelList.get( position ).getProduct_name() );
-                args.putString( "category_id", modelList.get( position ).getCategory_id() );
-                args.putString( "product_description", modelList.get( position ).getProduct_description() );
-//
-                args.putString( "price", modelList.get( position ).getPrice() );
-                args.putString( "mrp", modelList.get( position ).getMrp() );
-                args.putString( "product_image", modelList.get( position ).getProduct_image() );
-                args.putString( "status", modelList.get( position ).getStatus() );
-                args.putString( "in_stock", modelList.get( position ).getIn_stock() );
-                args.putString( "unit_value", modelList.get( position ).getUnit_value() );
-                args.putString( "unit", modelList.get( position ).getUnit() );
-                args.putString( "increment", modelList.get( position ).getIncreament() );
-                args.putString( "rewards", modelList.get( position ).getRewards() );
-                args.putString( "stock", modelList.get( position ).getStock() );
-                args.putString( "title", modelList.get( position ).getTitle() );
-                args.putString( "seller_id", modelList.get( position ).getSeller_id() );
-                args.putString("book_class", modelList.get(position).getBook_class());
-                args.putString("language", modelList.get(position).getLanguage());
-                args.putString("subject", modelList.get(position).getSubject());
-
-                details_fragment.setArguments( args );
-                FragmentManager fragmentManager = activity.getFragmentManager();
-                fragmentManager.beginTransaction().replace( R.id.contentPanel, details_fragment )
-                        .addToBackStack( null ).commit();
-
-
-        }
-        });
-    //    holder.start_time.setText(mList.getStart_time());
 
     }
 

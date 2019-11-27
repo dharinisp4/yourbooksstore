@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -198,11 +199,11 @@ session_management=new Session_management(getActivity());
 
         //Top Selling Products
         rv_top_selling = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
-        GridLayoutManager gridLayoutManager2= new GridLayoutManager(getActivity(), 2);
-       // LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.HORIZONTAL,false );
-        rv_top_selling.setLayoutManager(gridLayoutManager2);
+       // GridLayoutManager gridLayoutManager2= new GridLayoutManager(getActivity(), 2);
+       LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity() ,LinearLayoutManager.HORIZONTAL,false );
+        rv_top_selling.setLayoutManager(layoutManager1);
         rv_top_selling.setItemAnimator(new DefaultItemAnimator());
-        rv_top_selling.setNestedScrollingEnabled(false);
+       // rv_top_selling.setNestedScrollingEnabled(false);
         rv_top_selling.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(1), true));
 
 
@@ -339,96 +340,96 @@ session_management=new Session_management(getActivity());
         });
 
 
-        rv_deal_of_day.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_deal_of_day, new RecyclerTouchListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                getid = deal_of_day_models.get(position).getProduct_id();
-
-                Fragment details_fragment=new Details_Fragment();
-                Bundle args = new Bundle();
-
-                //Intent intent=new Intent(context, Product_details.class);
-                args.putString("product_id",deal_of_day_models.get(position).getProduct_id());
-                args.putString("product_name", deal_of_day_models.get(position).getProduct_name());
-                args.putString("category_id",deal_of_day_models.get(position).getCategory_id());
-                args.putString("product_description",deal_of_day_models.get(position).getProduct_description());
-                args.putString("deal_price",deal_of_day_models.get(position).getDeal_price());
-                args.putString("start_date",deal_of_day_models.get(position).getStart_date());
-                args.putString("start_time",deal_of_day_models.get(position).getStart_time());
-                args.putString("end_date",deal_of_day_models.get(position).getEnd_date());
-                args.putString("end_time",deal_of_day_models.get(position).getEnd_time());
-                args.putString("price",deal_of_day_models.get(position).getPrice());
-                args.putString( "mrp",deal_of_day_models.get( position ).getMrp() );
-                args.putString("product_image",deal_of_day_models.get(position).getProduct_image());
-                args.putString("status", deal_of_day_models.get(position).getStatus());
-                args.putString("in_stock", deal_of_day_models.get(position).getIn_stock());
-                args.putString("unit_value", deal_of_day_models.get(position).getUnit_value());
-                args.putString("unit", deal_of_day_models.get(position).getUnit());
-                args.putString("increament",deal_of_day_models.get(position).getIncreament());
-                args.putString("rewards",deal_of_day_models.get(position).getRewards());
-                args.putString("stock",deal_of_day_models.get(position).getStock());
-                args.putString("title",deal_of_day_models.get(position).getTitle());
-                args.putString("seller_id",deal_of_day_models.get(position).getSeller_id());
-                details_fragment.setArguments(args);
-
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
-                        .addToBackStack(null).commit();
-
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-
-            }
-        }));
+//        rv_deal_of_day.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_deal_of_day, new RecyclerTouchListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//
+//                getid = deal_of_day_models.get(position).getProduct_id();
+//
+//                Fragment details_fragment=new Details_Fragment();
+//                Bundle args = new Bundle();
+//
+//                //Intent intent=new Intent(context, Product_details.class);
+//                args.putString("product_id",deal_of_day_models.get(position).getProduct_id());
+//                args.putString("product_name", deal_of_day_models.get(position).getProduct_name());
+//                args.putString("category_id",deal_of_day_models.get(position).getCategory_id());
+//                args.putString("product_description",deal_of_day_models.get(position).getProduct_description());
+//                args.putString("deal_price",deal_of_day_models.get(position).getDeal_price());
+//                args.putString("start_date",deal_of_day_models.get(position).getStart_date());
+//                args.putString("start_time",deal_of_day_models.get(position).getStart_time());
+//                args.putString("end_date",deal_of_day_models.get(position).getEnd_date());
+//                args.putString("end_time",deal_of_day_models.get(position).getEnd_time());
+//                args.putString("price",deal_of_day_models.get(position).getPrice());
+//                args.putString( "mrp",deal_of_day_models.get( position ).getMrp() );
+//                args.putString("product_image",deal_of_day_models.get(position).getProduct_image());
+//                args.putString("status", deal_of_day_models.get(position).getStatus());
+//                args.putString("in_stock", deal_of_day_models.get(position).getIn_stock());
+//                args.putString("unit_value", deal_of_day_models.get(position).getUnit_value());
+//                args.putString("unit", deal_of_day_models.get(position).getUnit());
+//                args.putString("increament",deal_of_day_models.get(position).getIncreament());
+//                args.putString("rewards",deal_of_day_models.get(position).getRewards());
+//                args.putString("stock",deal_of_day_models.get(position).getStock());
+//                args.putString("title",deal_of_day_models.get(position).getTitle());
+//                args.putString("seller_id",deal_of_day_models.get(position).getSeller_id());
+//                details_fragment.setArguments(args);
+//
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
+//                        .addToBackStack(null).commit();
+//
+//            }
+//
+//            @Override
+//            public void onLongItemClick(View view, int position) {
+//
+//
+//            }
+//        }));
 
         //REcyclerview Top Selling
-        rv_top_selling.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_top_selling, new RecyclerTouchListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                getid = top_selling_models.get(position).getProduct_id();
-
-                Fragment details_fragment=new Details_Fragment();
-                Bundle args = new Bundle();
-
-                //Intent intent=new Intent(context, Product_details.class);
-                args.putString("product_id",top_selling_models.get(position).getProduct_id());
-                args.putString("product_name", top_selling_models.get(position).getProduct_name());
-                args.putString("category_id",top_selling_models.get(position).getCategory_id());
-                args.putString("product_description",top_selling_models.get(position).getProduct_description());
-                args.putString("deal_price",top_selling_models.get(position).getDeal_price());
-                args.putString("start_date",top_selling_models.get(position).getStart_date());
-                args.putString("start_time",top_selling_models.get(position).getStart_time());
-                args.putString("end_date",top_selling_models.get(position).getEnd_date());
-                args.putString("end_time",top_selling_models.get(position).getEnd_time());
-                args.putString("price",top_selling_models.get(position).getPrice());
-                args.putString( "mrp",top_selling_models.get( position ).getMrp() );
-                args.putString("product_image",top_selling_models.get(position).getProduct_image());
-                args.putString("status", top_selling_models.get(position).getStatus());
-                args.putString("in_stock", top_selling_models.get(position).getIn_stock());
-                args.putString("unit_value", top_selling_models.get(position).getUnit_value());
-                args.putString("unit", top_selling_models.get(position).getUnit());
-                args.putString("increament",top_selling_models.get(position).getIncreament());
-                args.putString("rewards",top_selling_models.get(position).getRewards());
-                args.putString("stock",top_selling_models.get(position).getStock());
-                args.putString("title",top_selling_models.get(position).getTitle());
-                args.putString("seller_id",top_selling_models.get(position).getSeller_id());
-                details_fragment.setArguments(args);
-
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
-                        .addToBackStack(null).commit();
-
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
+//        rv_top_selling.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_top_selling, new RecyclerTouchListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                getid = top_selling_models.get(position).getProduct_id();
+//
+//                Fragment details_fragment=new Details_Fragment();
+//                Bundle args = new Bundle();
+//
+//                //Intent intent=new Intent(context, Product_details.class);
+//                args.putString("product_id",top_selling_models.get(position).getProduct_id());
+//                args.putString("product_name", top_selling_models.get(position).getProduct_name());
+//                args.putString("category_id",top_selling_models.get(position).getCategory_id());
+//                args.putString("product_description",top_selling_models.get(position).getProduct_description());
+//                args.putString("deal_price",top_selling_models.get(position).getDeal_price());
+//                args.putString("start_date",top_selling_models.get(position).getStart_date());
+//                args.putString("start_time",top_selling_models.get(position).getStart_time());
+//                args.putString("end_date",top_selling_models.get(position).getEnd_date());
+//                args.putString("end_time",top_selling_models.get(position).getEnd_time());
+//                args.putString("price",top_selling_models.get(position).getPrice());
+//                args.putString( "mrp",top_selling_models.get( position ).getMrp() );
+//                args.putString("product_image",top_selling_models.get(position).getProduct_image());
+//                args.putString("status", top_selling_models.get(position).getStatus());
+//                args.putString("in_stock", top_selling_models.get(position).getIn_stock());
+//                args.putString("unit_value", top_selling_models.get(position).getUnit_value());
+//                args.putString("unit", top_selling_models.get(position).getUnit());
+//                args.putString("increament",top_selling_models.get(position).getIncreament());
+//                args.putString("rewards",top_selling_models.get(position).getRewards());
+//                args.putString("stock",top_selling_models.get(position).getStock());
+//                args.putString("title",top_selling_models.get(position).getTitle());
+//                args.putString("seller_id",top_selling_models.get(position).getSeller_id());
+//                details_fragment.setArguments(args);
+//
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
+//                        .addToBackStack(null).commit();
+//
+//            }
+//
+//            @Override
+//            public void onLongItemClick(View view, int position) {
+//
+//            }
+//        }));
         View_all_TopSell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
