@@ -151,6 +151,8 @@ holder.linearLayout.setVisibility(View.GONE);
             holder.tv_methid1.setText("PrePaid");
         } else if (mList.getPayment_method().equals("Net Banking")) {
             holder.tv_methid1.setText("PrePaid");
+        }else if (mList.getPayment_method().equals("Wallet")) {
+            holder.tv_methid1.setText("Wallet");
         }
         holder.tv_date.setText(mList.getOn_date());
         holder.tv_tracking_date.setText(mList.getOn_date());
