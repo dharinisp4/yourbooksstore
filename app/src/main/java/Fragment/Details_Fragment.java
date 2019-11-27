@@ -312,11 +312,12 @@ private List<Product_model> modelList ;
                 float qty = Float.parseFloat( numberButton.getNumber() );
                 float stocks = Float.parseFloat( prodcut_stock );
 
+                float price=qty*Float.parseFloat(details_product_price);
                 String unt=details_product_unit_value+details_product_unit;
                 final Module module=new Module();
                 module.setIntoCart(getActivity(),product_id,product_id,
                         product_images,cat_id,details_product_name,
-                        details_product_price,details_product_desc,details_product_rewards
+                        String.valueOf(price),details_product_desc,details_product_rewards
                         ,details_product_price,unt,details_product_increament,prodcut_stock
                         ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
 //                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());

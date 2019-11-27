@@ -315,8 +315,9 @@ public class Payment_fragment extends Fragment {
 
         payble_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(pay_amt));
         used_wallet_ammount.setText("(" + getResources().getString(R.string.currency) + String.valueOf(pay_amt)+ ")");
-        SharedPref.putString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT, total_amount);
+        //SharedPref.putString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT, total_amount);
         my_wallet_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(w_amt-pay_amt));
+       // attemptOrderWithWallet(String.valueOf(w_amt-pay_amt));
     }
 
     private void attemptOrder() {
@@ -436,6 +437,127 @@ public class Payment_fragment extends Fragment {
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
+
+
+    private void attemptOrderWithWallet(String wamt) {
+        ArrayList<HashMap<String, String>> items = db_cart.getCartAll();
+        rewards = Double.parseDouble(db_cart.getColumnRewards());
+        if (items.size() > 0) {
+            JSONArray passArray = new JSONArray();
+            for (int i = 0; i < items.size(); i++) {
+                HashMap<String, String> map = items.get(i);
+                JSONObject jObjP = new JSONObject();
+                try {
+                    jObjP.put("product_id", map.get("product_id"));
+                    jObjP.put("qty", map.get("qty"));
+                    jObjP.put("unit_value","");
+                    jObjP.put("unit", map.get("unit"));
+                    jObjP.put("price", map.get("price"));
+                    jObjP.put("rewards", map.get("rewards"));
+                    jObjP.put("store_id", map.get("sid"));
+                    jObjP.put("book_class", map.get("book_class"));
+                    jObjP.put("subject", map.get("subject"));
+                    jObjP.put("language", map.get("language"));
+
+                    passArray.put(jObjP);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            getuser_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
+
+            if (ConnectivityReceiver.isConnected()) {
+
+                Log.e(TAG, "from:" + gettime + "\ndate:" + getdate +
+                        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id +"\n"+ getstore_id + "\ndata:" + passArray.toString());
+
+//                Toast.makeText(getActivity(),"from:" + gettime + "\ndate:" + getdate +
+//                        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id +"\n"+ getstore_id + "\ndata:" + passArray.toString(),Toast.LENGTH_LONG).show();
+                try {
+
+                    makeAddOrderWithWalletRequest(getdate, gettime, getuser_id, getlocation_id, getstore_id,wamt, passArray);
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+
+
+
+            }
+        }
+    }
+
+    private void makeAddOrderWithWalletRequest(String date, String gettime, String userid, String
+            location, String store_id,String wamt,JSONArray passArray) {
+        progressDialog.show();
+        String tag_json_obj = "json_add_order_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("date", date);
+        params.put("time", gettime);
+        params.put("user_id", userid);
+        params.put("location", location);
+        params.put("store_id", store_id);
+        params.put("total_ammount",total_amount);
+        params.put("payment_method", "Wallet");
+        params.put("wallet_amount",wamt);
+        params.put("data", passArray.toString());
+        // Toast.makeText(getActivity(),"\n t_amt:- "+total_amount+"\n p-method"+getvalue+"\n"+passArray,Toast.LENGTH_LONG).show();
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_ORDER_WALLET, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    progressDialog.dismiss();
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        String msg = response.getString("data");
+                        String msg_arb=response.getString("data_arb");
+                        if(checkout.equalsIgnoreCase( "null" )) {
+                            db_cart.clearCart();
+                        }
+                        else
+                        {
+                            db_cart.removeItemFromCart( product_id );
+                        }
+                        Bundle args = new Bundle();
+                        Fragment fm = new Thanks_fragment();
+                        args.putString("msg", msg);
+                        args.putString("msgarb",msg_arb);
+                        fm.setArguments(args);
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                                .addToBackStack(null).commit();
+
+
+                    }
+
+                } catch (JSONException e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),""+e.getMessage(),Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
 
     private void Usewalletfororder(String userid, String Wallet) {
         String tag_json_obj = "json_add_order_req";
@@ -622,7 +744,29 @@ public class Payment_fragment extends Fragment {
             if (rb_Store.isChecked() || rb_Cod.isChecked()) {
                 attemptOrder();
             } else {
-                Toast.makeText(getActivity(), "Please Select One", Toast.LENGTH_SHORT).show();
+                double wall_amt=Double.parseDouble(getwallet);
+                double p_amt=Double.parseDouble(order_total_amount);
+
+                if(wall_amt<p_amt)
+                {
+                    Toast.makeText(getActivity(), "Please Select One", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+
+                    double check=wall_amt-p_amt;
+                    String ch="";
+                    if(check==0)
+                    {
+                        ch="0";
+                    }
+                    else
+                    {
+                        ch=String.valueOf(check);
+                    }
+                    attemptOrderWithWallet(ch);
+                }
+
             }
 
         }

@@ -73,7 +73,7 @@ public class Module {
                 mainActivity.setCartCounter("" + db_cart.getCartCount());
 
                 //   context.setCartCounter("" + holder.db_cart.getCartCount());
-               Toast.makeText(activity, "Added to Cart" +db_cart.getCartCount(), Toast.LENGTH_LONG).show();
+               Toast.makeText(activity, "Added to Cart", Toast.LENGTH_LONG).show();
                 int n = db_cart.getCartCount();
                 updateintent(activity);
           //      txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
@@ -184,7 +184,7 @@ public class Module {
                 mainActivity.setCartCounter("" + db_cart.getWishlistCount());
 
                 //   context.setCartCounter("" + holder.db_cart.getCartCount());
-                Toast.makeText(activity, "Added to WishList" +db_cart.getWishlistCount(), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Added to WishList" , Toast.LENGTH_LONG).show();
                 int n = db_cart.getWishlistCount();
                 updatewish(activity);
                 //      txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
