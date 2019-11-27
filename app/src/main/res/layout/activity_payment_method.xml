@@ -68,7 +68,6 @@
                             android:id="@+id/relative_used_wallet"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
                             android:layout_gravity="center_vertical"
                             android:gravity="center_vertical">
 
@@ -94,9 +93,9 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:visibility="gone"
                             android:id="@+id/relative_used_coupon"
                             android:layout_width="match_parent"
-                            android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:gravity="center_vertical">
