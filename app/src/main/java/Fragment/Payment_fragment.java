@@ -45,6 +45,7 @@ import Config.SharedPref;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.PaymentActivity;
+import gogrocer.tcc.ThanksOrder;
 import gogrocer.tcc.networkconnectivity.NetworkConnection;
 import gogrocer.tcc.networkconnectivity.NetworkError;
 
@@ -157,11 +158,13 @@ public class Payment_fragment extends Fragment {
         Relative_used_coupon = (RelativeLayout) view.findViewById(R.id.relative_used_coupon);
 
         getRefresrh();
-        final String WAmmount = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
+       // final String WAmmount = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
+      //  final String WAmmount =  getRefresrh();
         //Show  Wallet
-        getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
+        //Toast.makeText(getActivity(),"ww"+WAmmount,Toast.LENGTH_LONG).show();
+//        getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
+        //Toast.makeText(getActivity(),"ww"+getwallet,Toast.LENGTH_LONG).show();
         my_wallet_ammount = (TextView) view.findViewById(R.id.user_wallet);
-        my_wallet_ammount.setText(getActivity().getString(R.string.currency)+WAmmount);
         db_cart = new DatabaseCartHandler(getActivity());
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -204,8 +207,18 @@ public class Payment_fragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    Use_Wallet_Ammont();
+                    double wall_amt=Double.parseDouble(getwallet);
+                    double p_amt=Double.parseDouble(order_total_amount);
+                    if(wall_amt<p_amt)
+                    {
+                        Use_Wallet_Ammont();
 
+                    }
+                    else
+                    {
+                         use_wallet_for_order();
+                    }
+                    //Toast.makeText(getActivity(),"ww"+getwallet,Toast.LENGTH_LONG).show();
                     Coupon_and_wallet.setVisibility(View.VISIBLE);
                     Relative_used_wallet.setVisibility(View.VISIBLE);
                     if (rb_card.isChecked() || rb_Netbanking.isChecked() || rb_paytm.isChecked()) {
@@ -293,6 +306,17 @@ public class Payment_fragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void use_wallet_for_order() {
+
+        double pay_amt=Double.parseDouble(order_total_amount);
+        double w_amt=Double.parseDouble(getwallet);
+
+        payble_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(pay_amt));
+        used_wallet_ammount.setText("(" + getResources().getString(R.string.currency) + String.valueOf(pay_amt)+ ")");
+        SharedPref.putString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT, total_amount);
+        my_wallet_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(w_amt-pay_amt));
     }
 
     private void attemptOrder() {
@@ -670,6 +694,7 @@ public class Payment_fragment extends Fragment {
 
 
     public void getRefresrh() {
+        progressDialog.show();
         String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         RequestQueue rq = Volley.newRequestQueue(getActivity());
         StringRequest strReq = new StringRequest(Request.Method.GET, BaseURL.WALLET_REFRESH + user_id,
@@ -677,15 +702,22 @@ public class Payment_fragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            progressDialog.dismiss();
                             JSONObject jObj = new JSONObject(response);
                             if (jObj.optString("success").equalsIgnoreCase("success")) {
                                 String wallet_amount = jObj.getString("wallet");
-                               // Wallet_Ammount.setText(wallet_amount);
+                                //wa[0] =wallet_amount;
+                                my_wallet_ammount.setText(getActivity().getString(R.string.currency)+wallet_amount);
+                                getwallet=wallet_amount;
+                                //Toast.makeText(getActivity(), "" + wallet_amount + "\n wa:-  " + wa[0].toString(), Toast.LENGTH_LONG).show();
+                                // Wallet_Ammount.setText( my_wallet_ammount.setText(getActivity().getString(R.string.currency)+WAmmount);
+                                //       );
                                 SharedPref.putString(getActivity(), BaseURL.KEY_WALLET_Ammount, wallet_amount);
                             } else {
                                 // Toast.makeText(DashboardPage.this, "" + jObj.optString("msg"), Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
+                            progressDialog.dismiss();
                             e.printStackTrace();
                         }
 
@@ -694,7 +726,8 @@ public class Payment_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "" + error.getMessage().toString(), Toast.LENGTH_LONG).show();
             }
         }) {
 
