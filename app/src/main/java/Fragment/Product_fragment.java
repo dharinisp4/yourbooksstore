@@ -1048,6 +1048,7 @@ loadingBar.show();
                              makeAscendingProductRequest( cat_id );
                          }
 
+
                     }
                     else if(item.equals( "Price High - Low" ))
                     {

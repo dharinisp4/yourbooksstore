@@ -1,5 +1,6 @@
 package gogrocer.tcc;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +57,7 @@ public class MyOrderDetail extends AppCompatActivity {
     ImageView back_button;
      SharedPreferences preferences;
     private List<My_order_detail_model> my_order_detail_modelList = new ArrayList<>();
+    ProgressDialog progressDialog ;
 
     public MyOrderDetail() {
         // Required empty public constructor
@@ -83,6 +85,11 @@ public class MyOrderDetail extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        progressDialog=new ProgressDialog(MyOrderDetail.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
+
         tv_date = (TextView) findViewById(R.id.tv_order_Detail_date);
         tv_time = (TextView) findViewById(R.id.tv_order_Detail_time);
         tv_delivery_charge = (TextView) findViewById(R.id.tv_order_Detail_deli_charge);

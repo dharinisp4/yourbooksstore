@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -33,15 +34,14 @@ import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
+
 
 public class Support_info_fragment extends Fragment {
 
     private static String TAG = Support_info_fragment.class.getSimpleName();
 
     private TextView tv_info;
+    ProgressDialog progressDialog ;
 
     public Support_info_fragment() {
         // Required empty public constructor
@@ -57,6 +57,9 @@ public class Support_info_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_support_info, container, false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         tv_info = (TextView) view.findViewById(R.id.tv_info);
 
@@ -82,6 +85,7 @@ public class Support_info_fragment extends Fragment {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_info_req";
+        progressDialog.show();
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
@@ -110,7 +114,7 @@ public class Support_info_fragment extends Fragment {
                         tv_info.setText(Html.fromHtml(desc));
 
                     }
-
+                    progressDialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(),

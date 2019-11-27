@@ -1,8 +1,8 @@
 package Fragment;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -79,7 +79,7 @@ public class Home_fragment extends Fragment {
     private Home_adapter adapter;
     private boolean isSubcat = false;
     LinearLayout Search_layout;
-    Dialog ProgressDialog;
+  ProgressDialog progressDialog;
     String getid;
     Module module;
     String getcat_title;
@@ -132,9 +132,9 @@ public class Home_fragment extends Fragment {
         view.requestFocus();
 module=new Module();
 session_management=new Session_management(getActivity());
-        ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -481,6 +481,7 @@ session_management=new Session_management(getActivity());
                                         Bundle args = new Bundle();
                                         Fragment fm = new Product_fragment();
                                         args.putString("id", sub_cat);
+                                        args.putString( "viewall","category" );
                                         session_management.setCategoryId(sub_cat);
                                         fm.setArguments(args);
                                         FragmentManager fragmentManager = getFragmentManager();
@@ -512,6 +513,7 @@ session_management=new Session_management(getActivity());
     }
 
     private void makeGetBannerSliderRequest() {
+
         JsonArrayRequest req = new JsonArrayRequest(BaseURL.GET_BANNER_URL,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -677,7 +679,7 @@ session_management=new Session_management(getActivity());
 
 
     private void makeGetCategoryRequest() {
-        ProgressDialog.show();
+        progressDialog.show();
         String tag_json_obj = "json_category_req";
         isSubcat = false;
         Map<String, String> params = new HashMap<String, String>();
@@ -693,7 +695,7 @@ session_management=new Session_management(getActivity());
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
                 try {
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                    // module.showToast("asdasdasds",getActivity());
                     if (response != null && response.length() > 0) {
                         Boolean status = response.getBoolean("responce");
@@ -708,7 +710,7 @@ session_management=new Session_management(getActivity());
                         }
                     }
                 } catch (JSONException e) {
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     e.printStackTrace();
                 }
             }
@@ -716,7 +718,7 @@ session_management=new Session_management(getActivity());
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

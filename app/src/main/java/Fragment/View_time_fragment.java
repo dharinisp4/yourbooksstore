@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +51,7 @@ public class View_time_fragment extends Fragment {
     private String getdate;
 
     private Session_management sessionManagement;
+    ProgressDialog progressDialog ;
 
     public View_time_fragment() {
         // Required empty public constructor
@@ -58,6 +60,9 @@ public class View_time_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override
@@ -67,6 +72,9 @@ public class View_time_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_time_list, container, false);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.delivery_time));
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         sessionManagement = new Session_management(getActivity());
 
@@ -113,6 +121,7 @@ public class View_time_fragment extends Fragment {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_time_req";
+        progressDialog.show();
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("date",date);
@@ -140,6 +149,7 @@ public class View_time_fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                progressDialog.show();
             }
         }, new Response.ErrorListener() {
 

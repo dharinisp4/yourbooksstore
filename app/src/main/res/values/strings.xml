@@ -65,7 +65,7 @@
     <string name="et_reg_address" translatable="false">Complete Address</string>
     <string name="use" translatable="false">Use</string>
     <string name="store" translatable="false">Store Pick Up</string>
-    <string name="confirm_order" translatable="false">Confirm</string>
+    <string name="confirm_order" translatable="false">Confirmed</string>
     <string name="pickup" translatable="false">PickUp / COD</string>
     <string name="cash" translatable="false">Cash On Delivery</string>
     <!-- fragment_cart.xml -->

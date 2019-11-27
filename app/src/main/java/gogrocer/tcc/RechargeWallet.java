@@ -1,11 +1,11 @@
 package gogrocer.tcc;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +31,6 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
-
 import gogrocer.tcc.networkconnectivity.NetworkConnection;
 import gogrocer.tcc.networkconnectivity.NetworkError;
 import util.Session_management;
@@ -43,6 +42,7 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
     EditText Wallet_Ammount;
     RelativeLayout Recharge_Button;
     String ammount;
+    ProgressDialog progressDialog ;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -60,6 +60,11 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        progressDialog=new ProgressDialog(RechargeWallet.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
+
         getSupportActionBar().setTitle(getResources().getString(R.string.rech_wallet));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +158,7 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
     }
 
     private void Recharge_wallet() {
+        progressDialog.show();
         final String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         if (NetworkConnection.connectionChecking(this)) {
             RequestQueue rq = Volley.newRequestQueue(this);
@@ -161,6 +167,7 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
                         @Override
                         public void onResponse(String response) {
                             Log.i("eclipse", "Response=" + response);
+                            progressDialog.dismiss();
                             try {
                                 JSONObject object = new JSONObject(response);
                                 if (object.optString("success").equalsIgnoreCase("success")) {

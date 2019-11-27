@@ -2,6 +2,7 @@ package Fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,18 +60,24 @@ public class Search_fragment extends Fragment {
 
     private List<Product_model> modelList = new ArrayList<>();
     private Search_adapter adapter_product;
-
+    ProgressDialog progressDialog ;
     public Search_fragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.search));
 
@@ -102,6 +109,7 @@ public class Search_fragment extends Fragment {
         rv_search.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_search, new RecyclerTouchListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                progressDialog.show();
 
                 Fragment details_fragment=new Details_Fragment();
                 // bundle.putString("data",as);
@@ -157,7 +165,7 @@ public class Search_fragment extends Fragment {
                 // Toast.makeText(getActivity(),"col"+product_modelList.get(position).getColor(),Toast.LENGTH_LONG).show();
 
 
-
+                progressDialog.dismiss();
                 FragmentManager fragmentManager=getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel,details_fragment)
 
@@ -182,7 +190,7 @@ public class Search_fragment extends Fragment {
      * Method to make json object request where json response starts wtih {
      */
     private void makeGetProductRequest(String search_text) {
-
+            progressDialog.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_product_req";
 
@@ -221,6 +229,7 @@ public class Search_fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 

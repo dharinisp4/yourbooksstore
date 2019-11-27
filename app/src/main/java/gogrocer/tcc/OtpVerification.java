@@ -1,6 +1,7 @@
 package gogrocer.tcc;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class OtpVerification extends AppCompatActivity {
     boolean mmTimerRunning;
     private long mTimeLeftINMILLIS=START_TIME_IN_MILLI;
     CountDownTimer countDownTimer;
+    ProgressDialog progressDialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,9 @@ public class OtpVerification extends AppCompatActivity {
         timeout = findViewById( R.id.time );
         btn_verify=findViewById( R.id.btn_continue );
         back = findViewById( R.id.txt_back );
-        ProgressDialog = new Dialog(OtpVerification.this, android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+        progressDialog=new ProgressDialog(OtpVerification.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
       final String otp = getIntent().getStringExtra( "otp" );
       final String mobile = getIntent().getStringExtra( "mobile" );
@@ -54,17 +56,20 @@ public class OtpVerification extends AppCompatActivity {
       btn_verify.setOnClickListener( new View.OnClickListener() {
           @Override
           public void onClick(View view) {
+              progressDialog.show();
 
               String getotp = et_otp.getText().toString();
               if (otp.equalsIgnoreCase( getotp ))
               {
                   if (type.equalsIgnoreCase( "f" )) {
+                      progressDialog.dismiss();
                       Toast.makeText( OtpVerification.this, "Verified ", Toast.LENGTH_LONG ).show();
                       Intent intent = new Intent( OtpVerification.this, ResetPassword.class );
                       intent.putExtra( "mobile",mobile );
                       startActivity( intent );
                   }
                   else if (type.equalsIgnoreCase( "r" )) {
+                      progressDialog.dismiss();
                       Toast.makeText( OtpVerification.this, "Verified ", Toast.LENGTH_LONG ).show();
                       Intent intent = new Intent( OtpVerification.this, RegisterActivity.class );
                       intent.putExtra( "mobile",mobile );

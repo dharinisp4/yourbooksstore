@@ -35,10 +35,7 @@ import java.util.concurrent.ExecutionException;
 import Config.BaseURL;
 import util.Session_management;
 
-/**
- * This is the sample app which will make use of the PG SDK. This activity will
- * show the usage of Paytm PG SDK API’s.
- **/
+
 
 public class Paytm extends Activity {
     private Session_management sessionManagement;

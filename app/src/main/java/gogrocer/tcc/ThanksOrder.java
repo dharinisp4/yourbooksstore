@@ -1,9 +1,10 @@
 package gogrocer.tcc;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 public class ThanksOrder extends AppCompatActivity {
     RelativeLayout Go_Home, Track_Order;
     TextView tv_info;
+    ProgressDialog progressDialog ;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -28,6 +30,9 @@ public class ThanksOrder extends AppCompatActivity {
         setContentView(R.layout.activity_tahnks_order);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        progressDialog=new ProgressDialog(ThanksOrder.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.thanks));

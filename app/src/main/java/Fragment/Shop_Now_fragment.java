@@ -2,6 +2,7 @@ package Fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -54,7 +55,7 @@ public class Shop_Now_fragment extends Fragment {
     String getid;
     String getcat_title;
     Session_management session_management;
-
+    ProgressDialog progressDialog ;
 
     public Shop_Now_fragment() {
 
@@ -63,6 +64,9 @@ public class Shop_Now_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override
@@ -72,6 +76,9 @@ public class Shop_Now_fragment extends Fragment {
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.shop_now));
          session_management=new Session_management(getActivity());
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         if (ConnectivityReceiver.isConnected()) {
             makeGetCategoryRequest();
@@ -91,6 +98,7 @@ public class Shop_Now_fragment extends Fragment {
         rv_items.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_items, new RecyclerTouchListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                progressDialog.show();
                 getid = category_modelList.get(position).getId();
                 getcat_title = category_modelList.get(position).getTitle();
                 Bundle args = new Bundle();
@@ -99,6 +107,7 @@ public class Shop_Now_fragment extends Fragment {
                 args.putString("cat_title", getcat_title);
                 session_management.setCategoryId(getid);
                 fm.setArguments(args);
+                progressDialog.dismiss();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                         .addToBackStack(null).commit();
@@ -118,7 +127,7 @@ public class Shop_Now_fragment extends Fragment {
 
     private void makeGetCategoryRequest() {
         String tag_json_obj = "json_category_req";
-
+        progressDialog.show();
         isSubcat = false;
 
         Map<String, String> params = new HashMap<String, String>();
@@ -150,6 +159,7 @@ public class Shop_Now_fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 

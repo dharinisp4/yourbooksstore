@@ -45,12 +45,10 @@ import Config.SharedPref;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.PaymentActivity;
-import gogrocer.tcc.ThanksOrder;
-import gogrocer.tcc.networkconnectivity.NetworkConnection;
-import gogrocer.tcc.networkconnectivity.NetworkError;
-
 import gogrocer.tcc.Paytm;
 import gogrocer.tcc.R;
+import gogrocer.tcc.networkconnectivity.NetworkConnection;
+import gogrocer.tcc.networkconnectivity.NetworkError;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
@@ -101,6 +99,9 @@ public class Payment_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
     }
 
@@ -113,6 +114,7 @@ public class Payment_fragment extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
+
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 

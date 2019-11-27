@@ -39,7 +39,6 @@ import Model.Home_Icon_model;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
-
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
@@ -115,6 +114,7 @@ public class SubCategory_Fragment extends Fragment {
     }
 
     private void makeGetCategoryRequest(final String parent_id) {
+        loadingBar.show();
         String tag_json_obj = "json_category_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("parent", parent_id);
@@ -149,6 +149,7 @@ public class SubCategory_Fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override

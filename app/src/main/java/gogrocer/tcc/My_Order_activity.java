@@ -1,12 +1,13 @@
 package gogrocer.tcc;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ public class My_Order_activity extends AppCompatActivity {
         newBase = LocaleHelper.onAttach(newBase);
         super.attachBaseContext(newBase);
     }
+    ProgressDialog progressDialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class My_Order_activity extends AppCompatActivity {
 
             }
         });
+
+        progressDialog=new ProgressDialog(My_Order_activity.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);

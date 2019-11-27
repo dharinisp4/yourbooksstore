@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,7 @@ import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 
 public class Notification_fragment extends Fragment {
-
+ProgressDialog progressDialog ;
 
     public Notification_fragment() {
     }
@@ -18,6 +19,9 @@ public class Notification_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override
@@ -25,7 +29,9 @@ public class Notification_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         ((MainActivity) getActivity()).setTitle("Notification");
 
-
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         return view;
     }

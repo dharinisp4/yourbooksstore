@@ -319,6 +319,7 @@
                             android:layout_marginTop="@dimen/space_2"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
+                            android:visibility="gone"
                             android:background="@color/colorPrimaryDark" />
 
                         <Fonts.LatoBLack
@@ -327,6 +328,7 @@
                             android:layout_marginLeft="@dimen/space_12"
                             android:layout_marginTop="@dimen/space_6"
                             android:text="@string/card"
+                            android:visibility="gone"
                             android:textColor="@color/green"
                             android:textSize="@dimen/text_size_normal" />
 
@@ -338,7 +340,7 @@
                             android:layout_marginRight="@dimen/space_4"
                             android:text="@string/debit"
                             android:textSize="@dimen/text_size_small"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <RadioButton
                             android:id="@+id/use_netbanking"
@@ -349,7 +351,7 @@
                             android:fontFamily="@font/cold"
                             android:text="@string/net"
                             android:textSize="@dimen/text_size_small"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
 
                         <View

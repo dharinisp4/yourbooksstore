@@ -112,9 +112,11 @@ String language;
 
         store_id = SharedPref.getString(getActivity(), BaseURL.STORE_ID);
         preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
+
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
+
         tv_date = (TextView) view.findViewById(R.id.tv_deli_date);
         tv_time = (TextView) view.findViewById(R.id.tv_deli_fromtime);
         tv_add_adress = (RelativeLayout) view.findViewById(R.id.tv_deli_add_address);
@@ -235,6 +237,7 @@ String language;
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
+        progressDialog.show();
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                 R.style.datepicker,
@@ -247,7 +250,7 @@ String language;
                         getdate = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
 
                         tv_date.setText(getResources().getString(R.string.delivery_date) + getdate);
-
+                            progressDialog.dismiss();
                         try {
                             String inputPattern = "yyyy-MM-dd";
                             String outputPattern = "dd-MM-yyyy";
@@ -271,6 +274,7 @@ String language;
     }
 
     private void attemptOrder() {
+
 
         //String getaddress = et_address.getText().toString();
         progressDialog.show();

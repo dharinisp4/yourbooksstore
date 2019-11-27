@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,10 +34,11 @@ public class Wallet_fragment extends Fragment {
     private static String TAG = Wallet_fragment.class.getSimpleName();
 
     TextView Wallet_Ammount;
-
+    ProgressDialog progressDialog;
 
     RelativeLayout Recharge_Wallet;
     private Session_management sessionManagement;
+
 
     public Wallet_fragment() {
     }
@@ -44,6 +46,9 @@ public class Wallet_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
     }
 
@@ -52,6 +57,9 @@ public class Wallet_fragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_wallet_ammount, container, false);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_app_name));
         sessionManagement = new Session_management(getActivity());
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         //   String getwallet = sessionManagement.getUserDetails().get(BaseURL.KEY_WALLET_Ammount);
         Wallet_Ammount = (TextView) view.findViewById(R.id.wallet_ammount);
         //     Wallet_Ammount.setText(getwallet);
@@ -91,7 +99,7 @@ public class Wallet_fragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                    progressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
 

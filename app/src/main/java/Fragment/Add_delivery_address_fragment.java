@@ -35,9 +35,7 @@ import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
 
-/**
- * Created by Rajesh Dabhi on 6/7/2017.
- */
+
 
 public class Add_delivery_address_fragment extends Fragment implements View.OnClickListener {
 
@@ -64,6 +62,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
     }
 

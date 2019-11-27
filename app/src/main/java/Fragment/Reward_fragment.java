@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,9 +31,9 @@ import Config.BaseURL;
 import Config.SharedPref;
 import gogrocer.tcc.GifImageView;
 import gogrocer.tcc.MainActivity;
+import gogrocer.tcc.R;
 import gogrocer.tcc.networkconnectivity.NetworkConnection;
 import gogrocer.tcc.networkconnectivity.NetworkError;
-import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.Session_management;
 
@@ -45,6 +46,7 @@ public class Reward_fragment extends Fragment {
     TextView Rewards_Points;
     String rewards_amt,wallet_amt="";
     private Session_management sessionManagement;
+    ProgressDialog progressDialog ;
 
     public Reward_fragment() {
     }
@@ -52,6 +54,9 @@ public class Reward_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override
@@ -65,6 +70,10 @@ public class Reward_fragment extends Fragment {
         //  Rewards_Points.setText(getrewards);
         gifImageView = (GifImageView) view.findViewById(R.id.gif_image);
         gifImageView.setGifImageResource(R.drawable.pay);
+
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         Reedeem_Points = (RelativeLayout) view.findViewById(R.id.reedme_point);
         Reedeem_Points.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +108,7 @@ public class Reward_fragment extends Fragment {
     }
 
     public void getRewards() {
+        progressDialog.show();
         String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         RequestQueue rq = Volley.newRequestQueue(getActivity());
         StringRequest strReq = new StringRequest(Request.Method.GET, BaseURL.REWARDS_REFRESH + user_id,
@@ -130,7 +140,7 @@ public class Reward_fragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                        progressDialog.show();
                     }
                 }, new Response.ErrorListener() {
 
@@ -145,6 +155,7 @@ public class Reward_fragment extends Fragment {
     }
 
     private void Shift_Reward_to_WAllet() {
+        progressDialog.show();
         final String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         final String getreward = Rewards_Points.getText().toString();
        // final String getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
@@ -169,6 +180,7 @@ public class Reward_fragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            progressDialog.dismiss();
                         }
                     }, new Response.ErrorListener() {
 

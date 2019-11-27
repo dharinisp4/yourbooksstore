@@ -1,10 +1,11 @@
 package gogrocer.tcc;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,6 +15,7 @@ import Fragment.Payment_fragment;
 public class OrderFail extends AppCompatActivity {
     RelativeLayout oredr_fail;
     private Payment_fragment mItemsFragment;
+    ProgressDialog progressDialog ;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -26,6 +28,9 @@ public class OrderFail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_fail);
         mItemsFragment = new Payment_fragment();
+        progressDialog=new ProgressDialog(OrderFail.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -1,10 +1,11 @@
 package gogrocer.tcc;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     private TextView tv_email;
     String lan;
     SharedPreferences preferences;
+    ProgressDialog progressDialog ;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -65,6 +67,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         btn_continue.setOnClickListener(this);
         preferences = getSharedPreferences("lan", MODE_PRIVATE);
         lan=preferences.getString("language","");
+        progressDialog=new ProgressDialog(ForgotActivity.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override

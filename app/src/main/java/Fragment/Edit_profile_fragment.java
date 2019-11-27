@@ -69,7 +69,7 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
     private Uri imageuri;
     String image;
     private Session_management sessionManagement;
-
+ProgressDialog progressDialog ;
     public Edit_profile_fragment() {
         // Required empty public constructor
     }
@@ -77,6 +77,9 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override
@@ -89,6 +92,10 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.edit_profile));
 
         sessionManagement = new Session_management(getActivity());
+
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         et_phone = (EditText) view.findViewById(R.id.et_pro_phone);
         et_name = (EditText) view.findViewById(R.id.et_pro_name);

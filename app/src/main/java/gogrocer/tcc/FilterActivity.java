@@ -1,18 +1,14 @@
 package gogrocer.tcc;
 
 import android.app.Dialog;
-import Fragment.*;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,8 +31,8 @@ import java.util.List;
 
 import Adapter.FilterAdapter;
 import Config.BaseURL;
+import Fragment.Product_fragment;
 import util.CustomVolleyJsonRequest;
-import util.RecyclerTouchListener;
 
 public class FilterActivity extends Fragment {
 
@@ -53,12 +49,16 @@ public class FilterActivity extends Fragment {
     ImageView img_back;
     public static String book_class="",subject="",language="";
     int flag=0;
+    ProgressDialog progressDialog ;
 
     RecyclerView.LayoutManager layoutManager1,layoutManager2,layoutManager3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_filter, container, false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         chk_bk_class=(CheckBox)view.findViewById(R.id.chk_bk_class);
         chk_bk_subject=(CheckBox)view.findViewById(R.id.chk_bk_subject);
@@ -220,7 +220,7 @@ public class FilterActivity extends Fragment {
     private void createClassList(String cat_id) {
 
         //Toast.makeText(FilterActivity.this,""+cat_id,Toast.LENGTH_LONG).show();
-        ProgressDialog.show();
+        progressDialog.show();
         String json_tag="json_book_class";
         HashMap<String,String> map=new HashMap<>();
         map.put("category_id",cat_id);
@@ -232,7 +232,7 @@ public class FilterActivity extends Fragment {
                 try
                 {
                     list_class.clear();
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     //Toast.makeText(FilterActivity.this,""+response.toString(),Toast.LENGTH_LONG).show();
                     String status=response.getString("status");
                     if(status.equals("success"))
@@ -256,14 +256,14 @@ public class FilterActivity extends Fragment {
                 }
                 catch (Exception ex)
                 {
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
@@ -276,7 +276,7 @@ public class FilterActivity extends Fragment {
     private void createSubjectList(String cat_id) {
 
         //Toast.makeText(FilterActivity.this,""+cat_id,Toast.LENGTH_LONG).show();
-        ProgressDialog.show();
+        progressDialog.show();
         String json_tag="json_subject";
         HashMap<String,String> map=new HashMap<>();
         map.put("category_id",cat_id);
@@ -288,7 +288,7 @@ public class FilterActivity extends Fragment {
                 try
                 {
                     list_subject.clear();
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     //Toast.makeText(FilterActivity.this,""+response.toString(),Toast.LENGTH_LONG).show();
                     String status=response.getString("status");
                     if(status.equals("success"))
@@ -331,7 +331,7 @@ public class FilterActivity extends Fragment {
     private void createLanguageList(String cat_id) {
 
         //Toast.makeText(FilterActivity.this,""+cat_id,Toast.LENGTH_LONG).show();
-        ProgressDialog.show();
+        progressDialog.show();
         String json_tag="json_book_lang";
         HashMap<String,String> map=new HashMap<>();
         map.put("category_id",cat_id);
@@ -343,7 +343,7 @@ public class FilterActivity extends Fragment {
                 try
                 {
                     list_language.clear();
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     //Toast.makeText(FilterActivity.this,""+response.toString(),Toast.LENGTH_LONG).show();
                     String status=response.getString("status");
                     if(status.equals("success"))
@@ -368,14 +368,14 @@ public class FilterActivity extends Fragment {
                 }
                 catch (Exception ex)
                 {
-                    ProgressDialog.dismiss();
+                    progressDialog.dismiss();
                     Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });

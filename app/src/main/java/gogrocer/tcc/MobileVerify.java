@@ -1,6 +1,6 @@
 package gogrocer.tcc;
 
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +24,6 @@ import java.util.Random;
 
 import Config.BaseURL;
 import Module.Module;
-
 import util.CustomVolleyJsonRequest;
 
 public class MobileVerify extends AppCompatActivity {
@@ -32,7 +31,7 @@ public class MobileVerify extends AppCompatActivity {
 EditText et_phone ;
 Button btn_continue ;
 TextView back ;
-Dialog ProgressDialog ;
+ProgressDialog progressDialog ;
     int number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,9 @@ Dialog ProgressDialog ;
         back = findViewById( R.id.txt_back );
         final String type = getIntent().getStringExtra( "type" );
 
-        ProgressDialog = new Dialog(MobileVerify.this, android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
-
+        progressDialog=new ProgressDialog(MobileVerify.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         back.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +111,7 @@ Dialog ProgressDialog ;
 
     }
     private void sendOtp(final String phone_number, String otp) {
-        ProgressDialog.show();
+        progressDialog.show();
         String tag_json_obj = "json_otp_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("mobile",phone_number);
@@ -125,7 +123,7 @@ Dialog ProgressDialog ;
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("otp_forgot", response.toString());
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
@@ -151,7 +149,7 @@ Dialog ProgressDialog ;
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 Module module=new Module();
                 String errormsg = module.VolleyErrorMessage(error);
                 Toast.makeText( MobileVerify.this,""+ errormsg, Toast.LENGTH_LONG ).show();
@@ -163,7 +161,7 @@ Dialog ProgressDialog ;
     }
 
     private void otpRegister(final String phone_number, String otp) {
-        ProgressDialog.show();
+        progressDialog.show();
         String tag_json_obj = "json_otp_register";
         Map<String, String> params = new HashMap<String, String>();
         params.put("mobile",phone_number);
@@ -175,7 +173,7 @@ Dialog ProgressDialog ;
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("otp_reg", response.toString());
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
@@ -201,7 +199,7 @@ Dialog ProgressDialog ;
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 Module module=new Module();
                 String errormsg = module.VolleyErrorMessage(error);
                 Toast.makeText( MobileVerify.this,""+ errormsg, Toast.LENGTH_LONG ).show();

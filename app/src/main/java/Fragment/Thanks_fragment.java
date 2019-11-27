@@ -1,10 +1,8 @@
 package Fragment;
 
-import android.content.Intent;
 import android.app.Fragment;
-
 import android.app.FragmentManager;
-
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
@@ -21,9 +19,7 @@ import gogrocer.tcc.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 29/6/2017.
- */
+
 
 public class Thanks_fragment extends Fragment implements View.OnClickListener {
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     DatabaseHandlerWishList db_wish;
+    ProgressDialog progressDialog ;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -109,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
         String token;
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
         db_wish=new DatabaseHandlerWishList(MainActivity.this);
         token = FirebaseInstanceId.getInstance().getToken();
         Log.d("MYTAG", "This is your Firebase token" + token);

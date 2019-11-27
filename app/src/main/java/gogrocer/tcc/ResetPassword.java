@@ -1,6 +1,7 @@
 package gogrocer.tcc;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,7 +22,6 @@ import java.util.HashMap;
 
 import Config.BaseURL;
 import Module.Module;
-
 import util.CustomVolleyJsonRequest;
 
 import static com.android.volley.VolleyLog.TAG;
@@ -31,6 +30,7 @@ public class ResetPassword extends AppCompatActivity {
   EditText et_pass , et_cpass ;
    RelativeLayout reset ;
 Dialog ProgressDialog;
+ProgressDialog progressDialog ;
 
 
 
@@ -38,9 +38,9 @@ Dialog ProgressDialog;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_reset_password );
-        ProgressDialog = new Dialog(ResetPassword.this, android.R.style.Theme_Translucent_NoTitleBar);
-        ProgressDialog.setContentView(R.layout.progressbar);
-        ProgressDialog.setCancelable(false);
+        progressDialog=new ProgressDialog(ResetPassword.this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         final String mobile = getIntent().getStringExtra( "mobile" );
         et_pass = findViewById( R.id.et_password );

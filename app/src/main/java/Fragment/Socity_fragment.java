@@ -1,17 +1,16 @@
 package Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +31,6 @@ import java.util.List;
 
 import Adapter.SocietyAdapter;
 import Adapter.Socity_adapter;
-import Adapter.SuggestionAdapter;
 import Config.BaseURL;
 import Model.Socity_model;
 import gogrocer.tcc.AppController;
@@ -57,6 +55,7 @@ public class Socity_fragment extends Fragment {
     TextView tv_view_all;
     private List<Socity_model> socity_modelList = new ArrayList<>();
     private Socity_adapter adapter;
+    ProgressDialog progressDialog ;
 
     public Socity_fragment() {
         // Required empty public constructor
@@ -65,6 +64,9 @@ public class Socity_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
     }
 
     @Override
@@ -72,6 +74,9 @@ public class Socity_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_socity, container, false);
+        progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         //String getpincode = getArguments().getString("pincode");
 
@@ -147,6 +152,7 @@ public class Socity_fragment extends Fragment {
     private void makeGetSocityRequest() {
 
         // Tag used to cancel the request
+        progressDialog.show();
         String tag_json_obj = "json_socity_req";
 
         /*Map<String, String> params = new HashMap<String, String>();
@@ -172,7 +178,7 @@ public class Socity_fragment extends Fragment {
                         Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                     }
                 }
-
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override

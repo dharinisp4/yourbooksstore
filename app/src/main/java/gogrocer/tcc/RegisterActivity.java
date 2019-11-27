@@ -1,9 +1,10 @@
 package gogrocer.tcc;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         newBase = LocaleHelper.onAttach(newBase);
         super.attachBaseContext(newBase);
     }
+    ProgressDialog progressDialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,9 @@ public class RegisterActivity extends AppCompatActivity {
         String phone_number = getIntent().getStringExtra( "mobile" );
         et_phone.setText( phone_number );
         et_phone.setEnabled( false );
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading...");
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
