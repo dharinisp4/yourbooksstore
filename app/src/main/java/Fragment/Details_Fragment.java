@@ -81,8 +81,8 @@ private List<Product_model> modelList ;
     private RecyclerView rv_cat;
   Module module;
     int index;
-    double tot_amt=0;
-    double tot=0;
+   float tot_amt=0;
+   float tot=0;
    // RelativeLayout rel_variant;
     SharedPreferences preferences ;
     private List<Product_model> product_modelList = new ArrayList<>();
@@ -128,6 +128,9 @@ private List<Product_model> modelList ;
     TabLayout tabLayout;
     RelativeLayout related_products;
     CardView cardDesc ,cardReward;
+    ImageView plus ,minus ;
+    TextView product_qty ;
+    RelativeLayout rel_no ;
 
     private ElegantNumberButton numberButton;
 
@@ -241,6 +244,11 @@ private List<Product_model> modelList ;
         rel_sellers = view.findViewById( R.id.rel_seller );
         related_products=view.findViewById( R.id.rel_relative_product );
 
+        plus = view.findViewById( R.id.iv_subcat_plus );
+        minus=view.findViewById( R.id.iv_subcat_minus );
+        product_qty= view.findViewById( R.id.tv_subcat_contetiy );
+        rel_no=view.findViewById( R.id.rel_no );
+
       //  btn_add_to_cart=(Button)view.findViewById(R.id.btnAdd_to_cart);
 
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(details_product_name);
@@ -320,6 +328,8 @@ private List<Product_model> modelList ;
 //                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());
                // Toast.makeText(getActivity(), "Added to Cart" +db_cart.getCartCount(), Toast.LENGTH_LONG).show();
               //  Toast.makeText( getActivity() ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
+                btn_add.setVisibility( View.GONE );
+                rel_no.setVisibility( View.VISIBLE );
             }
         } );
         numberButton.setOnValueChangeListener( new ElegantNumberButton.OnValueChangeListener() {
@@ -336,39 +346,74 @@ private List<Product_model> modelList ;
         } );
 
 
-        // btn_add.setVisibility( View.GONE );
-        //   numberButton.setVisibility( View.VISIBLE );
-        //   numberButton.setNumber("1");
-//        numberButton.setOnValueChangeListener( new ElegantNumberButton.OnValueChangeListener() {
-//            @Override
-//            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-//
-//                if(newValue<=1)
-//                {
-//
-//                 //       db_cart.removeItemFromCart(product_id);
-//
-//                 //   numberButton.setVisibility(View.GONE);
-//                //    btn_add.setVisibility(View.VISIBLE);
-//                }
-//                else {
-//
-//
-//                    float qty = Float.parseFloat(String.valueOf(newValue));
-//                    double unit_price=Double.parseDouble(db_cart.getUnitPrice(product_id));
-//
-//                    String unt=details_product_unit_value+details_product_unit;
-//                    Module module=new Module();
-//                    module.setIntoCart(getActivity(),product_id,product_id,
-//                            product_images,cat_id,details_product_name,
-//                            String.valueOf(qty*unit_price),details_product_desc,details_product_rewards
-//                            ,details_product_price,unt,details_product_increament,prodcut_stock
-//                            ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
-//
-//                }
-//                }
-//        } );
+      plus.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int qty = Integer.valueOf(product_qty.getText().toString() );
+                qty = qty + 1;
+              product_qty.setText( String.valueOf( qty ) );
 
+//                preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
+//                language = preferences.getString( "language", "" );
+
+
+                float price=qty*Float.parseFloat(details_product_price);
+                String unt=details_product_unit_value+details_product_unit;
+                final Module module=new Module();
+                module.setIntoCart(getActivity(),product_id,product_id,
+                        product_images,cat_id,details_product_name,
+                        String.valueOf(price),details_product_desc,details_product_rewards
+                        ,details_product_price,unt,details_product_increament,prodcut_stock
+                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
+                updateintent();
+                //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
+
+                //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
+                //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
+
+            }
+        } );
+       minus.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int qty = 1;
+                if (!product_qty.getText().toString().equalsIgnoreCase( "" ))
+                    qty = Integer.valueOf( product_qty.getText().toString() );
+
+
+                if (qty > 1) {
+                    qty = qty - 1;
+                 product_qty.setText( String.valueOf( qty ) );
+//                    preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
+//                    language = preferences.getString( "language", "" );
+
+                    float price=qty*Float.parseFloat(details_product_price);
+                    String unt=details_product_unit_value+details_product_unit;
+                    final Module module=new Module();
+                    module.setIntoCart(getActivity(),product_id,product_id,
+                            product_images,cat_id,details_product_name,
+                            String.valueOf(price),details_product_desc,details_product_rewards
+                            ,details_product_price,unt,details_product_increament,prodcut_stock
+                            ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
+                    updateintent();
+                    //Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
+                   btn_add.setVisibility( View.GONE );
+                   rel_no.setVisibility( View.VISIBLE );
+
+                } else {
+                    db_cart.removeItemFromCart( product_id );
+                    updateintent();
+                  rel_no.setVisibility( View.GONE );
+                    btn_add.setVisibility( View.VISIBLE );
+                }
+                // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+                //  Double price = Double.parseDouble(map.get("price").trim());
+              //  Double price = Double.parseDouble( modelList.get( position ).getPrice() );
+               //tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
+
+            }
+
+        } );
 
 
 
@@ -388,7 +433,10 @@ private List<Product_model> modelList ;
             @Override
             public void onClick(View view) {
 
-                float qty = Float.parseFloat( numberButton.getNumber() );
+                float qty = Float.parseFloat( String.valueOf( product_qty.getText() ) );
+                float price = Float.parseFloat( details_product_price );
+                tot =qty*price ;
+
                 String unt=details_product_unit_value+details_product_unit;
                 Module module=new Module();
                 module.setIntoCart(getActivity(),product_id,product_id,
@@ -398,7 +446,7 @@ private List<Product_model> modelList ;
                         ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
 
                 if (ConnectivityReceiver.isConnected()) {
-                    makeGetLimiteRequest();
+                    makeBuyNowRequest();
                 } else {
                     ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
                 }
@@ -470,14 +518,16 @@ private List<Product_model> modelList ;
             boolean st=db_cart.isInCart(product_id);
             if(st==true)
             {
-             btn_add.setText( "Update Cart");
-             numberButton.setNumber(db_cart.getCartItemQty(product_id));
+             btn_add.setVisibility( View.GONE );
+             rel_no.setVisibility( View.VISIBLE );
+             product_qty.setText(db_cart.getCartItemQty(product_id));
           //   numberButton.setVisibility( View.VISIBLE);
             }
             else
             {
-                numberButton.setNumber( "1" );
-                btn_add.setText( "Add to Cart" );
+                product_qty.setText( "1" );
+                rel_no.setVisibility( View.GONE );
+                btn_add.setVisibility( View.VISIBLE );
             }
 
             int sell=Integer.parseInt(seller_id);
@@ -1032,7 +1082,7 @@ public boolean checkAttributeStatus(String atr)
 
 
 
-    private void makeGetLimiteRequest() {
+    private void makeBuyNowRequest() {
         progressDialog.show();
 
         JsonArrayRequest req = new JsonArrayRequest( BaseURL.GET_LIMITE_SETTING_URL,
@@ -1042,6 +1092,7 @@ public boolean checkAttributeStatus(String atr)
                         Log.d(TAG, response.toString());
 
                         Double total_amount = Double.parseDouble(db_cart.getTotalAmount());
+
 
 
                         try {
@@ -1083,6 +1134,97 @@ public boolean checkAttributeStatus(String atr)
                                     Bundle args = new Bundle();
                                     args.putString( "checkout",product_id );
                                     args.putString( "product_id",product_id );
+                                    args.putString( "total", String.valueOf( tot ) );
+                                    args.putString( "type","buynow" );
+                                    Fragment fm = new Delivery_fragment();
+                                    fm.setArguments(args);
+                                    FragmentManager fragmentManager = getFragmentManager();
+                                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                                            .addToBackStack(null).commit();
+                                } else {
+                                    //Toast.makeText(getActivity(), "Please login or regiter.\ncontinue", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(getActivity(), LoginActivity.class);
+                                    startActivity(i);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getActivity(),
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        progressDialog.dismiss();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                progressDialog.dismiss();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(getActivity(), "Connection Time out", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(req);
+
+    }
+    private void makeGetLimiteRequest() {
+        progressDialog.show();
+
+        JsonArrayRequest req = new JsonArrayRequest( BaseURL.GET_LIMITE_SETTING_URL,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG, response.toString());
+
+                        Double total_amount = Double.parseDouble(db_cart.getTotalAmount());
+
+
+
+                        try {
+                            // Parsing json array response
+                            // loop through each json object
+
+                            boolean issmall = false;
+                            boolean isbig = false;
+
+                            // arraylist list variable for store data;
+                            ArrayList<HashMap<String, String>> listarray = new ArrayList<>();
+
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject jsonObject = (JSONObject) response
+                                        .get(i);
+                                int value;
+
+                                if (jsonObject.getString("id").equals("1")) {
+                                    value = Integer.parseInt(jsonObject.getString("value"));
+
+                                    if (total_amount < value) {
+                                        issmall = true;
+                                        Toast.makeText(getActivity(), "" + jsonObject.getString("title") + " : " + value, Toast.LENGTH_SHORT).show();
+                                    }
+                                } else if (jsonObject.getString("id").equals("2")) {
+                                    value = Integer.parseInt(jsonObject.getString("value"));
+
+                                    if (total_amount > value) {
+                                        isbig = true;
+                                        Toast.makeText(getActivity(), "" + jsonObject.getString("title") + " : " + value, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            }
+
+                            if (!issmall && !isbig) {
+                                if (sessionManagement.isLoggedIn()) {
+                                    Bundle args = new Bundle();
+                                    args.putString( "checkout",product_id );
+                                    args.putString( "product_id",product_id );
+                                    args.putString( "total", String.valueOf( tot ) );
+                                    args.putString( "type","cart" );
                                     Fragment fm = new Delivery_fragment();
                                     fm.setArguments(args);
                                     FragmentManager fragmentManager = getFragmentManager();

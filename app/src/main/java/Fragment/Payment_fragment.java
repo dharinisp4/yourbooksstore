@@ -324,6 +324,7 @@ public class Payment_fragment extends Fragment {
     }
 
     private void attemptOrder() {
+       // Toast.makeText( getActivity(),"attempt order",Toast.LENGTH_LONG ).show();
         ArrayList<HashMap<String, String>> items = db_cart.getCartAll();
         rewards = Double.parseDouble(db_cart.getColumnRewards());
         if (items.size() > 0) {
@@ -377,6 +378,7 @@ public class Payment_fragment extends Fragment {
     private void makeAddOrderRequest(String date, String gettime, String userid, String
             location, String store_id, JSONArray passArray) {
         progressDialog.show();
+
         String tag_json_obj = "json_add_order_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("date", date);
@@ -443,6 +445,7 @@ public class Payment_fragment extends Fragment {
 
 
     private void attemptOrderWithWallet(String wamt) {
+
         ArrayList<HashMap<String, String>> items = db_cart.getCartAll();
         rewards = Double.parseDouble(db_cart.getColumnRewards());
         if (items.size() > 0) {
@@ -745,7 +748,7 @@ public class Payment_fragment extends Fragment {
     private void checked() {
         if (checkBox_Wallet.isChecked()) {
             if (rb_Store.isChecked() || rb_Cod.isChecked()) {
-                attemptOrder();
+                // attemptOrder();
             } else {
                 double wall_amt=Double.parseDouble(getwallet);
                 double p_amt=Double.parseDouble(order_total_amount);

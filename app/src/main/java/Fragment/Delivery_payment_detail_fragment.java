@@ -45,6 +45,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
     private DatabaseCartHandler db_cart;
     private Session_management sessionManagement;
     ProgressDialog progressDialog;
+    String buy_now_tot ,type;
 
     public Delivery_payment_detail_fragment() {
         // Required empty public constructor
@@ -108,6 +109,8 @@ public class Delivery_payment_detail_fragment extends Fragment {
         String societys = getArguments().getString( "society" );
         checkout = getArguments().getString( "checkout" );
         product_id=getArguments().getString( "product_id" );
+        buy_now_tot =getArguments().getString( "total" );
+        type =getArguments().getString( "type" );
         tv_timeslot.setText(getdate + " " + gettime);
         //tv_address.setText(getaddress);
 

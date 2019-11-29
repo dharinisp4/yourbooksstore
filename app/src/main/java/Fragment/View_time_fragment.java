@@ -149,7 +149,7 @@ public class View_time_fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                progressDialog.show();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
 

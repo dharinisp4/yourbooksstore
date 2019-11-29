@@ -86,6 +86,7 @@ SharedPreferences preferences;
 
     private String deli_charges ,checkout;
     String store_id ,product_id;
+    String buy_now_tot ,type;
 
     ProgressDialog progressDialog;
 String language;
@@ -109,6 +110,8 @@ String language;
         Bundle bundle = getArguments();
         checkout = bundle.getString( "checkout" );
         product_id = bundle.getString( "product_id" );
+        buy_now_tot =bundle.getString( "total" );
+        type =bundle.getString( "type" );
 
         store_id = SharedPref.getString(getActivity(), BaseURL.STORE_ID);
         preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
@@ -340,6 +343,8 @@ String language;
             args.putString( "phone",phone );
             args.putString( "checkout" ,checkout );
             args.putString( "product_id",product_id );
+            args.putString( "total",buy_now_tot );
+            args.putString( "type",type );
             fm.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

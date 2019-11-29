@@ -136,9 +136,9 @@ ProgressDialog progressDialog ;
                     .into(iv_profile);
         }
 
-        if (!TextUtils.isEmpty(getemail)) {
-            et_email.setText(getemail);
-        }
+//        if (!TextUtils.isEmpty(getemail)) {
+//            et_email.setText(getemail);
+//        }
 
         /*if (!TextUtils.isEmpty(gethouse)){
             et_house.setText(gethouse);
@@ -180,7 +180,7 @@ ProgressDialog progressDialog ;
 
         String getphone = et_phone.getText().toString();
         String getname = et_name.getText().toString();
-        String getemail = et_email.getText().toString();
+       // String getemail = et_email.getText().toString();
         /*String gethouse = et_house.getText().toString();
         String getsocity = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);*/
 
@@ -204,11 +204,11 @@ ProgressDialog progressDialog ;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(getemail)) {
-            tv_email.setTextColor(getResources().getColor(R.color.colorPrimary));
-            focusView = et_email;
-            cancel = true;
-        }
+//        if (TextUtils.isEmpty(getemail)) {
+//            tv_email.setTextColor(getResources().getColor(R.color.colorPrimary));
+//            focusView = et_email;
+//            cancel = true;
+//        }
 
         /*if (TextUtils.isEmpty(getsocity) && getsocity == null) {
             tv_socity.setTextColor(getResources().getColor(R.color.colorPrimary));
