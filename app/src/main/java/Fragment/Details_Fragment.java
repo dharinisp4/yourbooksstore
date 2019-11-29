@@ -352,21 +352,29 @@ private List<Product_model> modelList ;
                 int qty = Integer.valueOf(product_qty.getText().toString() );
                 qty = qty + 1;
               product_qty.setText( String.valueOf( qty ) );
+              int stock = Integer.parseInt( prodcut_stock );
+
 
 //                preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
 //                language = preferences.getString( "language", "" );
+                if (qty<=stock) {
 
 
-                float price=qty*Float.parseFloat(details_product_price);
-                String unt=details_product_unit_value+details_product_unit;
-                final Module module=new Module();
-                module.setIntoCart(getActivity(),product_id,product_id,
-                        product_images,cat_id,details_product_name,
-                        String.valueOf(price),details_product_desc,details_product_rewards
-                        ,details_product_price,unt,details_product_increament,prodcut_stock
-                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
-                updateintent();
-                //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
+                    float price = qty * Float.parseFloat( details_product_price );
+                    String unt = details_product_unit_value + details_product_unit;
+                    final Module module = new Module();
+                    module.setIntoCart( getActivity(), product_id, product_id,
+                            product_images, cat_id, details_product_name,
+                            String.valueOf( price ), details_product_desc, details_product_rewards
+                            , details_product_price, unt, details_product_increament, prodcut_stock
+                            , details_product_title, details_product_mrp, seller_id, details_product_class, details_product_subject, details_product_language, qty );
+                    updateintent();
+                }
+                else {
+                       Toast.makeText(getActivity(),"We have only "+"" +stock +""+" in Stock",Toast.LENGTH_LONG).show();
+                       plus.setEnabled( false );
+                       product_qty.setText( String.valueOf(qty-1) );
+                }
 
                 //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
                 //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
