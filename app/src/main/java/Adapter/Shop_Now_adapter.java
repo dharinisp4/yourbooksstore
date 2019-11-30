@@ -20,9 +20,7 @@ import gogrocer.tcc.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 22/6/2017.
- */
+
 
 public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyViewHolder> {
 

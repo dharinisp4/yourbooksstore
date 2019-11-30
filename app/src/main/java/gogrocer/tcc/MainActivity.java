@@ -591,7 +591,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_shop_now) {
             fm = new Shop_Now_fragment();
         } else if (id == R.id.nav_my_profile) {
-            fm = new Edit_profile_fragment();
+            if (sessionManagement.isLoggedIn()) {
+                Fragment fme = new Edit_profile_fragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fme)
+                        .addToBackStack(null).commit();
+            } else {
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
+                overridePendingTransition(0, 0);
+            }
         }
         else if (id == R.id.nav_my_wishlist) {
             fm = new Wishlist_fragment();

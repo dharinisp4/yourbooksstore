@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_name = (EditText) findViewById(R.id.et_reg_name);
         et_password = (EditText) findViewById(R.id.et_reg_password);
         et_con_password = (EditText) findViewById(R.id.et_con_password);
-        et_email = (EditText) findViewById(R.id.et_reg_email);
+      //  et_email = (EditText) findViewById(R.id.et_reg_email);
         tv_login =(TextView)findViewById( R.id.btnSignin);
 //        tv_password = (TextView) findViewById(R.id.tv_reg_password);
 //        tv_phone = (TextView) findViewById(R.id.tv_reg_phone);
@@ -99,7 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
         String getphone = et_phone.getText().toString();
         String getname = et_name.getText().toString();
         String getpassword = et_password.getText().toString();
-        String getemail = et_email.getText().toString();
+        String getemail ="";
+      //  String getemail = et_email.getText().toString();
         String getc_pass=et_con_password.getText().toString();
         boolean cancel = false;
         View focusView = null;
@@ -162,16 +163,16 @@ public class RegisterActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(getemail)) {
-            focusView = et_email;
-            cancel = true;
-        } else if (!isEmailValid(getemail)) {
-           // et_email.setText(getResources().getString(R.string.invalide_email_address));
-            et_email.setError(getResources().getString(R.string.email_not_valid) );
-            et_email.requestFocus();
-            focusView = et_email;
-            cancel = true;
-        }
+//        if (TextUtils.isEmpty(getemail)) {
+//            focusView = et_email;
+//            cancel = true;
+//        } else if (!isEmailValid(getemail)) {
+//           // et_email.setText(getResources().getString(R.string.invalide_email_address));
+//            et_email.setError(getResources().getString(R.string.email_not_valid) );
+//            et_email.requestFocus();
+//            focusView = et_email;
+//            cancel = true;
+//        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first

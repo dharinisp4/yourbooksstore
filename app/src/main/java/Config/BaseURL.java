@@ -1,9 +1,6 @@
 package Config;
 
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class BaseURL {
     static final String APP_NAME = "yourbooksstore";
     public static final String PREFS_NAME = "GroceryLoginPrefs";
@@ -47,8 +44,9 @@ public class BaseURL {
     public static final String CITY_ID = "CITY_ID";
     public static final String STORE_ID = "STORE_ID";
 
-   // public static String BASE_URL = "https://yourbooksstore.com/admin/";
-    public static String BASE_URL = "https://admin.anshuwap.com/yourbook/admin/";
+   public static String BASE_URL = "https://shoparounds.com/admin/";
+   // public static String BASE_URL = "https://admin.anshuwap.com/yourbook/admin/";
+
 
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
     public static String IMG_CATEGORY_URL = BASE_URL + "uploads/category/";

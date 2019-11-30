@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class Search_fragment extends Fragment {
     private List<Product_model> modelList = new ArrayList<>();
     private Search_adapter adapter_product;
     ProgressDialog progressDialog ;
+    ImageView img_no_item ;
     public Search_fragment() {
     }
 
@@ -80,7 +82,7 @@ public class Search_fragment extends Fragment {
         progressDialog.setMessage("Loading...");
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.search));
-
+        img_no_item = view.findViewById( R.id.img_no_items );
 
         acTextView = view.findViewById(R.id.et_search);
         acTextView.setThreshold(1);
@@ -221,6 +223,7 @@ public class Search_fragment extends Fragment {
                         
                         if (getActivity() != null) {
                             if (modelList.isEmpty()) {
+                                img_no_item.setVisibility( View.GONE );
                                 Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                             }
                         }

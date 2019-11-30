@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -53,6 +54,7 @@ public class SubCategory_Fragment extends Fragment {
     String getid;
     String getcat_title;
     ProgressDialog loadingBar;
+    ImageView no_item_img ;
     Home_Icon_Adapter home_icon_adapter;
     @Nullable
     @Override
@@ -62,12 +64,12 @@ public class SubCategory_Fragment extends Fragment {
         loadingBar.setMessage("Loading...");
         loadingBar.setCanceledOnTouchOutside(false);
         setHasOptionsMenu(true);
-        String getcat_id = getArguments().getString("cat_id");
+        final String getcat_id = getArguments().getString("cat_id");
         String getcat_name = getArguments().getString("title");
 
         ((MainActivity) getActivity()).setTitle(getcat_name);
 
-
+        no_item_img = view.findViewById( R.id.img_no_items );
         if (ConnectivityReceiver.isConnected()) {
        //     makeSubGetCategoryRequest();
             makeGetCategoryRequest(getcat_id);
@@ -140,6 +142,8 @@ public class SubCategory_Fragment extends Fragment {
                             home_icon_adapter.notifyDataSetChanged();
 
                         } else {
+                            no_item_img.setVisibility( View.VISIBLE );
+                            rv_items.setVisibility( View.GONE );
 
 
 

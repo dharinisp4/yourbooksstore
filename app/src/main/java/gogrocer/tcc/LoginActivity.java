@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_phone", email);
         params.put("password", password);
-
+        progressDialog.show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.LOGIN_URL, params, new Response.Listener<JSONObject>() {
 
@@ -191,13 +191,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         btn_continue.setEnabled(false);
 
-                    } else {
+                    }
+                    else {
                         String error = response.getString("error");
                         btn_continue.setEnabled(true);
 
                         Toast.makeText(LoginActivity.this, "" + error, Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
+                  progressDialog.dismiss();
+                }
+                catch (JSONException e) {
+                    progressDialog.dismiss();
                     e.printStackTrace();
                 }
             }
@@ -205,6 +209,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(LoginActivity.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

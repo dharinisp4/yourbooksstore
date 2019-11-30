@@ -1032,8 +1032,9 @@ loadingBar.show();
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ddlg.dismiss();
                     String item = sort_List.get( i ).toString();
-                    //final String cat_id = getArguments().getString("cat_id");
-                    final String cat_id = session_management.getCategoryId();
+                   // final String cat_id = getArguments().getString("cat_id");
+                   final String cat_id = session_management.getCategoryId();
+
 
                     if (item.equals( "Price Low - High" ))
                     {

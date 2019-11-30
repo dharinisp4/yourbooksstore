@@ -105,6 +105,7 @@ public class Shop_Now_fragment extends Fragment {
                 Fragment fm = new SubCategory_Fragment();
                 args.putString("cat_id", getid);
                 args.putString("cat_title", getcat_title);
+                args.putString( "viewall","category" );
                 session_management.setCategoryId(getid);
                 fm.setArguments(args);
                 progressDialog.dismiss();

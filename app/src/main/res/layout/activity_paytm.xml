@@ -259,7 +259,7 @@
                 android:onClick="onStartTransaction"
                 android:text="Pay"
                 android:textColor="#fff"
-                android:textSize="@dimen/text_size_small" />
+                android:textSize="16dp" />
 
 
         </RelativeLayout>

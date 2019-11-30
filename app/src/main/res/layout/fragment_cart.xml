@@ -23,7 +23,7 @@
             android:paddingTop="@dimen/space_5"
             android:text="@string/tv_cart_clear"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_small" />
+            android:textSize="@dimen/space_14" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_cart"
@@ -118,7 +118,7 @@
                 android:text="@string/checkout"
 
                 android:textColor="#fff"
-                android:textSize="@dimen/text_size_small" />
+                android:textSize="@dimen/space_16" />
 
 
         </RelativeLayout>
