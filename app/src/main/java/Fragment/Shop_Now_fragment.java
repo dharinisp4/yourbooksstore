@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -56,6 +57,7 @@ public class Shop_Now_fragment extends Fragment {
     String getcat_title;
     Session_management session_management;
     ProgressDialog progressDialog ;
+    ImageView img_no_itm;
 
     public Shop_Now_fragment() {
 
@@ -74,11 +76,13 @@ public class Shop_Now_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shop_now, container, false);
         setHasOptionsMenu(true);
 
+
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.shop_now));
          session_management=new Session_management(getActivity());
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
+        img_no_itm = view.findViewById( R.id.img_no_items );
 
         if (ConnectivityReceiver.isConnected()) {
             makeGetCategoryRequest();
@@ -152,10 +156,18 @@ public class Shop_Now_fragment extends Fragment {
                             Type listType = new TypeToken<List<ShopNow_model>>() {
                             }.getType();
                             category_modelList = gson.fromJson(response.getString("data"), listType);
+                            if (category_modelList.isEmpty())
+                            {
+                                rv_items.setVisibility( View.GONE);
+                                img_no_itm.setVisibility(View.VISIBLE );
+                            }
+                            else
+                            {
                             adapter = new Shop_Now_adapter(category_modelList);
                             rv_items.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
+                            }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

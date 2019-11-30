@@ -54,7 +54,7 @@
         android:id="@+id/img_no_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/no_items_found"
+        android:src="@drawable/noproduct"
         android:visibility="gone"/>
 
                 <android.support.v7.widget.RecyclerView

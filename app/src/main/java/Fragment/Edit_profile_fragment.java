@@ -121,6 +121,7 @@ ProgressDialog progressDialog ;
 
         et_name.setText(getname);
         et_phone.setText(getphone);
+        et_phone.setEnabled( false );
 
         /*if (!TextUtils.isEmpty(getsocity_name)) {
             btn_socity.setText(getsocity_name);

@@ -92,14 +92,12 @@
         android:layout_centerHorizontal="true"
         android:layout_width="250dp"
        android:visibility="gone"
-        android:src="@drawable/no_items_found"
+        android:src="@drawable/noproduct"
         android:layout_height="250dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_subcategory"
         android:layout_width="match_parent"
-
-
          android:visibility="gone"
         android:layout_height="wrap_content" />
 
