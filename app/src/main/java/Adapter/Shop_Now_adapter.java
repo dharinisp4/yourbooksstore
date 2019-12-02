@@ -18,8 +18,6 @@ import Config.BaseURL;
 import Model.ShopNow_model;
 import gogrocer.tcc.R;
 
-import static android.content.Context.MODE_PRIVATE;
-
 
 
 public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyViewHolder> {
@@ -66,15 +64,17 @@ public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyVi
                 .dontAnimate()
                 .into(holder.image);
 
-        preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
-        language=preferences.getString("language","");
-        if (language.contains("english")) {
-            holder.title.setText(mList.getTitle());
-        }
-        else {
-            holder.title.setText(mList.getArb_title());
+        holder.title.setText( mList.getTitle() );
 
-        }
+//        preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
+//        language=preferences.getString("language","");
+//        if (language.contains("english")) {
+//            holder.title.setText(mList.getTitle());
+//        }
+//        else {
+//            holder.title.setText(mList.getArb_title());
+//
+//        }
 
     }
 

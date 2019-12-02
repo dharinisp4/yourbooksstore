@@ -142,6 +142,7 @@ String userId="";
 
         et_name.setText(getname);
         et_phone.setText(getphone);
+        et_phone.setEnabled( false );
 
         if (!TextUtils.isEmpty(getimage)) {
             Glide.with( getActivity() )
