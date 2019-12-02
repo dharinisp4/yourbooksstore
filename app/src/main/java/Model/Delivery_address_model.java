@@ -14,8 +14,9 @@ public class Delivery_address_model {
     String receiver_mobile;
     String socity_name;
     String pincode;
-
     String delivery_charge;
+    String delivery_type;
+
     boolean ischeckd;
 
     public String getLocation_id(){
@@ -64,4 +65,11 @@ public class Delivery_address_model {
         this.ischeckd = ischeckd;
     }
 
+    public String getDelivery_type() {
+        return delivery_type;
+    }
+
+    public void setDelivery_type(String delivery_type) {
+        this.delivery_type = delivery_type;
+    }
 }

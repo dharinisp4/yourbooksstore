@@ -3,6 +3,7 @@ package gogrocer.tcc;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -108,6 +109,7 @@ public class FilterActivity extends Fragment {
         rv_class.setLayoutManager(layoutManager1);
         rv_subject.setLayoutManager(layoutManager2);
         rv_language.setLayoutManager(layoutManager3);
+        createClassList(cat_id);
 
 
         chk_bk_class.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -116,7 +118,7 @@ public class FilterActivity extends Fragment {
 
                 if(b)
                 {
-                    createClassList(cat_id);
+                    createBookClassList(cat_id);
                     if(chk_bk_subject.isChecked())
                     {
                         chk_bk_subject.setChecked(false);
@@ -209,13 +211,18 @@ public class FilterActivity extends Fragment {
                 args.putString("filter", data);
                 fm.setArguments(args);
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm).addToBackStack(null)
+                FragmentTransaction fragmentTransaction=  fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contentPanel, fm).addToBackStack(null)
                         .commit();
+             // fragmentTransaction.remove(getF);
+
+
             }
         });
 
         return view;
     }
+
 
     private void createClassList(String cat_id) {
 
@@ -237,20 +244,42 @@ public class FilterActivity extends Fragment {
                     String status=response.getString("status");
                     if(status.equals("success"))
                     {
-                        JSONArray array=response.getJSONArray("data");
-                        for(int i=0; i<array.length();i++)
-                        {
-                            JSONObject object= (JSONObject) array.get(i);
-                            String bk=object.getString("book_class");
-                            list_class.add(bk);
-                        }
-                        filterAdapter=new FilterAdapter(list_class,getActivity(),1);
-                        rv_class.setVisibility(View.VISIBLE);
-                        rv_class.setAdapter(filterAdapter);
 
+                        int a=0,b=0,c=0;
+                        JSONObject object=response.getJSONObject("data");
+
+
+                        if(object.has("book_class"))
+                        {
+                           chk_bk_class.setVisibility(View.VISIBLE);
+                        }
+                         if(object.has("subject"))
+                        {
+                            chk_bk_subject.setVisibility(View.VISIBLE);
+                        }
+                         if(object.has("language"))
+                        {
+                            chk_bk_language.setVisibility(View.VISIBLE);
+                             }
+                       //  else if(object.has()) {
+                        //Toast.makeText(getActivity(),"a- "+a+"\n b- "+b+"\n c- "+c+"\n date: --"+object.toString(),Toast.LENGTH_LONG).show();
+
+//                        JSONArray array=response.getJSONArray("data");
+//                        for(int i=0; i<array.length();i++)
+//                        {
+//                            JSONObject object= (JSONObject) array.get(i);
+//                            String bk=object.getString("book_class");
+//                            list_class.add(bk);
+//                        }
+//                        filterAdapter=new FilterAdapter(list_class,getActivity(),1);
+//                        rv_class.setVisibility(View.VISIBLE);
+//                        rv_class.setAdapter(filterAdapter);
+//
 
                     }
-                    else {
+                    else if(status.equals("failed")) {
+
+                       // Toast.makeText(getActivity(),"There are no filter in this category \n "+response.getString("data").toString(),Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -401,4 +430,71 @@ public class FilterActivity extends Fragment {
         }
         return s;
     }
+
+
+    private void createBookClassList(String cat_id) {
+
+        //Toast.makeText(FilterActivity.this,""+cat_id,Toast.LENGTH_LONG).show();
+        progressDialog.show();
+        String json_tag="json_book_class";
+        HashMap<String,String> map=new HashMap<>();
+        map.put("category_id",cat_id);
+
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_BOOK_CLASS_LIST, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("bk_class",response.toString());
+                try
+                {
+                    list_class.clear();
+                    progressDialog.dismiss();
+                    //Toast.makeText(FilterActivity.this,""+response.toString(),Toast.LENGTH_LONG).show();
+                    String status=response.getString("status");
+                    if(status.equals("success"))
+                    {
+
+                        //JSONObject object=response.getJSONObject("data");
+
+
+
+                        //  else if(object.has()) {
+                        //Toast.makeText(getActivity(),"a- "+a+"\n b- "+b+"\n c- "+c+"\n date: --"+object.toString(),Toast.LENGTH_LONG).show();
+
+                        JSONArray array=response.getJSONArray("data");
+                        for(int i=0; i<array.length();i++)
+                        {
+                            JSONObject object= (JSONObject) array.get(i);
+                            String bk=object.getString("book_class");
+                            list_class.add(bk);
+                        }
+                        filterAdapter=new FilterAdapter(list_class,getActivity(),1);
+                        rv_class.setVisibility(View.VISIBLE);
+                        rv_class.setAdapter(filterAdapter);
+//
+
+                    }
+                    else if(status.equals("failed")) {
+
+                        // Toast.makeText(getActivity(),"There are no filter in this category \n "+response.getString("data").toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
+
+
+    }
+
 }

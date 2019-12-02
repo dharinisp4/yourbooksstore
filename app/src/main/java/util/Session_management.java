@@ -209,4 +209,28 @@ public class Session_management {
     {
         return prefs2.getString(KEY_CAT,"");
     }
+
+
+    public void updateProfile(String image,String name)
+    {
+       editor.putString(KEY_IMAGE,image);
+       editor.putString(KEY_NAME,name);
+       editor.commit();
+    }
+
+    public HashMap<String,String> getUpdateProfile()
+    {
+        HashMap<String,String> map=new HashMap<>();
+        map.put(KEY_IMAGE,prefs.getString(KEY_IMAGE,null));
+        map.put(KEY_NAME,prefs.getString(KEY_NAME,null));
+        //map.put(KEY_IMAGE,prefs.getString(KEY_IMAGE,null));
+        return map;
+    }
+
+    public void updateUserName(String name)
+    {
+        editor.putString(KEY_NAME,name);
+        editor.commit();
+    }
+
 }

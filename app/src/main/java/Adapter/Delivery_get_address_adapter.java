@@ -57,10 +57,10 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
     private static int lastCheckedPos = 0;
     private boolean ischecked = false;
     private String location_id = "";
-    private String getsocity, gethouse, getphone, getpin, getname, getcharge;
+    private String getsocity, gethouse, getphone, getpin, getname, getcharge,gettype;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_address, tv_name, tv_phone, tv_charges,edit_details,delete_details;
+        public TextView tv_address, tv_name, tv_phone, tv_charges,tv_delivery_type,edit_details,delete_details;
         public RadioButton rb_select;
 
         SwipeLayout swipeLayout;
@@ -79,6 +79,7 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
             tv_phone = (TextView) view.findViewById(R.id.tv_adres_phone);
             tv_charges = (TextView) view.findViewById(R.id.tv_adres_charge);
             rb_select = (RadioButton) view.findViewById(R.id.rb_adres);
+            tv_delivery_type= view.findViewById(R.id.tv_delivery_type);
             rb_select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -92,6 +93,7 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
                     getname = modelList.get(clickedPos).getReceiver_name();
                     getphone = modelList.get(clickedPos).getReceiver_mobile();
                     getsocity = modelList.get(clickedPos).getSocity_name();
+                    gettype = modelList.get(clickedPos).getDelivery_type();
                     getpin = modelList.get(clickedPos).getPincode();
                     getcharge = modelList.get(clickedPos).getDelivery_charge();
 
@@ -153,7 +155,7 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
         holder.tv_phone.setText(mList.getReceiver_mobile());
         holder.tv_name.setText(mList.getReceiver_name());
         holder.tv_charges.setText(mList.getDelivery_charge()+context.getResources().getString(R.string.currency));
-
+        holder.tv_delivery_type.setText(mList.getDelivery_type().toUpperCase());
         holder.rb_select.setChecked(mList.getIscheckd());
         holder.rb_select.setTag(new Integer(position));
 
@@ -171,6 +173,7 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
             getname = modelList.get(0).getReceiver_name();
             getphone = modelList.get(0).getReceiver_mobile();
             getsocity = modelList.get(0).getSocity_name();
+            gettype = modelList.get(0).getDelivery_type();
             getpin = modelList.get(0).getPincode();
             getcharge = modelList.get(0).getDelivery_charge();
 
@@ -199,33 +202,8 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
             }
         });
 
-        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-
-            }
-        });
         holder.edit_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                        Fragment fm = new fragment_edit_details();
-                        Bundle args = new Bundle();
-                        args.putString("location_id",mList.getLocation_id());
-                        args.putString("name", mList.getReceiver_name());
-                        args.putString("mobile", mList.getReceiver_mobile());
-                        args.putString("pincode", mList.getPincode());
-                        args.putString("socity_id", mList.getSocity_id());
-                        args.putString("socity_name", mList.getSocity_name());
-                        args.putString("house", mList.getHouse_no());
-                        fm.setArguments(args);
-                        FragmentManager fragmentManager =((FragmentActivity)view.getContext()).getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                                .addToBackStack(null).commit();
-
-            }
-        });
-        holder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Session_management sessionManagement = new Session_management(context);
@@ -240,6 +218,7 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
                 args.putString("socity_id", mList.getSocity_id());
                 args.putString("socity_name", mList.getSocity_name());
                 args.putString("house", mList.getHouse_no());
+                args.putString("type",mList.getDelivery_type());
                 fm.setArguments(args);
                 FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
@@ -337,6 +316,8 @@ public class Delivery_get_address_adapter extends RecyclerSwipeAdapter<Delivery_
         map.put("pin",getpin);
         map.put("house",gethouse);
         map.put("society",getsocity);
+        map.put("type",gettype);
+
 
         return map;
     }

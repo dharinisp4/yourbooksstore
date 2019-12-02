@@ -94,7 +94,7 @@ ProgressDialog progressDialog ;
     }
 
     private void update_password(String number, String pass) {
-        ProgressDialog.show();
+        progressDialog.show();
         String json_tag="json_reset_tag";
         HashMap<String, String> map=new HashMap<>();
         map.put("mobile",number);
@@ -104,7 +104,7 @@ ProgressDialog progressDialog ;
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-               ProgressDialog.dismiss();
+               progressDialog.dismiss();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
@@ -127,7 +127,7 @@ ProgressDialog progressDialog ;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ProgressDialog.dismiss();
+                progressDialog.dismiss();
                 String errormsg = Module.VolleyErrorMessage(error);
                 Toast.makeText( ResetPassword.this,""+ errormsg, Toast.LENGTH_LONG ).show();
             }

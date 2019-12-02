@@ -46,6 +46,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -227,6 +229,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
         iv_profile = (ImageView) header.findViewById(R.id.iv_header_img);
+
+        String getimage=sessionManagement.getUpdateProfile().get(BaseURL.KEY_IMAGE);
+        if (!TextUtils.isEmpty(getimage)) {
+
+
+            Glide.with( MainActivity.this )
+                    .load( BaseURL.IMG_PROFILE_URL + getimage)
+                    .fitCenter()
+                    .placeholder( R.drawable.user )
+                    .crossFade()
+                    .diskCacheStrategy( DiskCacheStrategy.ALL )
+                    .dontAnimate()
+                    .into( iv_profile );
+        }
+
         tv_name = (TextView) header.findViewById(R.id.tv_header_name);
         My_Order = (LinearLayout) header.findViewById(R.id.my_orders);
         My_Reward = (LinearLayout) header.findViewById(R.id.my_reward);

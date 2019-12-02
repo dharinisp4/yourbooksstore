@@ -57,7 +57,7 @@
             android:layout_marginLeft="@dimen/space_15"
             android:textColor="#000"
 
-            android:text="Enter Otp"
+            android:text="Enter OTP"
             android:textSize="14sp" />
 
         <ImageView

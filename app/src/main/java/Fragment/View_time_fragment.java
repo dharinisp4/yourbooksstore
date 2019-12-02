@@ -125,6 +125,7 @@ public class View_time_fragment extends Fragment {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("date",date);
+        //Toast.makeText(getActivity(),""+date,Toast.LENGTH_LONG).show();
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.GET_TIME_SLOT_URL, params, new Response.Listener<JSONObject>() {

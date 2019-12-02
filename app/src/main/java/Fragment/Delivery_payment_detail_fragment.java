@@ -12,14 +12,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
+import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
+import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import util.Session_management;
 
@@ -27,6 +36,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
     private static String TAG = Delivery_payment_detail_fragment.class.getSimpleName();
 
+    double charges=0;
     private TextView tv_timeslot, tv_address, tv_total;
     private LinearLayout btn_order;
 
@@ -279,4 +289,42 @@ public class Delivery_payment_detail_fragment extends Fragment {
 //        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 //    }
 
+
+    public void getStandardCharges()
+    {
+        progressDialog.show();
+        String json_tag="json_charges";
+        HashMap<String,String> map=new HashMap<>();
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_STANDARD_CHARGES, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    progressDialog.dismiss();
+                    String status=response.getString("status");
+                    if(status.equals("success"))
+                    {
+                        charges=Double.parseDouble(response.getString("data"));
+                    }
+                    else
+                    {
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
+    }
 }
