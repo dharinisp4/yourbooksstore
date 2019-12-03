@@ -45,9 +45,7 @@ import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
 
-/**
- * Created by Rajesh Dabhi on 14/7/2017.
- */
+
 
 public class Search_fragment extends Fragment {
 
@@ -188,9 +186,6 @@ public class Search_fragment extends Fragment {
 
 
 
-    /**
-     * Method to make json object request where json response starts wtih {
-     */
     private void makeGetProductRequest(String search_text) {
             progressDialog.show();
         // Tag used to cancel the request
@@ -216,15 +211,23 @@ public class Search_fragment extends Fragment {
 
                      modelList = gson.fromJson(response.getString("data"), listType);
 
-                        adapter_product = new Search_adapter(modelList, getActivity());
-                        rv_search.setAdapter(adapter_product);
-                        adapter_product.notifyDataSetChanged();
+
 
                         
                         if (getActivity() != null) {
                             if (modelList.isEmpty()) {
-                                img_no_item.setVisibility( View.GONE );
+                                img_no_item.setVisibility( View.VISIBLE );
+                                rv_search.setVisibility( View.GONE );
                                 Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+
+                            }
+                            else
+                            {
+                                img_no_item.setVisibility( View.GONE );
+                                rv_search.setVisibility( View.VISIBLE );
+                                adapter_product = new Search_adapter(modelList, getActivity());
+                                rv_search.setAdapter(adapter_product);
+                                adapter_product.notifyDataSetChanged();
                             }
                         }
 

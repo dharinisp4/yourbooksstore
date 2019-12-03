@@ -1202,11 +1202,18 @@ loadingBar.show();
                         }.getType();
                         product_modelList.clear();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
-                        adapter_product = new Product_adapter(product_modelList, getActivity());
-                        img_no_products.setVisibility(View.GONE);
-                        rv_cat.setVisibility(View.VISIBLE);
-                        rv_cat.setAdapter(adapter_product);
-                        adapter_product.notifyDataSetChanged();
+                        if (product_modelList.isEmpty())
+                        {
+                            img_no_products.setVisibility(View.VISIBLE);
+                            rv_cat.setVisibility( View.GONE );
+                        }
+                        else {
+                            adapter_product = new Product_adapter( product_modelList, getActivity() );
+                            img_no_products.setVisibility( View.GONE );
+                            rv_cat.setVisibility( View.VISIBLE );
+                            rv_cat.setAdapter( adapter_product );
+                            adapter_product.notifyDataSetChanged();
+                        }
 
 
 
