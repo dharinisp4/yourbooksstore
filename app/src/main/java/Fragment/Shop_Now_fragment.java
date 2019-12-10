@@ -150,23 +150,25 @@ public class Shop_Now_fragment extends Fragment {
 
                 try {
                     if (response != null && response.length() > 0) {
+                        if(!response.has("data"))
+                        {
+                            rv_items.setVisibility( View.GONE);
+                            img_no_itm.setVisibility(View.VISIBLE );
+
+                        }
                         Boolean status = response.getBoolean("responce");
                         if (status) {
                             Gson gson = new Gson();
                             Type listType = new TypeToken<List<ShopNow_model>>() {
                             }.getType();
                             category_modelList = gson.fromJson(response.getString("data"), listType);
-                            if (category_modelList.isEmpty())
-                            {
-                                rv_items.setVisibility( View.GONE);
-                                img_no_itm.setVisibility(View.VISIBLE );
-                            }
-                            else
-                            {
+
+                                rv_items.setVisibility( View.VISIBLE);
+                                img_no_itm.setVisibility(View.GONE );
                             adapter = new Shop_Now_adapter(category_modelList);
                             rv_items.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
-                        }
+
                             }
                     }
                 } catch (JSONException e) {

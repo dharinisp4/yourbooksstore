@@ -84,6 +84,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private Product_adapter adapter_product;
     private SliderLayout  banner_slider;
     String view_all ;
+    String getcat_title="";
     String language;
     Session_management session_management;
     String getcat_id="";
@@ -127,7 +128,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         String id = getArguments().getString("id");
         String get_deal_id = getArguments().getString("cat_deal");
         get_top_sale_id = getArguments().getString("cat_top_selling");
-        String getcat_title = getArguments().getString("title");
+         getcat_title = getArguments().getString("title");
         view_all = getArguments().getString( "viewall" );
         String filer_data=getArguments().getString("filter");
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_product_name));
@@ -171,6 +172,8 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
 
             if(!TextUtils.isEmpty(filer_data))
             {
+                getcat_title=getArguments().getString("title");
+                ((MainActivity )getActivity()).setTitle(getcat_title);
                 makeGetProductFilterRequest(filer_data);
             }
             //Deal Of The Day Products
@@ -1079,12 +1082,12 @@ loadingBar.show();
 
                          if (view_all.equals( "top" ))
                          {
-                             Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
+                             //Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
                              ddlg.dismiss();
                              makeAscendingTop(  );
                          }
                          else if (view_all.equals("category")) {
-                             Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
+                             //Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
                              ddlg.dismiss();
                              makeAscendingProductRequest( cat_id );
                          }
@@ -1097,12 +1100,12 @@ loadingBar.show();
 
                         if (view_all.equals( "top" ))
                         {
-                            Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeDescendingTop(  );
                         }
                         else if (view_all.equals( "category" )) {
-                            Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeDescendingProductRequest( cat_id );
                         }
@@ -1113,12 +1116,12 @@ loadingBar.show();
                     {
                         if (view_all.equals( "top" ))
                         {
-                            Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeNewestTop();
                         }
                         else if (view_all.equals( "category" )) {
-                            Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeNewestProductRequest( cat_id );
                         }
@@ -1136,16 +1139,23 @@ loadingBar.show();
 
         else if(id==R.id.img_filter)
         {
-
+            FilterActivity filterActivity=new FilterActivity();
             Bundle args = new Bundle();
-            Fragment fm = new FilterActivity();
             args.putString("category_id", getcat_id);
-            fm.setArguments(args);
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-             fragmentTransaction.replace(R.id.contentPanel, fm)
-                     .addToBackStack(null)
-                .commit();
+            args.putString("title", getcat_title);
+//         /   fm.setArguments(args);
+            filterActivity.setArguments(args);
+            FragmentManager fragmentManager=getFragmentManager();
+            filterActivity.show(fragmentManager,"Filter");
+            //            Bundle args = new Bundle();
+//            Fragment fm = new FilterActivity();
+//            args.putString("category_id", getcat_id);
+//         /   fm.setArguments(args);
+            //FragmentManager fragmentManager = getFragmentManager();
+
+          //   fragmentTransaction.replace(R.id.contentPanel, fm)
+//                     .addToBackStack(null)
+//                .commit();
 
 
 //         Intent intent=new Intent(getActivity(), FilterActivity.class);
@@ -1185,7 +1195,7 @@ loadingBar.show();
         params.put("subject", subject);
         params.put("language", language);
 
-        Toast.makeText(getActivity(),""+filter_data.toString(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(),""+filter_data.toString(),Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.GET_PRODUCT_FILTER, params, new Response.Listener<JSONObject>() {
 
@@ -1196,24 +1206,22 @@ loadingBar.show();
                 try {
                     loadingBar.dismiss();
                     Boolean status = response.getBoolean("responce");
+                    if(!response.has("dara"))
+                    {
+                        img_no_products.setVisibility(View.VISIBLE);
+                        rv_cat.setVisibility( View.GONE );
+                    }
                     if (status) {
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
                         product_modelList.clear();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
-                        if (product_modelList.isEmpty())
-                        {
-                            img_no_products.setVisibility(View.VISIBLE);
-                            rv_cat.setVisibility( View.GONE );
-                        }
-                        else {
                             adapter_product = new Product_adapter( product_modelList, getActivity() );
                             img_no_products.setVisibility( View.GONE );
                             rv_cat.setVisibility( View.VISIBLE );
                             rv_cat.setAdapter( adapter_product );
                             adapter_product.notifyDataSetChanged();
-                        }
 
 
 

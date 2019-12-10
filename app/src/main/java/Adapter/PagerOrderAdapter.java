@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import Fragment.My_Pending_Order;
 import Fragment.My_Past_Order;
+import Fragment.My_cancel_order_fragment;
 
 
 public class PagerOrderAdapter extends FragmentStatePagerAdapter {
@@ -26,6 +27,9 @@ public class PagerOrderAdapter extends FragmentStatePagerAdapter {
             case 1:
                 My_Past_Order tab2 = new My_Past_Order();
                 return tab2;
+                case 2:
+                My_cancel_order_fragment tab3 = new My_cancel_order_fragment();
+                return tab3;
             default:
                 return null;
         }

@@ -1,7 +1,6 @@
 package Fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,53 +31,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Adapter.My_Past_Order_adapter;
+import Adapter.My_Cancel_Order_adapter;
+import Adapter.My_Pending_Order_adapter;
 import Config.BaseURL;
-import Model.My_Past_order_model;
+import Model.My_Cancel_order_model;
+import Model.My_Pending_order_model;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.MyOrderDetail;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
-import util.RecyclerTouchListener;
 import util.Session_management;
 
-public class My_Past_Order extends Fragment {
+/**
+ * Developed by Binplus Technologies pvt. ltd.  on 02,December,2019
+ */
+public class My_cancel_order_fragment extends Fragment {
 
-    //  private static String TAG = Fragment.My_Past_Order.class.getSimpleName();
+    private RecyclerView rv_mycancel;
 
-    private RecyclerView rv_myorder;
-
-    private List<My_Past_order_model> my_order_modelList = new ArrayList<>();
+    RelativeLayout rel_no;
+    private List<My_Cancel_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
     ProgressDialog progressDialog;
-    RelativeLayout rel_no;
-
-    public My_Past_Order() {
-        // Required empty public constructor
+    public My_cancel_order_fragment() {
     }
 
+    private static String TAG = My_cancel_order_fragment.class.getSimpleName();
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        progressDialog=new ProgressDialog(getActivity());
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setMessage("Loading...");
-
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_past_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_cancel_order, container, false);
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
-        // ((My_Order_activity) getActivity()).setTitle(getResources().getString(R.string.my_order));
-
-
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -97,9 +85,9 @@ public class My_Past_Order extends Fragment {
             }
         });
 
-        rel_no=(RelativeLayout)view.findViewById(R.id.rel_no);
-        rv_myorder = (RecyclerView) view.findViewById(R.id.rv_myorder);
-        rv_myorder.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv_mycancel = (RecyclerView) view.findViewById(R.id.rv_mycancel);
+        rel_no = (RelativeLayout) view.findViewById(R.id.rel_no);
+        rv_mycancel.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Session_management sessionManagement = new Session_management(getActivity());
         String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
@@ -115,87 +103,55 @@ public class My_Past_Order extends Fragment {
             ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
         }
 
-        // recyclerview item click listener
-        rv_myorder.addOnItemTouchListener(new
-
-                RecyclerTouchListener(getActivity(), rv_myorder, new RecyclerTouchListener.OnItemClickListener()
-
-        {
-            @Override
-            public void onItemClick(View view, int position) {
-                String sale_id = my_order_modelList.get(position).getSale_id();
-                String date = my_order_modelList.get(position).getOn_date();
-                String time = my_order_modelList.get(position).getDelivery_time_from();
-                String total = my_order_modelList.get(position).getTotal_amount();
-                String status = my_order_modelList.get(position).getStatus();
-                String deli_charge = my_order_modelList.get(position).getDelivery_charge();
-                Intent intent=new Intent(getContext(), MyOrderDetail.class);
-                intent.putExtra("sale_id", sale_id);
-                intent.putExtra("date", date);
-                intent.putExtra("time", time);
-                intent.putExtra("total", total);
-                intent.putExtra("status", status);
-                intent.putExtra("deli_charge", deli_charge);
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
-
         return view;
     }
 
 
-    /**
-     * Method to make json array request where json response starts wtih
-     */
     private void makeGetOrderRequest(String userid) {
-        // Tag used to cancel the request
         String tag_json_obj = "json_socity_req";
+        progressDialog.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", userid);
-        progressDialog.show();
+
         CustomVolleyJsonArrayRequest jsonObjReq = new CustomVolleyJsonArrayRequest(Request.Method.POST,
-                BaseURL.GET_DELIVERD_ORDER_URL, params, new Response.Listener<JSONArray>() {
+                BaseURL.GET_CANCEL_ORDERS, params, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("assst",response.toString());
+                Log.d(TAG, response.toString());
+                progressDialog.dismiss();
                 Gson gson = new Gson();
-                Type listType = new TypeToken<List<My_Past_order_model>>() {
+                Type listType = new TypeToken<List<My_Cancel_order_model>>() {
                 }.getType();
+
                 my_order_modelList = gson.fromJson(response.toString(), listType);
-                My_Past_Order_adapter adapter = new My_Past_Order_adapter(my_order_modelList);
-                rv_myorder.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                My_Cancel_Order_adapter myPendingOrderAdapter = new My_Cancel_Order_adapter(my_order_modelList);
+                rv_mycancel.setAdapter(myPendingOrderAdapter);
+                myPendingOrderAdapter.notifyDataSetChanged();
                 if(response.length()<=0)
                 {
                     rel_no.setVisibility(View.VISIBLE);
-                    rv_myorder.setVisibility(View.GONE);
+                    rv_mycancel.setVisibility(View.GONE);
                 }
-                //Toast.makeText(getActivity(), ""+response.length(), Toast.LENGTH_SHORT).show();
+
                 if (my_order_modelList.isEmpty()) {
-                   // Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                 }
-                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 
     }
 
-
-}
+    }

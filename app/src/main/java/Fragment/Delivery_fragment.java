@@ -152,6 +152,9 @@ String language;
         btn_checkout.setOnClickListener(this);
 
         String date = sessionManagement.getdatetime().get(BaseURL.KEY_DATE);
+
+      //  String time = sessionManagement.getdatetime().get(BaseURL.KEY_TIME);
+
         String time = sessionManagement.getdatetime().get(BaseURL.KEY_TIME);
 
 
@@ -207,6 +210,8 @@ String language;
         int id = view.getId();
 
         if (id == R.id.btn_deli_checkout) {
+            String c_time=getCurrentTime(getdate);
+            //Toast.makeText(getActivity(),"dt :-- "+getCurrentTime(getdate),Toast.LENGTH_LONG).show();
             attemptOrder();
         } else if (id == R.id.tv_deli_date) {
             getdate();
@@ -281,7 +286,7 @@ String language;
 
             }
         } );
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         datePickerDialog.show();
 
     }
@@ -300,11 +305,12 @@ String language;
             Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
             cancel = true;
             progressDialog.dismiss();
-        } else if (TextUtils.isEmpty(gettime)) {
-            Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
-            cancel = true;
-            progressDialog.dismiss();
         }
+//        else if (TextUtils.isEmpty(gettime)) {
+//            Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
+//            cancel = true;
+//            progressDialog.dismiss();
+//        }
 
         if (!delivery_address_modelList.isEmpty()) {
             if (adapter.ischeckd()) {
@@ -331,7 +337,7 @@ String language;
           //  Toast.makeText(getActivity(), "date:"+deli_charges, Toast.LENGTH_SHORT).show();
 
             sessionManagement.cleardatetime();
-
+            gettime=getCurrentTime(getdate);
             Bundle args = new Bundle();
             Fragment fm = new Delivery_payment_detail_fragment();
             HashMap<String,String> addmap = adapter.getAlladdress();
@@ -356,7 +362,7 @@ String language;
             args.putString( "product_id",product_id );
             args.putString( "total",buy_now_tot );
             args.putString( "type",type );
-            Toast.makeText(getActivity(),""+type,Toast.LENGTH_LONG).show();
+           // Toast.makeText(getActivity(),""+type,Toast.LENGTH_LONG).show();
             fm.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
@@ -464,4 +470,61 @@ String language;
         }
     };
 
+
+    public String getCurrentTime(String getdate)
+    {
+        sessionManagement.cleardatetime();
+
+
+        String curr="";
+        try
+        {
+            Date date=new Date();
+            SimpleDateFormat smdf=new SimpleDateFormat("HH:mm aa");
+            String ct=set12TimeFormat(smdf.format(date));
+            curr=ct+"-"+ct;
+            sessionManagement.creatdatetime(getdate,curr);
+
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        return curr;
+    }
+
+    public String set12TimeFormat(String time)
+    {
+        String tm="";
+         String[] time_arr=time.split(":");
+         int t=Integer.parseInt(time_arr[0].toString());
+         if(t<=12)
+         {
+             if(t<10)
+             {
+                 tm="0"+String.valueOf(t);
+             }
+             else
+             {
+                 tm=String.valueOf(t);
+             }
+
+         }
+         else
+         {
+             int tmm=t-12;
+             if(tmm<10)
+             {
+                 tm="0"+String.valueOf(tmm);
+             }
+             else
+             {
+                 tm=String.valueOf(tmm);
+             }
+
+         }
+
+         String c_tm=tm+":"+time_arr[1].toString();
+         return c_tm;
+    }
 }

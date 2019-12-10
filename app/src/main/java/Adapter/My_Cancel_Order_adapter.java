@@ -17,22 +17,23 @@ import android.widget.TextView;
 import java.util.List;
 
 import Config.BaseURL;
+import Model.My_Cancel_order_model;
 import Model.My_Pending_order_model;
 import gogrocer.tcc.R;
 import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Order_adapter.MyViewHolder> {
+public class My_Cancel_Order_adapter extends RecyclerView.Adapter<My_Cancel_Order_adapter.MyViewHolder> {
 
-    private List<My_Pending_order_model> modelList;
+    private List<My_Cancel_order_model> modelList;
     private LayoutInflater inflater;
     private Fragment currentFragment;
     SharedPreferences preferences;
     private Context context;
     Session_management session_management;
 
-    public My_Pending_Order_adapter(Context context, List<My_Pending_order_model> modemodelList, final Fragment currentFragment) {
+    public My_Cancel_Order_adapter(Context context, List<My_Cancel_order_model> modemodelList, final Fragment currentFragment) {
 
         this.context = context;
         this.modelList = modelList;
@@ -97,21 +98,21 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
         }
     }
 
-    public My_Pending_Order_adapter(List<My_Pending_order_model> modelList) {
+    public My_Cancel_Order_adapter(List<My_Cancel_order_model> modelList) {
         this.modelList = modelList;
     }
 
     @Override
-    public My_Pending_Order_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_my_past_order_rv, parent, false);
+    public My_Cancel_Order_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_my_cancel_order_rv, parent, false);
         context = parent.getContext();
-        return new My_Pending_Order_adapter.MyViewHolder(itemView);
+        return new My_Cancel_Order_adapter.MyViewHolder(itemView);
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(My_Pending_Order_adapter.MyViewHolder holder, int position) {
-        My_Pending_order_model mList = modelList.get(position);
+    public void onBindViewHolder(My_Cancel_Order_adapter.MyViewHolder holder, int position) {
+        My_Cancel_order_model mList = modelList.get(position);
 
         holder.tv_orderno.setText(mList.getSale_id());
 
@@ -170,14 +171,14 @@ holder.linearLayout.setVisibility(View.GONE);
             timeto=timeto.replace("pm","م");
             timeto=timeto.replace("am","ص");
 
-            String time=timefrom + "-" + timeto;
+            String time=timefrom ;
 
             holder.tv_time.setText(time);
         }else {
 
             String timefrom=mList.getDelivery_time_from();
             String timeto=mList.getDelivery_time_to();
-            String time=timefrom ;
+            String time=timefrom;
 
             holder.tv_time.setText(time);
 
@@ -188,52 +189,11 @@ holder.linearLayout.setVisibility(View.GONE);
 //        holder.tv_pending_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
         holder.tv_pending_date.setText(mList.getOn_date());
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        if(mList.getConfirm_date().equals(""))
-        {
-            holder.tv_confirm_date.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            holder.tv_confirm_date.setVisibility(View.VISIBLE);
-            holder.tv_confirm_date.setText(mList.getConfirm_date());
-        }
-
-        String status=mList.getStatus().toString();
-
-            holder.tv_cancel_date.setVisibility(View.INVISIBLE);
-            if(mList.getDelivered_date().equals(""))
-            {
-                holder.tv_delevered_date.setVisibility(View.INVISIBLE);
-            }
-            else
-            {
-                holder.tv_delevered_date.setVisibility(View.VISIBLE);
-                holder.tv_delevered_date.setText(mList.getDelivered_date());
-            }
-
-         if(status.equals("4"))
-        {
-            if(mList.getDelivered_date().equals(""))
-            {
-                holder.tv_cancel_date.setVisibility(View.INVISIBLE);
-            }
-            else
-            {
-                holder.tv_cancel_date.setVisibility(View.VISIBLE);
-                holder.tv_cancel_date.setText(mList.getDelivered_date());
-            }
-        }
-        else
-        {
-            holder.tv_cancel_date.setVisibility(View.INVISIBLE);
-
-        }
-
-
+        holder.tv_confirm_date.setText(mList.getOn_date());
 //        holder.tv_delevered_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-       // holder.tv_delevered_date.setText(mList.getOn_date());
+        holder.tv_delevered_date.setText(mList.getOn_date());
 //        holder.tv_cancel_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-       // holder.tv_cancel_date.setText(mList.getOn_date());
+        holder.tv_cancel_date.setText(mList.getOn_date());
 
         holder.tv_email.setText(mList.getReceiver_mobile());
         holder.tv_address.setText(mList.getReceiver_name());

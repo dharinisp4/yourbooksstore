@@ -1,6 +1,7 @@
 package gogrocer.tcc;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,18 +37,20 @@ import Config.BaseURL;
 import Fragment.Product_fragment;
 import util.CustomVolleyJsonRequest;
 
-public class FilterActivity extends Fragment {
+public class FilterActivity extends DialogFragment implements View.OnClickListener{
 
     Dialog ProgressDialog;
-    CheckBox chk_bk_class,chk_bk_subject,chk_bk_language;
+    Button chk_bk_class,chk_bk_subject,chk_bk_language;
     RecyclerView rv_class,rv_subject,rv_language;
     String cat_id="";
+    String cat_title="";
+    LinearLayout lin_data,lin_apply,lin_filter;
     List<String> list_class;
     List<String> list_language;
     List<String> list_subject;
     FilterAdapter filterAdapter;
-    Button btn_apply,btn_clear;
-   public static TextView txt_class,txt_subject,txt_language;
+    Button btn_apply;
+   public static TextView txt_class,txt_subject,txt_language,txtNo;
     ImageView img_back;
     public static String book_class="",subject="",language="";
     int flag=0;
@@ -61,16 +65,21 @@ public class FilterActivity extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
 
-        chk_bk_class=(CheckBox)view.findViewById(R.id.chk_bk_class);
-        chk_bk_subject=(CheckBox)view.findViewById(R.id.chk_bk_subject);
-        chk_bk_language=(CheckBox)view.findViewById(R.id.chk_bk_language);
+        chk_bk_class=(Button)view.findViewById(R.id.chk_bk_class);
+        chk_bk_subject=(Button)view.findViewById(R.id.chk_bk_subject);
+        chk_bk_language=(Button)view.findViewById(R.id.chk_bk_language);
 
         btn_apply=(Button)view.findViewById(R.id.btn_apply);
-        btn_clear=(Button)view.findViewById(R.id.btn_clear);
+       // btn_clear=(Button)view.findViewById(R.id.btn_clear);
 
         txt_class=(TextView)view.findViewById(R.id.txt_class);
         txt_subject=(TextView)view.findViewById(R.id.txt_subject);
         txt_language=(TextView)view.findViewById(R.id.txt_language);
+        txtNo=(TextView)view.findViewById(R.id.txtNo);
+
+        lin_apply=(LinearLayout)view.findViewById(R.id.lin_apply);
+        lin_filter=(LinearLayout)view.findViewById(R.id.lin_filter);
+        lin_data=(LinearLayout)view.findViewById(R.id.lin_data);
 
       //  img_back=(ImageView)view.findViewById(R.id.img_back);
 
@@ -90,7 +99,7 @@ public class FilterActivity extends Fragment {
 //        });
 
         cat_id= getArguments().getString("category_id");
-
+        cat_title=getArguments().getString("title");
         list_class=new ArrayList<>();
         list_subject=new ArrayList<>();
         list_language=new ArrayList<>();
@@ -112,77 +121,82 @@ public class FilterActivity extends Fragment {
         createClassList(cat_id);
 
 
-        chk_bk_class.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        chk_bk_class.setOnClickListener(this);
+        chk_bk_subject.setOnClickListener(this);
+        chk_bk_language.setOnClickListener(this);
 
-                if(b)
-                {
-                    createBookClassList(cat_id);
-                    if(chk_bk_subject.isChecked())
-                    {
-                        chk_bk_subject.setChecked(false);
-                    }
-                    if(chk_bk_language.isChecked())
-                    {
-                        chk_bk_language.setChecked(false);
-                    }
-                }
-                else
-                {
-                    rv_class.setVisibility(View.GONE);
-                }
 
-            }
-        });
-
-        chk_bk_language.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b)
-                {
-                   createLanguageList(cat_id);
-                    if(chk_bk_subject.isChecked())
-                    {
-                        chk_bk_subject.setChecked(false);
-                    }
-                    if(chk_bk_class.isChecked())
-                    {
-                        chk_bk_class.setChecked(false);
-                    }
-                }
-                else
-                {
-                   rv_language.setVisibility(View.GONE);
-                }
-
-            }
-        });
-
-        chk_bk_subject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b)
-                {
-                    createSubjectList(cat_id);
-                    if(chk_bk_language.isChecked())
-                    {
-                        chk_bk_language.setChecked(false);
-                    }
-                    if(chk_bk_class.isChecked())
-                    {
-                        chk_bk_class.setChecked(false);
-                    }
-                }
-                else
-                {
-                    rv_subject.setVisibility(View.GONE);
-                }
-
-            }
-        });
+//        chk_bk_class.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//                if(b)
+//                {
+//                    createBookClassList(cat_id);
+//                    if(chk_bk_subject.isChecked())
+//                    {
+//                        chk_bk_subject.setChecked(false);
+//                    }
+//                    if(chk_bk_language.isChecked())
+//                    {
+//                        chk_bk_language.setChecked(false);
+//                    }
+//                }
+//                else
+//                {
+//                    rv_class.setVisibility(View.GONE);
+//                }
+//
+//            }
+//        });
+//
+//        chk_bk_language.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//                if(b)
+//                {
+//                   createLanguageList(cat_id);
+//                    if(chk_bk_subject.isChecked())
+//                    {
+//                        chk_bk_subject.setChecked(false);
+//                    }
+//                    if(chk_bk_class.isChecked())
+//                    {
+//                        chk_bk_class.setChecked(false);
+//                    }
+//                }
+//                else
+//                {
+//                   rv_language.setVisibility(View.GONE);
+//                }
+//
+//            }
+//        });
+//
+//        chk_bk_subject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//                if(b)
+//                {
+//                    createSubjectList(cat_id);
+//                    if(chk_bk_language.isChecked())
+//                    {
+//                        chk_bk_language.setChecked(false);
+//                    }
+//                    if(chk_bk_class.isChecked())
+//                    {
+//                        chk_bk_class.setChecked(false);
+//                    }
+//                }
+//                else
+//                {
+//                    rv_subject.setVisibility(View.GONE);
+//                }
+//
+//            }
+//        });
 
 
         btn_apply.setOnClickListener(new View.OnClickListener() {
@@ -203,12 +217,14 @@ public class FilterActivity extends Fragment {
                 }
                 JSONArray array=new JSONArray();
                 array.put(object);
-
+                dismiss();
                 String data=array.toString();
                 //String data=cat_id+"@"+book_class+","+subject+","+language;
                 Bundle args = new Bundle();
                 Fragment fm = new Product_fragment();
                 args.putString("filter", data);
+                args.putString("title",cat_title);
+
                 fm.setArguments(args);
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction=  fragmentManager.beginTransaction();
@@ -261,6 +277,8 @@ public class FilterActivity extends Fragment {
                         {
                             chk_bk_language.setVisibility(View.VISIBLE);
                              }
+
+
                        //  else if(object.has()) {
                         //Toast.makeText(getActivity(),"a- "+a+"\n b- "+b+"\n c- "+c+"\n date: --"+object.toString(),Toast.LENGTH_LONG).show();
 
@@ -279,7 +297,9 @@ public class FilterActivity extends Fragment {
                     }
                     else if(status.equals("failed")) {
 
-                       // Toast.makeText(getActivity(),"There are no filter in this category \n "+response.getString("data").toString(),Toast.LENGTH_LONG).show();
+                        txtNo.setVisibility(View.VISIBLE);
+
+                        // Toast.makeText(getActivity(),"There are no filter in this category \n "+response.getString("data").toString(),Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -497,4 +517,70 @@ public class FilterActivity extends Fragment {
 
     }
 
+    @Override
+    public void onClick(View view) {
+
+        int id=view.getId();
+
+        if(id == R.id.chk_bk_class)
+        {
+            chk_bk_class.setBackgroundColor(getActivity().getResources().getColor(R.color.add_cart));
+            chk_bk_language.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            chk_bk_subject.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            if(lin_data.getVisibility()==View.GONE)
+            {
+                lin_data.setVisibility(View.VISIBLE);
+            }
+            if(lin_apply.getVisibility()==View.GONE)
+            {
+                lin_apply.setVisibility(View.VISIBLE);
+            }
+            if(lin_filter.getVisibility()==View.GONE)
+            {
+                lin_filter.setVisibility(View.VISIBLE);
+            }
+            createBookClassList(cat_id);
+
+        }
+        else if(id == R.id.chk_bk_language)
+        {
+            chk_bk_class.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            chk_bk_language.setBackgroundColor(getActivity().getResources().getColor(R.color.add_cart));
+            chk_bk_subject.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            if(lin_data.getVisibility()==View.GONE)
+            {
+                lin_data.setVisibility(View.VISIBLE);
+            }
+            if(lin_apply.getVisibility()==View.GONE)
+            {
+                lin_apply.setVisibility(View.VISIBLE);
+            }
+            if(lin_filter.getVisibility()==View.GONE)
+            {
+                lin_filter.setVisibility(View.VISIBLE);
+            }
+            createLanguageList(cat_id);
+
+        }
+        else if(id == R.id.chk_bk_subject)
+        {
+            chk_bk_class.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            chk_bk_language.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            chk_bk_subject.setBackgroundColor(getActivity().getResources().getColor(R.color.add_cart));
+            if(lin_data.getVisibility()==View.GONE)
+            {
+                lin_data.setVisibility(View.VISIBLE);
+            }
+            if(lin_apply.getVisibility()==View.GONE)
+            {
+                lin_apply.setVisibility(View.VISIBLE);
+            }
+            if(lin_filter.getVisibility()==View.GONE)
+            {
+                lin_filter.setVisibility(View.VISIBLE);
+            }
+            createSubjectList(cat_id);
+
+        }
+    }
 }

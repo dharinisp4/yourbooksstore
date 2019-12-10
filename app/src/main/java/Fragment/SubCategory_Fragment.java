@@ -131,11 +131,19 @@ public class SubCategory_Fragment extends Fragment {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
 
+                        if(!response.has("data"))
+                        {
+                            no_item_found.setVisibility( View.VISIBLE );
+                            rv_items.setVisibility( View.GONE );
+
+                        }
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<Home_Icon_model>>() {}.getType();
                         category_modelList = gson.fromJson(response.getString("data"), listType);
                         if (!category_modelList.isEmpty()) {
                             rv_items.setVisibility( View.VISIBLE);
+                            no_item_found.setVisibility( View.GONE );
+                            rv_items.setVisibility( View.VISIBLE );
 
                             home_icon_adapter=new Home_Icon_Adapter(category_modelList);
                             rv_items.setAdapter(home_icon_adapter);

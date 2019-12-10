@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +37,9 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
     private static String TAG = Delivery_payment_detail_fragment.class.getSimpleName();
 
-    double charges=0;
-    private TextView tv_timeslot, tv_address, tv_total;
+   String charges="";
+    String chg="";
+    private TextView tv_timeslot, tv_address, tv_total,tvstan;
     private LinearLayout btn_order;
 
     private TextView recivername,mobileno,pincode,Address,tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal;
@@ -56,6 +58,8 @@ public class Delivery_payment_detail_fragment extends Fragment {
     private Session_management sessionManagement;
     ProgressDialog progressDialog;
     String buy_now_tot ,type;
+    RelativeLayout rel_stan;
+
 
     public Delivery_payment_detail_fragment() {
         // Required empty public constructor
@@ -93,10 +97,13 @@ public class Delivery_payment_detail_fragment extends Fragment {
         tvDiscount = view.findViewById( R.id.tvDiscount );
         tvDelivary = view.findViewById( R.id.tvDelivary );
         tvSubTotal = view.findViewById( R.id.tvSubTotal );
+        tvstan = view.findViewById( R.id.tvstan );
         recivername =view.findViewById( R.id.recivername );
         mobileno = view.findViewById( R.id.mobileno );
         pincode = view.findViewById( R.id.pincode );
         Address = view.findViewById( R.id.Address );
+        rel_stan = view.findViewById( R.id.rel_stan );
+
         // Houseno = view.findViewById( R.idi.Houseno );
         //  Society = view.findViewById( R.d.Society );
 
@@ -134,10 +141,32 @@ public class Delivery_payment_detail_fragment extends Fragment {
         pincode.setText( pin );
         Address.setText( societys );
 
+        if(type.equals("standard"))
+        {
+            rel_stan.setVisibility(View.VISIBLE);
+
+          //  getStandardCharges();
+            charges=sessionManagement.getStandardCharges();
+            tvstan.setText(getActivity().getResources().getString(R.string.currency)+String.valueOf(charges));
+//            Toast.makeText(getActivity(),""+charges,Toast.LENGTH_LONG).show();
+        }
+
+
+
+
         if (checkout.equalsIgnoreCase( "null" )) {
 
             tvItems.setText( String.valueOf( db_cart.getCartCount() ) );
-            total = Double.parseDouble( db_cart.getTotalAmount() ) + deli_charges;
+            if(type.equals("standard"))
+            {
+
+                total = Double.parseDouble( db_cart.getTotalAmount() ) + deli_charges+Double.parseDouble(charges);
+
+            }
+            else
+            {
+                total = Double.parseDouble( db_cart.getTotalAmount() ) + deli_charges;
+            }
             // String mrp= String.valueOf(db_cart.getTotalMRP());
             String price = String.valueOf( db_cart.getTotalAmount() );
             tvMrp.setText( getResources().getString( R.string.currency ) + price );
@@ -155,6 +184,17 @@ public class Delivery_payment_detail_fragment extends Fragment {
              tvItems.setText("1");
 
             tvMrp.setText( getResources().getString( R.string.currency ) + t_price );
+
+            if(type.equals("standard"))
+            {
+                total = t_price+deli_charges+ deli_charges+Double.parseDouble(charges);
+
+            }
+            else
+            {
+                total = t_price+deli_charges;
+
+            }
             total = t_price+deli_charges;
             tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
             tvSubTotal.setText( getResources().getString( R.string.currency ) + total );
@@ -200,7 +240,14 @@ public class Delivery_payment_detail_fragment extends Fragment {
         return view;
     }
 
-//    private void attemptOrder() {
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+    }
+
+    //    private void attemptOrder() {
 //        // retrive data from cart database
 //        ArrayList<HashMap<String, String>> items = db_cart.getCartAll();
 //        if (items.size() > 0) {
@@ -290,41 +337,5 @@ public class Delivery_payment_detail_fragment extends Fragment {
 //    }
 
 
-    public void getStandardCharges()
-    {
-        progressDialog.show();
-        String json_tag="json_charges";
-        HashMap<String,String> map=new HashMap<>();
-        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_STANDARD_CHARGES, map, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
 
-                try {
-                    progressDialog.dismiss();
-                    String status=response.getString("status");
-                    if(status.equals("success"))
-                    {
-                        charges=Double.parseDouble(response.getString("data"));
-                    }
-                    else
-                    {
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    progressDialog.dismiss();
-                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
-    }
 }

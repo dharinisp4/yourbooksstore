@@ -28,6 +28,9 @@ public class BaseURL {
     public static final String KEY_DATE = "date";
     public static final String KEY_TIME = "time";
     public static final String KEY_CAT = "cat_id";
+    public static final String KEY_STAN = "standard";
+    public static final String KEY_CNT = "img_count";
+
 
     //Store Selection
 
@@ -152,5 +155,6 @@ public class BaseURL {
     public static String GET_ORDER_WALLET = BASE_URL + "index.php/api/send_order_with_wallet";
     public static String GET_UPLOAD = BASE_URL + "index.php/api/upload_images";
     public static String GET_STANDARD_CHARGES = BASE_URL + "index.php/api/get_standard_delivery_charges";
+    public static String GET_CANCEL_ORDERS = BASE_URL + "index.php/api/my_cancel_orders";
 
 }

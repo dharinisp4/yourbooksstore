@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundgrey"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/space_8"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/rel_no"
@@ -34,7 +32,7 @@
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_myorder"
+            android:id="@+id/rv_mycancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

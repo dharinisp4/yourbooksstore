@@ -435,17 +435,17 @@ session_management=new Session_management(getActivity());
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(getActivity(), SelectStore.class);
-                startActivity(intent);
-//                Bundle args = new Bundle();
-//                Fragment fm = new Product_fragment();
-//                args.putString("cat_top_selling", "2");
-//                args.putString( "viewall","top" );
-//                args.putString("title","Top Selling Products");
-//                fm.setArguments(args);
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-//                        .addToBackStack(null).commit();
+//                Intent intent=new Intent(getActivity(), SelectStore.class);
+//                startActivity(intent);
+                Bundle args = new Bundle();
+                Fragment fm = new Product_fragment();
+                args.putString("cat_top_selling", "2");
+                args.putString( "viewall","top" );
+                args.putString("title","Top Selling Products");
+                fm.setArguments(args);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                        .addToBackStack(null).commit();
 
             }
         });

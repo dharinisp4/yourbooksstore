@@ -57,6 +57,7 @@ import util.JSONParser;
 import util.NameValuePair;
 import util.Session_management;
 
+import static Config.BaseURL.KEY_CNT;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -191,9 +192,25 @@ String userId="";
             }
             else
             {
+                String c="";
+                String cnt=sessionManagement.getUpdateProfile().get(KEY_CNT);
+                if( TextUtils.isEmpty(cnt))
+                {
+                    c="0";
+                }
+                else
+                {
+                    int f=Integer.parseInt(cnt);
+                    f++;
+                    c=String.valueOf(f);
+                }
                 String name=user_name+userId;
-                uplaodImage(name,user_name);
+                String n=name+c+".jpg";
+
+
+                uplaodImage(n,user_name,c);
             }
+
 
         }
 
@@ -223,6 +240,7 @@ String userId="";
             Uri path=data.getData();
             try
             {
+                Toast.makeText(getActivity(),""+data,Toast.LENGTH_LONG).show();
                 flag=2;
                 bitmap= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),path);
                 iv_profile.setImageBitmap(bitmap);
@@ -250,7 +268,7 @@ String userId="";
         return Base64.encodeToString(imgBytes,Base64.DEFAULT);
     }
 
-    public void uplaodImage(final String name, final String user_name)
+    public void uplaodImage(final String name, final String user_name, final String c)
     {
         progressDialog.show();
         String user_id=session_management.getUserDetails().get(BaseURL.KEY_ID).toString();
@@ -267,12 +285,20 @@ String userId="";
                 progressDialog.dismiss();
                 try
                 {
-                    String n=name+".jpg";
+
                     boolean b=response.getBoolean("responce");
                     if(b)
                     {
 
-                        sessionManagement.updateProfile(n,user_name);
+                        sessionManagement.updateProfile(name,user_name,c);
+                        Glide.with( getActivity() )
+                                .load( BaseURL.IMG_PROFILE_URL + name)
+                                .fitCenter()
+                                .placeholder( R.drawable.user )
+                                .crossFade()
+                                .diskCacheStrategy( DiskCacheStrategy.ALL )
+                                .dontAnimate()
+                                .into( MainActivity.iv_profile );
                         Toast.makeText(getActivity(),""+response.getString("message"),Toast.LENGTH_LONG).show();
                     }
                     else
@@ -313,7 +339,6 @@ String userId="";
                 progressDialog.dismiss();
                 try
                 {
-
                     boolean b=response.getBoolean("responce");
                     if(b)
                     {

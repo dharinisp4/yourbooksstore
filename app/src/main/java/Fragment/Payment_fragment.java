@@ -389,7 +389,7 @@ public class Payment_fragment extends Fragment {
         params.put("total_ammount",total_amount);
         params.put("payment_method", getvalue);
         params.put("data", passArray.toString());
-       // Toast.makeText(getActivity(),"\n t_amt:- "+total_amount+"\n p-method"+getvalue+"\n"+passArray,Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),"date "+date+"\ntime  "+gettime+"\n user_id "+userid+"\n location "+location+"\n srote_id "+store_id+"\n t_amt:- "+total_amount+"\n p-method"+getvalue+"\n"+passArray,Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.ADD_ORDER_URL, params, new Response.Listener<JSONObject>() {
             @Override
@@ -844,6 +844,7 @@ public class Payment_fragment extends Fragment {
 
 
     public void getRefresrh() {
+        progressDialog.show();
         String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         RequestQueue rq = Volley.newRequestQueue(getActivity());
         StringRequest strReq = new StringRequest(Request.Method.GET, BaseURL.WALLET_REFRESH + user_id,

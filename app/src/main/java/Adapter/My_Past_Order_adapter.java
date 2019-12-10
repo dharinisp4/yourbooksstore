@@ -37,8 +37,8 @@ SharedPreferences preferences;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_orderno, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date;
-        public TextView tv_pending_date, tv_pending_time, tv_confirm_date, tv_confirm_time, tv_delevered_date, tv_delevered_time, tv_cancel_date, tv_cancel_time;
+        public TextView tv_orderno, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date,tv_email;
+        public TextView tv_pending_date, tv_pending_time, tv_confirm_date, tv_confirm_time, tv_address,tv_delevered_date, tv_delevered_time, tv_cancel_date, tv_cancel_time;
         public View view1, view2, view3, view4, view5, view6;
         public RelativeLayout relative_background;
         public ImageView Confirm, Out_For_Deliverde, Delivered;
@@ -49,8 +49,10 @@ SharedPreferences preferences;
 
         public MyViewHolder(View view) {
             super(view);
+            tv_address = view.findViewById(R.id.user_address);
             tv_orderno = (TextView) view.findViewById(R.id.tv_order_no);
             tv_status = (TextView) view.findViewById(R.id.tv_order_status);
+            tv_email = view.findViewById(R.id.email);
             relativetextstatus = (TextView) view.findViewById(R.id.status);
             tv_tracking_date = (TextView) view.findViewById(R.id.tracking_date);
             tv_date = (TextView) view.findViewById(R.id.tv_order_date);
@@ -161,7 +163,7 @@ SharedPreferences preferences;
             timeto=timeto.replace("pm","م");
             timeto=timeto.replace("am","ص");
 
-            String time=timefrom + "-" + timeto;
+            String time=timefrom ;
 
             holder.tv_time.setText(time);
         }else {
@@ -174,16 +176,20 @@ SharedPreferences preferences;
 
         }
 
+        holder.tv_email.setText(mList.getReceiver_mobile());
+        holder.tv_address.setText(mList.getReceiver_name());
         holder.tv_price.setText(context.getResources().getString(R.string.currency) + mList.getTotal_amount());
         holder.tv_item.setText(context.getResources().getString(R.string.tv_cart_item) + mList.getTotal_items());
 //        holder.tv_pending_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
         holder.tv_pending_date.setText(mList.getOn_date());
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_confirm_date.setText(mList.getOn_date());
-//        holder.tv_delevered_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_delevered_date.setText(mList.getOn_date());
-//        holder.tv_cancel_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_cancel_date.setText(mList.getOn_date());
+
+            holder.tv_confirm_date.setText(mList.getConfirm_date());
+
+            holder.tv_delevered_date.setText(mList.getDelivered_date());
+                holder.tv_cancel_date.setText(mList.getDelivered_date());
+
+
     }
 
 

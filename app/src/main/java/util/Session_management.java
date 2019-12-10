@@ -12,6 +12,7 @@ import gogrocer.tcc.MainActivity;
 import static Config.BaseURL.BASE_URL;
 import static Config.BaseURL.IS_LOGIN;
 import static Config.BaseURL.KEY_CAT;
+import static Config.BaseURL.KEY_CNT;
 import static Config.BaseURL.KEY_DATE;
 import static Config.BaseURL.KEY_EMAIL;
 import static Config.BaseURL.KEY_HOUSE;
@@ -25,6 +26,7 @@ import static Config.BaseURL.KEY_PINCODE;
 import static Config.BaseURL.KEY_REWARDS_POINTS;
 import static Config.BaseURL.KEY_SOCITY_ID;
 import static Config.BaseURL.KEY_SOCITY_NAME;
+import static Config.BaseURL.KEY_STAN;
 import static Config.BaseURL.KEY_TIME;
 import static Config.BaseURL.KEY_WALLET_Ammount;
 import static Config.BaseURL.PREFS_NAME;
@@ -211,10 +213,11 @@ public class Session_management {
     }
 
 
-    public void updateProfile(String image,String name)
+    public void updateProfile(String image,String name,String cnt)
     {
        editor.putString(KEY_IMAGE,image);
        editor.putString(KEY_NAME,name);
+        editor.putString(KEY_CNT,cnt);
        editor.commit();
     }
 
@@ -223,6 +226,7 @@ public class Session_management {
         HashMap<String,String> map=new HashMap<>();
         map.put(KEY_IMAGE,prefs.getString(KEY_IMAGE,null));
         map.put(KEY_NAME,prefs.getString(KEY_NAME,null));
+        map.put(KEY_CNT,prefs.getString(KEY_CNT,null));
         //map.put(KEY_IMAGE,prefs.getString(KEY_IMAGE,null));
         return map;
     }
@@ -233,4 +237,14 @@ public class Session_management {
         editor.commit();
     }
 
+    public void setStandardCharges(String ch)
+    {
+        editor.putString(KEY_STAN,ch);
+        editor.commit();
+    }
+
+    public String getStandardCharges()
+    {
+        return prefs.getString(KEY_STAN,null);
+    }
 }

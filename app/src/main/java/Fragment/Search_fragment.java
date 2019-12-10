@@ -205,6 +205,12 @@ public class Search_fragment extends Fragment {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
 
+                        if(!response.has("data"))
+                        {
+                            img_no_item.setVisibility( View.VISIBLE );
+                            rv_search.setVisibility( View.GONE );
+
+                        }
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
@@ -212,8 +218,10 @@ public class Search_fragment extends Fragment {
                      modelList = gson.fromJson(response.getString("data"), listType);
 
 
+                        img_no_item.setVisibility( View.GONE );
+                        rv_search.setVisibility( View.VISIBLE );
 
-                        
+
                         if (getActivity() != null) {
                             if (modelList.isEmpty()) {
                                 img_no_item.setVisibility( View.VISIBLE );

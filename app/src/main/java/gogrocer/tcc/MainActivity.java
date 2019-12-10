@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView totalBudgetCount, totalBudgetCountwish, totalBudgetCount3, tv_name, powerd_text;
-    private ImageView iv_profile;
+  public static ImageView iv_profile;
     private DatabaseCartHandler dbcart;
     private Session_management sessionManagement;
     private Menu nav_menu;

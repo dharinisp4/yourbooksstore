@@ -419,6 +419,39 @@
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="@dimen/space_14" />
                                 </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/rel_stan"
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/space_2"
+                                    >
+                                    <TextView
+                                        android:fontFamily="@font/chivo"
+                                        android:id="@+id/txtstan"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/space_14"
+                                        android:padding="2dp"
+                                        android:textColor="@android:color/black"
+                                        android:text="Standard Delivery Charge :"/>
+
+                                    <TextView
+                                        android:fontFamily="@font/chivo"
+                                        android:id="@+id/tvstan"
+                                        android:layout_width="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:padding="@dimen/space_2"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_toRightOf="@id/txtstan"
+                                        android:text="0"
+                                        android:textAlignment="viewEnd"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/space_14" />
+                                </RelativeLayout>
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/space_1"

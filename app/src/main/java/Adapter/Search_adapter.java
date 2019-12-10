@@ -301,6 +301,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
                 .load(BaseURL.IMG_PRODUCT_URL + mList.getProduct_image())
                 .centerCrop()
                 .crossFade()
+                .placeholder(R.drawable.icon)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontAnimate()
                 .into(holder.iv_logo);

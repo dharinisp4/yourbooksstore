@@ -43,9 +43,10 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
     private static String TAG = Add_delivery_address_fragment.class.getSimpleName();
 
+    String chg="";
     String type="";
     private EditText et_phone, et_name,  et_address;
-    private TextView et_pin ;
+    private TextView et_pin,txt_note ;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_house, tv_socity, select_city;
     private String getsocity = "";
@@ -93,6 +94,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         tv_name = (TextView) view.findViewById(R.id.tv_add_adres_name);
         tv_pin = (TextView) view.findViewById(R.id.tv_add_adres_pin);
         et_pin = (TextView) view.findViewById(R.id.et_add_adres_pin);
+        txt_note = (TextView) view.findViewById(R.id.txt_note);
         et_address = (EditText) view.findViewById(R.id.address);
         tv_house = (TextView) view.findViewById(R.id.tv_add_adres_home);
         tv_socity = (TextView) view.findViewById(R.id.tv_add_adres_socity);
@@ -186,6 +188,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         {
             if(image_normal.getVisibility()==View.GONE)
             {
+                txt_note.setVisibility(View.GONE);
                 image_normal.setVisibility(View.VISIBLE);
                 image_standard.setVisibility(View.GONE);
                 type="normal";
@@ -198,9 +201,13 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         {
             if(image_standard.getVisibility()==View.GONE)
             {
+                getStandardCharges();
+                txt_note.setVisibility(View.VISIBLE);
                 image_standard.setVisibility(View.VISIBLE);
                 image_normal.setVisibility(View.GONE);
                 type="standard";
+
+
             }
 
         }
@@ -414,4 +421,48 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
+    public void getStandardCharges()
+    {
+        final String[] ch = {};
+        progressDialog.show();
+        String json_tag="json_charges";
+        HashMap<String,String> map=new HashMap<>();
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_STANDARD_CHARGES, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    progressDialog.dismiss();
+                    String status=response.getString("status");
+                    if(status.equals("success"))
+                    {
+                        chg =response.getString("data");
+                        txt_note.setText("Note : standard delivery charges "+getActivity().getResources().getString(R.string.currency)+String.valueOf(chg));
+
+                        sessionManagement.setStandardCharges(chg);
+
+                        //String h=sessionManagement.getStandardCharges();
+                        //Toast.makeText(getActivity(),""+chg+"\n "+h, Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
+    }
 }

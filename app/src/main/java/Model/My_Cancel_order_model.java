@@ -4,7 +4,7 @@ package Model;
  * Created by Rajesh Dabhi on 29/6/2017.
  */
 
-public class My_Pending_order_model {
+public class My_Cancel_order_model {
 
     String sale_id;
     String user_id;
@@ -26,7 +26,6 @@ public class My_Pending_order_model {
     String receiver_mobile ;
     String confirm_date;
     String delivered_date;
-
 
     public String getSale_id(){
         return sale_id;

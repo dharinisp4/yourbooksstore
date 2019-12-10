@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ public class My_Pending_Order extends Fragment {
 
     private RecyclerView rv_myorder;
 
+    RelativeLayout rel_no;
     private List<My_Pending_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
     ProgressDialog progressDialog;
@@ -73,6 +75,7 @@ public class My_Pending_Order extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
+        rel_no=(RelativeLayout)view.findViewById(R.id.rel_no);
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -118,7 +121,7 @@ public class My_Pending_Order extends Fragment {
                 Bundle args = new Bundle();
                 String sale_id = my_order_modelList.get(position).getSale_id();
                 String date = my_order_modelList.get(position).getOn_date();
-                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
+                String time = my_order_modelList.get(position).getDelivery_time_from();
                 String total = my_order_modelList.get(position).getTotal_amount();
                 String status = my_order_modelList.get(position).getStatus();
                 String deli_charge = my_order_modelList.get(position).getDelivery_charge();
@@ -155,7 +158,7 @@ public class My_Pending_Order extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
-                Log.d(TAG, response.toString());
+                Log.d("my_orders", response.toString());
                  progressDialog.dismiss();
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<My_Pending_order_model>>() {
@@ -165,7 +168,11 @@ public class My_Pending_Order extends Fragment {
                 My_Pending_Order_adapter myPendingOrderAdapter = new My_Pending_Order_adapter(my_order_modelList);
                 rv_myorder.setAdapter(myPendingOrderAdapter);
                 myPendingOrderAdapter.notifyDataSetChanged();
-
+                if(response.length()<=0)
+                {
+                    rel_no.setVisibility(View.VISIBLE);
+                    rv_myorder.setVisibility(View.GONE);
+                }
                 if (my_order_modelList.isEmpty()) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                 }
