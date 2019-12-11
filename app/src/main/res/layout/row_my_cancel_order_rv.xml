@@ -155,7 +155,7 @@
                 <Fonts.LatoBLack
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email : "
+                    android:text="Mobile : "
                     android:textSize="11sp"
                     android:textColor="@color/dark_gray"/>
                 <Fonts.LatoBLack
@@ -353,6 +353,7 @@
             android:background="@color/light_gray"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="4">
 
             <LinearLayout

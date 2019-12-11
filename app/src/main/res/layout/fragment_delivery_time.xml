@@ -113,160 +113,13 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/rv_deli_address" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:layout_marginLeft="@dimen/space_10"
-                    android:gravity="center"
-                    android:text="Select Delivery Type :"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/chivo" />
-
-                <LinearLayout
-                    android:id="@+id/lay_normal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="@dimen/space_10"
-                    android:layout_marginRight="@dimen/space_10"
-                    android:orientation="vertical">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/dark_gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/bgcolor2"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/space_10">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/normal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/space_20"
-                            android:gravity="center"
-                            android:text="Normal Delivery"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:fontFamily="@font/chivo" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="@dimen/space_10"
-                            android:gravity="center|right">
-
-                            <ImageView
-                                android:id="@+id/image_normal"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/status_delivered"
-                                android:visibility="gone" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/dark_gray" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/lay_standard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:layout_marginLeft="@dimen/space_10"
-                    android:layout_marginRight="@dimen/space_10"
-                    android:orientation="vertical">
-
-                    <View
-                        android:id="@+id/line_pay"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-
-                        android:background="@color/dark_gray" />
-
-                    <LinearLayout
-                        android:id="@+id/linear_pay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/bgcolor2"
-                        android:orientation="horizontal"
-
-                        android:padding="@dimen/space_10">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/standard" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:gravity="center"
-                            android:text="Standard Delivery"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:fontFamily="@font/chivo" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="@dimen/space_10"
-                            android:gravity="center|right">
-
-                            <ImageView
-                                android:id="@+id/image_standard"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/status_delivered"
-                                android:visibility="gone" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <View
-                        android:id="@+id/line1_pay"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/dark_gray"
-                        />
-
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/txt_note"
-                    android:visibility="gone"
-                    android:text="Note : standard delivery charges"
-                    android:textColor="@color/cb_errorRed"
-                    android:layout_width="match_parent"
-                    android:fontFamily="@font/chivo"
-                    android:layout_marginTop="@dimen/space_5"
-                    android:textSize="@dimen/space_15"
-                    android:layout_height="wrap_content"/>
-
-
-
             </LinearLayout>
+
+
         </LinearLayout>
+
 <!--    </ScrollView>-->
 
     <LinearLayout
@@ -335,6 +188,164 @@
                     android:text="@string/currency" />-->
 
             </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10"
+            android:layout_marginLeft="@dimen/space_10"
+            android:gravity="center"
+            android:text="Select Delivery Type :"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:fontFamily="@font/chivo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/lay_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_10"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/dark_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bgcolor2"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_10">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/space_20"
+                        android:gravity="center"
+                        android:text="Normal Delivery"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/chivo" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/space_10"
+                        android:gravity="center|right">
+
+                        <ImageView
+                            android:id="@+id/image_normal"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/status_delivered"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/dark_gray" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lay_standard"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_10"
+                android:layout_marginTop="@dimen/space_15"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/line_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/dark_gray" />
+
+                <LinearLayout
+                    android:id="@+id/linear_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bgcolor2"
+
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_10">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/standard" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center"
+                        android:text="Standard Delivery"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/chivo" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/space_10"
+                        android:gravity="center|right">
+
+                        <ImageView
+                            android:id="@+id/image_standard"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/status_delivered"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/line1_pay"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/dark_gray"
+                    />
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/txt_note"
+                android:visibility="gone"
+                android:text="Note : standard delivery charges"
+                android:textColor="@color/cb_errorRed"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/chivo"
+                android:layout_marginTop="@dimen/space_5"
+                android:textSize="@dimen/space_15"
+                android:layout_height="wrap_content"/>
+
+
 
         </LinearLayout>
 

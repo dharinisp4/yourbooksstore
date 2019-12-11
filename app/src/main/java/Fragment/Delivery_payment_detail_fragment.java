@@ -244,6 +244,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
                     args.putString("getstoreid", getstore_id);
                     args.putString( "checkout",checkout );
                     args.putString( "product_id",product_id );
+                    args.putString( "delivery_type",getDeliveryType );
                     fm.setArguments(args);
                     progressDialog.dismiss();
                     FragmentManager fragmentManager = getFragmentManager();

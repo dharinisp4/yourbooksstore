@@ -68,6 +68,7 @@ public class Payment_fragment extends Fragment {
     private String gettime = "";
     private String getdate = "";
     private String getuser_id = "";
+    String getDeliveryType ="";
     private Double rewards;
     RadioButton rb_Store, rb_Cod, rb_card, rb_Netbanking, rb_paytm;
     CheckBox checkBox_Wallet, checkBox_coupon;
@@ -197,6 +198,7 @@ public class Payment_fragment extends Fragment {
 
         checkout = getArguments().getString( "checkout" );
         product_id= getArguments().getString( "product_id" );
+        getDeliveryType = getArguments().getString( "delivery_type" );
 
         payble_ammount = (TextView) view.findViewById(R.id.payable_ammount);
         order_ammount = (TextView) view.findViewById(R.id.order_ammount);
@@ -389,6 +391,7 @@ public class Payment_fragment extends Fragment {
         params.put("total_ammount",total_amount);
         params.put("payment_method", getvalue);
         params.put("data", passArray.toString());
+        params.put( "delivery_type",getDeliveryType );
 //        Toast.makeText(getActivity(),"date "+date+"\ntime  "+gettime+"\n user_id "+userid+"\n location "+location+"\n srote_id "+store_id+"\n t_amt:- "+total_amount+"\n p-method"+getvalue+"\n"+passArray,Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.ADD_ORDER_URL, params, new Response.Listener<JSONObject>() {
@@ -510,6 +513,7 @@ public class Payment_fragment extends Fragment {
         params.put("payment_method", "Wallet");
         params.put("wallet_amount",wamt);
         params.put("data", passArray.toString());
+        params.put( "delivery_type",getDeliveryType );
         // Toast.makeText(getActivity(),"\n t_amt:- "+total_amount+"\n p-method"+getvalue+"\n"+passArray,Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.GET_ORDER_WALLET, params, new Response.Listener<JSONObject>() {
