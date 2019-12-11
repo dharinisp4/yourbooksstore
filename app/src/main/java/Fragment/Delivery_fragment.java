@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +55,6 @@ import Model.Delivery_address_model;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
-import gogrocer.tcc.ThanksOrder;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
@@ -67,7 +68,7 @@ public class Delivery_fragment extends Fragment implements View.OnClickListener 
 
     private static String TAG = Delivery_fragment.class.getSimpleName();
 
-    private TextView tv_afternoon, tv_morning, tv_total, tv_item, tv_socity;
+    private TextView tv_afternoon, tv_morning, tv_total, tv_item, tv_socity ,txt_note;
 
     private TextView tv_date, tv_time;
     private EditText et_address;
@@ -85,6 +86,11 @@ SharedPreferences preferences;
 
     private String gettime = "";
     private String getdate = "";
+    String typedelivery = "" ;
+    String chg="";
+
+    private ImageView image_normal,image_standard;
+    LinearLayout lay_standard,lay_normal;
 
     private String deli_charges ,checkout;
     String store_id ,product_id;
@@ -133,6 +139,14 @@ String language;
         rv_address.setLayoutManager(new LinearLayoutManager(getActivity()));
         //tv_socity = (TextView) view.findViewById(R.id.tv_deli_socity);
         //et_address = (EditText) view.findViewById(R.id.et_deli_address);
+
+        image_normal=(ImageView)view.findViewById(R.id.image_normal);
+        image_standard=(ImageView)view.findViewById(R.id.image_standard);
+        lay_standard=(LinearLayout) view.findViewById(R.id.lay_standard);
+        lay_normal=(LinearLayout) view.findViewById(R.id.lay_normal);
+        txt_note = (TextView) view.findViewById(R.id.txt_note);
+        lay_normal.setOnClickListener( this );
+        lay_standard.setOnClickListener( this );
 
         db_cart = new DatabaseCartHandler( getActivity());
         tv_total.setText(db_cart.getTotalAmount());
@@ -195,6 +209,8 @@ String language;
         }
 
 
+
+
         if (ConnectivityReceiver.isConnected()) {
             String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
             makeGetAddressRequest(user_id);
@@ -236,6 +252,33 @@ String language;
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                     .addToBackStack(null).commit();
+
+        }
+        if(id == R.id.lay_normal)
+        {
+            if(image_normal.getVisibility()==View.GONE)
+            {
+                txt_note.setVisibility(View.GONE);
+                image_normal.setVisibility(View.VISIBLE);
+                image_standard.setVisibility(View.GONE);
+                typedelivery="normal";
+            }
+            else
+            {
+
+            }
+        }else if(id == R.id.lay_standard)
+        {
+            if(image_standard.getVisibility()==View.GONE)
+            {
+                getStandardCharges();
+                txt_note.setVisibility(View.VISIBLE);
+                image_standard.setVisibility(View.VISIBLE);
+                image_normal.setVisibility(View.GONE);
+                typedelivery="standard";
+
+
+            }
 
         }
 
@@ -302,10 +345,16 @@ String language;
         boolean cancel = false;
 
         if (TextUtils.isEmpty(getdate)) {
-            Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please select date", Toast.LENGTH_SHORT).show();
             cancel = true;
             progressDialog.dismiss();
         }
+       else if(typedelivery.equals("") || TextUtils.isEmpty(typedelivery))
+                    {
+                     Toast.makeText(getActivity(),"Please Select Any One Delivery Method",Toast.LENGTH_LONG).show();
+                        cancel = true;
+            progressDialog.dismiss();
+                    }
 //        else if (TextUtils.isEmpty(gettime)) {
 //            Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
 //            cancel = true;
@@ -362,6 +411,8 @@ String language;
             args.putString( "product_id",product_id );
             args.putString( "total",buy_now_tot );
             args.putString( "type",type );
+            args.putString( "delivery_type",typedelivery );
+
            // Toast.makeText(getActivity(),""+type,Toast.LENGTH_LONG).show();
             fm.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
@@ -526,5 +577,50 @@ String language;
 
          String c_tm=tm+":"+time_arr[1].toString();
          return c_tm;
+    }
+
+    public void getStandardCharges()
+    {
+        final String[] ch = {};
+        progressDialog.show();
+        String json_tag="json_charges";
+        HashMap<String,String> map=new HashMap<>();
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_STANDARD_CHARGES, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    progressDialog.dismiss();
+                    String status=response.getString("status");
+                    if(status.equals("success"))
+                    {
+                        chg =response.getString("data");
+                        txt_note.setText("Note : standard delivery charges "+getActivity().getResources().getString(R.string.currency)+String.valueOf(chg));
+
+                        sessionManagement.setStandardCharges(chg);
+
+                        //String h=sessionManagement.getStandardCharges();
+                        //Toast.makeText(getActivity(),""+chg+"\n "+h, Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
     }
 }

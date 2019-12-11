@@ -18,7 +18,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +35,6 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Product_model;
 import Module.Module;
-import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
@@ -212,6 +210,10 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             holder.wish_before.setVisibility( View.GONE );
             holder.wish_after.setVisibility( View.GONE );
 
+        }
+        else
+        {
+            holder.out_of_stock.setVisibility( View.GONE );
         }
 
 

@@ -65,7 +65,7 @@
     <string name="et_reg_address" translatable="false">Complete Address</string>
     <string name="use" translatable="false">Use</string>
     <string name="store" translatable="false">Store Pick Up</string>
-    <string name="confirm_order" translatable="false">Confirmed</string>
+    <string name="confirm_order" translatable="false">Confirm</string>
     <string name="pickup" translatable="false">PickUp / COD</string>
     <string name="cash" translatable="false">Cash On Delivery</string>
     <!-- fragment_cart.xml -->
@@ -189,7 +189,7 @@
     <string name="no_internet" translatable="false">Sorry! Not connected to internet</string>
     <string name="order_no" translatable="false">Order No.:\u0020</string>
     <string name="pending" translatable="false">Pending</string>
-    <string name="confirm" translatable="false">Confirm</string>
+    <string name="confirm" translatable="false">Confirmed</string>
     <string name="delivered" translatable="false">Delivered</string>
     <string name="outfordeliverd" translatable="false">Out for Delivered\nReady to pickup</string>
     <string name="cancle" translatable="false">Cancel</string>
@@ -254,5 +254,8 @@
     <string name="enter_password" translatable="false">Please Enter Password</string>
     <string name="enter_cnfpassword" translatable="false">Please Enter Confirm Password</string>
     <string name="enter_pass_notmatch" translatable="false">Password &amp; Confirm Password does\'t match</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

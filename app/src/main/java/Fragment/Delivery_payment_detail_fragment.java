@@ -24,7 +24,6 @@ import java.util.HashMap;
 
 import Config.BaseURL;
 import Config.SharedPref;
-import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -42,13 +41,14 @@ public class Delivery_payment_detail_fragment extends Fragment {
     private TextView tv_timeslot, tv_address, tv_total,tvstan;
     private LinearLayout btn_order;
 
-    private TextView recivername,mobileno,pincode,Address,tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal;
+    private TextView recivername,mobileno,pincode,Address,tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal ,tvDeliveryType;
 
     private String getlocation_id = "";
     private String gettime = "";
     private String getdate = "";
     private String getuser_id = "";
     private String getstore_id = "";
+    String getDeliveryType ;
 
     private int deli_charges;
     String checkout ,product_id ;
@@ -103,6 +103,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         pincode = view.findViewById( R.id.pincode );
         Address = view.findViewById( R.id.Address );
         rel_stan = view.findViewById( R.id.rel_stan );
+        tvDeliveryType=view.findViewById( R.id.tvdelivery_type );
 
         // Houseno = view.findViewById( R.idi.Houseno );
         //  Society = view.findViewById( R.d.Society );
@@ -118,7 +119,9 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
         getlocation_id = getArguments().getString("location_id");
         getstore_id = getArguments().getString("store_id");
+        getDeliveryType = getArguments().getString( "delivery_type" );
         deli_charges = Integer.parseInt(getArguments().getString("deli_charges"));
+
         String name = getArguments().getString("name");
         String phone = getArguments().getString( "phone" );
         String house = getArguments().getString( "house" );
@@ -129,19 +132,36 @@ public class Delivery_payment_detail_fragment extends Fragment {
         buy_now_tot =getArguments().getString( "total" );
         type =getArguments().getString( "type" );
         tv_timeslot.setText(getdate + " " + gettime);
+        tvDeliveryType.setText( getDeliveryType );
         //tv_address.setText(getaddress);
 
+//        if (getDeliveryType .equals( "standard" ))
+//        {
+//          //  deli_charges = Integer.parseInt( getStandardCharges() );
+//
+//
+//            charges=sessionManagement.getStandardCharges();
+//            tvDelivary.setText(getActivity().getResources().getString(R.string.currency)+ charges );
+//
+//          //  tvstan.setText(getActivity().getResources().getString(R.string.currency)+String.valueOf(charges));
+//        }
+//        else if (getDeliveryType.equals( "normal" ))
+//        {
+//
+//            tvDelivary.setText(getActivity().getResources().getString(R.string.currency)+ deli_charges );
+//        }
 
 
 //        tv_total.setText("" + db_cart.getTotalAmount());
         //  tv_item.setText("" + db_cart.getWishlistCount());
         recivername.setText( name );
         mobileno.setText( phone );
+//        tvDelivary.setText( deli_charges );
         // houseno.setText( house );
         pincode.setText( pin );
         Address.setText( societys );
 
-        if(type.equals("standard"))
+        if(getDeliveryType.equals("standard"))
         {
             rel_stan.setVisibility(View.VISIBLE);
 
@@ -157,7 +177,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         if (checkout.equalsIgnoreCase( "null" )) {
 
             tvItems.setText( String.valueOf( db_cart.getCartCount() ) );
-            if(type.equals("standard"))
+            if(getDeliveryType.equals("standard"))
             {
 
                 total = Double.parseDouble( db_cart.getTotalAmount() ) + deli_charges+Double.parseDouble(charges);
@@ -171,7 +191,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
             String price = String.valueOf( db_cart.getTotalAmount() );
             tvMrp.setText( getResources().getString( R.string.currency ) + price );
 
-            tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
+           tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
             tvSubTotal.setText( getResources().getString( R.string.currency ) + total );
         }
         else
@@ -185,7 +205,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
             tvMrp.setText( getResources().getString( R.string.currency ) + t_price );
 
-            if(type.equals("standard"))
+            if(getDeliveryType.equals("standard"))
             {
                 total = t_price+deli_charges+ deli_charges+Double.parseDouble(charges);
 
@@ -196,7 +216,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
             }
             total = t_price+deli_charges;
-            tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
+           // tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
             tvSubTotal.setText( getResources().getString( R.string.currency ) + total );
              Toast.makeText(getActivity() ,"" +list.size(),Toast.LENGTH_LONG ).show();
         }
@@ -336,6 +356,51 @@ public class Delivery_payment_detail_fragment extends Fragment {
 //        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 //    }
 
+    public void getStandardCharges()
+    {
+        final String[] ch = {};
+        progressDialog.show();
+        String json_tag="json_charges";
+        HashMap<String,String> map=new HashMap<>();
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_STANDARD_CHARGES, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
 
+                try {
+                    progressDialog.dismiss();
+                    String status=response.getString("status");
+                    if(status.equals("success"))
+                    {
+                        chg =response.getString("data");
+                       // txt_note.setText("Note : standard delivery charges "+getActivity().getResources().getString(R.string.currency)+String.valueOf(chg));
+
+                        sessionManagement.setStandardCharges(chg);
+
+                        //String h=sessionManagement.getStandardCharges();
+                        //Toast.makeText(getActivity(),""+chg+"\n "+h, Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
+
+
+    }
 
 }

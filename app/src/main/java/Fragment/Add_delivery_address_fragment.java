@@ -100,10 +100,10 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         tv_socity = (TextView) view.findViewById(R.id.tv_add_adres_socity);
         btn_update = (RelativeLayout) view.findViewById(R.id.btn_add_adres_edit);
         select_city = (TextView) view.findViewById(R.id.select_city);
-        image_normal=(ImageView)view.findViewById(R.id.image_normal);
-        image_standard=(ImageView)view.findViewById(R.id.image_standard);
-        lay_standard=(LinearLayout) view.findViewById(R.id.lay_standard);
-        lay_normal=(LinearLayout) view.findViewById(R.id.lay_normal);
+//        image_normal=(ImageView)view.findViewById(R.id.image_normal);
+//        image_standard=(ImageView)view.findViewById(R.id.image_standard);
+//        lay_standard=(LinearLayout) view.findViewById(R.id.lay_standard);
+//        lay_normal=(LinearLayout) view.findViewById(R.id.lay_normal);
 
         String getsocity_name = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_NAME);
         String getsocity_id = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);
@@ -154,8 +154,8 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         btn_update.setOnClickListener(this);
        // select_city.setOnClickListener(this);
         et_pin.setOnClickListener(this);
-        lay_normal.setOnClickListener(this);
-        lay_standard.setOnClickListener(this);
+//        lay_normal.setOnClickListener(this);
+//        lay_standard.setOnClickListener(this);
 
 
         return view;
@@ -184,33 +184,33 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             }*/
 
         }
-        else if(id == R.id.lay_normal)
-        {
-            if(image_normal.getVisibility()==View.GONE)
-            {
-                txt_note.setVisibility(View.GONE);
-                image_normal.setVisibility(View.VISIBLE);
-                image_standard.setVisibility(View.GONE);
-                type="normal";
-            }
-            else
-            {
-
-            }
-        }else if(id == R.id.lay_standard)
-        {
-            if(image_standard.getVisibility()==View.GONE)
-            {
-                getStandardCharges();
-                txt_note.setVisibility(View.VISIBLE);
-                image_standard.setVisibility(View.VISIBLE);
-                image_normal.setVisibility(View.GONE);
-                type="standard";
-
-
-            }
-
-        }
+//        else if(id == R.id.lay_normal)
+//        {
+//            if(image_normal.getVisibility()==View.GONE)
+//            {
+//                txt_note.setVisibility(View.GONE);
+//                image_normal.setVisibility(View.VISIBLE);
+//                image_standard.setVisibility(View.GONE);
+//                type="normal";
+//            }
+//            else
+//            {
+//
+//            }
+//        }else if(id == R.id.lay_standard)
+//        {
+//            if(image_standard.getVisibility()==View.GONE)
+//            {
+//                getStandardCharges();
+//                txt_note.setVisibility(View.VISIBLE);
+//                image_standard.setVisibility(View.VISIBLE);
+//                image_normal.setVisibility(View.GONE);
+//                type="standard";
+//
+//
+//            }
+//
+//        }
     }
 
     private void attemptEditProfile() {
@@ -291,11 +291,11 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
                 // check internet connection
                 if (ConnectivityReceiver.isConnected()) {
-                    if(type.equals("") || TextUtils.isEmpty(type))
-                    {
-                     Toast.makeText(getActivity(),"Please Select Any One Delivery Method",Toast.LENGTH_LONG).show();
-                    }
-                    else {
+//                    if(type.equals("") || TextUtils.isEmpty(type))
+//                    {
+//                     Toast.makeText(getActivity(),"Please Select Any One Delivery Method",Toast.LENGTH_LONG).show();
+//                    }
+//                    else {
                         if (isEdit) {
                             makeEditAddressRequest(getlocation_id, getpin, getsocity, gethouse, getname, getphone,type);
                         } else {
@@ -305,7 +305,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 }
             }
         }
-    }
+
 
     private boolean isPhoneValid(String phoneno) {
         //TODO: Replace this with your own logic
