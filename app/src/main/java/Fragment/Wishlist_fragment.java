@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,9 +63,10 @@ public class Wishlist_fragment extends Fragment {
         loadingBar=new ProgressDialog(getActivity());
         loadingBar.setMessage("Loading...");
         loadingBar.setCanceledOnTouchOutside(false);
+
         ArrayList<HashMap<String, String>> map = db_wish.getWishlistAll();
 
-//        Log.d("cart all ",""+db_cart.getCartAll());
+        Toast.makeText(getActivity(),""+map.size(),Toast.LENGTH_LONG).show();
 
         Wishlist_Adapter adapter = new Wishlist_Adapter( map,getActivity() );
 

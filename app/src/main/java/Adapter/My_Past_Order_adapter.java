@@ -49,9 +49,10 @@ SharedPreferences preferences;
 
         public MyViewHolder(View view) {
             super(view);
-            tv_address = view.findViewById(R.id.user_address);
+
             tv_orderno = (TextView) view.findViewById(R.id.tv_order_no);
             tv_status = (TextView) view.findViewById(R.id.tv_order_status);
+            tv_address = view.findViewById(R.id.user_address);
             tv_email = view.findViewById(R.id.email);
             relativetextstatus = (TextView) view.findViewById(R.id.status);
             tv_tracking_date = (TextView) view.findViewById(R.id.tracking_date);
@@ -170,7 +171,7 @@ SharedPreferences preferences;
 
             String timefrom=mList.getDelivery_time_from();
             String timeto=mList.getDelivery_time_to();
-            String time=timefrom + "-" + timeto;
+            String time=timefrom;
 
             holder.tv_time.setText(time);
 

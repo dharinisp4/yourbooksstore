@@ -240,7 +240,7 @@ String userId="";
             Uri path=data.getData();
             try
             {
-                Toast.makeText(getActivity(),""+data,Toast.LENGTH_LONG).show();
+               // Toast.makeText(getActivity(),""+data,Toast.LENGTH_LONG).show();
                 flag=2;
                 bitmap= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),path);
                 iv_profile.setImageBitmap(bitmap);
@@ -285,6 +285,7 @@ String userId="";
                 progressDialog.dismiss();
                 try
                 {
+
 
                     boolean b=response.getBoolean("responce");
                     if(b)

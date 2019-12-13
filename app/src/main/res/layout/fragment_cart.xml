@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_marginTop="@dimen/space_1"
             android:id="@+id/tv_cart_clear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -29,7 +29,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/space_10">
 
             <LinearLayout
                 android:id="@+id/radioLinear"
@@ -126,9 +127,14 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+       android:background="@color/white"
         android:layout_alignParentBottom="true"
 
         android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/dark_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -198,7 +204,7 @@
             android:gravity="center"
             android:text="Select Delivery Type :"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:fontFamily="@font/chivo" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -222,31 +228,37 @@
                     android:layout_height="2dp"
                     android:background="@color/dark_gray" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/bgcolor2"
                     android:orientation="horizontal"
-                    android:padding="@dimen/space_10">
+                    android:paddingLeft="@dimen/space_10"
+                    android:paddingRight="@dimen/space_10"
+                    android:paddingTop="@dimen/space_5"
+                    >
 
                     <ImageView
+                        android:id="@+id/img_con"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/normal" />
 
                     <TextView
+                        android:layout_toRightOf="@+id/img_con"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/space_20"
                         android:gravity="center"
                         android:text="Normal Delivery"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:fontFamily="@font/chivo" />
 
                     <LinearLayout
+                        android:layout_centerVertical="true"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/space_10"
                         android:gravity="center|right">
 
@@ -258,7 +270,7 @@
                             android:visibility="gone" />
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
 
                 <View
@@ -284,33 +296,40 @@
                     android:layout_height="2dp"
                     android:background="@color/dark_gray" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/linear_pay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/bgcolor2"
 
                     android:orientation="horizontal"
-                    android:padding="@dimen/space_10">
+                    android:paddingLeft="@dimen/space_10"
+                    android:paddingRight="@dimen/space_10"
+                    android:paddingTop="@dimen/space_5"
+                    >
+
 
                     <ImageView
+                        android:id="@+id/img_iconn"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/standard" />
 
                     <TextView
+                        android:layout_toRightOf="@+id/img_iconn"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:gravity="center"
                         android:text="Standard Delivery"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:fontFamily="@font/chivo" />
 
                     <LinearLayout
+                        android:layout_centerVertical="true"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/space_10"
                         android:gravity="center|right">
 
@@ -322,7 +341,7 @@
                             android:visibility="gone" />
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
 
                 <View
@@ -334,20 +353,22 @@
                     />
 
             </LinearLayout>
-            <TextView
-                android:id="@+id/txt_note"
-                android:visibility="gone"
-                android:text="Note : standard delivery charges"
-                android:textColor="@color/cb_errorRed"
-                android:layout_width="match_parent"
-                android:fontFamily="@font/chivo"
-                android:layout_marginTop="@dimen/space_5"
-                android:textSize="@dimen/space_15"
-                android:layout_height="wrap_content"/>
 
 
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/txt_note"
+            android:visibility="gone"
+            android:text="Note : standard delivery charges"
+            android:textColor="@color/cb_errorRed"
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/chivo"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_5"
+            android:textSize="@dimen/space_15"
+            android:layout_height="wrap_content"/>
+
 
         <RelativeLayout
             android:id="@+id/btn_deli_checkout"
