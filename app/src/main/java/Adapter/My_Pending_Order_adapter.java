@@ -43,10 +43,11 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_orderno, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date,tv_email,tv_address;
+        public TextView tv_orderno,txt_expected, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date,tv_email,tv_address;
         public TextView tv_pending_date, tv_pending_time, tv_confirm_date, tv_confirm_time, tv_delevered_date, tv_delevered_time, tv_cancel_date, tv_cancel_time;
         public View view1, view2, view3, view4, view5, view6;
         public RelativeLayout relative_background;
+        public LinearLayout exp_linear;
         public ImageView Confirm, Out_For_Deliverde, Delivered;
         CardView cardView;
         public TextView tv_methid1;
@@ -67,7 +68,9 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
             tv_time = (TextView) view.findViewById(R.id.tv_order_time);
             tv_price = (TextView) view.findViewById(R.id.tv_order_price);
             tv_item = (TextView) view.findViewById(R.id.tv_order_item);
+            txt_expected = (TextView) view.findViewById(R.id.txt_expected);
             cardView = view.findViewById(R.id.card_view);
+            exp_linear = view.findViewById(R.id.exp_linear);
 
             linearLayout=view.findViewById(R.id.l2);
 //            //Payment Method
@@ -117,17 +120,23 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
 
         if (mList.getStatus().equals("0")) {
             holder.tv_status.setText(context.getResources().getString(R.string.pending));
+            holder.exp_linear.setVisibility(View.GONE);
             holder.relativetextstatus.setText(context.getResources().getString(R.string.pending));
             holder.relative_background.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         } else if (mList.getStatus().equals("1")) {
+            holder.tv_tracking_date.setText(mList.getDelivered_date());
+
             holder.view1.setBackgroundColor(context.getResources().getColor(R.color.green));
             holder.view2.setBackgroundColor(context.getResources().getColor(R.color.green));
             holder.relative_background.setBackgroundColor(context.getResources().getColor(R.color.orange));
             holder.Confirm.setImageResource(R.color.green);
             holder.tv_status.setText(context.getResources().getString(R.string.confirm));
             holder.relativetextstatus.setText(context.getResources().getString(R.string.confirm));
+
             holder.tv_status.setTextColor(context.getResources().getColor(R.color.green));
         } else if (mList.getStatus().equals("2")) {
+            holder.tv_tracking_date.setText(mList.getDelivered_date());
+
             holder.view1.setBackgroundColor(context.getResources().getColor(R.color.green));
             holder.relative_background.setBackgroundColor(context.getResources().getColor(R.color.purple));
             holder.view2.setBackgroundColor(context.getResources().getColor(R.color.green));
@@ -140,7 +149,7 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
             holder.tv_status.setTextColor(context.getResources().getColor(R.color.green));
         }
            else if (mList.getStatus().equals("4")) {
-holder.linearLayout.setVisibility(View.GONE);
+           holder.linearLayout.setVisibility(View.GONE);
         }
 
         if (mList.getPayment_method().equals("Store Pick Up")) {
@@ -154,8 +163,7 @@ holder.linearLayout.setVisibility(View.GONE);
         }else if (mList.getPayment_method().equals("Wallet")) {
             holder.tv_methid1.setText("Wallet");
         }
-        holder.tv_date.setText(mList.getOn_date());
-        holder.tv_tracking_date.setText(mList.getOn_date());
+        holder.tv_date.setText(getDate(mList.getPlaced_date()));
 
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");
@@ -186,7 +194,7 @@ holder.linearLayout.setVisibility(View.GONE);
         holder.tv_price.setText(context.getResources().getString(R.string.currency) + mList.getTotal_amount());
         holder.tv_item.setText(context.getResources().getString(R.string.tv_cart_item) + mList.getTotal_items());
 //        holder.tv_pending_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_pending_date.setText(mList.getOn_date());
+        holder.tv_pending_date.setText(getDate(mList.getPlaced_date()));
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
         if(mList.getConfirm_date().equals(""))
         {
@@ -201,14 +209,15 @@ holder.linearLayout.setVisibility(View.GONE);
         String status=mList.getStatus().toString();
 
             holder.tv_cancel_date.setVisibility(View.INVISIBLE);
-            if(mList.getDelivered_date().equals(""))
+            if(!mList.getOut_date().equals(""))
             {
-                holder.tv_delevered_date.setVisibility(View.INVISIBLE);
+                holder.tv_delevered_date.setVisibility(View.VISIBLE);
+                holder.tv_delevered_date.setText(mList.getOut_date());
+
             }
             else
             {
-                holder.tv_delevered_date.setVisibility(View.VISIBLE);
-                holder.tv_delevered_date.setText(mList.getDelivered_date());
+                holder.tv_delevered_date.setVisibility(View.INVISIBLE);
             }
 
          if(status.equals("4"))
@@ -249,5 +258,11 @@ holder.linearLayout.setVisibility(View.GONE);
         return modelList.size();
     }
 
+
+    public String getDate(String str_date)
+    {
+        String[] arr=str_date.split(" ");
+        return arr[0].toString();
+    }
 }
 

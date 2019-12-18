@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -43,6 +44,7 @@ import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
+import util.Session_management;
 
 public class SubCategory_Fragment extends Fragment {
 
@@ -53,9 +55,10 @@ public class SubCategory_Fragment extends Fragment {
     private boolean isSubcat = false;
     String getid;
     String getcat_title;
-    ImageView  no_item_found;
+    TextView no_item_found;
     ProgressDialog loadingBar;
     Home_Icon_Adapter home_icon_adapter;
+    Session_management session_management;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class SubCategory_Fragment extends Fragment {
         loadingBar.setMessage("Loading...");
         loadingBar.setCanceledOnTouchOutside(false);
         setHasOptionsMenu(true);
+        session_management=new Session_management(getActivity());
         String getcat_id = getArguments().getString("cat_id");
         String getcat_name = getArguments().getString("title");
         no_item_found = view.findViewById( R.id.img_no_items );
@@ -98,6 +102,7 @@ public class SubCategory_Fragment extends Fragment {
                 args.putString("cat_id", getid);
                 args.putString( "title" , title);
                 args.putString( "viewall","category" );
+                session_management.setCategoryId(getid);
                 // args.putString( "" );
                 // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
                 fm.setArguments(args);

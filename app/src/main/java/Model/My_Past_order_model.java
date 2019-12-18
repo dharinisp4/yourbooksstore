@@ -26,6 +26,25 @@ public class My_Past_order_model {
     String receiver_mobile ;
     String confirm_date;
     String delivered_date;
+    String placed_date;
+    String out_date;
+
+    public String getPlaced_date() {
+        return placed_date;
+    }
+
+    public void setPlaced_date(String placed_date) {
+        this.placed_date = placed_date;
+    }
+
+    public String getOut_date() {
+        return out_date;
+    }
+
+    public void setOut_date(String out_date) {
+        this.out_date = out_date;
+    }
+
     public String getReceiver_name() {
         return receiver_name;
     }

@@ -235,7 +235,7 @@
                     <Fonts.LatoBLack
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tracking_st"
+                        android:text="Cancelled Date :"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/text_size_small" />
 
@@ -265,7 +265,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Ram"
+                        android:text="Cancelled"
                         android:textColor="#fff"
                         android:textSize="@dimen/text_size_small" />
 

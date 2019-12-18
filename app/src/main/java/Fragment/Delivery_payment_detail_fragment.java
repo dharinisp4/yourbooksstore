@@ -36,7 +36,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
     private static String TAG = Delivery_payment_detail_fragment.class.getSimpleName();
 
-   String charges="";
+   //String charges="";
     String chg="";
     private TextView tv_timeslot, tv_address, tv_total,tvstan;
     private LinearLayout btn_order;
@@ -132,7 +132,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         buy_now_tot =getArguments().getString( "total" );
         type =getArguments().getString( "type" );
         tv_timeslot.setText(getdate + " " + gettime);
-        tvDeliveryType.setText( getDeliveryType );
+        tvDeliveryType.setText( getDeliveryType.toUpperCase() );
         //tv_address.setText(getaddress);
 
 //        if (getDeliveryType .equals( "standard" ))
@@ -161,15 +161,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         pincode.setText( pin );
         Address.setText( societys );
 
-        if(getDeliveryType.equals("standard"))
-        {
-            rel_stan.setVisibility(View.VISIBLE);
 
-          //  getStandardCharges();
-            charges=sessionManagement.getStandardCharges();
-            tvstan.setText(getActivity().getResources().getString(R.string.currency)+String.valueOf(charges));
-//            Toast.makeText(getActivity(),""+charges,Toast.LENGTH_LONG).show();
-        }
 
 
 
@@ -177,16 +169,9 @@ public class Delivery_payment_detail_fragment extends Fragment {
         if (checkout.equalsIgnoreCase( "null" )) {
 
             tvItems.setText( String.valueOf( db_cart.getCartCount() ) );
-            if(getDeliveryType.equals("standard"))
-            {
 
-                total = Double.parseDouble( db_cart.getTotalAmount() ) + deli_charges+Double.parseDouble(charges);
 
-            }
-            else
-            {
                 total = Double.parseDouble( db_cart.getTotalAmount() ) + deli_charges;
-            }
             // String mrp= String.valueOf(db_cart.getTotalMRP());
             String price = String.valueOf( db_cart.getTotalAmount() );
             tvMrp.setText( getResources().getString( R.string.currency ) + price );
@@ -205,16 +190,6 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
             tvMrp.setText( getResources().getString( R.string.currency ) + t_price );
 
-            if(getDeliveryType.equals("standard"))
-            {
-                total = t_price+deli_charges+ deli_charges+Double.parseDouble(charges);
-
-            }
-            else
-            {
-                total = t_price+deli_charges;
-
-            }
             total = t_price+deli_charges;
            // tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
             tvSubTotal.setText( getResources().getString( R.string.currency ) + total );
@@ -244,6 +219,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
                     args.putString("getstoreid", getstore_id);
                     args.putString( "checkout",checkout );
                     args.putString( "product_id",product_id );
+                    args.putString( "deli_charges", String.valueOf(deli_charges));
                     args.putString( "delivery_type",getDeliveryType );
                     fm.setArguments(args);
                     progressDialog.dismiss();

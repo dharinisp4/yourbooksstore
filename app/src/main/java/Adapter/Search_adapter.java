@@ -48,7 +48,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_discount ,tv_mrp;
         public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
         Button tv_add ;
-        RelativeLayout rel_no ;
+        RelativeLayout rel_no,rel_stock ;
 
         public MyViewHolder(View view) {
             super(view);
@@ -64,6 +64,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
             tv_discount =(TextView)view.findViewById( R.id.product_discount );
             tv_mrp=(TextView)view.findViewById( R.id.tv_subcat_mrp );
+            rel_stock=(RelativeLayout) view.findViewById( R.id.rel_stock );
             iv_remove.setVisibility(View.GONE);
             tv_add.setVisibility( View.GONE );
             tv_total.setVisibility( View.GONE );
@@ -296,6 +297,16 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
     @Override
     public void onBindViewHolder(Search_adapter.MyViewHolder holder, int position) {
         Product_model mList = modelList.get(position);
+
+        int stock=Integer.parseInt(mList.getStock());
+        if(stock<=0)
+        {
+            holder.rel_stock.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.rel_stock.setVisibility(View.GONE);
+        }
 
         Glide.with(context)
                 .load(BaseURL.IMG_PRODUCT_URL + mList.getProduct_image())

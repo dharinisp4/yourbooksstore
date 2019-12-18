@@ -1,9 +1,11 @@
 package Adapter;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +24,13 @@ import java.util.HashMap;
 
 import Config.BaseURL;
 import Fragment.Cart_fragment;
+import Fragment.Empty_cart_fragment;
+import Fragment.Empty_wishlist_fragment;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 
+import static Fragment.Cart_fragment.no_prod_image;
+import static Fragment.Cart_fragment.rv_cart;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -181,60 +187,64 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             public void onClick(View view) {
 
                 int qty = Integer.valueOf(holder.tv_contetiy.getText().toString());
-                qty = qty + 1;
+                int id = Integer.parseInt(map.get("product_id"));
 
-                holder.tv_contetiy.setText(String.valueOf(qty));
-                int id=Integer.parseInt(map.get("product_id"));
+                ArrayList<HashMap<String, String>> mapP = dbHandler.getCartProduct(id);
 
-                ArrayList<HashMap<String, String>> mapP=dbHandler.getCartProduct(id);
+                HashMap<String, String> mapProduct = mapP.get(0);
+                int stock = Integer.parseInt(mapProduct.get("stock"));
 
-                HashMap<String,String> mapProduct=mapP.get(0);
+                if (qty == stock) {
+                    Toast.makeText(activity, "We have only " +stock +" in Stock", Toast.LENGTH_LONG).show();
+                } else {
 
-                double t=Double.parseDouble(mapProduct.get("unit_price"));
-                double unit_price=Double.parseDouble(dbHandler.getUnitPrice(map.get( "product_id" ) ));
-             //   double p=Double.parseDouble(mapProduct.get("unit_price"));
-                holder.tv_total.setText("" + t * qty);
-              //  String pr=String.valueOf(t+p);
-                float qt=Float.valueOf(qty);
-
-                // Toast.makeText(activity,"\npri "+map.get("unit_value")+"\n am "+pr,Toast.LENGTH_LONG ).show();
-              //  HashMap<String, String> mapProduct = new HashMap<String, String>();
+                    qty = qty + 1;
+                    holder.tv_contetiy.setText(String.valueOf(qty));
 
 
 
-                mapProduct.put("product_id", map.get( "product_id" ));
-                mapProduct.put("cart_id", map.get( "cart_id" ));
-                mapProduct.put("product_image",map.get("product_image"));
-                mapProduct.put("cat_id",map.get( "cat_id" ));
-                mapProduct.put("product_name",map.get( "product_name" ));
-                mapProduct.put("price", String.valueOf(qty*unit_price));
-                mapProduct.put("product_description",map.get("product_description"));
-                mapProduct.put("rewards", map.get("rewards"));
-                mapProduct.put("unit_price", map.get("price"));
-                mapProduct.put("unit", map.get("unit"));
-                mapProduct.put("increament", map.get("increament"));
-                mapProduct.put("stock",map.get( "stock" ));
-                mapProduct.put("title",map.get( "title" ));
-                mapProduct.put("mrp",map.get( "mrp" ));
-                mapProduct.put("sid",map.get( "sid" ));
+                    double t = Double.parseDouble(mapProduct.get("unit_price"));
+                    double unit_price = Double.parseDouble(dbHandler.getUnitPrice(map.get("product_id")));
+                    //   double p=Double.parseDouble(mapProduct.get("unit_price"));
+                    holder.tv_total.setText("" + t * qty);
+                    //  String pr=String.valueOf(t+p);
+                    float qt = Float.valueOf(qty);
+
+                    // Toast.makeText(activity,"\npri "+map.get("unit_value")+"\n am "+pr,Toast.LENGTH_LONG ).show();
+                    //  HashMap<String, String> mapProduct = new HashMap<String, String>();
+
+
+                    mapProduct.put("product_id", map.get("product_id"));
+                    mapProduct.put("cart_id", map.get("cart_id"));
+                    mapProduct.put("product_image", map.get("product_image"));
+                    mapProduct.put("cat_id", map.get("cat_id"));
+                    mapProduct.put("product_name", map.get("product_name"));
+                    mapProduct.put("price", String.valueOf(qty * unit_price));
+                    mapProduct.put("product_description", map.get("product_description"));
+                    mapProduct.put("rewards", map.get("rewards"));
+                    mapProduct.put("unit_price", map.get("price"));
+                    mapProduct.put("unit", map.get("unit"));
+                    mapProduct.put("increament", map.get("increament"));
+                    mapProduct.put("stock", map.get("stock"));
+                    mapProduct.put("title", map.get("title"));
+                    mapProduct.put("mrp", map.get("mrp"));
+                    mapProduct.put("sid", map.get("sid"));
 
 //                Toast.makeText(activity,"id- "+map.get("product_id")+"\n img- "+map.get("product_image")+"\n cat_id- "+map.get("category_id")+"\n" +
 //                        "\n name- "+map.get("product_name")+"\n price- "+pr+"\n unit_price- "+map.get("unit_price")+
 //                        "\n size- "+ map.get("size")+"\n col- "+ map.get("color")+"rew- "+ map.get("rewards")+"unit_value- "+ map.get("unit_value")+
 //                        "unit- "+map.get("unit")+"\n inc- "+map.get("increament")+"stock- "+map.get("stock")+"title- "+map.get("title"),Toast.LENGTH_LONG).show();
 
-                boolean update_cart=dbHandler.setCart(mapProduct,qt);
-                if(update_cart==true)
-                {
-                    Toast.makeText(activity,"Qty Not Updated",Toast.LENGTH_LONG).show();
+                    boolean update_cart = dbHandler.setCart(mapProduct, qt);
+                    if (update_cart == true) {
+                        Toast.makeText(activity, "Qty Not Updated", Toast.LENGTH_LONG).show();
 
+                    } else {
+                        Toast.makeText(activity, "Qty Updated", Toast.LENGTH_LONG).show();
+                        Cart_fragment.tv_total.setText(activity.getResources().getString(R.string.currency) + " " + dbHandler.getTotalAmount());
+                    }
+                    //  holder.tv_total.setText(""+db_cart.getTotalAmount());
                 }
-                else
-                {
-                    Toast.makeText(activity,"Qty Updated",Toast.LENGTH_LONG).show();
-                    Cart_fragment.tv_total.setText(activity.getResources().getString(R.string.currency)+" "+dbHandler.getTotalAmount());
-                }
-                //  holder.tv_total.setText(""+db_cart.getTotalAmount());
             }
         });
 //
@@ -276,6 +286,12 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 dbHandler.removeItemFromCart(map.get("product_id"));
                 list.remove(position);
                 notifyDataSetChanged();
+
+                if(list.size()<=0)
+                {
+                    rv_cart.setVisibility(View.GONE);
+                    no_prod_image.setVisibility(View.VISIBLE);
+                }
                 updateintent();
             }
         });

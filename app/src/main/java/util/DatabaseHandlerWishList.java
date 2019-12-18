@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 public class DatabaseHandlerWishList extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "bkywish_db";
+    private static String DB_NAME = "bksh_db";
     private static int DB_VERSION = 2;
     private SQLiteDatabase db;
 
@@ -42,6 +42,7 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
     public static final String COLUMN_BOOK_CLASS = "book_class";
     public static final String COLUMN_SUBJECT = "subject";
     public static final String COLUMN_LANGUAGE = "language";
+    public static final String COLUMN_USER_ID = "user_id";
 
     public DatabaseHandlerWishList(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -70,6 +71,7 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
                 + COLUMN_SELLER_ID + " TEXT NOT NULL, "
                 + COLUMN_BOOK_CLASS + " TEXT NULL, "
                 + COLUMN_SUBJECT + " TEXT NULL, "
+                + COLUMN_USER_ID + " TEXT NOT NULL, "
                 + COLUMN_LANGUAGE + " TEXT NULL "
                 + ")";
 
@@ -79,7 +81,7 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
 
     public boolean setwishlist(HashMap<String, String> map) {
         db = getWritableDatabase();
-        if (isInWishlist(map.get(COLUMN_ID))) {
+        if (isInWishlist(map.get(COLUMN_ID),map.get(COLUMN_USER_ID))) {
             //db.execSQL("update " + WISHLIST_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "' where " + COLUMN_ID + "=" + map.get(COLUMN_ID));
             return false;
         } else {
@@ -103,15 +105,16 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
             values.put(COLUMN_MRP, map.get(COLUMN_MRP));
             values.put(COLUMN_DESC, map.get(COLUMN_DESC));
             values.put(COLUMN_STATUS, map.get(COLUMN_STATUS));
+            values.put(COLUMN_USER_ID, map.get(COLUMN_USER_ID));
 
             db.insert(WISHLIST_TABLE, null, values);
             return true;
         }
     }
 
-    public boolean isInWishlist(String id) {
+    public boolean isInWishlist(String id,String user_id) {
         db = getReadableDatabase();
-        String qry = "Select *  from " + WISHLIST_TABLE + " where " + COLUMN_ID + " = " + id;
+        String qry = "Select *  from " + WISHLIST_TABLE + " where " + COLUMN_ID + " = " + id + " and " + COLUMN_USER_ID + " = " + user_id ;
         Cursor cursor = db.rawQuery(qry, null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) return true;
@@ -123,19 +126,19 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
 
 
 
-    public int getWishlistCount() {
+    public int getWishlistCount(String id) {
         db = getReadableDatabase();
-        String qry = "Select *  from " + WISHLIST_TABLE;
+        String qry = "Select *  from " + WISHLIST_TABLE + " where " + COLUMN_USER_ID + " = " + id;
         Cursor cursor = db.rawQuery(qry, null);
         return cursor.getCount();
     }
 
 
 
-    public ArrayList<HashMap<String, String>> getWishlistAll() {
+    public ArrayList<HashMap<String, String>> getWishlistAll(String user_id) {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
         db = getReadableDatabase();
-        String qry = "Select *  from " + WISHLIST_TABLE;
+        String qry = "Select *  from " + WISHLIST_TABLE + " where " + COLUMN_USER_ID + " = " + user_id;
         Cursor cursor = db.rawQuery(qry, null);
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -159,6 +162,7 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
             map.put(COLUMN_MRP, cursor.getString(cursor.getColumnIndex(COLUMN_MRP)));
             map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
             map.put(COLUMN_STATUS, cursor.getString(cursor.getColumnIndex(COLUMN_STATUS)));
+            map.put(COLUMN_USER_ID, cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID)));
             list.add(map);
             cursor.moveToNext();
         }
@@ -188,9 +192,9 @@ public class DatabaseHandlerWishList extends SQLiteOpenHelper {
         db.execSQL("delete from " + WISHLIST_TABLE);
     }
 
-    public void removeItemFromWishlist(String id) {
+    public void removeItemFromWishlist(String id,String user_id) {
         db = getReadableDatabase();
-        db.execSQL("delete from " + WISHLIST_TABLE + " where " + COLUMN_ID + " = " + id);
+        db.execSQL("delete from " + WISHLIST_TABLE + " where " + COLUMN_ID + " = " + id + " and " + COLUMN_USER_ID + " = " +  user_id);
     }
 
     @Override

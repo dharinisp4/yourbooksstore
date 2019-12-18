@@ -44,7 +44,7 @@
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
-            android:text="No Filter Available for this category"
+            android:text="No Filter Available for these products"
             android:layout_width="match_parent"
             android:layout_centerInParent="true"
             android:layout_height="wrap_content"/>

@@ -87,7 +87,7 @@ private List<Product_model> modelList ;
     SharedPreferences preferences ;
     private List<Product_model> product_modelList = new ArrayList<>();
     private RelatedProductAdapter adapter_product;
-    RelativeLayout rel_rewards ,rel_details , rel_related,rel_sellers;
+    RelativeLayout rel_rewards ,rel_details , rel_related,rel_sellers,rel_stock;
     ScrollView scrollView ;
 
     Activity activity;
@@ -101,9 +101,8 @@ private List<Product_model> modelList ;
     int status=0;
 
     private TextView dialog_unit_type,dialog_txtId,dialog_txtVar;
-    String color ,size ;
-    Dialog dialog;
-    String language ;
+    int stock=0 ;
+
 
     public static ProgressBar progressBar,pgb,pbg1;
     RelativeLayout relativeLayout_spinner,relativeLayout_size,relativeLayout_color ,rel_seller;
@@ -131,6 +130,7 @@ private List<Product_model> modelList ;
     ImageView plus ,minus ;
     TextView product_qty ;
     RelativeLayout rel_no ;
+    String user_id;
 
     private ElegantNumberButton numberButton;
 
@@ -154,6 +154,7 @@ private List<Product_model> modelList ;
      module=new Module();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
+        user_id=sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
@@ -198,6 +199,7 @@ private List<Product_model> modelList ;
         details_product_subject=bundle.getString("subject");
         details_product_language=bundle.getString("language");
 
+        stock=Integer.parseInt(prodcut_stock);
 
 //         list=new ArrayList<String>();
 //         list_atr_name=new ArrayList<String>();
@@ -242,6 +244,7 @@ private List<Product_model> modelList ;
         rel_related = view.findViewById( R.id.rel_related );
         rel_rewards = view.findViewById( R.id.rel_rewards );
         rel_sellers = view.findViewById( R.id.rel_seller );
+        rel_stock = view.findViewById( R.id.rel_stock );
         related_products=view.findViewById( R.id.rel_relative_product );
 
         plus = view.findViewById( R.id.iv_subcat_plus );
@@ -285,6 +288,14 @@ private List<Product_model> modelList ;
             }
         } );
 
+        if(stock<=0)
+        {
+            rel_stock.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            rel_stock.setVisibility(View.GONE);
+        }
 
 
         txtDesc.setText(details_product_desc);
@@ -314,22 +325,30 @@ private List<Product_model> modelList ;
         btn_add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                float qty = Float.parseFloat( numberButton.getNumber() );
-                float stocks = Float.parseFloat( prodcut_stock );
+                if(stock<=0)
+                {
+                    Toast.makeText(getActivity(),"Out Of Stock",Toast.LENGTH_SHORT).show();
+                }
+                else {
 
-                float price=qty*Float.parseFloat(details_product_price);
-                String unt=details_product_unit_value+details_product_unit;
-                final Module module=new Module();
-                module.setIntoCart(getActivity(),product_id,product_id,
-                        product_images,cat_id,details_product_name,
-                        String.valueOf(price),details_product_desc,details_product_rewards
-                        ,details_product_price,unt,details_product_increament,prodcut_stock
-                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
+
+                    float qty = Float.parseFloat(numberButton.getNumber());
+                    float stocks = Float.parseFloat(prodcut_stock);
+
+                    float price = qty * Float.parseFloat(details_product_price);
+                    String unt = details_product_unit_value + details_product_unit;
+                    final Module module = new Module();
+                    module.setIntoCart(getActivity(), product_id, product_id,
+                            product_images, cat_id, details_product_name,
+                            String.valueOf(price), details_product_desc, details_product_rewards
+                            , details_product_price, unt, details_product_increament, prodcut_stock
+                            , details_product_title, details_product_mrp, seller_id, details_product_class, details_product_subject, details_product_language, qty);
 //                ((MainActivity) context).setCartCounter("" + db_cart.getCartCount());
-               // Toast.makeText(getActivity(), "Added to Cart" +db_cart.getCartCount(), Toast.LENGTH_LONG).show();
-              //  Toast.makeText( getActivity() ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
-                btn_add.setVisibility( View.GONE );
-                rel_no.setVisibility( View.VISIBLE );
+                    // Toast.makeText(getActivity(), "Added to Cart" +db_cart.getCartCount(), Toast.LENGTH_LONG).show();
+                    //  Toast.makeText( getActivity() ,"count" + db_cart.getCartCount(),Toast.LENGTH_LONG ).show();
+                    btn_add.setVisibility(View.GONE);
+                    rel_no.setVisibility(View.VISIBLE);
+                }
             }
         } );
         numberButton.setOnValueChangeListener( new ElegantNumberButton.OnValueChangeListener() {
@@ -428,12 +447,12 @@ private List<Product_model> modelList ;
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                           if (ConnectivityReceiver.isConnected()) {
+
+                if (ConnectivityReceiver.isConnected()) {
                     makeGetLimiteRequest();
                 } else {
                     ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
                 }
-
             }
         });
 
@@ -441,24 +460,30 @@ private List<Product_model> modelList ;
             @Override
             public void onClick(View view) {
 
-                float qty = Float.parseFloat( String.valueOf( product_qty.getText() ) );
-                float price = Float.parseFloat( details_product_price );
-                tot =qty*price ;
-
-                String unt=details_product_unit_value+details_product_unit;
-                Module module=new Module();
-                module.setIntoCart(getActivity(),product_id,product_id,
-                        product_images,cat_id,details_product_name,
-                        details_product_price,details_product_desc,details_product_rewards
-                        ,details_product_price,unt,details_product_increament,prodcut_stock
-                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,qty);
-
-                if (ConnectivityReceiver.isConnected()) {
-                    makeBuyNowRequest();
-                } else {
-                    ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+                if(stock<=0)
+                {
+                    Toast.makeText(getActivity(),"Out Of Stock",Toast.LENGTH_SHORT).show();
                 }
+                else {
 
+                    float qty = Float.parseFloat(String.valueOf(product_qty.getText()));
+                    float price = Float.parseFloat(details_product_price);
+                    tot = qty * price;
+
+                    String unt = details_product_unit_value + details_product_unit;
+                    Module module = new Module();
+                    module.setIntoCart(getActivity(), product_id, product_id,
+                            product_images, cat_id, details_product_name,
+                            details_product_price, details_product_desc, details_product_rewards
+                            , details_product_price, unt, details_product_increament, prodcut_stock
+                            , details_product_title, details_product_mrp, seller_id, details_product_class, details_product_subject, details_product_language, qty);
+
+                    if (ConnectivityReceiver.isConnected()) {
+                        makeBuyNowRequest();
+                    } else {
+                        ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+                    }
+                }
             }
         } );
 
@@ -466,6 +491,15 @@ private List<Product_model> modelList ;
         wish_before.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sessionManagement.isLoggedIn())
+                {
+
+                    if(stock<=0)
+                    {
+                        Toast.makeText(getActivity(),"Out Of Stock",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
 
                 wish_before.setVisibility(View.GONE);
                 wish_after.setVisibility(View.VISIBLE);
@@ -474,8 +508,15 @@ private List<Product_model> modelList ;
                         product_images,cat_id,details_product_name,
                         details_product_price,details_product_desc,details_product_inStock,details_product_status,details_product_rewards
                         ,details_product_unit_value,details_product_unit,details_product_increament,prodcut_stock
-                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language);
+                        ,details_product_title,details_product_mrp,seller_id,details_product_class,details_product_subject,details_product_language,user_id);
+                    }
 
+                }
+                else
+                {
+                    Intent i = new Intent(getActivity(), LoginActivity.class);
+                    getActivity().startActivity(i);
+                }
             }
         });
 
@@ -487,7 +528,8 @@ private List<Product_model> modelList ;
 
                 try {
 
-                    db_wish.removeItemFromWishlist(product_id);
+                    db_wish.removeItemFromWishlist(product_id,user_id);
+                    updateWish();
                 }
                 catch (Exception ex)
                 {
@@ -551,11 +593,16 @@ private List<Product_model> modelList ;
 
             updateData();
 
-            if(db_wish.isInWishlist(product_id))
+            if(sessionManagement.isLoggedIn())
             {
-                wish_after.setVisibility(View.VISIBLE);
-                wish_before.setVisibility(View.GONE);
+                if(db_wish.isInWishlist(product_id,user_id))
+                {
+                    wish_after.setVisibility(View.VISIBLE);
+                    wish_before.setVisibility(View.GONE);
+                }
             }
+
+
 //        else
 //        {
 //
@@ -1317,7 +1364,7 @@ public boolean checkAttributeStatus(String atr)
     };
     public void updateWishCount()
     {
-        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishlistCount());
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishlistCount(user_id));
     }
 
 

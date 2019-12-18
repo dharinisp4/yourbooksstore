@@ -74,6 +74,8 @@ import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
 import util.Session_management;
 
+import static Config.BaseURL.KEY_ID;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences.Editor editor;
     DatabaseHandlerWishList db_wish;
     ProgressDialog progressDialog ;
-
+  String user_id="";
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -179,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         sessionManagement = new Session_management(MainActivity.this);
 
-
+        user_id=sessionManagement.getUserDetails().get(KEY_ID);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -506,7 +508,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         totalBudgetCount = (TextView) count.findViewById(R.id.actionbar_notifcation_textview);
         totalBudgetCount.setText("" + dbcart.getCartCount());
         totalBudgetCountwish = (TextView) wish.findViewById(R.id.actionbar_wish_textview);
-        totalBudgetCountwish.setText("" + db_wish.getWishlistCount());
+        totalBudgetCountwish.setText("" + db_wish.getWishlistCount(user_id));
         return true;
     }
 
@@ -539,7 +541,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         else  if (id == R.id.action_wish) {
-            if (db_wish.getWishlistCount() > 0) {
+            if (db_wish.getWishlistCount(user_id) > 0) {
                 Fragment fm = new Wishlist_fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

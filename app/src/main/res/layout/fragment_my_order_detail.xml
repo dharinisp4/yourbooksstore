@@ -69,12 +69,14 @@
 
             <Fonts.LatoBLack
                 android:id="@+id/tv_order_Detail_date"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="#000" />
 
             <Fonts.LatoBLack
+                android:visibility="gone"
                 android:id="@+id/tv_order_Detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

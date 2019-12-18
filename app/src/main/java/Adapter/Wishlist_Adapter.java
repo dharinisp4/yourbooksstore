@@ -3,6 +3,7 @@ package Adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +41,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Fragment.Details_Fragment;
+import Fragment.Wishlist_fragment;
 import Model.ProductVariantModel;
 import Model.Product_model;
 import Model.Wish_model;
@@ -48,6 +50,7 @@ import Module.Module;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
+import util.Session_management;
 
 import static Module.Module.updatewish;
 import static android.content.Context.MODE_PRIVATE;
@@ -56,11 +59,14 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
     ArrayList<HashMap<String, String>> list;
     private List<Wish_model> wishList;
+    ImageView no_prod_image;
     Activity context;
     private DatabaseCartHandler dbcart;
     private DatabaseHandlerWishList dbWish;
     String language;
+    String user_id="";
     Module module;
+    Session_management session_management;
     SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy ,tv_subcat_mrp ,tv_discount,tv_reward_point;
@@ -72,7 +78,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
         public MyViewHolder(View view) {
             super(view);
-
+           session_management=new Session_management(context);
             rel_no =(RelativeLayout)view.findViewById( R.id.rel_no );
             rel_stock =(RelativeLayout)view.findViewById( R.id.rel_stock );
             tv_title = (TextView) view.findViewById(R.id.product_name);
@@ -91,7 +97,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
             rel_click = (RelativeLayout) view.findViewById(R.id.rel_wish);
            // iv_remove.setOnClickListener( this );
-
+           user_id=session_management.getUserDetails().get(BaseURL.KEY_ID);
             rel_click.setOnClickListener(this);
 
 
@@ -114,12 +120,15 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         }
     }
 
-    public Wishlist_Adapter(ArrayList<HashMap<String, String>> list, Activity context) {
+    public Wishlist_Adapter(ArrayList<HashMap<String, String>> list, ImageView no_prod_image, Activity context) {
         this.list = list;
+        this.no_prod_image = no_prod_image;
         this.context = context;
+
         dbcart=new DatabaseCartHandler(context);
         dbWish=new DatabaseHandlerWishList(context);
     }
+
 
     @Override
     public Wishlist_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -331,9 +340,15 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         holder.iv_remove.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbWish.removeItemFromWishlist( map.get( "product_id" ) );
+                dbWish.removeItemFromWishlist( map.get( "product_id" ),user_id );
                 list.remove(position);
                 notifyDataSetChanged();
+
+                if(list.size()<=0)
+                {
+                    no_prod_image.setVisibility(View.VISIBLE);
+                    Wishlist_fragment.rv_wishlist.setVisibility(View.GONE);
+                }
                 updatewish();
 
             }

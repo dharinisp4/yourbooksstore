@@ -28,6 +28,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/img_product"
                 android:layout_width="200dp"
@@ -38,7 +39,22 @@
                 android:scaleType="fitXY"
                 />
 
+                <RelativeLayout
+                    android:id="@+id/rel_stock"
+                    android:visibility="gone"
+                    android:clickable="false"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/img_out_of_stock"
+                        android:layout_width="140dp"
+                        android:layout_height="120dp"
 
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/out_of_stock"/>
+
+                </RelativeLayout>
             </RelativeLayout>
             <View
 

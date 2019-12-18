@@ -68,6 +68,7 @@ import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
 import util.Session_management;
 
+import static Config.BaseURL.KEY_ID;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -88,6 +89,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     String language;
     Session_management session_management;
     String getcat_id="";
+    String user_id="";
     ImageView img_no_products,img_filter;
     TextView img_sort;
     SharedPreferences preferences;
@@ -97,6 +99,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
     private boolean isSubcat = false;
     NewAdapter new_adapter ;
     String get_top_sale_id ;
+    String id="";
 
     private List<Deal_Of_Day_model> deal_of_day_models = new ArrayList<>();
 
@@ -124,8 +127,9 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         rv_cat = (RecyclerView) view.findViewById(R.id.rv_subcategory);
         rv_cat.setLayoutManager(new GridLayoutManager(getActivity(),2));
         session_management=new Session_management(getActivity());
+        user_id=session_management.getUserDetails().get(KEY_ID);
         getcat_id = getArguments().getString("cat_id");
-        String id = getArguments().getString("id");
+         id = getArguments().getString("id");
         String get_deal_id = getArguments().getString("cat_deal");
         get_top_sale_id = getArguments().getString("cat_top_selling");
          getcat_title = getArguments().getString("title");
@@ -1032,7 +1036,7 @@ loadingBar.show();
     };
     private void updateWishData() {
 
-        ((MainActivity) getActivity()).setWishCounter("" + dbwish.getWishlistCount());
+        ((MainActivity) getActivity()).setWishCounter("" + dbwish.getWishlistCount(user_id));
     }
 
 
@@ -1049,9 +1053,9 @@ loadingBar.show();
     @Override
     public void onClick(View view) {
 
-        int id = view.getId();
+        int v_id = view.getId();
 
-        if(id==R.id.img_sort)
+        if(v_id==R.id.img_sort)
         {
             final ArrayList <String>  sort_List = new ArrayList<>(  );
             sort_List.add( "Price Low - High" );
@@ -1137,16 +1141,18 @@ loadingBar.show();
             } );
         }
 
-        else if(id==R.id.img_filter)
+        else if(v_id==R.id.img_filter)
         {
-            FilterActivity filterActivity=new FilterActivity();
-            Bundle args = new Bundle();
-            args.putString("category_id", getcat_id);
-            args.putString("title", getcat_title);
+            String idd=session_management.getCategoryId();
+                FilterActivity filterActivity=new FilterActivity();
+                Bundle args = new Bundle();
+                args.putString("category_id", idd);
+                args.putString("title", getcat_title);
 //         /   fm.setArguments(args);
-            filterActivity.setArguments(args);
-            FragmentManager fragmentManager=getFragmentManager();
-            filterActivity.show(fragmentManager,"Filter");
+                filterActivity.setArguments(args);
+                FragmentManager fragmentManager=getFragmentManager();
+                filterActivity.show(fragmentManager,"Filter");
+
             //            Bundle args = new Bundle();
 //            Fragment fm = new FilterActivity();
 //            args.putString("category_id", getcat_id);

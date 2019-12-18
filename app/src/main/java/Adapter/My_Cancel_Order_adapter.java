@@ -155,8 +155,8 @@ holder.linearLayout.setVisibility(View.GONE);
         }else if (mList.getPayment_method().equals("Wallet")) {
             holder.tv_methid1.setText("Wallet");
         }
-        holder.tv_date.setText(mList.getOn_date());
-        holder.tv_tracking_date.setText(mList.getOn_date());
+        holder.tv_date.setText(getDate(mList.getPlaced_date()));
+        holder.tv_tracking_date.setText(mList.getOut_date());
 
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");
@@ -187,13 +187,13 @@ holder.linearLayout.setVisibility(View.GONE);
         holder.tv_price.setText(context.getResources().getString(R.string.currency) + mList.getTotal_amount());
         holder.tv_item.setText(context.getResources().getString(R.string.tv_cart_item) + mList.getTotal_items());
 //        holder.tv_pending_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_pending_date.setText(mList.getOn_date());
+        holder.tv_pending_date.setText(getDate(mList.getPlaced_date()));
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_confirm_date.setText(mList.getOn_date());
+        //holder.tv_confirm_date.setText(mList.getOn_date());
 //        holder.tv_delevered_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_delevered_date.setText(mList.getOn_date());
+        //holder.tv_delevered_date.setText(mList.getOn_date());
 //        holder.tv_cancel_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_cancel_date.setText(mList.getOn_date());
+        //holder.tv_cancel_date.setText(mList.getOn_date());
 
         holder.tv_email.setText(mList.getReceiver_mobile());
         holder.tv_address.setText(mList.getReceiver_name());
@@ -209,5 +209,9 @@ holder.linearLayout.setVisibility(View.GONE);
         return modelList.size();
     }
 
+    private String getDate(String placed_date) {
+        String[] arr=placed_date.split(" ");
+        return arr[0].toString();
+    }
 }
 

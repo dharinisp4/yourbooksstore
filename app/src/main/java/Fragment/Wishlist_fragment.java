@@ -15,16 +15,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import Adapter.Wishlist_Adapter;
+import Config.BaseURL;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
+import util.Session_management;
 
 
 public class Wishlist_fragment extends Fragment {
@@ -32,10 +35,12 @@ public class Wishlist_fragment extends Fragment {
     private static String TAG = Shop_Now_fragment.class.getSimpleName();
     private Bundle savedInstanceState;
     private DatabaseHandlerWishList db_wish;
-    RecyclerView rv_wishlist;
+   public static RecyclerView rv_wishlist;
     DatabaseCartHandler db_cart;
     ProgressDialog loadingBar;
-
+    public static ImageView no_prod_image;
+ Session_management session_management;
+ String user_id;
     public Wishlist_fragment() {
         // Required empty public constructor
     }
@@ -55,20 +60,30 @@ public class Wishlist_fragment extends Fragment {
 
         ((MainActivity) getActivity()).setTitle( getResources().getString( R.string.wishlist ) );
         rv_wishlist = view.findViewById( R.id.rv_wishlist );
+        no_prod_image = view.findViewById( R.id.no_prod_image );
         rv_wishlist.setLayoutManager( new LinearLayoutManager( getActivity() ) );
         db_cart=new DatabaseCartHandler(getActivity());
+        session_management=new Session_management(getActivity());
         //db = new DatabaseHandler(getActivity());
+        user_id=session_management.getUserDetails().get(BaseURL.KEY_ID);
         db_wish = new DatabaseHandlerWishList( getActivity() );
 
         loadingBar=new ProgressDialog(getActivity());
         loadingBar.setMessage("Loading...");
         loadingBar.setCanceledOnTouchOutside(false);
 
-        ArrayList<HashMap<String, String>> map = db_wish.getWishlistAll();
+        ArrayList<HashMap<String, String>> map = db_wish.getWishlistAll(user_id);
 
-        Toast.makeText(getActivity(),""+map.size(),Toast.LENGTH_LONG).show();
 
-        Wishlist_Adapter adapter = new Wishlist_Adapter( map,getActivity() );
+       if(map.size()<=0)
+       {
+           if(map.size()<=0)
+           {
+               rv_wishlist.setVisibility(View.GONE);
+               no_prod_image.setVisibility(View.VISIBLE);
+           }
+       }
+        Wishlist_Adapter adapter = new Wishlist_Adapter( map,no_prod_image,getActivity() );
 
         rv_wishlist.setAdapter( adapter );
         adapter.notifyDataSetChanged();
@@ -160,7 +175,7 @@ public class Wishlist_fragment extends Fragment {
 
     private void updateWishData() {
 
-        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishlistCount());
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishlistCount(user_id));
     }
 
 

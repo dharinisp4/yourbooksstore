@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,9 +39,11 @@ import Model.My_Cancel_order_model;
 import Model.My_Pending_order_model;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
+import gogrocer.tcc.MyOrderDetail;
 import gogrocer.tcc.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
+import util.RecyclerTouchListener;
 import util.Session_management;
 
 /**
@@ -102,6 +105,34 @@ public class My_cancel_order_fragment extends Fragment {
         {
             ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
         }
+
+        rv_mycancel.addOnItemTouchListener(new
+                RecyclerTouchListener(getActivity(), rv_mycancel, new RecyclerTouchListener.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle args = new Bundle();
+                String sale_id = my_order_modelList.get(position).getSale_id();
+                String date = my_order_modelList.get(position).getOn_date();
+                String time = my_order_modelList.get(position).getDelivery_time_from();
+                String total = my_order_modelList.get(position).getTotal_amount();
+                String status = my_order_modelList.get(position).getStatus();
+                String deli_charge = my_order_modelList.get(position).getDelivery_charge();
+                Intent intent=new Intent(getContext(), MyOrderDetail.class);
+                intent.putExtra("sale_id", sale_id);
+                intent.putExtra("date", date);
+                intent.putExtra("time", time);
+                intent.putExtra("total", total);
+                intent.putExtra("status", status);
+                intent.putExtra("deli_charge", deli_charge);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
 
         return view;
     }

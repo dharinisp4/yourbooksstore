@@ -151,7 +151,7 @@ public class Module {
                                    String details_product_price, String details_product_desc,String details_in_stock,String details_status,
                                    String details_product_rewards, String details_product_unit_value, String details_product_unit,
                                    String details_product_increament, String details_product_inStock, String details_product_title,
-                                   String details_product_mrp, String seller_id,String book_class,String subject,String language)
+                                   String details_product_mrp, String seller_id,String book_class,String subject,String language,String user_id)
     {
         DatabaseHandlerWishList db_cart=new DatabaseHandlerWishList(activity);
         HashMap<String, String> mapProduct=new HashMap<String, String>();
@@ -174,6 +174,7 @@ public class Module {
         mapProduct.put("book_class",book_class);
         mapProduct.put("subject",subject);
         mapProduct.put("language",language);
+        mapProduct.put("user_id",user_id);
 
 
         try {
@@ -181,15 +182,16 @@ public class Module {
             boolean tr = db_cart.setwishlist(mapProduct);
             if (tr == true) {
                 MainActivity mainActivity = new MainActivity();
-                mainActivity.setCartCounter("" + db_cart.getWishlistCount());
+                mainActivity.setCartCounter("" + db_cart.getWishlistCount(user_id));
 
                 //   context.setCartCounter("" + holder.db_cart.getCartCount());
                 Toast.makeText(activity, "Added to WishList" , Toast.LENGTH_LONG).show();
-                int n = db_cart.getWishlistCount();
+                int n = db_cart.getWishlistCount(user_id);
                 updatewish(activity);
                 //      txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
 
             } else if (tr == false) {
+
                 Toast.makeText(activity, "Something went wrong", Toast.LENGTH_LONG).show();
                 // txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
             }

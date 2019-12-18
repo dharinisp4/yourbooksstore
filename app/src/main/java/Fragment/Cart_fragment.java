@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +51,8 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = Cart_fragment.class.getSimpleName();
 
-  RecyclerView rv_cart;
+  public static RecyclerView rv_cart;
+  public static ImageView no_prod_image;
    public static TextView tv_clear, tv_total, tv_item;
     RelativeLayout btn_checkout;
 
@@ -87,6 +89,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         tv_clear = (TextView) view.findViewById(R.id.tv_cart_clear);
         tv_total = (TextView) view.findViewById(R.id.tv_cart_total);
         tv_item = (TextView) view.findViewById(R.id.tv_cart_item);
+        no_prod_image = (ImageView) view.findViewById(R.id.no_prod_image);
         btn_checkout = (RelativeLayout) view.findViewById(R.id.btn_cart_checkout);
         rv_cart = (RecyclerView) view.findViewById(R.id.rv_cart);
         rv_cart.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -95,6 +98,11 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
         ArrayList<HashMap<String, String>> map = db.getCartAll();
 
+        if(map.size()<=0)
+        {
+            rv_cart.setVisibility(View.GONE);
+            no_prod_image.setVisibility(View.VISIBLE);
+        }
         Cart_adapter adapter = new Cart_adapter(getActivity(), map);
         rv_cart.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -156,8 +164,10 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                 Cart_adapter adapter = new Cart_adapter(getActivity(), map);
                 rv_cart.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-
+                rv_cart.setVisibility(View.GONE);
+                no_prod_image.setVisibility(View.VISIBLE);
                 updateData();
+
 
                 dialogInterface.dismiss();
             }

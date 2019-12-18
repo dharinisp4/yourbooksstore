@@ -146,7 +146,6 @@ public class BaseURL {
     public static final String PUSH_NOTIFICATION = "pushNotification";
 
     //Filter Urls
-
     public static String GET_LANGUAGE_URL = BASE_URL + "index.php/api/get_language";
     public static String GET_SUBJECT_URL = BASE_URL + "index.php/api/get_subject";
     public static String GET_BOOK_CLASS_URL = BASE_URL + "index.php/api/get_book_class";

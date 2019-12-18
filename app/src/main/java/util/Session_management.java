@@ -247,4 +247,6 @@ public class Session_management {
     {
         return prefs.getString(KEY_STAN,null);
     }
+
+
 }

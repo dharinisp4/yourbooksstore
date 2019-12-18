@@ -35,9 +35,11 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Product_model;
 import Module.Module;
+import gogrocer.tcc.LoginActivity;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
+import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -49,6 +51,8 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
     private DatabaseCartHandler dbcart;
     private DatabaseHandlerWishList dbWish;
     String language;
+    String user_id="";
+    Session_management session_management;
     Module module;
     SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -81,6 +85,9 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             wish_after = (ImageView) view.findViewById(R.id.wish_after);
             rel_click = (RelativeLayout) view.findViewById(R.id.rel_click);
             out_of_stock= view.findViewById( R.id.img_out_of_stock );
+            session_management=new Session_management(context);
+            user_id=session_management.getUserDetails().get(BaseURL.KEY_ID);
+
 //            iv_remove.setVisibility(View.GONE);
 //            iv_minus.setOnClickListener(this);
 //            iv_plus.setOnClickListener(this);
@@ -179,11 +186,15 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         Double qty = Double.parseDouble( (String) holder.tv_contetiy.getText() );
         holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price );
 
-        if(dbWish.isInWishlist(mList.getProduct_id()))
+        if(session_management.isLoggedIn())
         {
-            holder.wish_after.setVisibility(View.VISIBLE);
-            holder.wish_before.setVisibility(View.GONE);
+            if(dbWish.isInWishlist(mList.getProduct_id(),user_id))
+            {
+                holder.wish_after.setVisibility(View.VISIBLE);
+                holder.wish_before.setVisibility(View.GONE);
+            }
         }
+
 
    String bk_lang="";
         String lang=mList.getLanguage().toString();
@@ -202,18 +213,18 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         if(stock<=0)
         {
             holder.out_of_stock.setVisibility(View.VISIBLE);
-            holder.rel_click.setEnabled( false );
-
             holder.tv_add.setVisibility( View.INVISIBLE );
             holder.rel_no.setVisibility( View.GONE );
 
             holder.wish_before.setVisibility( View.GONE );
-            holder.wish_after.setVisibility( View.GONE );
 
         }
         else
         {
             holder.out_of_stock.setVisibility( View.GONE );
+            holder.tv_add.setVisibility( View.VISIBLE );
+
+
         }
 
 
@@ -308,29 +319,36 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         holder.iv_plus.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int qty = Integer.valueOf( holder.tv_contetiy.getText().toString() );
-                qty = qty + 1;
-                holder.tv_contetiy.setText( String.valueOf( qty ) );
+                int qty = Integer.valueOf(holder.tv_contetiy.getText().toString());
+                int stock = Integer.parseInt(modelList.get(position).getStock());
 
-                preferences = context.getSharedPreferences( "lan", MODE_PRIVATE );
-                language = preferences.getString( "language", "" );
+                if (qty == stock) {
+                    Toast.makeText(context, "We have only " + stock + " in Stock", Toast.LENGTH_LONG).show();
+                } else {
+
+                    qty = qty + 1;
+                    holder.tv_contetiy.setText(String.valueOf(qty));
+
+                    preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
+                    language = preferences.getString("language", "");
 
 
-                String unt=modelList.get(position).getUnit_value()+modelList.get(position).getUnit();
-                  double unit_price=Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
-                // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
-                Module module=new Module();
-                module.setIntoCart((Activity) context,modelList.get(position).getProduct_id(),modelList.get(position).getProduct_id(),
-                        modelList.get(position).getProduct_image(),modelList.get(position).getCategory_id(),modelList.get(position).getProduct_name(),
-                        String.valueOf(qty*unit_price),modelList.get(position).getProduct_description(),modelList.get(position).getRewards()
-                        ,modelList.get(position).getPrice(),unt,modelList.get(position).getIncreament(),modelList.get(position).getStock()
-                        ,modelList.get(position).getTitle(),modelList.get(position).getMrp(),modelList.get(position).getSeller_id(),modelList.get(position).getBook_class(),modelList.get(position).getSubject(),modelList.get(position).getLanguage(),qty);
-                updateintent();
-          //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
+                    String unt = modelList.get(position).getUnit_value() + modelList.get(position).getUnit();
+                    double unit_price = Double.parseDouble(dbcart.getUnitPrice(modelList.get(position).getProduct_id()));
+                    // Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+                    Module module = new Module();
+                    module.setIntoCart((Activity) context, modelList.get(position).getProduct_id(), modelList.get(position).getProduct_id(),
+                            modelList.get(position).getProduct_image(), modelList.get(position).getCategory_id(), modelList.get(position).getProduct_name(),
+                            String.valueOf(qty * unit_price), modelList.get(position).getProduct_description(), modelList.get(position).getRewards()
+                            , modelList.get(position).getPrice(), unt, modelList.get(position).getIncreament(), modelList.get(position).getStock()
+                            , modelList.get(position).getTitle(), modelList.get(position).getMrp(), modelList.get(position).getSeller_id(), modelList.get(position).getBook_class(), modelList.get(position).getSubject(), modelList.get(position).getLanguage(), qty);
+                    updateintent();
+                    //      Toast.makeText(context,""+dbcart.getTotalAmount(),Toast.LENGTH_LONG).show();
 
-             //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
-           //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
+                    //   Double price = Double.parseDouble( modelList.get( position ).getPrice() );
+                    //     holder.tv_total.setText( context.getResources().getString( R.string.currency ) + price * qty );
 
+                }
             }
         } );
         holder.iv_minus.setOnClickListener( new View.OnClickListener() {
@@ -380,16 +398,23 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         holder.wish_before.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(session_management.isLoggedIn())
+                {
+                    holder.wish_before.setVisibility(View.GONE);
+                    holder.wish_after.setVisibility(View.VISIBLE);
+                    module.setIntoWish((Activity) context,mList.getProduct_id(),
+                            mList.getProduct_image(),mList.getCategory_id(),mList.getProduct_name(),
+                            mList.getPrice(),mList.getProduct_description(),mList.getIn_stock(),mList.getStatus(),mList.getRewards()
+                            ,mList.getUnit_value(),mList.getUnit(),mList.getIncreament(),mList.getStock()
+                            ,mList.getTitle(),mList.getMrp(),mList.getSeller_id(),mList.getBook_class(),mList.getSubject(),mList.getLanguage(),user_id);
+                    updatewish();
+                }
+                else
+                {
+                    Intent i = new Intent(context, LoginActivity.class);
+                    context.startActivity(i);
+                }
 
-                holder.wish_before.setVisibility(View.GONE);
-                holder.wish_after.setVisibility(View.VISIBLE);
-
-                module.setIntoWish((Activity) context,mList.getProduct_id(),
-                        mList.getProduct_image(),mList.getCategory_id(),mList.getProduct_name(),
-                        mList.getPrice(),mList.getProduct_description(),mList.getIn_stock(),mList.getStatus(),mList.getRewards()
-                        ,mList.getUnit_value(),mList.getUnit(),mList.getIncreament(),mList.getStock()
-                        ,mList.getTitle(),mList.getMrp(),mList.getSeller_id(),mList.getBook_class(),mList.getSubject(),mList.getLanguage());
-                updatewish();
             }
         });
 
@@ -400,7 +425,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                 holder.wish_before.setVisibility(View.VISIBLE);
                 holder.wish_after.setVisibility(View.GONE);
 
-                dbWish.removeItemFromWishlist(mList.getProduct_id());
+                dbWish.removeItemFromWishlist(mList.getProduct_id(),user_id);
                 updatewish();
             }
         });

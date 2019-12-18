@@ -69,6 +69,7 @@ public class Payment_fragment extends Fragment {
     private String getdate = "";
     private String getuser_id = "";
     String getDeliveryType ="";
+    int deli_charges ;
     private Double rewards;
     RadioButton rb_Store, rb_Cod, rb_card, rb_Netbanking, rb_paytm;
     CheckBox checkBox_Wallet, checkBox_coupon;
@@ -115,6 +116,11 @@ public class Payment_fragment extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
+        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "Font/Bold.ttf");
+
+        checkBox_Wallet = (CheckBox) view.findViewById(R.id.use_wallet);
+        checkBox_Wallet.setTypeface(font);
+
 
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -122,14 +128,12 @@ public class Payment_fragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
+                checkBox_Wallet.setChecked(false);
                 getvalue = radioButton.getText().toString();
             }
         });
 
 
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "Font/Bold.ttf");
-        checkBox_Wallet = (CheckBox) view.findViewById(R.id.use_wallet);
-        checkBox_Wallet.setTypeface(font);
         rb_Store = (RadioButton) view.findViewById(R.id.use_store_pickup);
         rb_Store.setTypeface(font);
         rb_Cod = (RadioButton) view.findViewById(R.id.use_COD);
@@ -155,7 +159,7 @@ public class Payment_fragment extends Fragment {
 
         sessionManagement = new Session_management(getActivity());
 
-
+        deli_charges = Integer.parseInt(getArguments().getString("deli_charges"));
         Coupon_and_wallet = (LinearLayout) view.findViewById(R.id.coupon_and_wallet);
         Relative_used_wallet = (RelativeLayout) view.findViewById(R.id.relative_used_wallet);
         Relative_used_coupon = (RelativeLayout) view.findViewById(R.id.relative_used_coupon);
@@ -212,17 +216,10 @@ public class Payment_fragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
+                    rb_Cod.setChecked(false);
                     double wall_amt=Double.parseDouble(getwallet);
                     double p_amt=Double.parseDouble(order_total_amount);
-                    if(wall_amt<p_amt)
-                    {
-                        Use_Wallet_Ammont();
-
-                    }
-                    else
-                    {
-                         use_wallet_for_order();
-                    }
+                    use_wallet_for_order();
                     //Toast.makeText(getActivity(),"ww"+getwallet,Toast.LENGTH_LONG).show();
                     Coupon_and_wallet.setVisibility(View.VISIBLE);
                     Relative_used_wallet.setVisibility(View.VISIBLE);
@@ -318,10 +315,29 @@ public class Payment_fragment extends Fragment {
         double pay_amt=Double.parseDouble(order_total_amount);
         double w_amt=Double.parseDouble(getwallet);
 
-        payble_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(pay_amt));
-        used_wallet_ammount.setText("(" + getResources().getString(R.string.currency) + String.valueOf(pay_amt)+ ")");
-        //SharedPref.putString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT, total_amount);
-        my_wallet_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(w_amt-pay_amt));
+        if(w_amt<=0)
+        {
+            Toast.makeText(getActivity(),"You don't have enough wallet amount",Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+           // checkBox_Wallet.setChecked(false);
+            payble_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(pay_amt));
+            //SharedPref.putString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT, total_amount);
+            double diff=w_amt-pay_amt;
+            if(diff<=0)
+            {
+                my_wallet_ammount.setText(getResources().getString(R.string.currency)+"0");
+            }
+            else
+            {
+                my_wallet_ammount.setText(getResources().getString(R.string.currency)+String.valueOf(diff));
+            }
+            used_wallet_ammount.setText("(" + getResources().getString(R.string.currency) + String.valueOf(w_amt)+ ")");
+
+
+        }
+
        // attemptOrderWithWallet(String.valueOf(w_amt-pay_amt));
     }
 
@@ -388,6 +404,7 @@ public class Payment_fragment extends Fragment {
         params.put("user_id", userid);
         params.put("location", location);
         params.put("store_id", store_id);
+        params.put("delivery_charges", String.valueOf(deli_charges));
         params.put("total_ammount",total_amount);
         params.put("payment_method", getvalue);
         params.put("data", passArray.toString());
@@ -509,6 +526,7 @@ public class Payment_fragment extends Fragment {
         params.put("user_id", userid);
         params.put("location", location);
         params.put("store_id", store_id);
+        params.put("delivery_charges", String.valueOf(deli_charges));
         params.put("total_ammount",total_amount);
         params.put("payment_method", "Wallet");
         params.put("wallet_amount",wamt);
@@ -558,7 +576,7 @@ public class Payment_fragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"err:-  "+error.getMessage(),Toast.LENGTH_LONG).show();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
@@ -751,22 +769,27 @@ public class Payment_fragment extends Fragment {
 
     private void checked() {
         if (checkBox_Wallet.isChecked()) {
-            if (rb_Store.isChecked() || rb_Cod.isChecked()) {
-                // attemptOrder();
-            } else {
+
+
                 double wall_amt=Double.parseDouble(getwallet);
                 double p_amt=Double.parseDouble(order_total_amount);
 
                 if(wall_amt<p_amt)
                 {
-                    Toast.makeText(getActivity(), "Please Select One", Toast.LENGTH_SHORT).show();
+                    if(!rb_Cod.isChecked())
+                    {
+                        checkBox_Wallet.setChecked(false);
+                        Toast.makeText(getActivity(), "You don't have enough wallet amount ", Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
                 else
                 {
 
                     double check=wall_amt-p_amt;
                     String ch="";
-                    if(check==0)
+                    if(check<=0)
                     {
                         ch="0";
                     }
@@ -777,17 +800,20 @@ public class Payment_fragment extends Fragment {
                     attemptOrderWithWallet(ch);
                 }
 
+
+
+        }
+
+            else if (rb_Cod.isChecked()) {
+                attemptOrder();
             }
 
-        }
-        if (rb_Store.isChecked()) {
-            attemptOrder();
-        }
-        if (rb_Cod.isChecked()) {
 
+        else if (rb_Store.isChecked()) {
             attemptOrder();
         }
-        if (rb_card.isChecked()) {
+
+       else if (rb_card.isChecked()) {
             Intent myIntent = new Intent(getActivity(), PaymentActivity.class);
             if (checkBox_Wallet.isChecked()) {
                 myIntent.putExtra("total", total_amount);
@@ -801,7 +827,7 @@ public class Payment_fragment extends Fragment {
             }
             getActivity().startActivity(myIntent);
         }
-        if (rb_Netbanking.isChecked()) {
+        else if (rb_Netbanking.isChecked()) {
             Intent myIntent1 = new Intent(getActivity(), PaymentActivity.class);
             if (checkBox_Wallet.isChecked()) {
                 myIntent1.putExtra("total", total_amount);
@@ -816,7 +842,7 @@ public class Payment_fragment extends Fragment {
             }
             getActivity().startActivity(myIntent1);
         }
-               if (rb_paytm.isChecked()) {
+              else if (rb_paytm.isChecked()) {
             Intent myIntent1 = new Intent(getActivity(), Paytm.class);
             if (checkBox_Wallet.isChecked()) {
                 myIntent1.putExtra("total", total_amount);
@@ -832,7 +858,7 @@ public class Payment_fragment extends Fragment {
             getActivity().startActivity(myIntent1);
 
         }
-        if (checkBox_coupon.isChecked()) {
+        else if (checkBox_coupon.isChecked()) {
             if (rb_Store.isChecked() || rb_Cod.isChecked()) {
                 attemptOrder();
             } else {
@@ -842,6 +868,11 @@ public class Payment_fragment extends Fragment {
 
         }
 
+        else
+        {
+            Toast.makeText(getActivity(),"Please Select Payment method for order",Toast.LENGTH_LONG
+                    ).show();
+        }
 
 
     }

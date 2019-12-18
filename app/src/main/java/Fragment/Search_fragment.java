@@ -109,11 +109,16 @@ public class Search_fragment extends Fragment {
         rv_search.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_search, new RecyclerTouchListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                progressDialog.show();
 
-                Fragment details_fragment=new Details_Fragment();
-                // bundle.putString("data",as);
-                Bundle args = new Bundle();
+                int stock=Integer.parseInt(modelList.get(position).getStock());
+                if(stock<=0)
+                {
+
+                }
+                else {
+                    Fragment details_fragment = new Details_Fragment();
+                    // bundle.putString("data",as);
+                    Bundle args = new Bundle();
 
 //                //Intent intent=new Intent(context, Product_details.class);
 //                args.putString("product_id", modelList.get(position).getProduct_id());
@@ -137,41 +142,40 @@ public class Search_fragment extends Fragment {
 //                args.putString("stock", modelList.get(position).getStock());
 //                args.putString("title", modelList.get(position).getTitle());
 
-                args.putString("product_id", modelList.get(position).getProduct_id());
-                args.putString("product_name", modelList.get(position).getProduct_name());
-                args.putString("category_id", modelList.get(position).getCategory_id());
-                args.putString("product_description", modelList.get(position).getProduct_description());
-                //         args.putString("deal_price",modelList.get(position).getDeal_price());
-                //       args.putString("start_date",modelList.get(position).getStart_date());
-                //     args.putString("start_time",modelList.get(position).getStart_time());
-                //   args.putString("end_date",modelList.get(position).getEnd_date());
-                // args.putString("end_time",modelList.get(position).getEnd_time());
-                args.putString("price", modelList.get(position).getPrice());
-                args.putString("mrp", modelList.get(position).getMrp());
-                args.putString("product_image", modelList.get(position).getProduct_image());
-                args.putString("status", modelList.get(position).getStatus());
-                args.putString("in_stock", modelList.get(position).getIn_stock());
-                args.putString("unit_value", modelList.get(position).getUnit_value());
-                args.putString("unit", modelList.get(position).getUnit());
-                args.putString("increament", modelList.get(position).getIncreament());
-                args.putString("rewards", modelList.get(position).getRewards());
-                args.putString("stock", modelList.get(position).getStock());
-                args.putString("title", modelList.get(position).getTitle());
-                args.putString("seller_id", modelList.get(position).getSeller_id());
+                    args.putString("product_id", modelList.get(position).getProduct_id());
+                    args.putString("product_name", modelList.get(position).getProduct_name());
+                    args.putString("category_id", modelList.get(position).getCategory_id());
+                    args.putString("product_description", modelList.get(position).getProduct_description());
+                    //         args.putString("deal_price",modelList.get(position).getDeal_price());
+                    //       args.putString("start_date",modelList.get(position).getStart_date());
+                    //     args.putString("start_time",modelList.get(position).getStart_time());
+                    //   args.putString("end_date",modelList.get(position).getEnd_date());
+                    // args.putString("end_time",modelList.get(position).getEnd_time());
+                    args.putString("price", modelList.get(position).getPrice());
+                    args.putString("mrp", modelList.get(position).getMrp());
+                    args.putString("product_image", modelList.get(position).getProduct_image());
+                    args.putString("status", modelList.get(position).getStatus());
+                    args.putString("in_stock", modelList.get(position).getIn_stock());
+                    args.putString("unit_value", modelList.get(position).getUnit_value());
+                    args.putString("unit", modelList.get(position).getUnit());
+                    args.putString("increament", modelList.get(position).getIncreament());
+                    args.putString("rewards", modelList.get(position).getRewards());
+                    args.putString("stock", modelList.get(position).getStock());
+                    args.putString("title", modelList.get(position).getTitle());
+                    args.putString("seller_id", modelList.get(position).getSeller_id());
 
-                details_fragment.setArguments(args);
-
-
-                // Toast.makeText(getActivity(),"col"+product_modelList.get(position).getColor(),Toast.LENGTH_LONG).show();
+                    details_fragment.setArguments(args);
 
 
-                progressDialog.dismiss();
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel,details_fragment)
-
-                        .addToBackStack(null).commit();
+                    // Toast.makeText(getActivity(),"col"+product_modelList.get(position).getColor(),Toast.LENGTH_LONG).show();
 
 
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
+
+                            .addToBackStack(null).commit();
+
+                }
             }
 
             @Override

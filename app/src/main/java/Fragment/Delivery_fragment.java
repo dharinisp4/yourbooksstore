@@ -262,6 +262,12 @@ String language;
                 image_normal.setVisibility(View.VISIBLE);
                 image_standard.setVisibility(View.GONE);
                 typedelivery="normal";
+
+                Intent updates = new Intent("Grocery_delivery_charge");
+                updates.putExtra("type", "update");
+                updates.putExtra("charge", deli_charges);
+                getActivity().sendBroadcast(updates);
+
             }
             else
             {
@@ -276,6 +282,11 @@ String language;
                 image_standard.setVisibility(View.VISIBLE);
                 image_normal.setVisibility(View.GONE);
                 typedelivery="standard";
+                String st_chrg=sessionManagement.getStandardCharges();
+                Intent updates = new Intent("Grocery_delivery_charge");
+                updates.putExtra("type", "update");
+                updates.putExtra("charge", st_chrg);
+                getActivity().sendBroadcast(updates);
 
 
             }
@@ -400,7 +411,7 @@ String language;
             args.putString("time", gettime);
             args.putString("location_id", location_id);
             args.putString("address", address);
-            args.putString("deli_charges", deli_charges);
+
             args.putString("store_id", store_id);
             args.putString("name",name);
             args.putString( "pin",pin );
@@ -413,7 +424,18 @@ String language;
             args.putString( "type",type );
             args.putString( "delivery_type",typedelivery );
 
-           // Toast.makeText(getActivity(),""+type,Toast.LENGTH_LONG).show();
+            if(typedelivery.equalsIgnoreCase("standard"))
+            {
+                String std_chrg=sessionManagement.getStandardCharges();
+                args.putString("deli_charges", std_chrg);
+            }
+            else
+            {
+                args.putString("deli_charges", deli_charges);
+            }
+
+
+        //    Toast.makeText(getActivity(),""+typedelivery,Toast.LENGTH_LONG).show();
             fm.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
@@ -512,7 +534,7 @@ String language;
             if (type.contentEquals("update")) {
                 //updateData();
                 deli_charges = intent.getStringExtra("charge");
-              //  Toast.makeText(getActivity(), deli_charges, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getActivity(), "dfghjkl"+typedelivery, Toast.LENGTH_SHORT).show();
 
                 Double total = Double.parseDouble(db_cart.getTotalAmount()) + Integer.parseInt(deli_charges);
 
