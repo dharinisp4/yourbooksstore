@@ -263,11 +263,6 @@ String language;
                 image_standard.setVisibility(View.GONE);
                 typedelivery="normal";
 
-                Intent updates = new Intent("Grocery_delivery_charge");
-                updates.putExtra("type", "update");
-                updates.putExtra("charge", deli_charges);
-                getActivity().sendBroadcast(updates);
-
             }
             else
             {
@@ -282,12 +277,6 @@ String language;
                 image_standard.setVisibility(View.VISIBLE);
                 image_normal.setVisibility(View.GONE);
                 typedelivery="standard";
-                String st_chrg=sessionManagement.getStandardCharges();
-                Intent updates = new Intent("Grocery_delivery_charge");
-                updates.putExtra("type", "update");
-                updates.putExtra("charge", st_chrg);
-                getActivity().sendBroadcast(updates);
-
 
             }
 
