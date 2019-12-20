@@ -42,6 +42,7 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.PaymentActivity;
@@ -76,6 +77,8 @@ public class Payment_fragment extends Fragment {
     EditText et_Coupon;
     String getvalue;
     String text;
+     Module module;
+
     String cp;
     String Used_Wallet_amount;
     String total_amount;
@@ -111,7 +114,7 @@ public class Payment_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_payment_method, container, false);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.payment));
-
+        module=new Module();
         Prefrence_TotalAmmount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
@@ -453,10 +456,11 @@ public class Payment_fragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -576,10 +580,9 @@ public class Payment_fragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),"err:-  "+error.getMessage(),Toast.LENGTH_LONG).show();
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -611,8 +614,9 @@ public class Payment_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -912,7 +916,10 @@ public class Payment_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), "" + error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         }) {
 

@@ -45,6 +45,7 @@ import Adapter.My_order_detail_adapter;
 import Config.BaseURL;
 import Fragment.My_order_detail_fragment;
 import Model.My_order_detail_model;
+import Module.Module;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
 import util.CustomVolleyJsonRequest;
@@ -55,6 +56,7 @@ public class MyOrderDetail extends AppCompatActivity {
      Dialog dialog;
     EditText et_remark;
     Button btn_yes,btn_no;
+    Module module;
     private TextView tv_date, tv_time, tv_total, tv_delivery_charge;
     private RelativeLayout btn_cancle;
     private RecyclerView rv_detail_order;
@@ -81,6 +83,7 @@ public class MyOrderDetail extends AppCompatActivity {
         setContentView(R.layout.fragment_my_order_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        module=new Module();
         dialog=new Dialog(MyOrderDetail.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -262,8 +265,9 @@ public class MyOrderDetail extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(MyOrderDetail.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(MyOrderDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -323,8 +327,9 @@ public class MyOrderDetail extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(MyOrderDetail.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(MyOrderDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

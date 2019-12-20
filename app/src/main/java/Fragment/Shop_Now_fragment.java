@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -38,6 +39,7 @@ import java.util.Map;
 import Adapter.Shop_Now_adapter;
 import Config.BaseURL;
 import Model.ShopNow_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -54,10 +56,11 @@ public class Shop_Now_fragment extends Fragment {
     private Shop_Now_adapter adapter;
     private boolean isSubcat = false;
     String getid;
+    Module module;
     String getcat_title;
     Session_management session_management;
     ProgressDialog progressDialog ;
-    ImageView img_no_itm;
+    TextView img_no_itm;
 
     public Shop_Now_fragment() {
 
@@ -76,7 +79,7 @@ public class Shop_Now_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shop_now, container, false);
         setHasOptionsMenu(true);
 
-
+        module=new Module();
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.shop_now));
          session_management=new Session_management(getActivity());
         progressDialog=new ProgressDialog(getActivity());
@@ -181,8 +184,9 @@ public class Shop_Now_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

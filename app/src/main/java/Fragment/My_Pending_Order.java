@@ -35,6 +35,7 @@ import java.util.Map;
 import Adapter.My_Pending_Order_adapter;
 import Config.BaseURL;
 import Model.My_Pending_order_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.MyOrderDetail;
@@ -53,6 +54,7 @@ public class My_Pending_Order extends Fragment {
     RelativeLayout rel_no;
     private List<My_Pending_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
+     Module module;
     ProgressDialog progressDialog;
 
     public My_Pending_Order() {
@@ -76,6 +78,7 @@ public class My_Pending_Order extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
         rel_no=(RelativeLayout)view.findViewById(R.id.rel_no);
+        module=new Module();
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -182,8 +185,9 @@ public class My_Pending_Order extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

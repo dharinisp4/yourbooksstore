@@ -37,6 +37,7 @@ import java.util.Map;
 import Adapter.My_order_detail_adapter;
 import Config.BaseURL;
 import Model.My_order_detail_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -52,7 +53,7 @@ import util.Session_management;
 public class My_order_detail_fragment extends Fragment {
 
     private static String TAG = My_order_detail_fragment.class.getSimpleName();
-
+    Module module;
     private TextView tv_date, tv_time, tv_total, tv_delivery_charge;
     private RelativeLayout btn_cancle;
     private RecyclerView rv_detail_order;
@@ -79,7 +80,7 @@ public class My_order_detail_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_order_detail, container, false);
-
+   module=new Module();
         tv_date = (TextView) view.findViewById(R.id.tv_order_Detail_date);
         tv_time = (TextView) view.findViewById(R.id.tv_order_Detail_time);
         tv_delivery_charge = (TextView) view.findViewById(R.id.tv_order_Detail_deli_charge);
@@ -256,8 +257,9 @@ public class My_order_detail_fragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

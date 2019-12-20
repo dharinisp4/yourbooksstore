@@ -52,6 +52,7 @@ import Adapter.Delivery_get_address_adapter;
 import Config.BaseURL;
 import Config.SharedPref;
 import Model.Delivery_address_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -68,6 +69,7 @@ public class Delivery_fragment extends Fragment implements View.OnClickListener 
 
     private static String TAG = Delivery_fragment.class.getSimpleName();
 
+     Module module;
     private TextView tv_afternoon, tv_morning, tv_total, tv_item, tv_socity ,txt_note;
 
     private TextView tv_date, tv_time;
@@ -116,6 +118,7 @@ String language;
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.delivery));
         Bundle bundle = getArguments();
+        module=new Module();
         checkout = bundle.getString( "checkout" );
         product_id = bundle.getString( "product_id" );
         buy_now_tot =bundle.getString( "total" );
@@ -486,11 +489,9 @@ String language;
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    if (getActivity() != null) {
-                        Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                    }
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -629,7 +630,10 @@ String language;
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);

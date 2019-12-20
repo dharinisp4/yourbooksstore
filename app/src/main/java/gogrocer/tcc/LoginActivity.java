@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
+import Module.Module;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static String TAG = LoginActivity.class.getSimpleName();
     private Button btn_continue,btn_facebook,btn_google;
     private EditText et_password, et_email;
+    Module module;
     private TextView tv_password, tv_email, btn_forgot , btn_register;
     private Session_management sessionManagement;
     ProgressDialog progressDialog ;
@@ -51,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         // remove title
         setContentView(R.layout.activity_login);
-
+    module=new Module();
         et_password = (EditText) findViewById(R.id.et_login_pass);
         et_email = (EditText) findViewById(R.id.et_login_email);
         tv_password = (TextView) findViewById(R.id.tv_login_password);
@@ -211,8 +213,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(LoginActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

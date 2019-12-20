@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -49,6 +50,7 @@ public class fragment_edit_details extends Fragment {
     Dialog ProgressDialog ;
     Session_management session_management;
     String getlocation_id;
+    Module module;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class fragment_edit_details extends Fragment {
         ProgressDialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
         ProgressDialog.setContentView(R.layout.progressbar);
         ProgressDialog.setCancelable(false);
+        module=new Module();
         Bundle b = getArguments();
         getlocation_id = b.getString("location_id");
         name.setText(b.getString("name"));
@@ -220,8 +223,9 @@ public class fragment_edit_details extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

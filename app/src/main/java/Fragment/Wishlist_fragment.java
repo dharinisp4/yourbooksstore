@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class Wishlist_fragment extends Fragment {
    public static RecyclerView rv_wishlist;
     DatabaseCartHandler db_cart;
     ProgressDialog loadingBar;
-    public static ImageView no_prod_image;
+    public static RelativeLayout no_prod_image;
  Session_management session_management;
  String user_id;
     public Wishlist_fragment() {

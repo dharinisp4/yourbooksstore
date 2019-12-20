@@ -28,13 +28,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
+import Module.Module;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 
 public class ForgotActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static String TAG = ForgotActivity.class.getSimpleName();
-
+   Module module;
     private RelativeLayout btn_continue;
     private EditText et_email;
     private TextView tv_email;
@@ -59,7 +60,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_forgot);
         // Call the function callInstamojo to start payment here
-
+      module=new Module();
         et_email = (EditText) findViewById(R.id.et_login_email);
         tv_email = (TextView) findViewById(R.id.tv_login_email);
         btn_continue = (RelativeLayout) findViewById(R.id.btnContinue);
@@ -171,8 +172,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(ForgotActivity.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(ForgotActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

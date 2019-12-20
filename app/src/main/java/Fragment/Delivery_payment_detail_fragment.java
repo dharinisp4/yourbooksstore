@@ -24,6 +24,7 @@ import java.util.HashMap;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -38,6 +39,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
    //String charges="";
     String chg="";
+     Module module;
     private TextView tv_timeslot, tv_address, tv_total,tvstan;
     private LinearLayout btn_order;
 
@@ -81,7 +83,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         View view = inflater.inflate( R.layout.fragment_confirm_order, container, false);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.payment));
-
+        module=new Module();
         db_cart = new DatabaseCartHandler(getActivity());
         sessionManagement = new Session_management(getActivity());
         progressDialog=new ProgressDialog(getActivity());
@@ -372,7 +374,10 @@ public class Delivery_payment_detail_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);

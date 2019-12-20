@@ -1,6 +1,7 @@
 package Module;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ import util.DatabaseHandlerWishList;
 
 public class Module {
 
-
+Context context;
     public Module() {
     }
 
@@ -107,7 +108,7 @@ public class Module {
 
     }
 
-    public static String VolleyErrorMessage(VolleyError error)
+    public String VolleyErrorMessage(VolleyError error)
     {
         String str_error ="";
         if (error instanceof TimeoutError) {

@@ -128,8 +128,6 @@ SharedPreferences preferences;
        {
 
            holder.img_out_of_stock.setVisibility( View.VISIBLE );
-           holder.rel_click.setEnabled( false );
-           holder.card_view_top.setEnabled( false );
 
 
        }

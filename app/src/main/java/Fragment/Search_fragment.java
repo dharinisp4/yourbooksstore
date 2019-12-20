@@ -38,6 +38,7 @@ import Adapter.Search_adapter;
 import Adapter.SuggestionAdapter;
 import Config.BaseURL;
 import Model.Product_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -56,7 +57,7 @@ public class Search_fragment extends Fragment {
     private AutoCompleteTextView acTextView;
     private RelativeLayout btn_search;
     private RecyclerView rv_search;
-
+    Module module;
     private List<Product_model> modelList = new ArrayList<>();
     private Search_adapter adapter_product;
     ProgressDialog progressDialog ;
@@ -78,7 +79,7 @@ public class Search_fragment extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
-
+         module=new Module();
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.search));
         img_no_item = view.findViewById( R.id.img_no_items );
 
@@ -254,8 +255,9 @@ public class Search_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

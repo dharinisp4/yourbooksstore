@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ import java.util.HashMap;
 
 import Adapter.Cart_adapter;
 import Config.BaseURL;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.LoginActivity;
 import gogrocer.tcc.MainActivity;
@@ -51,8 +53,10 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = Cart_fragment.class.getSimpleName();
 
+     Module module;
   public static RecyclerView rv_cart;
-  public static ImageView no_prod_image;
+  public static LinearLayout lin_amt;
+  public static RelativeLayout no_prod_image;
    public static TextView tv_clear, tv_total, tv_item;
     RelativeLayout btn_checkout;
 
@@ -78,7 +82,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.cart));
-
+       module=new Module();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
 
@@ -89,8 +93,9 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         tv_clear = (TextView) view.findViewById(R.id.tv_cart_clear);
         tv_total = (TextView) view.findViewById(R.id.tv_cart_total);
         tv_item = (TextView) view.findViewById(R.id.tv_cart_item);
-        no_prod_image = (ImageView) view.findViewById(R.id.no_prod_image);
+        no_prod_image = (RelativeLayout) view.findViewById(R.id.no_prod_image);
         btn_checkout = (RelativeLayout) view.findViewById(R.id.btn_cart_checkout);
+        lin_amt = (LinearLayout) view.findViewById(R.id.lin_amt);
         rv_cart = (RecyclerView) view.findViewById(R.id.rv_cart);
         rv_cart.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -102,6 +107,9 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         {
             rv_cart.setVisibility(View.GONE);
             no_prod_image.setVisibility(View.VISIBLE);
+            lin_amt.setVisibility(View.GONE);
+            tv_clear.setVisibility(View.GONE);
+
         }
         Cart_adapter adapter = new Cart_adapter(getActivity(), map);
         rv_cart.setAdapter(adapter);
@@ -166,6 +174,8 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                 adapter.notifyDataSetChanged();
                 rv_cart.setVisibility(View.GONE);
                 no_prod_image.setVisibility(View.VISIBLE);
+                lin_amt.setVisibility(View.GONE);
+                tv_clear.setVisibility(View.GONE);
                 updateData();
 
 
@@ -253,9 +263,9 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), "Connection Time out", Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

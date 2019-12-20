@@ -34,6 +34,7 @@ import java.util.Map;
 import Adapter.My_Past_Order_adapter;
 import Config.BaseURL;
 import Model.My_Past_order_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.MyOrderDetail;
@@ -48,7 +49,7 @@ public class My_Past_Order extends Fragment {
     //  private static String TAG = Fragment.My_Past_Order.class.getSimpleName();
 
     private RecyclerView rv_myorder;
-
+    Module module;
     private List<My_Past_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
     ProgressDialog progressDialog;
@@ -76,7 +77,7 @@ public class My_Past_Order extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
         // ((My_Order_activity) getActivity()).setTitle(getResources().getString(R.string.my_order));
-
+      module=new Module();
 
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
@@ -187,8 +188,9 @@ public class My_Past_Order extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

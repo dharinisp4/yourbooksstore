@@ -75,6 +75,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Product_fragment extends Fragment implements View.OnClickListener{
     ProgressDialog loadingBar;
+    Module module;
     private static String TAG = Product_fragment.class.getSimpleName();
     private RecyclerView rv_cat;
     private TabLayout tab_cat;
@@ -120,6 +121,7 @@ public class Product_fragment extends Fragment implements View.OnClickListener{
         loadingBar=new ProgressDialog(getActivity());
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.setMessage("Loading...");
+        module=new Module();
         img_sort=(TextView) view.findViewById(R.id.img_sort);
         img_filter=(ImageView)view.findViewById(R.id.img_filter);
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);
@@ -722,8 +724,10 @@ loadingBar.show();
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -774,8 +778,10 @@ loadingBar.show();
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -826,8 +832,10 @@ loadingBar.show();
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -878,8 +886,10 @@ loadingBar.show();
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -931,8 +941,10 @@ loadingBar.show();
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -983,8 +995,10 @@ loadingBar.show();
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -1250,9 +1264,9 @@ loadingBar.show();
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
+import Module.Module;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 
@@ -35,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static String TAG = RegisterActivity.class.getSimpleName();
     private EditText et_phone, et_name, et_password, et_email,et_con_password;
     private RelativeLayout btn_register;
+     Module module;
     private TextView  tv_login ,tv_phone, tv_name, tv_password, tv_email;
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -49,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         // remove title
 
         setContentView(R.layout.activity_register);
-
+     module=new Module();
         et_phone = (EditText) findViewById(R.id.et_reg_phone);
         et_name = (EditText) findViewById(R.id.et_reg_name);
         et_password = (EditText) findViewById(R.id.et_reg_password);
@@ -281,8 +283,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(RegisterActivity.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(RegisterActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

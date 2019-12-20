@@ -35,6 +35,7 @@ import java.util.List;
 import Adapter.FilterAdapter;
 import Config.BaseURL;
 import Fragment.Product_fragment;
+import Module.Module;
 import util.CustomVolleyJsonRequest;
 
 public class FilterActivity extends DialogFragment implements View.OnClickListener{
@@ -50,6 +51,7 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
     List<String> list_subject;
     FilterAdapter filterAdapter;
     Button btn_apply;
+    Module module;
    public static TextView txt_class,txt_subject,txt_language,txtNo;
     ImageView img_back;
     public static String book_class="",subject="",language="";
@@ -64,7 +66,7 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
-
+       module=new Module();
         chk_bk_class=(Button)view.findViewById(R.id.chk_bk_class);
         chk_bk_subject=(Button)view.findViewById(R.id.chk_bk_subject);
         chk_bk_language=(Button)view.findViewById(R.id.chk_bk_language);
@@ -313,7 +315,10 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -368,7 +373,10 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 ProgressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -425,7 +433,10 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -509,7 +520,10 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);

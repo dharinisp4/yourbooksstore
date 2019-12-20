@@ -130,7 +130,9 @@ public class About_us_fragment extends Fragment {
                 progressDialog.dismiss();
 
                 String msg=module.VolleyErrorMessage(error);
-                Toast.makeText(getActivity(), ""+msg, Toast.LENGTH_SHORT).show();
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
 //                VolleyLog.d(TAG, "Error: " + error.getMessage());
 //                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
 //                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();

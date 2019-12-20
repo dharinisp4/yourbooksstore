@@ -30,6 +30,7 @@ import Adapter.Home_adapter;
 import Adapter.View_time_adapter;
 import Config.BaseURL;
 import Model.Category_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -47,7 +48,7 @@ public class View_time_fragment extends Fragment {
     private List<String> time_list = new ArrayList<>();
     private List<Category_model> category_modelList = new ArrayList<>();
     private Home_adapter adapter;
-
+    Module module;
     private String getdate;
 
     private Session_management sessionManagement;
@@ -70,7 +71,7 @@ public class View_time_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_time_list, container, false);
-
+       module=new Module();
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.delivery_time));
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
@@ -157,8 +158,9 @@ public class View_time_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -29,6 +29,7 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import gogrocer.tcc.GifImageView;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -44,6 +45,7 @@ public class Reward_fragment extends Fragment {
     private static String TAG = Reward_fragment.class.getSimpleName();
     RelativeLayout Reedeem_Points;
     TextView Rewards_Points;
+    Module module;
     String rewards_amt,wallet_amt="";
     private Session_management sessionManagement;
     ProgressDialog progressDialog ;
@@ -64,7 +66,7 @@ public class Reward_fragment extends Fragment {
         final View view = inflater.inflate(R.layout.activity_reward_points, container, false);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_toolbar_name));
         sessionManagement = new Session_management(getActivity());
-
+        module=new Module();
         String getrewards = sessionManagement.getUserDetails().get(BaseURL.KEY_REWARDS_POINTS);
         Rewards_Points = (TextView) view.findViewById(R.id.reward_points);
         //  Rewards_Points.setText(getrewards);
@@ -146,7 +148,10 @@ public class Reward_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         }) {
 
@@ -186,7 +191,10 @@ public class Reward_fragment extends Fragment {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("Error [" + error + "]");
+                    String msg=module.VolleyErrorMessage(error);
+                    if(!(msg.equals("") || msg.isEmpty())) {
+                        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }) {
 

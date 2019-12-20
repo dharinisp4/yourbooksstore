@@ -31,6 +31,7 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import gogrocer.tcc.networkconnectivity.NetworkConnection;
 import gogrocer.tcc.networkconnectivity.NetworkError;
 import util.Session_management;
@@ -42,6 +43,7 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
     EditText Wallet_Ammount;
     RelativeLayout Recharge_Button;
     String ammount;
+    Module module;
     ProgressDialog progressDialog ;
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -58,6 +60,7 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
         setContentView(R.layout.activity_recharge_wallet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        module=new Module();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -184,7 +187,10 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("Error [" + error + "]");
+                    String msg=module.VolleyErrorMessage(error);
+                    if(!(msg.equals("") || msg.isEmpty())) {
+                        Toast.makeText(RechargeWallet.this, "" + msg, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }) {
 

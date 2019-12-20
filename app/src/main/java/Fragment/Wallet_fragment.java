@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import gogrocer.tcc.RechargeWallet;
@@ -35,7 +37,7 @@ public class Wallet_fragment extends Fragment {
 
     TextView Wallet_Ammount;
     ProgressDialog progressDialog;
-
+   Module module;
     RelativeLayout Recharge_Wallet;
     private Session_management sessionManagement;
 
@@ -59,6 +61,7 @@ public class Wallet_fragment extends Fragment {
         sessionManagement = new Session_management(getActivity());
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
+        module=new Module();
         progressDialog.setMessage("Loading...");
         //   String getwallet = sessionManagement.getUserDetails().get(BaseURL.KEY_WALLET_Ammount);
         Wallet_Ammount = (TextView) view.findViewById(R.id.wallet_ammount);
@@ -105,7 +108,10 @@ public class Wallet_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         }) {
 

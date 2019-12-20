@@ -99,11 +99,7 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             if(id== R.id.rel_click)
             {
                 int in_stock=Integer.parseInt(modelList.get(position).getIn_stock());
-                if(in_stock==0)
-                {
-                    Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
-                }
-                else {
+
                     Details_Fragment details_fragment = new Details_Fragment();
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
                     Bundle args = new Bundle();
@@ -143,7 +139,7 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             }
 
 
-        }
+
     }
 
     public RelatedProductAdapter(List<Product_model> modelList, Context context,String product_id) {

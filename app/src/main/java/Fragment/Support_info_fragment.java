@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Support_info_model;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -42,6 +43,7 @@ public class Support_info_fragment extends Fragment {
 
     private TextView tv_info;
     ProgressDialog progressDialog ;
+    Module module;
 
     public Support_info_fragment() {
         // Required empty public constructor
@@ -60,7 +62,7 @@ public class Support_info_fragment extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
-
+        module=new Module();
         tv_info = (TextView) view.findViewById(R.id.tv_info);
 
         String geturl = getArguments().getString("url");
@@ -126,8 +128,9 @@ public class Support_info_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });

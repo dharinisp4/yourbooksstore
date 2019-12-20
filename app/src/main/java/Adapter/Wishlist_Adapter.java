@@ -59,7 +59,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
     ArrayList<HashMap<String, String>> list;
     private List<Wish_model> wishList;
-    ImageView no_prod_image;
+    RelativeLayout no_prod_image;
     Activity context;
     private DatabaseCartHandler dbcart;
     private DatabaseHandlerWishList dbWish;
@@ -120,7 +120,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         }
     }
 
-    public Wishlist_Adapter(ArrayList<HashMap<String, String>> list, ImageView no_prod_image, Activity context) {
+    public Wishlist_Adapter(ArrayList<HashMap<String, String>> list, RelativeLayout no_prod_image, Activity context) {
         this.list = list;
         this.no_prod_image = no_prod_image;
         this.context = context;

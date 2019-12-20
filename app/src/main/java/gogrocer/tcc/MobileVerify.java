@@ -31,6 +31,7 @@ public class MobileVerify extends AppCompatActivity {
 EditText et_phone ;
 Button btn_continue ;
 TextView back ;
+Module module;
 ProgressDialog progressDialog ;
     int number;
     @Override
@@ -39,6 +40,7 @@ ProgressDialog progressDialog ;
         setContentView( R.layout.activity_mobile_verify );
         et_phone = findViewById( R.id.et_phone );
         back = findViewById( R.id.txt_back );
+        module=new Module();
         final String type = getIntent().getStringExtra( "type" );
 
         progressDialog=new ProgressDialog(MobileVerify.this);
@@ -150,9 +152,10 @@ ProgressDialog progressDialog ;
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Module module=new Module();
-                String errormsg = module.VolleyErrorMessage(error);
-                Toast.makeText( MobileVerify.this,""+ errormsg, Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(MobileVerify.this, "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -200,9 +203,10 @@ ProgressDialog progressDialog ;
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Module module=new Module();
-                String errormsg = module.VolleyErrorMessage(error);
-                Toast.makeText( MobileVerify.this,""+ errormsg, Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(MobileVerify.this, "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

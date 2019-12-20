@@ -143,13 +143,10 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
         {
 
           holder.img_out_of_stock.setVisibility( View.VISIBLE );
-          holder.card_view_top.setEnabled( false );
-          holder.rel_click.setEnabled( false );
         }
         else
         {
             holder.img_out_of_stock.setVisibility( View.GONE );
-            holder.card_view_top.setEnabled( true );
         }
 
         if (language.contains("english")) {

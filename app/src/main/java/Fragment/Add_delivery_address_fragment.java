@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
+import Module.Module;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -43,6 +44,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
     private static String TAG = Add_delivery_address_fragment.class.getSimpleName();
 
+     Module module;
     String chg="";
     String type="";
     private EditText et_phone, et_name,  et_address;
@@ -105,6 +107,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 //        lay_standard=(LinearLayout) view.findViewById(R.id.lay_standard);
 //        lay_normal=(LinearLayout) view.findViewById(R.id.lay_normal);
 
+        module=new Module();
         String getsocity_name = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_NAME);
         String getsocity_id = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);
 
@@ -354,9 +357,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -410,9 +413,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -460,7 +463,10 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);

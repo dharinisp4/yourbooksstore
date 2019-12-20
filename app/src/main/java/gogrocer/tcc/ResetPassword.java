@@ -30,6 +30,7 @@ public class ResetPassword extends AppCompatActivity {
   EditText et_pass , et_cpass ;
    RelativeLayout reset ;
 Dialog ProgressDialog;
+Module module;
 ProgressDialog progressDialog ;
 
 
@@ -41,7 +42,7 @@ ProgressDialog progressDialog ;
         progressDialog=new ProgressDialog(ResetPassword.this);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
-
+       module=new Module();
         final String mobile = getIntent().getStringExtra( "mobile" );
         et_pass = findViewById( R.id.et_password );
         et_cpass=findViewById( R.id.et_con_pass );
@@ -127,8 +128,10 @@ ProgressDialog progressDialog ;
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( ResetPassword.this,""+ errormsg, Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(ResetPassword.this, "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

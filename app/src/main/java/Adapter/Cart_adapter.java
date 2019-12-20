@@ -29,8 +29,10 @@ import Fragment.Empty_wishlist_fragment;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 
+import static Fragment.Cart_fragment.lin_amt;
 import static Fragment.Cart_fragment.no_prod_image;
 import static Fragment.Cart_fragment.rv_cart;
+import static Fragment.Cart_fragment.tv_clear;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -291,6 +293,8 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 {
                     rv_cart.setVisibility(View.GONE);
                     no_prod_image.setVisibility(View.VISIBLE);
+                    lin_amt.setVisibility(View.GONE);
+                    tv_clear.setVisibility(View.GONE);
                 }
                 updateintent();
             }

@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Config.BaseURL;
+import Module.Module;
 import de.hdodenhof.circleimageview.CircleImageView;
 import gogrocer.tcc.AppController;
 import gogrocer.tcc.MainActivity;
@@ -66,6 +67,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class Edit_profile_fragment extends Fragment implements View.OnClickListener {
 
+     Module module;
     ProgressDialog progressDialog;
     int flag=1;
     private static String TAG = Edit_profile_fragment.class.getSimpleName();
@@ -106,6 +108,7 @@ String userId="";
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
         progressDialog.setCanceledOnTouchOutside(false);
+        module=new Module();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         setHasOptionsMenu(true);
@@ -254,7 +257,7 @@ String userId="";
         }
         else
         {
-            Toast.makeText(getActivity()," "+requestCode+"\n"+requestCode+"\n "+data,Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity()," "+data,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -317,7 +320,10 @@ String userId="";
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -360,8 +366,10 @@ String userId="";
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
-            }
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }            }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
 
