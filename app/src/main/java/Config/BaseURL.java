@@ -30,6 +30,7 @@ public class BaseURL {
     public static final String KEY_CAT = "cat_id";
     public static final String KEY_STAN = "standard";
     public static final String KEY_CNT = "img_count";
+    public static final String KEY_VIEW_ALL = "view_all";
 
 
     //Store Selection
@@ -155,5 +156,7 @@ public class BaseURL {
     public static String GET_UPLOAD = BASE_URL + "index.php/api/upload_images";
     public static String GET_STANDARD_CHARGES = BASE_URL + "index.php/api/get_standard_delivery_charges";
     public static String GET_CANCEL_ORDERS = BASE_URL + "index.php/api/my_cancel_orders";
+    public static String GET_VERSTION_DATA = BASE_URL + "index.php/api/getVersionData";
+    public static String GET_TOP_FILTER_DATA = BASE_URL + "index.php/api/get_top_filter";
 
 }

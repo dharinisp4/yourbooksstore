@@ -620,6 +620,66 @@ loadingBar.show();
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
+
+    private void maketopFilterProductRequest(String cat_id,String book_class,String subject,String lang) {
+        String tag_json_obj = "json_product_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("top_selling_product", cat_id);
+        params.put("book_class", book_class);
+        params.put("subject", subject);
+        params.put("language", lang);
+
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_ALL_TOP_SELLING_PRODUCTS, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    Boolean status = response.getBoolean("responce");
+                    if (status) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson(response.getString("top_selling_product"), listType);
+                        adapter_product = new Product_adapter(product_modelList, getActivity());
+                        img_no_products.setVisibility(View.GONE);
+                        rv_cat.setVisibility(View.VISIBLE);
+                        rv_cat.setAdapter(adapter_product);
+                        adapter_product.notifyDataSetChanged();
+                        if (getActivity() != null) {
+                            if (product_modelList.isEmpty()) {
+                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    String msg=e.getMessage();
+                    if(msg.equals("No value for data"))
+                    {
+                        rv_cat.setVisibility(View.GONE);
+                        img_no_products.setVisibility(View.VISIBLE);
+                    }
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
     private void makeGetBannerSliderRequest() {
         JsonArrayRequest req = new JsonArrayRequest(BaseURL.GET_BANNER_URL,
                 new Response.Listener<JSONArray>() {
@@ -1093,18 +1153,19 @@ loadingBar.show();
                     String item = sort_List.get( i ).toString();
                    // final String cat_id = getArguments().getString("cat_id");
                    final String cat_id = session_management.getCategoryId();
-
+                   final String vw = session_management.getViewAll();
+                  //  Toast.makeText(getActivity(),""+cat_id,Toast.LENGTH_SHORT).show();
 
                     if (item.equals( "Price Low - High" ))
                     {
 
-                         if (view_all.equals( "top" ))
+                         if (vw.equals( "top" ))
                          {
                              //Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
                              ddlg.dismiss();
                              makeAscendingTop(  );
                          }
-                         else if (view_all.equals("category")) {
+                         else if (vw.equals("category")) {
                              //Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
                              ddlg.dismiss();
                              makeAscendingProductRequest( cat_id );
@@ -1116,13 +1177,13 @@ loadingBar.show();
                     {
                        //  Toast.makeText( getActivity(), "category id :" +cat_id, Toast.LENGTH_SHORT ).show();
 
-                        if (view_all.equals( "top" ))
+                        if (vw.equals( "top" ))
                         {
                             //Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeDescendingTop(  );
                         }
-                        else if (view_all.equals( "category" )) {
+                        else if (vw.equals( "category" )) {
                             //Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeDescendingProductRequest( cat_id );
@@ -1132,13 +1193,13 @@ loadingBar.show();
                     }
                     else if(item.equals( "Newest First" ))
                     {
-                        if (view_all.equals( "top" ))
+                        if (vw.equals( "top" ))
                         {
                             //Toast.makeText(getActivity(),"top",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeNewestTop();
                         }
-                        else if (view_all.equals( "category" )) {
+                        else if (vw.equals( "category" )) {
                             //Toast.makeText(getActivity(),"category",Toast.LENGTH_LONG).show();
                             ddlg.dismiss();
                             makeNewestProductRequest( cat_id );
@@ -1203,17 +1264,31 @@ loadingBar.show();
                 language=object.getString("language");
 
             }
+            if(getcat_id.equals("2"))
+            {
+                maketopFilterProductRequest(getcat_id,book_class,subject,language);
+            }
+            else
+            {
+                get_productFilter(getcat_id,book_class,subject,language);
+            }
         }
         catch (Exception ex)
         {
             //Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
         }
+
+
+    }
+
+    public void get_productFilter(String getcat_id,String book_class,String subject,String lang)
+    {
         String tag_json_obj = "json_product_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("cat_id", getcat_id);
         params.put("book_class", book_class);
         params.put("subject", subject);
-        params.put("language", language);
+        params.put("language", lang);
 
         //Toast.makeText(getActivity(),""+filter_data.toString(),Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
@@ -1237,11 +1312,11 @@ loadingBar.show();
                         }.getType();
                         product_modelList.clear();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
-                            adapter_product = new Product_adapter( product_modelList, getActivity() );
-                            img_no_products.setVisibility( View.GONE );
-                            rv_cat.setVisibility( View.VISIBLE );
-                            rv_cat.setAdapter( adapter_product );
-                            adapter_product.notifyDataSetChanged();
+                        adapter_product = new Product_adapter( product_modelList, getActivity() );
+                        img_no_products.setVisibility( View.GONE );
+                        rv_cat.setVisibility( View.VISIBLE );
+                        rv_cat.setAdapter( adapter_product );
+                        adapter_product.notifyDataSetChanged();
 
 
 

@@ -193,9 +193,9 @@ public class Delivery_payment_detail_fragment extends Fragment {
             tvMrp.setText( getResources().getString( R.string.currency ) + t_price );
 
             total = t_price+deli_charges;
-           // tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
+            tvDelivary.setText( getResources().getString( R.string.currency ) + deli_charges );
             tvSubTotal.setText( getResources().getString( R.string.currency ) + total );
-             Toast.makeText(getActivity() ,"" +list.size(),Toast.LENGTH_LONG ).show();
+         //    Toast.makeText(getActivity() ,"" +list.size(),Toast.LENGTH_LONG ).show();
         }
 
         //  tv_total.setText("" + db_cart.getTotalAmount());

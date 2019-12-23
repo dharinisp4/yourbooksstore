@@ -1,9 +1,7 @@
 package gogrocer.tcc;
 
 
-/**
- * Created by Rahul Hooda on 14/7/17.
- */
+
 public enum AppEnvironment {
 
     SANDBOX {

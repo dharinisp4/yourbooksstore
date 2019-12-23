@@ -160,7 +160,6 @@ public class Reward_fragment extends Fragment {
     }
 
     private void Shift_Reward_to_WAllet() {
-        progressDialog.show();
         final String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
         final String getreward = Rewards_Points.getText().toString();
        // final String getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
@@ -180,12 +179,13 @@ public class Reward_fragment extends Fragment {
                                     String final_amount = json_data.getString("final_amount");
                                     String final_rewards = json_data.getString("final_rewards");
                                     Rewards_Points.setText(final_rewards);
+                                    Toast.makeText(getActivity(),"Rewards Redeem successfully.",Toast.LENGTH_SHORT).show();
+                                    Rewards_Points.setEnabled(false);
                                     SharedPref.putString(getActivity(), BaseURL.KEY_WALLET_Ammount, final_amount);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            progressDialog.dismiss();
                         }
                     }, new Response.ErrorListener() {
 

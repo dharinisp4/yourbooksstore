@@ -201,7 +201,7 @@
     <string name="method_three">Cards</string>
     <string name="method_four">NetBanking</string>
     <string name="past" translatable="false">Past Orders</string>
-    <string name="cancel_order" translatable="false">My Cancel Orders</string>
+    <string name="cancel_order" translatable="false">Cancelled Orders</string>
     <string name="add" translatable="false">Address</string>
     <string name="searchh" translatable="false">Search</string>
     <string name="search_msg" translatable="false">Search Your Product</string>

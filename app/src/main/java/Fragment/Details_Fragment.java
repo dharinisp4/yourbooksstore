@@ -1191,7 +1191,7 @@ public boolean checkAttributeStatus(String atr)
                                     args.putString( "product_id",product_id );
                                     args.putString( "total", String.valueOf( tot ) );
                                     args.putString( "type","buynow" );
-                                    Fragment fm = new Delivery_fragment();
+                                    Fragment fm = new Cart_fragment();
                                     fm.setArguments(args);
                                     FragmentManager fragmentManager = getFragmentManager();
                                     fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

@@ -625,7 +625,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fm = new Wishlist_fragment();
         }
         else if (id == R.id.nav_support) {
-            String smsNumber = "91958/4267640";
+            String smsNumber = "919584267640";
             Intent sendIntent = new Intent("android.intent.action.MAIN");
             sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
             sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(smsNumber) + "@s.whatsapp.net");//phone number without "+" prefix
@@ -655,14 +655,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             sessionManagement.logoutSession();
             finish();
 
-        } /*else if (id == R.id.nav_powerd) {
+        } else if (id == R.id.nav_powerd) {
             // stripUnderlines(textView);
-            String url = "http://sameciti.com";
+            String url = "https://binplus.in";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
             finish();
-        }*/
+        }
 
         if (fm != null) {
             FragmentManager fragmentManager = getFragmentManager();
@@ -737,12 +737,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showSnack(boolean isConnected) {
-        String message;
-        int color;
 
-        if (!isConnected) {
-            Intent intent = new Intent(MainActivity.this, NetworkError.class);
-            startActivity(intent);
+        if (isConnected == false) {
+            try
+            {
+                Intent intent = new Intent(MainActivity.this, NoConnectionActivity.class);
+                startActivity(intent);
+            }
+            catch (Exception ex)
+            {
+                Toast.makeText(MainActivity.this,"No connection"+ex.getMessage(),Toast.LENGTH_SHORT).show();
+
+            }
+
         }
     }
 

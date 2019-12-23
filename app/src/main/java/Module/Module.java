@@ -124,7 +124,7 @@ Context context;
             //TODO
         } else if (error instanceof ParseError) {
             //TODO
-            str_error="An Unknown error occur";
+            str_error="Something Went Wrong \n Please try again later";
         }else if(error instanceof NoConnectionError){
             str_error="no Internet Connection";
         }

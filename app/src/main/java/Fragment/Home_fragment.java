@@ -1,11 +1,15 @@
 package Fragment;
 
+import android.app.AlertDialog;
+import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -78,6 +82,8 @@ public class Home_fragment extends Fragment {
     private RecyclerView rv_items, rv_top_selling, rv_deal_of_day, rv_headre_icons;
     private List<Category_model> category_modelList = new ArrayList<>();
     private Home_adapter adapter;
+    int version_code=0;
+    String app_link="";
     private boolean isSubcat = false;
     LinearLayout Search_layout;
   ProgressDialog progressDialog;
@@ -149,13 +155,8 @@ session_management=new Session_management(getActivity());
         });
         //Check Internet Connection
         if (ConnectivityReceiver.isConnected()) {
-            makeGetSliderRequest();
-            makeGetBannerSliderRequest();
-            makeGetCategoryRequest();
-            makeGetFeaturedSlider();
-            make_menu_items();
-            make_deal_od_the_day();
-            make_top_selling();
+            getAppSettingData();
+            //Toast.makeText(getActivity(),""+version_code+"\n "+getUpdaterInfo(),Toast.LENGTH_SHORT).show();
 
 
         }
@@ -443,6 +444,8 @@ session_management=new Session_management(getActivity());
                 args.putString("cat_top_selling", "2");
                 args.putString( "viewall","top" );
                 args.putString("title","Top Selling Products");
+                session_management.setCategoryId("2");
+                session_management.setViewAll("top");
                 fm.setArguments(args);
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
@@ -472,7 +475,7 @@ session_management=new Session_management(getActivity());
                                 url_maps.put("slider_image", BaseURL.IMG_SLIDER_URL + jsonObject.getString("slider_image"));
                                 listarray.add(url_maps);
                             }
-                            for (HashMap<String, String> name : listarray) {
+                            for (final HashMap<String, String> name : listarray) {
                                 CustomSlider textSliderView = new CustomSlider(getActivity());
                                 textSliderView.description(name.get("")).image(name.get("slider_image")).setScaleType(BaseSliderView.ScaleType.Fit);
                                 textSliderView.bundle(new Bundle());
@@ -487,8 +490,11 @@ session_management=new Session_management(getActivity());
                                         Bundle args = new Bundle();
                                         Fragment fm = new Product_fragment();
                                         args.putString("id", sub_cat);
+                                        args.putString("title", name.get("slider_title"));
                                         args.putString( "viewall","category" );
                                         session_management.setCategoryId(sub_cat);
+                                        session_management.setViewAll("category");
+
                                         fm.setArguments(args);
                                         FragmentManager fragmentManager = getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
@@ -1015,4 +1021,108 @@ session_management=new Session_management(getActivity());
 //    }
 
 
+    public boolean getUpdaterInfo()
+    {
+        boolean st=false;
+        try
+        {
+            PackageInfo packageInfo=getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(),0);
+            int ver_code=packageInfo.versionCode;
+            if(ver_code == version_code)
+            {
+                st=true;
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+return st;
+    }
+
+    public void getAppSettingData()
+    {
+        progressDialog.show();
+        String json_tag="json_app_tag";
+        HashMap<String,String> map=new HashMap<>();
+
+        CustomVolleyJsonRequest request=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_VERSTION_DATA, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+            progressDialog.dismiss();
+                try
+                {
+                    boolean sts=response.getBoolean("responce");
+
+                    if(sts)
+                    {
+                       JSONObject object=response.getJSONObject("data");
+                       version_code=Integer.parseInt(object.getString("app_version"));
+                       app_link=object.getString("data");
+
+                        if(getUpdaterInfo())
+                        {
+                            makeGetSliderRequest();
+                            makeGetBannerSliderRequest();
+                            makeGetCategoryRequest();
+                            makeGetFeaturedSlider();
+                            make_menu_items();
+                            make_deal_od_the_day();
+                            make_top_selling();
+
+                        }
+                        else
+                        {
+
+                            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                            builder.setCancelable(false);
+                            builder.setMessage("The new version of app is available please update to get access.");
+                            builder.setPositiveButton("Update now", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    String url = app_link;
+                                    Intent in = new Intent(Intent.ACTION_VIEW);
+                                    in.setData(Uri.parse(url));
+                                    startActivity(in);
+                                    getActivity().finish();
+                                    //Toast.makeText(getActivity(),"updating",Toast.LENGTH_SHORT).show();
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    dialogInterface.dismiss();
+                                    getActivity().finishAffinity();
+                                }
+                            });
+                            AlertDialog dialog=builder.create();
+                            dialog.show();
+                        }
+
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(),""+response.getString("error"),Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText(getActivity(),""+msg,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(request,json_tag);
+    }
 }

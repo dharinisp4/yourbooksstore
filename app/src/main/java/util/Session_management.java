@@ -28,6 +28,7 @@ import static Config.BaseURL.KEY_SOCITY_ID;
 import static Config.BaseURL.KEY_SOCITY_NAME;
 import static Config.BaseURL.KEY_STAN;
 import static Config.BaseURL.KEY_TIME;
+import static Config.BaseURL.KEY_VIEW_ALL;
 import static Config.BaseURL.KEY_WALLET_Ammount;
 import static Config.BaseURL.PREFS_NAME;
 import static Config.BaseURL.PREFS_NAME2;
@@ -204,12 +205,22 @@ public class Session_management {
 
     public void setCategoryId(String categoryId){
 
-        editor2.putString(KEY_CAT,categoryId);
-        editor2.commit();
+        editor.putString(KEY_CAT,categoryId);
+        editor.commit();
     }
     public String getCategoryId()
     {
-        return prefs2.getString(KEY_CAT,"");
+        return prefs.getString(KEY_CAT,"");
+    }
+
+  public void setViewAll(String viewAll){
+
+        editor.putString(KEY_VIEW_ALL,viewAll);
+        editor.commit();
+    }
+    public String getViewAll()
+    {
+        return prefs.getString(KEY_VIEW_ALL,"");
     }
 
 

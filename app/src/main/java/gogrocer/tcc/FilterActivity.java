@@ -120,7 +120,16 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
         rv_class.setLayoutManager(layoutManager1);
         rv_subject.setLayoutManager(layoutManager2);
         rv_language.setLayoutManager(layoutManager3);
-        createClassList(cat_id);
+        if(cat_id.equals("2"))
+        {
+            createTopClassList(cat_id);
+        }
+        else
+        {
+            createClassList(cat_id);
+
+        }
+
 
 
         chk_bk_class.setOnClickListener(this);
@@ -304,6 +313,101 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
                         // Toast.makeText(getActivity(),"There are no filter in this category \n "+response.getString("data").toString(),Toast.LENGTH_LONG).show();
 
                     }
+                }
+                catch (Exception ex)
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
+
+
+    }
+
+
+    private void createTopClassList(String cat_id) {
+
+        //Toast.makeText(FilterActivity.this,""+cat_id,Toast.LENGTH_LONG).show();
+        progressDialog.show();
+        String json_tag="json_book_class";
+        HashMap<String,String> map=new HashMap<>();
+        map.put("category_id",cat_id);
+
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_TOP_FILTER_DATA, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("bk_class",response.toString());
+                try
+                {
+                    list_language.clear();
+                    list_subject.clear();
+                    list_class.clear();
+                    progressDialog.dismiss();
+                    JSONArray class_arr=response.getJSONArray("book_class");
+                    JSONArray lang_arr=response.getJSONArray("language");
+                    JSONArray subject_arr=response.getJSONArray("subject");
+                    //Toast.makeText(FilterActivity.this,""+response.toString(),Toast.LENGTH_LONG).show();
+                        int a=0,b=0,c=0;
+
+
+                        if(class_arr.length()>0)
+                        {
+                           chk_bk_class.setVisibility(View.VISIBLE);
+
+                           for(int i=0; i<class_arr.length();i++)
+                           {
+                              String cl=class_arr.getString(i);
+                              list_class.add(cl);
+                           }
+                        }
+                         if(subject_arr.length()>0)
+                        {
+                            chk_bk_subject.setVisibility(View.VISIBLE);
+                            for(int i=0; i<subject_arr.length();i++)
+                            {
+                                String cl=subject_arr.getString(i);
+                                list_subject.add(cl);
+                            }
+                        }
+                         if(lang_arr.length()>0)
+                        {
+                            chk_bk_language.setVisibility(View.VISIBLE);
+                            for(int i=0; i<lang_arr.length();i++)
+                            {
+                                String cl=lang_arr.getString(i);
+                                list_language.add(cl);
+                            }
+                             }
+
+
+                       //  else if(object.has()) {
+                        //Toast.makeText(getActivity(),"a- "+a+"\n b- "+b+"\n c- "+c+"\n date: --"+object.toString(),Toast.LENGTH_LONG).show();
+
+//                        JSONArray array=response.getJSONArray("data");
+//                        for(int i=0; i<array.length();i++)
+//                        {
+//                            JSONObject object= (JSONObject) array.get(i);
+//                            String bk=object.getString("book_class");
+//                            list_class.add(bk);
+//                        }
+//                        filterAdapter=new FilterAdapter(list_class,getActivity(),1);
+//                        rv_class.setVisibility(View.VISIBLE);
+//                        rv_class.setAdapter(filterAdapter);
+//
+
+
+
                 }
                 catch (Exception ex)
                 {
@@ -553,7 +657,19 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
             {
                 lin_filter.setVisibility(View.VISIBLE);
             }
-            createBookClassList(cat_id);
+            if(cat_id.equals("2"))
+            {
+                filterAdapter=new FilterAdapter(list_class,getActivity(),1);
+                rv_class.setVisibility(View.VISIBLE);
+                rv_class.setAdapter(filterAdapter);
+
+                filterAdapter.notifyDataSetChanged();
+
+            }
+            else
+            {
+                createBookClassList(cat_id);
+            }
 
         }
         else if(id == R.id.chk_bk_language)
@@ -573,8 +689,18 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
             {
                 lin_filter.setVisibility(View.VISIBLE);
             }
-            createLanguageList(cat_id);
-
+            if (cat_id.equals("2"))
+            {
+                filterAdapter=new FilterAdapter(list_language,getActivity(),3);
+                rv_language.setVisibility(View.VISIBLE);
+                rv_language.setAdapter(filterAdapter);
+                rv_subject.setVisibility(View.GONE);
+                rv_class.setVisibility(View.GONE);
+                filterAdapter.notifyDataSetChanged();
+            }
+            else {
+                createLanguageList(cat_id);
+            }
         }
         else if(id == R.id.chk_bk_subject)
         {
@@ -593,8 +719,16 @@ public class FilterActivity extends DialogFragment implements View.OnClickListen
             {
                 lin_filter.setVisibility(View.VISIBLE);
             }
-            createSubjectList(cat_id);
-
+            if(cat_id.equals("2"))
+            {
+                filterAdapter=new FilterAdapter(list_subject,getActivity(),2);
+                rv_subject.setVisibility(View.VISIBLE);
+                rv_subject.setAdapter(filterAdapter);
+                filterAdapter.notifyDataSetChanged();
+            }
+            else {
+                createSubjectList(cat_id);
+            }
         }
     }
 }

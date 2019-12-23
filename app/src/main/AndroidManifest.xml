@@ -39,7 +39,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity android:name=".FilterActivity"></activity>
+        <activity android:name=".NoConnectionActivity"></activity>
+        <activity android:name=".FilterActivity" />
         <activity android:name="com.payumoney.sdkui.ui.activities.PayUmoneyActivity" />
         <activity
             android:name=".SplashActivity"
@@ -50,10 +51,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ResetPassword"></activity>
+        <activity android:name=".ResetPassword" />
         <activity android:name=".OtpVerification" />
         <activity android:name=".MobileVerify" />
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".PaymentActivity"
             android:configChanges="orientation|screenSize"
@@ -64,7 +69,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="networkconnectivity.NetworkError" />
+        <activity android:name=".networkconnectivity.NetworkError" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
