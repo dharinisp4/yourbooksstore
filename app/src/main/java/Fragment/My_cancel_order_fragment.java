@@ -127,6 +127,7 @@ public class My_cancel_order_fragment extends Fragment {
                 intent.putExtra("total", total);
                 intent.putExtra("status", status);
                 intent.putExtra("deli_charge", deli_charge);
+                intent.putExtra("type","cancel");
                 startActivity(intent);
             }
 

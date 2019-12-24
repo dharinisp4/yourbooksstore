@@ -142,9 +142,10 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         final HashMap<String, String> map = list.get(position);
         //imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.your_image));
     //    holder.wish_before.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_close));
+        String first_image= module.getFirstImage(map.get("product_image"),context);
 
         Glide.with( context )
-                .load( BaseURL.IMG_PRODUCT_URL + map.get("product_image"))
+                .load( BaseURL.IMG_PRODUCT_URL + first_image)
                 .fitCenter()
                 .placeholder( R.drawable.icon )
                 .crossFade()

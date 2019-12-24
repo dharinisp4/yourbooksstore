@@ -119,6 +119,7 @@ public class BaseURL {
     public static String GET_DELIVERD_ORDER_URL = BASE_URL + "index.php/api/delivered_complete";
 
     public static String ORDER_DETAIL_URL = BASE_URL + "index.php/api/order_details";
+    public static String ORDER_CANCEL_DETAIL_URL = BASE_URL + "index.php/api/order_cancel_details";
 
     public static String DELETE_ORDER_URL = BASE_URL + "index.php/api/cancel_order";
 
@@ -158,5 +159,7 @@ public class BaseURL {
     public static String GET_CANCEL_ORDERS = BASE_URL + "index.php/api/my_cancel_orders";
     public static String GET_VERSTION_DATA = BASE_URL + "index.php/api/getVersionData";
     public static String GET_TOP_FILTER_DATA = BASE_URL + "index.php/api/get_top_filter";
+    public static String GET_COUPON = BASE_URL + "index.php/api/get_coupon";
+
 
 }

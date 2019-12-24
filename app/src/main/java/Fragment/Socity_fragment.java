@@ -53,7 +53,7 @@ public class Socity_fragment extends Fragment {
     private RecyclerView rv_socity;
 
     TextView tv_view_all;
-    private List<Socity_model> socity_modelList = new ArrayList<>();
+    private ArrayList<Socity_model> socity_modelList = new ArrayList<>();
     private Socity_adapter adapter;
     ProgressDialog progressDialog ;
 
@@ -104,12 +104,12 @@ public class Socity_fragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter.getFilter().filter(charSequence);
+                //adapter.getFilter().filter(charSequence);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                 filter(editable.toString());
             }
         });
 
@@ -146,8 +146,20 @@ public class Socity_fragment extends Fragment {
         return view;
     }
 
+    private void filter(String s) {
+        ArrayList<Socity_model> filteredList=new ArrayList<>();
+        for(Socity_model socity_model : socity_modelList)
+        {
+            if(socity_model.getPincode().toLowerCase().contains(s.toLowerCase().toString()))
+            {
+                filteredList.add(socity_model);
+            }
+        }
+        adapter.filterList(filteredList);
+    }
+
     /**
-     * Method to make json array request where json response starts wtih
+     * Method to make json array request where json response starts with
      */
     private void makeGetSocityRequest() {
 

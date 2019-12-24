@@ -87,6 +87,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             out_of_stock= view.findViewById( R.id.img_out_of_stock );
             session_management=new Session_management(context);
             user_id=session_management.getUserDetails().get(BaseURL.KEY_ID);
+            module=new Module();
 
 //            iv_remove.setVisibility(View.GONE);
 //            iv_minus.setOnClickListener(this);
@@ -171,9 +172,10 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
     @Override
     public void onBindViewHolder(final Product_adapter.MyViewHolder holder, final int position) {
         final Product_model mList = modelList.get( position );
+        String first_image= module.getFirstImage(mList.getProduct_image(),context);
 
         Glide.with( context )
-                .load( BaseURL.IMG_PRODUCT_URL + mList.getProduct_image() )
+                .load( BaseURL.IMG_PRODUCT_URL + first_image )
                 .fitCenter()
                 .placeholder( R.drawable.icon )
                 .crossFade()

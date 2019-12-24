@@ -15,6 +15,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.My_order_detail_model;
+import Module.Module;
 import gogrocer.tcc.R;
 
 /**
@@ -25,6 +26,7 @@ public class My_order_detail_adapter extends RecyclerView.Adapter<My_order_detai
 
     private List<My_order_detail_model> modelList;
     private Context context;
+    Module module;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_title, tv_price, tv_qty;
@@ -36,6 +38,7 @@ public class My_order_detail_adapter extends RecyclerView.Adapter<My_order_detai
             tv_price = (TextView) view.findViewById(R.id.tv_order_Detail_price);
             tv_qty = (TextView) view.findViewById(R.id.tv_order_Detail_qty);
             iv_img = (ImageView) view.findViewById(R.id.iv_order_detail_img);
+            module=new Module();
 
         }
     }
@@ -57,9 +60,10 @@ public class My_order_detail_adapter extends RecyclerView.Adapter<My_order_detai
     @Override
     public void onBindViewHolder(My_order_detail_adapter.MyViewHolder holder, int position) {
         My_order_detail_model mList = modelList.get(position);
+        String first_image= module.getFirstImage(mList.getProduct_image(),context);
 
         Glide.with(context)
-                .load(BaseURL.IMG_PRODUCT_URL + mList.getProduct_image())
+                .load(BaseURL.IMG_PRODUCT_URL + first_image)
                 .centerCrop()
                 .placeholder(R.drawable.icon)
                 .crossFade()

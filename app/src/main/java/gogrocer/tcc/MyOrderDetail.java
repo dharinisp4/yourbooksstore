@@ -120,6 +120,7 @@ public class MyOrderDetail extends AppCompatActivity {
         String time = getIntent().getStringExtra("time");
         String status = getIntent().getStringExtra("status");
         String deli_charge = getIntent().getStringExtra("deli_charge");
+        String type = getIntent().getStringExtra("type");
 
         if (status.equals("0")) {
             btn_cancle.setVisibility(View.VISIBLE);
@@ -146,7 +147,15 @@ public class MyOrderDetail extends AppCompatActivity {
 
         // check internet connection
         if (ConnectivityReceiver.isConnected()) {
-            makeGetOrderDetailRequest(sale_id);
+            if(type.equals("cancel"))
+            {
+                makeGetCancelOrderDetailRequest(sale_id);
+            }
+            else
+            {
+                makeGetOrderDetailRequest(sale_id);
+            }
+
         } else {
             Toast.makeText(MyOrderDetail.this, "Error Network Issues", Toast.LENGTH_SHORT).show();
             // ((MainActivity) getApplication()).onNetworkConnectionChanged(false);
@@ -202,6 +211,51 @@ public class MyOrderDetail extends AppCompatActivity {
               //  showDeleteDialog();
             }
         });
+
+    }
+
+    private void makeGetCancelOrderDetailRequest(String sale_id) {
+
+        String tag_json_obj = "json_order_detail_req";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("sale_id", sale_id);
+
+        CustomVolleyJsonArrayRequest jsonObjReq = new CustomVolleyJsonArrayRequest(Request.Method.POST,
+                BaseURL.ORDER_CANCEL_DETAIL_URL, params, new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d(TAG, response.toString());
+
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<My_order_detail_model>>() {
+                }.getType();
+
+                my_order_detail_modelList = gson.fromJson(response.toString(), listType);
+
+                My_order_detail_adapter adapter = new My_order_detail_adapter(my_order_detail_modelList);
+                rv_detail_order.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+                if (my_order_detail_modelList.isEmpty()) {
+                    Toast.makeText(MyOrderDetail.this, getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.equals("") || msg.isEmpty())) {
+                    Toast.makeText(MyOrderDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 
     }
 

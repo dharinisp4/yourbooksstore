@@ -31,6 +31,7 @@ import java.util.List;
 import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Product_model;
+import Module.Module;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
@@ -42,6 +43,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
     private List<Product_model> modelList;
     private List<Product_model> mFilteredList;
     private Context context;
+     Module module;
   //  private DatabaseCartHandler dbcart;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -72,7 +74,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
             iv_plus.setOnClickListener(this);
             tv_add.setOnClickListener(this);
             iv_logo.setOnClickListener(this);
-
+            module=new Module();
             CardView cardView = (CardView) view.findViewById(R.id.card_view);
             cardView.setOnClickListener(this);
 
@@ -307,9 +309,9 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         {
             holder.rel_stock.setVisibility(View.GONE);
         }
-
+        String first_image= module.getFirstImage(mList.getProduct_image(),context);
         Glide.with(context)
-                .load(BaseURL.IMG_PRODUCT_URL + mList.getProduct_image())
+                .load(BaseURL.IMG_PRODUCT_URL + first_image)
                 .centerCrop()
                 .crossFade()
                 .placeholder(R.drawable.icon)

@@ -135,6 +135,7 @@ public class My_Pending_Order extends Fragment {
                 intent.putExtra("total", total);
                 intent.putExtra("status", status);
                 intent.putExtra("deli_charge", deli_charge);
+                intent.putExtra("type","pending");
                 startActivity(intent);
             }
 

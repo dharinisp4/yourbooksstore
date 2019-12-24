@@ -25,6 +25,7 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Deal_Of_Day_model;
 import Model.Product_model;
+import Module.Module;
 import gogrocer.tcc.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -38,6 +39,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
     private Context context;
     private Activity activity ;
     SharedPreferences preferences;
+    Module module;
 
     public NewAdapter( Activity activity,List<Product_model> product_models) {
         this.product_models = product_models;
@@ -61,6 +63,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
             card_view_top = (CardView) view.findViewById( R.id.card_view_top );
             img_out_of_stock = view.findViewById( R.id.img_out_of_stock );
             rel_click=view.findViewById( R.id.rel_click );
+            module=new Module();
             rel_click.setOnClickListener( this );
            card_view_top.setOnClickListener(this);
         }
@@ -127,9 +130,10 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
         Deal_Of_Day_model mList = modelList.get(position);
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");
+        String first_image= module.getFirstImage(mList.getProduct_image(),activity);
 
         Glide.with(context)
-                .load(BaseURL.IMG_PRODUCT_URL + mList.getProduct_image())
+                .load(BaseURL.IMG_PRODUCT_URL + first_image)
                 .placeholder(R.drawable.icon)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

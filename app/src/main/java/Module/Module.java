@@ -27,8 +27,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import Config.BaseURL;
 import Model.ProductVariantModel;
 
+import gogrocer.tcc.CustomSlider;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.MobileVerify;
 import gogrocer.tcc.R;
@@ -204,6 +206,32 @@ Context context;
 
 
 
+    }
+
+    public String getFirstImage(String product_images,Context context)
+    {
+        String first_image="";
+        try {
+            List<String> image_list=new ArrayList<>();
+            JSONArray array = new JSONArray(product_images);
+            //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
+            if (product_images.equals(null)) {
+                Toast.makeText(context, "There is no image for this product", Toast.LENGTH_LONG).show();
+            } else {
+                for (int i = 0; i <= array.length() - 1; i++) {
+                    image_list.add(array.get(i).toString());
+
+                }
+
+                first_image=image_list.get(0).toString();
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+          //  Toast.makeText(context,""+ex.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+        return first_image;
     }
 
     }

@@ -86,7 +86,7 @@ public class Home_fragment extends Fragment {
     String app_link="";
     private boolean isSubcat = false;
     LinearLayout Search_layout;
-  ProgressDialog progressDialog;
+    ProgressDialog progressDialog;
     String getid;
 
     Module module;
@@ -138,8 +138,8 @@ public class Home_fragment extends Fragment {
         ((MainActivity) getActivity()).updateHeader();
         view.setFocusableInTouchMode(true);
         view.requestFocus();
-module=new Module();
-session_management=new Session_management(getActivity());
+        module=new Module();
+        session_management=new Session_management(getActivity());
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");

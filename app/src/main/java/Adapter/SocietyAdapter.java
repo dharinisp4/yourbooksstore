@@ -41,7 +41,7 @@ public class SocietyAdapter extends ArrayAdapter<String> {
                     List<Socity_model> new_suggestions = jp.getParseJsonSociety(constraint.toString());
                     suggestions.clear();
                     for (int i = 0; i < new_suggestions.size(); i++) {
-                        suggestions.add(new_suggestions.get(i).getSocity_name());
+                        suggestions.add(new_suggestions.get(i).getPincode());
                     }
                     filterResults.values = suggestions;
                     filterResults.count = suggestions.size();
@@ -54,6 +54,7 @@ public class SocietyAdapter extends ArrayAdapter<String> {
                 if (results != null && results.count > 0) {
                     notifyDataSetChanged();
                 } else {
+
                     notifyDataSetInvalidated();
                 }
             }

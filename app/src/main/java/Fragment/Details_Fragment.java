@@ -40,6 +40,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -61,6 +65,7 @@ import Model.Product_model;
 import Model.SellerModel;
 import Module.Module;
 import gogrocer.tcc.AppController;
+import gogrocer.tcc.CustomSlider;
 import gogrocer.tcc.LoginActivity;
 import gogrocer.tcc.MainActivity;
 import gogrocer.tcc.R;
@@ -131,7 +136,7 @@ private List<Product_model> modelList ;
     TextView product_qty ;
     RelativeLayout rel_no ;
     String user_id;
-
+   SliderLayout product_img_slider;
     private ElegantNumberButton numberButton;
 
     private Session_management sessionManagement;
@@ -158,6 +163,7 @@ private List<Product_model> modelList ;
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
+        product_img_slider = (SliderLayout) view.findViewById(R.id.product_img_slider);
        //    tabLayout =(TabLayout)view.findViewById(R.id.desc_tablayout);
        rv_cat = (RecyclerView) view.findViewById(R.id.related_recycler);
      //    gifImageView=(ImageView) view.findViewById(R.id.gifImageView);
@@ -611,34 +617,47 @@ private List<Product_model> modelList ;
         //Toast.makeText(getActivity(),""+cat_id, Toast.LENGTH_LONG).show();
         makeRelatedProductRequest(cat_id);
 
-//       try
-//        {
-//            image_list.clear();
-//            JSONArray array=new JSONArray(product_images );
-//           //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
-//            if(product_images.equals(null))
-//            {
-//                Toast.makeText(getActivity(),"There is no image for this product", Toast.LENGTH_LONG).show();
-//            }
-//            else
-//            {
-//                for(int i=0; i<=array.length()-1;i++)
-//                {
-//                    image_list.add(array.get(i).toString());
-//
-//                }
-//
-//            }
+       try {
+           image_list.clear();
+           JSONArray array = new JSONArray(product_images);
+           //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
+           if (product_images.equals(null)) {
+               Toast.makeText(getActivity(), "There is no image for this product", Toast.LENGTH_LONG).show();
+           } else {
+               for (int i = 0; i <= array.length() - 1; i++) {
+                   image_list.add(array.get(i).toString());
 
+               }
+
+               for(int i=0; i<image_list.size();i++)
+               {
+                   CustomSlider textSliderView = new CustomSlider(getActivity());
+                   // initialize a SliderLayout
+                   textSliderView
+                           .image(BaseURL.IMG_PRODUCT_URL +image_list.get(i).toString())
+                           .setScaleType(CustomSlider.ScaleType.CenterInside);
+                   product_img_slider.addSlider(textSliderView);
+               }
+
+
+
+
+               product_img_slider.setDuration(10000);
+           }
+       }
+       catch (Exception ex)
+       {
+           Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_SHORT).show();
+       }
          //   Toast.makeText(getActivity(),""+image_list.get(0).toString(),Toast.LENGTH_LONG).show();
-            Glide.with(getActivity())
-                    .load( BaseURL.IMG_PRODUCT_URL +product_images )
-                    .fitCenter()
-                    .placeholder(R.drawable.icon)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
-                    .into(btn);
+//            Glide.with(getActivity())
+//                    .load( BaseURL.IMG_PRODUCT_URL +image_list.get(0) )
+//                    .fitCenter()
+//                    .placeholder(R.drawable.icon)
+//                    .crossFade()
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .dontAnimate()
+//                    .into(btn);
 
             /*if(details_product_color.equals(null) || details_product_color.equals("null"))
             {

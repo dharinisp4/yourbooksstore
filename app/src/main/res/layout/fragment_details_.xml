@@ -29,7 +29,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/img_product"
                 android:layout_width="200dp"
                 android:layout_height="250dp"
@@ -38,6 +40,12 @@
                 android:layout_margin="@dimen/space_10"
                 android:scaleType="fitXY"
                 />
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/product_img_slider"
+                    android:layout_width="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="250dp"
+                    android:layout_margin="@dimen/space_2" />
 
                 <RelativeLayout
                     android:id="@+id/rel_stock"

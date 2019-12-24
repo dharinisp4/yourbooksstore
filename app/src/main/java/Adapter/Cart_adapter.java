@@ -26,6 +26,7 @@ import Config.BaseURL;
 import Fragment.Cart_fragment;
 import Fragment.Empty_cart_fragment;
 import Fragment.Empty_wishlist_fragment;
+import Module.Module;
 import gogrocer.tcc.R;
 import util.DatabaseCartHandler;
 
@@ -43,6 +44,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
     String Reward;
     SharedPreferences preferences;
     String language;
+    Module module;
 
     int lastpostion;
     DatabaseCartHandler dbHandler;
@@ -80,8 +82,10 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
     @Override
     public void onBindViewHolder(final ProductHolder holder, final int position) {
         final HashMap<String, String> map = list.get(position);
+        String first_image= module.getFirstImage(map.get("product_image"),activity);
+
         Glide.with(activity)
-                .load(BaseURL.IMG_PRODUCT_URL + map.get("product_image"))
+                .load(BaseURL.IMG_PRODUCT_URL + first_image)
                 .centerCrop()
                 .placeholder(R.drawable.icon)
                 .crossFade()
@@ -342,6 +346,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
            // tv_add.setText(R.string.tv_pro_update);
             rel_no.setVisibility( View.VISIBLE );
                 tv_add.setVisibility( View.GONE );
+                module=new Module();
         }
     }
 

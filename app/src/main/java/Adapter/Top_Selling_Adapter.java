@@ -24,6 +24,7 @@ import java.util.List;
 import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Top_Selling_model;
+import Module.Module;
 import gogrocer.tcc.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -34,6 +35,7 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
     private List<Top_Selling_model> modelList;
     private Context context;
     private Activity activity ;
+     Module module;
 SharedPreferences preferences;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView product_nmae, product_prize, product_mrp , product_discount;
@@ -52,6 +54,7 @@ SharedPreferences preferences;
             img_out_of_stock=view.findViewById( R.id.img_out_of_stock );
             rel_click = view.findViewById( R.id.rel_click);
             rel_click.setOnClickListener( this );
+            module=new Module();
 //            card_view_top.setOnClickListener( this );
         }
 
@@ -113,8 +116,9 @@ SharedPreferences preferences;
         Top_Selling_model mList = modelList.get(position);
          preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
     String language=preferences.getString("language","");
+   String first_image= module.getFirstImage(mList.getProduct_image(),activity);
         Glide.with(context)
-                .load(BaseURL.IMG_PRODUCT_URL + mList.getProduct_image())
+                .load(BaseURL.IMG_PRODUCT_URL + first_image)
                 .placeholder(R.drawable.icon)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

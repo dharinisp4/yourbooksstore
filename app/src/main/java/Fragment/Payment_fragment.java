@@ -60,6 +60,7 @@ import static com.android.volley.VolleyLog.TAG;
 
 public class Payment_fragment extends Fragment {
     RelativeLayout confirm;
+    RelativeLayout rel_coupon;
     private DatabaseCartHandler db_cart;
     private Session_management sessionManagement;
     TextView payble_ammount, my_wallet_ammount, used_wallet_ammount, used_coupon_ammount, order_ammount;
@@ -123,7 +124,7 @@ public class Payment_fragment extends Fragment {
 
         checkBox_Wallet = (CheckBox) view.findViewById(R.id.use_wallet);
         checkBox_Wallet.setTypeface(font);
-
+        rel_coupon=(RelativeLayout)view.findViewById(R.id.rel_coupon);
 
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -308,6 +309,18 @@ public class Payment_fragment extends Fragment {
 
                     ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
                 }
+            }
+        });
+
+        rel_coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment fragment=new DeliverTypeFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment)
+                        .addToBackStack(null).commit();
+
             }
         });
         return view;

@@ -404,7 +404,7 @@
 
 
                         <CheckBox
-                          android:visibility="gone"
+                            android:visibility="gone"
                             android:id="@+id/use_coupon"
                             style="@android:style/Widget.CompoundButton.RadioButton"
                             android:layout_width="wrap_content"
@@ -486,8 +486,32 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rel_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/confirm_order_button"
+            android:layout_marginLeft="@dimen/space_6"
+            android:layout_marginTop="@dimen/space_20"
+            android:layout_marginRight="@dimen/space_6"
+            android:background="@drawable/linear_border_layout"
+            android:padding="12dp">
+
+            <Fonts.LatoBLack
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Enter Coupon Code"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:id="@+id/confirm_order"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/space_20"
             android:layout_height="@dimen/confirm_order_button"
             android:layout_marginLeft="@dimen/space_6"
             android:layout_marginRight="@dimen/space_6"

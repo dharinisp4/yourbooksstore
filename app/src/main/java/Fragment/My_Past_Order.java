@@ -137,6 +137,7 @@ public class My_Past_Order extends Fragment {
                 intent.putExtra("total", total);
                 intent.putExtra("status", status);
                 intent.putExtra("deli_charge", deli_charge);
+                intent.putExtra("type","past");
                 startActivity(intent);
 
             }

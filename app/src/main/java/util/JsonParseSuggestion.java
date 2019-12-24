@@ -28,7 +28,7 @@ public class JsonParseSuggestion {
         List<Socity_model> listData = new ArrayList<>();
         try {
             String temp=name.replace(" ", "%20");
-            URL js = new URL(BaseURL.GET_SOCITY_URL+"?socity_name="+"%"+temp+"%");
+            URL js = new URL(BaseURL.GET_SOCITY_URL+"?pincode="+"%"+temp+"%");
             URLConnection jc = js.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(jc.getInputStream()));
             String line = reader.readLine();

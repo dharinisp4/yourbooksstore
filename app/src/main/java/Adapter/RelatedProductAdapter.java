@@ -166,9 +166,10 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }
+        String first_image= module.getFirstImage(mList.getProduct_image(),context);
 
         Glide.with( context )
-                .load( BaseURL.IMG_PRODUCT_URL + mList.getProduct_image() )
+                .load( BaseURL.IMG_PRODUCT_URL + first_image )
                 .fitCenter()
                 .placeholder( R.drawable.icon )
                 .crossFade()
