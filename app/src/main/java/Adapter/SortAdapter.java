@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 public class SortAdapter extends BaseAdapter {
     Context context;

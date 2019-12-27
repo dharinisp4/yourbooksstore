@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 
 public class Notification_fragment extends Fragment {
 ProgressDialog progressDialog ;

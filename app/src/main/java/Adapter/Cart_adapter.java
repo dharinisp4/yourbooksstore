@@ -1,11 +1,9 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +22,8 @@ import java.util.HashMap;
 
 import Config.BaseURL;
 import Fragment.Cart_fragment;
-import Fragment.Empty_cart_fragment;
-import Fragment.Empty_wishlist_fragment;
 import Module.Module;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 import util.DatabaseCartHandler;
 
 import static Fragment.Cart_fragment.lin_amt;

@@ -11,20 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 
-import org.bouncycastle.util.test.FixedSecureRandom;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,14 +29,14 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.AppController;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
 
-import static gogrocer.tcc.AppController.TAG;
+import static shoparounds.com.AppController.TAG;
 
 public class fragment_edit_details extends Fragment {
     EditText name,address,phone;

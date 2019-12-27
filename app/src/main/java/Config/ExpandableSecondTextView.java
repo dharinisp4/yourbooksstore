@@ -23,7 +23,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 public class ExpandableSecondTextView extends LinearLayout implements View.OnClickListener {
 

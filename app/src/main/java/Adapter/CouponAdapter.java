@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import Model.CouponModel;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 /**
  * Developed by Binplus Technologies pvt. ltd.  on 23,December,2019

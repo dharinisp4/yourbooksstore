@@ -3,15 +3,14 @@ package Fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 
 public class Empty_cart_fragment extends Fragment {
 

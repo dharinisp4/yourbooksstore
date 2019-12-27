@@ -15,12 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,15 +30,13 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.My_Cancel_Order_adapter;
-import Adapter.My_Pending_Order_adapter;
 import Config.BaseURL;
 import Model.My_Cancel_order_model;
-import Model.My_Pending_order_model;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.MyOrderDetail;
-import gogrocer.tcc.R;
+import shoparounds.com.AppController;
+import shoparounds.com.MainActivity;
+import shoparounds.com.MyOrderDetail;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
 import util.RecyclerTouchListener;

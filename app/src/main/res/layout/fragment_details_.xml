@@ -494,6 +494,7 @@
        android:layout_height="wrap_content"
        android:layout_marginTop="@dimen/space_10"
        android:id="@+id/cardseller"
+       android:visibility="gone"
        app:cardElevation="@dimen/space_5">
        <RelativeLayout
            android:layout_width="match_parent"
@@ -528,12 +529,13 @@
    </android.support.v7.widget.CardView>
 
     <View
+        android:visibility="gone"
         android:id="@+id/sellerview"
 
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@+id/cardseller"
-        android:layout_marginTop="@dimen/space_10"
+                    android:layout_marginTop="@dimen/space_10"
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_marginRight="@dimen/space_5"
                     android:background="@color/dark_gray" />

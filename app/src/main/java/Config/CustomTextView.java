@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 public class CustomTextView extends AppCompatTextView {
     public CustomTextView(Context context) {

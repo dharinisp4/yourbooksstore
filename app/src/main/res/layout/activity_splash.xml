@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-       tools:context="gogrocer.tcc.SplashActivity">
+       tools:context="shoparounds.com.SplashActivity">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
        android:backgroundTintMode="multiply"
-        android:background="@drawable/ccccc"
+        android:background="@drawable/shoparoundswelcome"
         android:scaleType="centerCrop"
 
         />
@@ -28,6 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="280dp"
+        android:visibility="gone"
         />
 
 
@@ -49,6 +50,7 @@
         android:textColor="@color/colorPrimary"
         android:textStyle="italic|bold"
         android:fontFamily="serif"
+        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/logo"
         />

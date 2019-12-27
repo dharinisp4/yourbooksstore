@@ -6,10 +6,9 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 
-import gogrocer.tcc.LoginActivity;
-import gogrocer.tcc.MainActivity;
+import shoparounds.com.LoginActivity;
+import shoparounds.com.MainActivity;
 
-import static Config.BaseURL.BASE_URL;
 import static Config.BaseURL.IS_LOGIN;
 import static Config.BaseURL.KEY_CAT;
 import static Config.BaseURL.KEY_CNT;

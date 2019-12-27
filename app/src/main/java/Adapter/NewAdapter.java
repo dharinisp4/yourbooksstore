@@ -26,7 +26,7 @@ import Fragment.Details_Fragment;
 import Model.Deal_Of_Day_model;
 import Model.Product_model;
 import Module.Module;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

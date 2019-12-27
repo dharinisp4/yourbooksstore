@@ -1,7 +1,6 @@
 package Fragment;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -33,10 +32,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -65,11 +62,10 @@ import Model.Deal_Of_Day_model;
 import Model.Home_Icon_model;
 import Model.Top_Selling_model;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.CustomSlider;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
-import gogrocer.tcc.SelectStore;
+import shoparounds.com.AppController;
+import shoparounds.com.CustomSlider;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;

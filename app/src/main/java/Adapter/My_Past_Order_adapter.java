@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import Model.My_Past_order_model;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -203,6 +203,16 @@ SharedPreferences preferences;
     @Override
     public int getItemCount() {
         return modelList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
 }

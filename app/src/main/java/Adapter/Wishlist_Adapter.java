@@ -1,39 +1,26 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,17 +29,14 @@ import java.util.List;
 import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Fragment.Wishlist_fragment;
-import Model.ProductVariantModel;
-import Model.Product_model;
 import Model.Wish_model;
 
 import Module.Module;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
 import util.Session_management;
 
-import static Module.Module.updatewish;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyViewHolder> {
@@ -78,6 +62,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
         public MyViewHolder(View view) {
             super(view);
+            module=new Module();
            session_management=new Session_management(context);
             rel_no =(RelativeLayout)view.findViewById( R.id.rel_no );
             rel_stock =(RelativeLayout)view.findViewById( R.id.rel_stock );
@@ -142,7 +127,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         final HashMap<String, String> map = list.get(position);
         //imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.your_image));
     //    holder.wish_before.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_close));
-        String first_image= module.getFirstImage(map.get("product_image"),context);
+        String first_image= module.getFirstImage(map.get("product_image"), context);
 
         Glide.with( context )
                 .load( BaseURL.IMG_PRODUCT_URL + first_image)

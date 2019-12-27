@@ -12,20 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.bouncycastle.asn1.sec.SECNamedCurves;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,9 +36,9 @@ import Adapter.Shop_Now_adapter;
 import Config.BaseURL;
 import Model.Home_Icon_model;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.AppController;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;

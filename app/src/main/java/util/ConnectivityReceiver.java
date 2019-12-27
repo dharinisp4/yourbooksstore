@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import gogrocer.tcc.AppController;
+import shoparounds.com.AppController;
 
 /**
  * Created by Rajesh Dabhi on 22/6/2017.

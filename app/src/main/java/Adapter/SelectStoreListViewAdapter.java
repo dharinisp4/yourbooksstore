@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 public class SelectStoreListViewAdapter extends BaseAdapter {
     Context context;

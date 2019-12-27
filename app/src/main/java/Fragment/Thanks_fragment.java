@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.My_Order_activity;
-import gogrocer.tcc.R;
+import shoparounds.com.MainActivity;
+import shoparounds.com.My_Order_activity;
+import shoparounds.com.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

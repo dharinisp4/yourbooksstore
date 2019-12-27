@@ -1,6 +1,5 @@
 package Adapter;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -18,26 +17,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Product_model;
 import Module.Module;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -98,7 +91,6 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
             if(id== R.id.rel_click)
             {
-                int in_stock=Integer.parseInt(modelList.get(position).getIn_stock());
 
                     Details_Fragment details_fragment = new Details_Fragment();
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
@@ -205,11 +197,11 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
         if(in_stock<=0)
         {
             holder.out_of_stock.setVisibility(View.VISIBLE);
-            holder.rel_click.setEnabled( false );
+         //   holder.rel_click.setEnabled( false );
         }
         else
         {
-            holder.rel_click.setEnabled( true );
+           // holder.rel_click.setEnabled( true );
         }
 
 

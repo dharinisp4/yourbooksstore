@@ -16,7 +16,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.Home_Icon_model;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

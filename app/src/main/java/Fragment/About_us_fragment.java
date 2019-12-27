@@ -27,9 +27,9 @@ import java.util.List;
 
 import Model.Support_info_model;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.AppController;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 
 public class About_us_fragment extends Fragment {

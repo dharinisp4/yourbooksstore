@@ -16,10 +16,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import Config.BaseURL;
 import Model.My_Cancel_order_model;
-import Model.My_Pending_order_model;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;

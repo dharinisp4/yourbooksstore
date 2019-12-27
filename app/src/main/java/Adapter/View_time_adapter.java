@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

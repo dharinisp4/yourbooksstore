@@ -2,7 +2,6 @@ package Fragment;
 
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -30,20 +29,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -64,11 +56,11 @@ import Config.ExpandableSecondTextView;
 import Model.Product_model;
 import Model.SellerModel;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.CustomSlider;
-import gogrocer.tcc.LoginActivity;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.AppController;
+import shoparounds.com.CustomSlider;
+import shoparounds.com.LoginActivity;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
@@ -98,7 +90,7 @@ private List<Product_model> modelList ;
     Activity activity;
     //DatabaseHandler dbcart ;
     DatabaseCartHandler db_cart;
-  DatabaseHandlerWishList db_wish ;
+    DatabaseHandlerWishList db_wish ;
     //TextView txtColor,txtSize;
     TextView txtPer,sel_info,featuresTitle,tv_rewards;
 

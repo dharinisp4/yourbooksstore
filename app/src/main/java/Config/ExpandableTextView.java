@@ -6,9 +6,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 public class ExpandableTextView extends AppCompatTextView {
     private static final int DEFAULT_TRIM_LENGTH = 50;

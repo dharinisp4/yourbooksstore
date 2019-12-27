@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import Model.ProductVariantModel;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 
 public class ProductVariantAdapter extends BaseAdapter {

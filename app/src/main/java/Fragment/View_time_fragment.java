@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 
@@ -31,9 +29,9 @@ import Adapter.View_time_adapter;
 import Config.BaseURL;
 import Model.Category_model;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.AppController;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;

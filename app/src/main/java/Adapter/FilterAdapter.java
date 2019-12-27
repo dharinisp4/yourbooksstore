@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import gogrocer.tcc.FilterActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.FilterActivity;
+import shoparounds.com.R;
 
 /**
  * Developed by Binplus Technologies pvt. ltd. on 13,November,2019

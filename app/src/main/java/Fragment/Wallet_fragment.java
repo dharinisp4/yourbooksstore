@@ -24,9 +24,9 @@ import org.json.JSONObject;
 import Config.BaseURL;
 import Config.SharedPref;
 import Module.Module;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
-import gogrocer.tcc.RechargeWallet;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
+import shoparounds.com.RechargeWallet;
 import util.ConnectivityReceiver;
 import util.Session_management;
 

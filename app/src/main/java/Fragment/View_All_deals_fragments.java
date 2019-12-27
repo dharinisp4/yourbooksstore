@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.View_All_Deal_Of_Day_model;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.ConnectivityReceiver;
 
 public class View_All_deals_fragments extends Fragment {

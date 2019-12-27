@@ -16,7 +16,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.View_All_Deal_Of_Day_model;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 /**
  * Created by Rajesh Dabhi on 22/6/2017.

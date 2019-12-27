@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 
 //import android.support.v4.app.Fragment;
 

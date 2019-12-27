@@ -30,11 +30,11 @@ import java.util.Map;
 import Config.BaseURL;
 import Config.SharedPref;
 import Module.Module;
-import gogrocer.tcc.GifImageView;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
-import gogrocer.tcc.networkconnectivity.NetworkConnection;
-import gogrocer.tcc.networkconnectivity.NetworkError;
+import shoparounds.com.GifImageView;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
+import shoparounds.com.networkconnectivity.NetworkConnection;
+import shoparounds.com.networkconnectivity.NetworkError;
 import util.ConnectivityReceiver;
 import util.Session_management;
 

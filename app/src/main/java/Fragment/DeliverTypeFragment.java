@@ -25,8 +25,8 @@ import Adapter.CouponAdapter;
 import Config.BaseURL;
 import Model.CouponModel;
 import Module.Module;
-import gogrocer.tcc.AppController;
-import gogrocer.tcc.R;
+import shoparounds.com.AppController;
+import shoparounds.com.R;
 import util.CustomVolleyJsonRequest;
 
 /**

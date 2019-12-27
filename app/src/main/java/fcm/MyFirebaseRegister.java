@@ -21,7 +21,7 @@ import java.util.Map;
 import Config.BaseURL;
 
 
-import gogrocer.tcc.AppController;
+import shoparounds.com.AppController;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 

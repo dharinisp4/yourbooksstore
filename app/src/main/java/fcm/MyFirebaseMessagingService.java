@@ -27,8 +27,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.R;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 

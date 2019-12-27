@@ -20,20 +20,13 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import Config.BaseURL;
-import Model.ProductVariantModel;
-
-import gogrocer.tcc.CustomSlider;
-import gogrocer.tcc.MainActivity;
-import gogrocer.tcc.MobileVerify;
-import gogrocer.tcc.R;
+import shoparounds.com.MainActivity;
+import shoparounds.com.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandlerWishList;
 

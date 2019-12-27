@@ -16,9 +16,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import Config.BaseURL;
 import Model.My_Pending_order_model;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -134,7 +133,7 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
             holder.relativetextstatus.setText(context.getResources().getString(R.string.confirm));
 
             holder.tv_status.setTextColor(context.getResources().getColor(R.color.green));
-        } else if (mList.getStatus().equals("2")) {
+        } else if (mList.getStatus().equals("2") || mList.getStatus().equals("5")) {
             holder.tv_tracking_date.setText(mList.getDelivered_date());
 
             holder.view1.setBackgroundColor(context.getResources().getColor(R.color.green));
@@ -263,6 +262,16 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
     {
         String[] arr=str_date.split(" ");
         return arr[0].toString();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }
 

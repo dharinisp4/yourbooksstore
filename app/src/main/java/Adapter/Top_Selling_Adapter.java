@@ -25,7 +25,7 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Top_Selling_model;
 import Module.Module;
-import gogrocer.tcc.R;
+import shoparounds.com.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
