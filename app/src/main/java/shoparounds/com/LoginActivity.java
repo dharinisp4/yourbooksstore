@@ -152,6 +152,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return phoneno.length() > 9;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
     /**
      * Method to make json object request where json response starts wtih
      */

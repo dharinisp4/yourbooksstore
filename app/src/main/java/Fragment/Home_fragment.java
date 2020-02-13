@@ -80,9 +80,10 @@ public class Home_fragment extends Fragment {
     private Home_adapter adapter;
     int version_code=0;
     String app_link="";
+    ProgressDialog progressDialog;
+
     private boolean isSubcat = false;
     LinearLayout Search_layout;
-    ProgressDialog progressDialog;
     String getid;
 
     Module module;
